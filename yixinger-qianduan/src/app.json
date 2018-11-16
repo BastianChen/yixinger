@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/logs/main",
+    "pages/counter/main",
+    "pages/api/main",
+    "pages/search/search",
+    "pages/suggestion/suggestion",
+    "pages/regeocoding/regeocoding",
+    "pages/weather/weather",
+    "pages/photo/photo"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "yixinger",
+    "navigationBarTextStyle": "black"
+  }
+}

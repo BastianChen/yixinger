@@ -1,0 +1,2 @@
+<van-button type="primary" size="normal" round style="margin:30rpx;" bindtap="chooseimage" class="_van-button data-v-548e5345">获取图片</van-button>
+<image src="{{tempFilePaths }}" mode="aspecFill" />
