@@ -1,4 +1,4 @@
-package com.cb.yixinger;
+package com.cb.yixinger.config;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;

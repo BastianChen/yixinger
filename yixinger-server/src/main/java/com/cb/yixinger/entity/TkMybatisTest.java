@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import javax.persistence.OrderBy;
-import javax.persistence.Table;
 
 /**
  * @Description:
@@ -12,7 +11,6 @@ import javax.persistence.Table;
  * @create: 2018-11-21 14:59
  **/
 @Data
-@Table
 public class TkMybatisTest {
     @Id
     @OrderBy("desc")

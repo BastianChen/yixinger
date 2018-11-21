@@ -1,6 +1,6 @@
 package com.cb.yixinger.dao.test;
 
-import com.cb.yixinger.BaseMapper;
+import com.cb.yixinger.config.BaseMapper;
 import com.cb.yixinger.entity.TkMybatisTest;
 import org.springframework.stereotype.Repository;
 

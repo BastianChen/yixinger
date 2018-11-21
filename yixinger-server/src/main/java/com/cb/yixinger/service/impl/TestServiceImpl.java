@@ -6,6 +6,8 @@ import com.cb.yixinger.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Description:
  * @author: YFZX-CB-1784 ChenBen
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class TestServiceImpl implements TestService {
     @Autowired
     private TestDao testDao;
+
     @Override
     public void insrtTest(TkMybatisTest tkMybatisTest) {
         testDao.insrtTest(tkMybatisTest);
@@ -23,5 +26,25 @@ public class TestServiceImpl implements TestService {
     @Override
     public TkMybatisTest getTest(Integer id) {
         return testDao.getTest(id);
+    }
+
+    @Override
+    public void updateTest(TkMybatisTest tkMybatisTest) {
+        testDao.updateTest(tkMybatisTest);
+    }
+
+    @Override
+    public void deleteTest(Integer id) {
+        testDao.deleteTest(id);
+    }
+
+    @Override
+    public List<TkMybatisTest> getTestList() {
+        return testDao.getTestList();
+    }
+
+    @Override
+    public List<TkMybatisTest> getTestListByNameAndAge(String name, Integer age) {
+        return testDao.getTestListByNameAndAge(name,age);
     }
 }

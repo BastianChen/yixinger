@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -47,17 +48,39 @@ public class YixingerApplicationTests {
         }
         JSONObject jsonObject = JSONObject.fromObject(js);
         System.out.println(jsonObject.toString(2));
-
     }
 
     @Test
-    public void tkMybatisTest(){
+    public void addTest(){
         TkMybatisTest tkMybatisTest = new TkMybatisTest();
         tkMybatisTest.setName("ben");
         tkMybatisTest.setRealName("陈奔");
         tkMybatisTest.setAge(21);
         testService.insrtTest(tkMybatisTest);
+    }
 
-        System.out.println(testService.getTest(1));
+    @Test
+    public void updateTest(){
+        TkMybatisTest tkMybatisTest = new TkMybatisTest();
+        tkMybatisTest.setId(1);
+        tkMybatisTest.setName("陈奔");
+        tkMybatisTest.setRealName("ben");
+        tkMybatisTest.setAge(18);
+        testService.updateTest(tkMybatisTest);
+    }
+
+    @Test
+    public void deleteTest(){
+        testService.deleteTest(2);
+    }
+
+    @Test
+    public void getTestList(){
+        System.out.println(testService.getTestList());
+    }
+
+    @Test
+    public void getTestListByNameAndAgeTest(){
+        System.out.println(testService.getTestListByNameAndAge("ben",21));
     }
 }

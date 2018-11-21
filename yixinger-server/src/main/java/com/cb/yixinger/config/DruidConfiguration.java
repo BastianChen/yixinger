@@ -1,4 +1,4 @@
-package com.cb.yixinger;
+package com.cb.yixinger.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * @Description:
+ * @Description: Druid JAVA 配置
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2018-11-21 15:10
  **/
@@ -31,28 +31,32 @@ public class DruidConfiguration {
     @Bean
     public ServletRegistrationBean druidServlet() {
         logger.info("init Druid Servlet Configuration ");
+        // 创建servlet注册实体
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         // IP白名单
         servletRegistrationBean.addInitParameter("allow", "*");
         // IP黑名单(共同存在时，deny优先于allow)
         servletRegistrationBean.addInitParameter("deny", "192.168.1.100");
-        //控制台管理用户
-        servletRegistrationBean.addInitParameter("loginUsername", "admin");
-        servletRegistrationBean.addInitParameter("loginPassword", "admin");
-        //是否能够重置数据 禁用HTML页面上的“Reset All”功能
+        // 控制台管理用户
+        servletRegistrationBean.addInitParameter("loginUsername", "druid");
+        servletRegistrationBean.addInitParameter("loginPassword", "123456");
+        // 是否能够重置数据 禁用HTML页面上的“Reset All”功能
         servletRegistrationBean.addInitParameter("resetEnable", "false");
         return servletRegistrationBean;
     }
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
+        // 创建过滤器
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
+        // 设置过滤器过滤路径
         filterRegistrationBean.addUrlPatterns("/*");
+        // 忽略过滤的形式
         filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
         return filterRegistrationBean;
     }
 
-    //解决 spring.datasource.filters=stat,wall,log4j 无法正常注册进去
+    // 解决 spring.datasource.filters=stat,wall,log4j 无法正常注册进去
     @Component
     @ConfigurationProperties(prefix = DB_PREFIX)
     class IDataSourceProperties {
@@ -75,8 +79,8 @@ public class DruidConfiguration {
         private String filters;
         private String connectionProperties;
 
-        @Bean     //声明其为Bean实例
-        @Primary  //在同样的DataSource中，首先使用被标注的DataSource
+        @Bean     // 声明其为Bean实例
+        @Primary  // 在同样的DataSource中，首先使用被标注的DataSource
         public DataSource dataSource() {
             DruidDataSource datasource = new DruidDataSource();
             datasource.setUrl(url);
@@ -84,7 +88,7 @@ public class DruidConfiguration {
             datasource.setPassword(password);
             datasource.setDriverClassName(driverClassName);
 
-            //configuration
+            // configuration
             datasource.setInitialSize(initialSize);
             datasource.setMinIdle(minIdle);
             datasource.setMaxActive(maxActive);
@@ -250,5 +254,4 @@ public class DruidConfiguration {
             this.connectionProperties = connectionProperties;
         }
     }
-
 }
