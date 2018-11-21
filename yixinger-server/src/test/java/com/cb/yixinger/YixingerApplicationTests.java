@@ -1,10 +1,13 @@
 package com.cb.yixinger;
 
+import com.cb.yixinger.entity.TkMybatisTest;
+import com.cb.yixinger.service.TestService;
 import net.sf.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,6 +17,8 @@ import java.io.UnsupportedEncodingException;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class YixingerApplicationTests {
+    @Autowired
+    private TestService testService;
 
     @Test
     public void contextLoads() {
@@ -43,5 +48,16 @@ public class YixingerApplicationTests {
         JSONObject jsonObject = JSONObject.fromObject(js);
         System.out.println(jsonObject.toString(2));
 
+    }
+
+    @Test
+    public void tkMybatisTest(){
+        TkMybatisTest tkMybatisTest = new TkMybatisTest();
+        tkMybatisTest.setName("ben");
+        tkMybatisTest.setRealName("陈奔");
+        tkMybatisTest.setAge(21);
+        testService.insrtTest(tkMybatisTest);
+
+        System.out.println(testService.getTest(1));
     }
 }

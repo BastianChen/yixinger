@@ -87,4 +87,13 @@ Page({
     //   url: url
     // })
   },
+  // nav() {
+  //   let { latitude2, longitude2, name, desc } = this.data;
+  //   wx.openLocation({
+  //     latitude: +latitude2,
+  //     longitude: +longitude2,
+  //     name,
+  //     address: desc
+  //   });
+  // }
 })
