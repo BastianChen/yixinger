@@ -2,6 +2,8 @@ var bmap = require('../../libs/bmap-wx.min.js');
 var config = require('../../libs/config.js');
 var wxMarkerData = [];
 var city = '';
+//var queryType = '景点';
+var queryType = '美食';
 
 Page({
   data: {
@@ -25,6 +27,7 @@ Page({
       console.log(data)
     };
     var success = function(data) {
+      console.log(data)
       wxMarkerData = data.wxMarkerData;
       city = data.originalData.results[0].city
       that.setData({
@@ -38,7 +41,7 @@ Page({
       });
     }
     BMap.search({
-      "query": '美食',
+      "query": queryType,
       fail: fail,
       success: success,
       iconPath: '../../img/marker_checked.png',
