@@ -51,7 +51,7 @@ public class YixingerApplicationTests {
     }
 
     @Test
-    public void addTest(){
+    public void addTest() {
         TkMybatisTest tkMybatisTest = new TkMybatisTest();
         tkMybatisTest.setName("ben");
         tkMybatisTest.setRealName("陈奔");
@@ -60,7 +60,7 @@ public class YixingerApplicationTests {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         TkMybatisTest tkMybatisTest = new TkMybatisTest();
         tkMybatisTest.setId(1);
         tkMybatisTest.setName("陈奔");
@@ -70,17 +70,22 @@ public class YixingerApplicationTests {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         testService.deleteTest(2);
     }
 
     @Test
-    public void getTestList(){
+    public void getTestList() {
         System.out.println(testService.getTestList());
     }
 
     @Test
-    public void getTestListByNameAndAgeTest(){
-        System.out.println(testService.getTestListByNameAndAge("ben",21));
+    public void getTestListByNameAndAgeTest() {
+        System.out.println(testService.getTestListByNameAndAge("ben", 21));
+    }
+
+    @Test
+    public void pageHelperTest() {
+        System.out.println(testService.findTkMybatisTestByPage(1, 2));
     }
 }

@@ -22,4 +22,6 @@ public interface TestService {
     List<TkMybatisTest> getTestList();
 
     List<TkMybatisTest> getTestListByNameAndAge(String name, Integer age);
+
+    List<TkMybatisTest> findTkMybatisTestByPage(int currentPage,int pageSize);
 }
