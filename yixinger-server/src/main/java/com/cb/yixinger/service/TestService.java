@@ -2,6 +2,7 @@ package com.cb.yixinger.service;
 
 
 import com.cb.yixinger.entity.TkMybatisTest;
+import net.sf.json.JSONObject;
 
 import java.util.List;
 
@@ -23,5 +24,9 @@ public interface TestService {
 
     List<TkMybatisTest> getTestListByNameAndAge(String name, Integer age);
 
-    List<TkMybatisTest> findTkMybatisTestByPage(int currentPage,int pageSize);
+    List<TkMybatisTest> findTkMybatisTestByPage(int currentPage, int pageSize);
+
+    void addRedisTest(String key,String value);
+
+    String getRedisTest(String string);
 }

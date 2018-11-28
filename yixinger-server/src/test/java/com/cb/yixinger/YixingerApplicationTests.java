@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ import java.util.List;
 public class YixingerApplicationTests {
     @Autowired
     private TestService testService;
+    @Autowired
+    RedisTemplate<String, String> redisTemplate;
 
     @Test
     public void contextLoads() {
@@ -57,6 +60,7 @@ public class YixingerApplicationTests {
         tkMybatisTest.setRealName("陈奔");
         tkMybatisTest.setAge(21);
         testService.insrtTest(tkMybatisTest);
+        System.out.println(testService.getTest(3));
     }
 
     @Test
@@ -75,6 +79,11 @@ public class YixingerApplicationTests {
     }
 
     @Test
+    public void getTest(){
+        System.out.println(testService.getTest(3));
+    }
+
+    @Test
     public void getTestList() {
         System.out.println(testService.getTestList());
     }
@@ -87,5 +96,12 @@ public class YixingerApplicationTests {
     @Test
     public void pageHelperTest() {
         System.out.println(testService.findTkMybatisTestByPage(1, 2));
+    }
+
+    @Test
+    public void redisTest(){
+        testService.addRedisTest("test:","123456");
+        //redisTemplate.opsForValue().getOperations().delete("test:");
+        System.out.println(testService.getRedisTest("test:"));
     }
 }

@@ -5,10 +5,15 @@ import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.TkMybatisTest;
 import com.cb.yixinger.service.TestService;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description:
@@ -19,6 +24,11 @@ import java.util.List;
 public class TestServiceImpl implements TestService {
     @Autowired
     private TestDao testDao;
+    //    @Autowired
+//    StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    RedisTemplate<String, String> redisTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
 
     @Override
     public void insrtTest(TkMybatisTest tkMybatisTest) {
@@ -47,7 +57,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public List<TkMybatisTest> getTestListByNameAndAge(String name, Integer age) {
-        return testDao.getTestListByNameAndAge(name,age);
+        return testDao.getTestListByNameAndAge(name, age);
     }
 
     @Override
@@ -59,5 +69,22 @@ public class TestServiceImpl implements TestService {
         PageBean<TkMybatisTest> pageData = new PageBean<>(currentPage, pageSize, countNums);
         pageData.setItems(tkMybatisTests);
         return pageData.getItems();
+    }
+
+    @Override
+    public void addRedisTest(String key, String value) {
+        redisTemplate.opsForValue().set(key, value, 10L, TimeUnit.MINUTES);
+    }
+
+    @Override
+    public String getRedisTest(String string) {
+        String value = redisTemplate.opsForValue().get(string);
+        if (!StringUtils.isEmpty(value)) {
+            logger.info("读取缓存数据");
+            return value;
+        } else {
+            logger.info("未读取到缓存数据");
+            return null;
+        }
     }
 }

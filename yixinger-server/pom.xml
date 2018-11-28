@@ -122,7 +122,7 @@
             <artifactId>mapper-spring-boot-starter</artifactId>
             <version>1.2.4</version>
         </dependency>
-        <!---分页插件-->
+        <!--分页插件-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -133,7 +133,12 @@
             <artifactId>yixinger</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
+        <!--Redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.0.4.RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
