@@ -31,8 +31,9 @@ public class YixingerApplicationTests {
 
     @Test
     public void jsoupTest() {
-        String url = "https://map.baidu.com/?ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=1&compat=1&t=1542763086565&uid=38abdda9d1f4af0f3110af96&primaryUid=1175400224615406276&auth=XALx853BcA248H7bWFvB%40wZv%3DSaJXBA4uxHEzNLBVRztykiOxAXXwy1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3Guzt7xjhN%40ThwzBDGJ4P6VWvcEWe1GD8zv7u%40ZPuxtfvAughxehwzJGBP4B6GBvgjLLwWvrZZWux";
-        //String url = "https://map.baidu.com";
+        String url = "https://ugcapi.baidu.com/richindex/2/photo?uid=df95f91c9c62cbb438221c0e&from=map_pc&pageCount=10";// 图片爬取
+        //String url = "https://ugcapi.baidu.com/richindex/2/comment?uid=df95f91c9c62cbb438221c0e&pageIndex=1&pageCount=10";// 评论爬取
+        //String url = "https://map.baidu.com/?ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=1&compat=1&t=1542763086565&uid=96d38a845c08e6492902e13b&primaryUid=1175400224615406276&auth=XALx853BcA248H7bWFvB%40wZv%3DSaJXBA4uxHEzNLBVRztykiOxAXXwy1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3Guzt7xjhN%40ThwzBDGJ4P6VWvcEWe1GD8zv7u%40ZPuxtfvAughxehwzJGBP4B6GBvgjLLwWvrZZWux";// 地点信息爬取
         Connection con = Jsoup.connect(url).ignoreContentType(true);
         con.header("Referer", "https://map.baidu.com/");
         con.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
@@ -45,7 +46,6 @@ public class YixingerApplicationTests {
         String js = null;
         try {
             js = new String(doc, "GBK");
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
