@@ -96,6 +96,7 @@ export default {
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo
+              console.log(this.userInfo)
             }
           })
         }

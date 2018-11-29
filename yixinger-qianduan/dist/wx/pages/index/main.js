@@ -178,6 +178,7 @@ if (false) {(function () {
           wx.getUserInfo({
             success: function success(res) {
               _this.userInfo = res.userInfo;
+              console.log(_this.userInfo);
             }
           });
         }
