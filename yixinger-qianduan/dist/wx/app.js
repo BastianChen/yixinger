@@ -79,9 +79,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-84461908", Component.options)
+    hotAPI.createRecord("data-v-061ab952", Component.options)
   } else {
-    hotAPI.reload("data-v-84461908", Component.options)
+    hotAPI.reload("data-v-061ab952", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

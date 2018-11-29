@@ -7,5 +7,5 @@
 <view class="place_info">
   <text class="h1">{{placeData.title}}</text>
   <text>{{placeData.address}}</text>
-  <!-- <van-button type="primary" size="normal" round class="_van-button data-v-548e5345" bindtouchstart="nav">导航</van-button> -->
+  <van-button type="primary" size="normal" round class="_van-button data-v-548e5345" bindtouchstart="nav">导航</van-button>
 </view>
