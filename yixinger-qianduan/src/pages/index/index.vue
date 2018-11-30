@@ -7,12 +7,12 @@
       </div>
     </div>
     <!--<div>-->
-      <!--<radio-group class="radio-group" @change="radioChange">-->
-        <!--<label class="radio" v-for="(item, index) in items" :key="item.name">-->
-          <!--<radio :value="item.name" :checked="item.checked"/>-->
-          <!--{{item.value}}-->
-        <!--</label>-->
-      <!--</radio-group>-->
+    <!--<radio-group class="radio-group" @change="radioChange">-->
+    <!--<label class="radio" v-for="(item, index) in items" :key="item.name">-->
+    <!--<radio :value="item.name" :checked="item.checked"/>-->
+    <!--{{item.value}}-->
+    <!--</label>-->
+    <!--</radio-group>-->
     <!--</div>-->
 
     <div class="usermotto">
@@ -22,13 +22,13 @@
     </div>
 
     <!--<form class="form-container">-->
-      <!--<input type="text" class="form-control" v-model="motto" placeholder="v-model"/>-->
-      <!--<input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy"/>-->
+    <!--<input type="text" class="form-control" v-model="motto" placeholder="v-model"/>-->
+    <!--<input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy"/>-->
     <!--</form>-->
     <!--<a @click="vuexPage" class="counter" open-type="getUserInfo">去往Vuex示例页面</a>-->
-    <van-button type="primary" size="normal" round open-type="getUserInfo">获取个人信息</van-button>
+    <van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>
     <van-button type="primary" size="normal" round @click="photoPage">打开相机</van-button>
-    <van-tabbar active="0" >
+    <van-tabbar active="0">
       <van-tabbar-item icon="shop" @click="apiPage">POI</van-tabbar-item>
       <van-tabbar-item icon="search" dot @click="suggestionPage">搜索</van-tabbar-item>
       <van-tabbar-item icon="records" info="5" @click="regeocodingPage">逆地址</van-tabbar-item>
@@ -42,7 +42,7 @@
 import card from '@/components/card'
 
 export default {
-  data () {
+  data() {
     return {
       motto: 'Hello World',
       userInfo: {},
@@ -54,7 +54,8 @@ export default {
         {name: 'ENG', value: '英国'},
         {name: 'TUR', value: '法国'}
       ],
-      active: 0
+      active: 0,
+      code: ""
     }
   },
 
@@ -63,54 +64,80 @@ export default {
   },
 
   methods: {
-    onChange (event) {
+    onChange(event) {
       console.log(event.detail)
     },
-    vuexPage(){
+    vuexPage() {
       this.$router.push('../counter/main')
     },
-    apiPage(){
+    apiPage() {
       this.$router.push('../search/search')
     },
-    suggestionPage(){
+    suggestionPage() {
       this.$router.push('../suggestion/suggestion')
     },
-    regeocodingPage(){
+    regeocodingPage() {
       this.$router.push('../regeocoding/regeocoding')
     },
-    weatherPage(){
+    weatherPage() {
       this.$router.push('../weather/weather')
     },
-    bindViewTap () {
+    bindViewTap() {
       // const url = '../logs/main'
       // wx.navigateTo({url})
       this.$router.push('../logs/main')
     },
-    photoPage(){
+    photoPage() {
       this.$router.push('../photo/photo')
     },
-    getUserInfo () {
+    getUserInfo() {
       // 调用登录接口
+      // wx.login({
+      //   success: () => {
+      //     wx.getUserInfo({
+      //       success: (res) => {
+      //         this.userInfo = res.userInfo
+      //         console.log(res)
+      //         console.log(this.userInfo)
+      //       }
+      //     })
+      //   }
+      // }),
       wx.login({
-        success: () => {
+        //获取code
+        success: (res) => {
+          this.code = res.code;
+          console.log(res.code) //返回code
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo
+              console.log(res)
               console.log(this.userInfo)
+              // wx.request({
+              //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
+              //   data: {},
+              //   header: {
+              //     'content-type': 'application/json'
+              //   },
+              //   success: (res) => {
+              //     console.log("openid"+res)
+              //     openid = res.data.openid //返回openid
+              //   }
+              //})
             }
           })
         }
       })
     },
-    clickHandle (msg, ev) {
+    clickHandle(msg, ev) {
       console.log('clickHandle:', msg, ev)
     },
-    radioChange (e) {
+    radioChange(e) {
       console.log('radio发生change事件，携带value值为：', e.target.value)
     }
   },
 
-  created () {
+  created() {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
   }
@@ -125,8 +152,8 @@ export default {
   }
 
   .userinfo-avatar {
-    width: 80px ;
-    height: 80px ;
+    width: 80px;
+    height: 80px;
     margin: 20px;
     border-radius: 50%;
   }

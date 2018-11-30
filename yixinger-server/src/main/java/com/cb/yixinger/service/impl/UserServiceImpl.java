@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+
 /**
  * @Description:
  * @author: YFZX-CB-1784 ChenBen
@@ -21,6 +23,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(System.currentTimeMillis());
+        user.setCreateDate(date);
         userDao.addUser(user);
+    }
+
+    @Override
+    public User getUser(String id) {
+        return userDao.getUser(id);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(System.currentTimeMillis());
+        user.setUpdateDate(date);
+        userDao.updateUser(user);
     }
 }

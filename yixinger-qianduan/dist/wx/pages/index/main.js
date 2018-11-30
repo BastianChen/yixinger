@@ -133,7 +133,8 @@ if (false) {(function () {
       motto: 'Hello World',
       userInfo: {},
       items: [{ name: 'USA', value: '美国' }, { name: 'CHN', value: '中国', checked: 'true' }, { name: 'BRA', value: '巴西' }, { name: 'JPN', value: '日本' }, { name: 'ENG', value: '英国' }, { name: 'TUR', value: '法国' }],
-      active: 0
+      active: 0,
+      code: ""
     };
   },
 
@@ -173,12 +174,38 @@ if (false) {(function () {
       var _this = this;
 
       // 调用登录接口
+      // wx.login({
+      //   success: () => {
+      //     wx.getUserInfo({
+      //       success: (res) => {
+      //         this.userInfo = res.userInfo
+      //         console.log(res)
+      //         console.log(this.userInfo)
+      //       }
+      //     })
+      //   }
+      // }),
       wx.login({
-        success: function success() {
+        //获取code
+        success: function success(res) {
+          _this.code = res.code;
+          console.log(res.code); //返回code
           wx.getUserInfo({
             success: function success(res) {
               _this.userInfo = res.userInfo;
+              console.log(res);
               console.log(_this.userInfo);
+              // wx.request({
+              //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
+              //   data: {},
+              //   header: {
+              //     'content-type': 'application/json'
+              //   },
+              //   success: (res) => {
+              //     console.log("openid"+res)
+              //     openid = res.data.openid //返回openid
+              //   }
+              //})
             }
           });
         }
@@ -208,7 +235,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "container",
     attrs: {
-      "eventid": '6'
+      "eventid": '7'
     },
     on: {
       "click": function($event) {
@@ -251,14 +278,18 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "size": "normal",
       "round": "",
       "open-type": "getUserInfo",
+      "eventid": '1',
       "mpcomid": '2'
+    },
+    on: {
+      "click": _vm.getUserInfo
     }
   }, [_vm._v("获取个人信息")]), _vm._v(" "), _c('van-button', {
     attrs: {
       "type": "primary",
       "size": "normal",
       "round": "",
-      "eventid": '1',
+      "eventid": '2',
       "mpcomid": '3'
     },
     on: {
@@ -272,7 +303,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('van-tabbar-item', {
     attrs: {
       "icon": "shop",
-      "eventid": '2',
+      "eventid": '3',
       "mpcomid": '4'
     },
     on: {
@@ -282,7 +313,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "icon": "search",
       "dot": "",
-      "eventid": '3',
+      "eventid": '4',
       "mpcomid": '5'
     },
     on: {
@@ -292,7 +323,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "icon": "records",
       "info": "5",
-      "eventid": '4',
+      "eventid": '5',
       "mpcomid": '6'
     },
     on: {
@@ -302,7 +333,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "icon": "gold-coin",
       "info": "20",
-      "eventid": '5',
+      "eventid": '6',
       "mpcomid": '7'
     },
     on: {

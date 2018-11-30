@@ -1,5 +1,5 @@
 <import src="/components/card.vue.wxml" /><template name="576527af">
-  <view class="_div data-v-378baaca container" bindtap="handleProxy" data-eventid="{{'6'}}" data-comkey="{{$k}}">
+  <view class="_div data-v-378baaca container" bindtap="handleProxy" data-eventid="{{'7'}}" data-comkey="{{$k}}">
     <view class="_div data-v-378baaca userinfo" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">
       <image class="_img data-v-378baaca userinfo-avatar" wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <view class="_div data-v-378baaca userinfo-nickname"><template data="{{...$root[$kk+'0'], $root}}" is="0a074556"></template></view>
@@ -7,13 +7,13 @@
     <view class="_div data-v-378baaca usermotto">
       <view class="_div data-v-378baaca user-motto"><template data="{{...$root[$kk+'1'], $root}}" is="0a074556"></template></view>
     </view>
-    <van-button type="primary" size="normal" round open-type="getUserInfo" class="_van-button data-v-378baaca">获取个人信息</van-button>
-    <van-button type="primary" size="normal" round bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_van-button data-v-378baaca">打开相机</van-button>
+    <van-button type="primary" size="normal" round open-type="getUserInfo" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_van-button data-v-378baaca">获取个人信息</van-button>
+    <van-button type="primary" size="normal" round bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_van-button data-v-378baaca">打开相机</van-button>
     <van-tabbar active="0" class="_van-tabbar data-v-378baaca">
-      <van-tabbar-item icon="shop" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_van-tabbar-item data-v-378baaca">POI</van-tabbar-item>
-      <van-tabbar-item icon="search" dot bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_van-tabbar-item data-v-378baaca">搜索</van-tabbar-item>
-      <van-tabbar-item icon="records" info="5" bindtap="handleProxy" data-eventid="{{'4'}}" data-comkey="{{$k}}" class="_van-tabbar-item data-v-378baaca">逆地址</van-tabbar-item>
-      <van-tabbar-item icon="gold-coin" info="20" bindtap="handleProxy" data-eventid="{{'5'}}" data-comkey="{{$k}}" class="_van-tabbar-item data-v-378baaca">天气</van-tabbar-item>
+      <van-tabbar-item icon="shop" bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_van-tabbar-item data-v-378baaca">POI</van-tabbar-item>
+      <van-tabbar-item icon="search" dot bindtap="handleProxy" data-eventid="{{'4'}}" data-comkey="{{$k}}" class="_van-tabbar-item data-v-378baaca">搜索</van-tabbar-item>
+      <van-tabbar-item icon="records" info="5" bindtap="handleProxy" data-eventid="{{'5'}}" data-comkey="{{$k}}" class="_van-tabbar-item data-v-378baaca">逆地址</van-tabbar-item>
+      <van-tabbar-item icon="gold-coin" info="20" bindtap="handleProxy" data-eventid="{{'6'}}" data-comkey="{{$k}}" class="_van-tabbar-item data-v-378baaca">天气</van-tabbar-item>
     </van-tabbar>
   </view>
 </template>

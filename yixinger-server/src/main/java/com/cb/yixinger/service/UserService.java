@@ -9,4 +9,8 @@ import com.cb.yixinger.entity.User;
  **/
 public interface UserService {
     void addUser(User user);
+
+    User getUser(String id);
+
+    void updateUser(User user);
 }

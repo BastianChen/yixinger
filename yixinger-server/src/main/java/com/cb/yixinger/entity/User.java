@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @OrderBy("desc")
-    private Long id;
+    private String openid;
 
     private String nickName;
 

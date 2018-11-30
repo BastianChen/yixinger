@@ -1,5 +1,6 @@
 package com.cb.yixinger;
 
+import com.cb.yixinger.utils.HttpRequestor;
 import com.cb.yixinger.entity.TkMybatisTest;
 import com.cb.yixinger.service.TestService;
 import net.sf.json.JSONObject;
@@ -12,9 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -103,5 +104,32 @@ public class YixingerApplicationTests {
         testService.addRedisTest("test:","123456");
         //redisTemplate.opsForValue().getOperations().delete("test:");
         System.out.println(testService.getRedisTest("test:"));
+    }
+
+    @Test
+    public void openIdTest(){
+        try {
+            System.out.println(doPost());
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected String doPost() throws ServletException, IOException {
+        String appid = "wx52a9380821d85603";
+        String secret = "353ae1409d24e026d2bdcb0b180953e8";
+        String requestUrl = "https://api.weixin.qq.com/sns/jscode2session?appid="+appid+"&secret="+secret+"&js_code=0217ZmJI0Adv6g2LDAII0zWaJI07ZmJb&grant_type=authorization_code";
+        //获取openid
+        String  oppid = null;
+        try {
+            oppid = new HttpRequestor().doGet(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject oppidObj =JSONObject.fromObject(oppid);
+        String openid = (String) oppidObj.get("openid");
+        return openid;
     }
 }
