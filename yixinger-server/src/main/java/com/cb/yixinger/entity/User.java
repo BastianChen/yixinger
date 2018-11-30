@@ -1,37 +1,36 @@
 package com.cb.yixinger.entity;
 
+import lombok.Data;
+
+import javax.persistence.Id;
+import javax.persistence.OrderBy;
 import java.io.Serializable;
 
+@Data
 public class User implements Serializable {
+    @Id
+    @OrderBy("desc")
     private Long id;
 
-    private String name;
+    private String nickName;
 
-    private Integer age;
+    private String avatarUrl;
+
+    private String city;
+
+    private String province;
+
+    private String country;
+
+    private String gender;
+
+    private String language;
+
+    private String createDate;
+
+    private String updateDate;
+
+    private String location;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
 }

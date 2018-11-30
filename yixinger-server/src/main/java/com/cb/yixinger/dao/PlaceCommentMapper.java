@@ -1,9 +1,9 @@
 package com.cb.yixinger.dao;
 
-import com.cb.yixinger.entity.PlaceCommentWithBLOBs;
+import com.cb.yixinger.config.BaseMapper;
+import com.cb.yixinger.entity.PlaceComment;
+import org.springframework.stereotype.Repository;
 
-public interface PlaceCommentMapper {
-    int insert(PlaceCommentWithBLOBs record);
-
-    int insertSelective(PlaceCommentWithBLOBs record);
+@Repository("PlaceCommentMapper")
+public interface PlaceCommentMapper extends BaseMapper<PlaceComment> {
 }

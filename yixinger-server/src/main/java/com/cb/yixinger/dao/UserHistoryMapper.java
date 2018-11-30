@@ -1,9 +1,9 @@
 package com.cb.yixinger.dao;
 
+import com.cb.yixinger.config.BaseMapper;
 import com.cb.yixinger.entity.UserHistory;
+import org.springframework.stereotype.Repository;
 
-public interface UserHistoryMapper {
-    int insert(UserHistory record);
-
-    int insertSelective(UserHistory record);
+@Repository("UserHistoryMapper")
+public interface UserHistoryMapper extends BaseMapper<UserHistory> {
 }

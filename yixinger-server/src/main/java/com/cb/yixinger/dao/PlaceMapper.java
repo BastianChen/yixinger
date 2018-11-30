@@ -1,9 +1,9 @@
 package com.cb.yixinger.dao;
 
-import com.cb.yixinger.entity.PlaceWithBLOBs;
+import com.cb.yixinger.config.BaseMapper;
+import com.cb.yixinger.entity.Place;
+import org.springframework.stereotype.Repository;
 
-public interface PlaceMapper {
-    int insert(PlaceWithBLOBs record);
-
-    int insertSelective(PlaceWithBLOBs record);
+@Repository("PlaceMapper")
+public interface PlaceMapper extends BaseMapper<Place> {
 }

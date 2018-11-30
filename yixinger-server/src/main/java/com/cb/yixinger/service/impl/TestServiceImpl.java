@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class TestServiceImpl implements TestService {
     @Autowired
     private TestDao testDao;
-    //    @Autowired
+//    @Autowired
 //    StringRedisTemplate stringRedisTemplate;
     @Autowired
     RedisTemplate<String, String> redisTemplate;

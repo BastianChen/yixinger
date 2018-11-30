@@ -1,8 +1,15 @@
 package com.cb.yixinger.entity;
 
+import lombok.Data;
+
+import javax.persistence.Id;
+import javax.persistence.OrderBy;
 import java.io.Serializable;
 
+@Data
 public class PhotoDistinguish implements Serializable {
+    @Id
+    @OrderBy("desc")
     private Integer id;
 
     private Integer userId;
@@ -16,52 +23,4 @@ public class PhotoDistinguish implements Serializable {
     private String result;
 
     private static final long serialVersionUID = 1L;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl == null ? null : imageUrl.trim();
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date == null ? null : date.trim();
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result == null ? null : result.trim();
-    }
 }

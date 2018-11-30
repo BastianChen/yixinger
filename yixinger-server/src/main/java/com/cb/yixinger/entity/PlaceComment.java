@@ -1,8 +1,15 @@
 package com.cb.yixinger.entity;
 
+import lombok.Data;
+
+import javax.persistence.Id;
+import javax.persistence.OrderBy;
 import java.io.Serializable;
 
+@Data
 public class PlaceComment implements Serializable {
+    @Id
+    @OrderBy("desc")
     private Integer id;
 
     private Integer placeId;
@@ -19,69 +26,9 @@ public class PlaceComment implements Serializable {
 
     private Double overallRating;
 
+    private String comment;
+
+    private String imageList;
+
     private static final long serialVersionUID = 1L;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getPlaceId() {
-        return placeId;
-    }
-
-    public void setPlaceId(Integer placeId) {
-        this.placeId = placeId;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date == null ? null : date.trim();
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
-
-    public String getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(String userImage) {
-        this.userImage = userImage == null ? null : userImage.trim();
-    }
-
-    public Double getOverallRating() {
-        return overallRating;
-    }
-
-    public void setOverallRating(Double overallRating) {
-        this.overallRating = overallRating;
-    }
 }

@@ -1,8 +1,15 @@
 package com.cb.yixinger.entity;
 
+import lombok.Data;
+
+import javax.persistence.Id;
+import javax.persistence.OrderBy;
 import java.io.Serializable;
 
+@Data
 public class UserHistory implements Serializable {
+    @Id
+    @OrderBy("desc")
     private Integer id;
 
     private Integer userId;
@@ -12,36 +19,4 @@ public class UserHistory implements Serializable {
     private String readDate;
 
     private static final long serialVersionUID = 1L;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getPlaceId() {
-        return placeId;
-    }
-
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId == null ? null : placeId.trim();
-    }
-
-    public String getReadDate() {
-        return readDate;
-    }
-
-    public void setReadDate(String readDate) {
-        this.readDate = readDate == null ? null : readDate.trim();
-    }
 }

@@ -1,9 +1,9 @@
 package com.cb.yixinger.dao;
 
-import com.cb.yixinger.entity.TranslatorWithBLOBs;
+import com.cb.yixinger.config.BaseMapper;
+import com.sun.java.accessibility.util.Translator;
+import org.springframework.stereotype.Repository;
 
-public interface TranslatorMapper {
-    int insert(TranslatorWithBLOBs record);
-
-    int insertSelective(TranslatorWithBLOBs record);
+@Repository("TranslatorMapper")
+public interface TranslatorMapper extends BaseMapper<Translator> {
 }
