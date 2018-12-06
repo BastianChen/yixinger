@@ -50,5 +50,7 @@ public class Place implements Serializable {
 
     private String introduce;
 
+    private Integer count;
+
     private static final long serialVersionUID = 1L;
 }
