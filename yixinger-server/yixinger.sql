@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : ben
+ Source Server         : Ben
  Source Server Type    : MySQL
- Source Server Version : 80012
+ Source Server Version : 50722
  Source Host           : localhost:3306
  Source Schema         : yixinger
 
  Target Server Type    : MySQL
- Target Server Version : 80012
+ Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 04/12/2018 20:30:29
+ Date: 06/12/2018 17:21:17
 */
 
 SET NAMES utf8mb4;
@@ -167,8 +167,8 @@ CREATE TABLE `translator`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nick_name` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户昵称',
+  `openid` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户openid',
+  `nick_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户昵称',
   `avatar_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户头像url',
   `city` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所属城市',
   `province` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所属省份',
@@ -178,8 +178,13 @@ CREATE TABLE `user`  (
   `create_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建时间',
   `update_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户数据更新时间',
   `location` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所在国家',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`openid`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('oE9el5Hx6LplsHe2roGhrkxkEUsk', '😜  Ben', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaZauBTKp2NtvFsAtrJOpURw/132', 'Hangzhou', 'Zhejiang', 'China', '1', 'de', '2018-11-30 16:17:02', '2018-11-30 16:38:14', 'China');
 
 -- ----------------------------
 -- Table structure for user_history
