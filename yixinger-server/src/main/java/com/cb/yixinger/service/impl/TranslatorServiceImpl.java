@@ -6,7 +6,6 @@ import com.cb.yixinger.utils.Constants;
 import com.cb.yixinger.utils.TransApi;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.stereotype.Service;
 
 /**

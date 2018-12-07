@@ -32,9 +32,9 @@ public class Place implements Serializable {
 
     private Double longitude;
 
-    private Double price;
+    private String price;
 
-    private Double overallRating;
+    private String overallRating;
 
     private String tags1;
 
@@ -51,6 +51,12 @@ public class Place implements Serializable {
     private String introduce;
 
     private Integer count;
+
+    private String sugTime;
+
+    private String bestTime;
+
+    private String weather;
 
     private static final long serialVersionUID = 1L;
 }

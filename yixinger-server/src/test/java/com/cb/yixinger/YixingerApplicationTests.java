@@ -6,6 +6,7 @@ import com.cb.yixinger.entity.TkMybatisTest;
 import com.cb.yixinger.service.TestService;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -38,11 +39,14 @@ public class YixingerApplicationTests {
     public void jsoupTest() {
         //String url = "https://ugcapi.baidu.com/richindex/2/photo?uid=df95f91c9c62cbb438221c0e&from=map_pc&pageCount=10";// 图片爬取
         //String url = "https://ugcapi.baidu.com/richindex/2/comment?uid=df95f91c9c62cbb438221c0e&pageIndex=1&pageCount=10";// 评论爬取
+        //df95f91c9c62cbb438221c0e //西湖uid
+        //96d38a845c08e6492902e13b //餐馆uid
         String url = "https://map.baidu.com/?ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=1&compat=1&t=1542763086565&uid=96d38a845c08e6492902e13b&primaryUid=1175400224615406276&auth=XALx853BcA248H7bWFvB%40wZv%3DSaJXBA4uxHEzNLBVRztykiOxAXXwy1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3Guzt7xjhN%40ThwzBDGJ4P6VWvcEWe1GD8zv7u%40ZPuxtfvAughxehwzJGBP4B6GBvgjLLwWvrZZWux";// 地点信息爬取
         Connection con = Jsoup.connect(url).ignoreContentType(true);
         con.header("Referer", "https://map.baidu.com/");
         con.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
         Place place = new Place();
+        Boolean type = false; //false为餐馆 true为景点
         byte[] doc = new byte[0];
         try {
             doc = con.execute().bodyAsBytes();
@@ -66,48 +70,86 @@ public class YixingerApplicationTests {
         content = content.getJSONObject("detail_info");
         place.setImage(content.getString("image"));
         place.setShopHours(content.getString("shop_hours"));
+        place.setPrice(content.getString("price"));
+        place.setOverallRating(content.getString("overall_rating"));
         content = content.getJSONObject("vs_content").getJSONObject("invisible").getJSONObject("bigdata");
         JSONArray jsonArray = content.getJSONArray("tags1");
         JSONArray tags1Array = new JSONArray();
         for (int i = 0; i < jsonArray.size(); i++) {
             tags1Array = (JSONArray) jsonArray.get(i);
             tags1Array = (JSONArray) tags1Array.get(0);
-            if (place.getTags1()==null){
+            if (place.getTags1() == null) {
                 place.setTags1((String) tags1Array.get(0));
-            }else {
-                place.setTags1(place.getTags1()+";"+(String) tags1Array.get(0));
+            } else {
+                place.setTags1(place.getTags1() + ";" + (String) tags1Array.get(0));
             }
         }
-        //推荐菜
+
         JSONObject avocado = jsonObject.getJSONObject("avocado");
         JSONArray cards = avocado.getJSONArray("cards");
         avocado = cards.getJSONObject(1);
-        JSONObject dataInfo = avocado.getJSONObject("data");
-        JSONArray list = dataInfo.getJSONArray("wordList");
-        for(int i=0;i<list.size();i++){
-            if(place.getWordList()==null){
-                place.setWordList((String) list.get(i));
-            }else {
-                place.setWordList(place.getWordList()+","+(String) list.get(i));
+        try {
+            // 餐馆推荐菜
+            JSONObject dataInfo = avocado.getJSONObject("data");
+            JSONArray list = dataInfo.getJSONArray("wordList");
+            for (int i = 0; i < list.size(); i++) {
+                if (place.getWordList() == null) {
+                    place.setWordList((String) list.get(i));
+                } else {
+                    place.setWordList(place.getWordList() + "," + (String) list.get(i));
+                }
             }
+            list = dataInfo.getJSONArray("imgList");
+            place.setImgList(list.toString());
+            // 餐馆推荐菜数
+            Integer count = dataInfo.getInt("count");
+            place.setCount(count);
+            // 餐馆印象标签
+            avocado = cards.getJSONObject(2);
+            dataInfo = avocado.getJSONObject("data");
+            list = dataInfo.getJSONArray("content");
+            place.setContent(list.toString());
+            // 餐馆部分评论
+            avocado = cards.getJSONObject(3);
+            dataInfo = avocado.getJSONObject("data");
+            dataInfo = dataInfo.getJSONObject("list");
+            Integer totalNum = dataInfo.getInt("totalNum");
+            place.setCommentNumber(totalNum);
+            // 餐馆评论数
+            list = avocado.getJSONObject("data").getJSONObject("list").getJSONArray("comment_list");
+            place.setCommentList(list.toString());
+        } catch (JSONException jsonException) {
+            //景点图片列表
+            avocado = cards.getJSONObject(2);
+            JSONObject dataInfo = avocado.getJSONObject("data").getJSONObject("list");
+            JSONArray list = dataInfo.getJSONArray("photo_list");
+            JSONObject photoList = new JSONObject();
+            for (int i = 0; i < list.size(); i++) {
+                photoList = (JSONObject) list.get(i);
+                if (place.getPhotoList() == null) {
+                    place.setPhotoList(photoList.getString("imgUrl"));
+                } else {
+                    place.setPhotoList(place.getPhotoList() + ";" + photoList.getString("imgUrl"));
+                }
+            }
+            // 景点介绍
+            avocado = cards.getJSONObject(3).getJSONObject("data");
+            place.setIntroduce(avocado.getJSONObject("introduce").getString("abstract"));
+            // 景点建议游玩时间
+            place.setSugTime(avocado.getString("sug_time"));
+            // 景点最佳季节
+            place.setBestTime(avocado.getString("best_time"));
+            // 景点天气
+            place.setWeather(avocado.getJSONObject("weather").toString());
+            // 景点印象标签
+            avocado = cards.getJSONObject(7).getJSONObject("data");
+            place.setContent(avocado.getJSONArray("content").toString());
+            // 景点部分评论
+            avocado = cards.getJSONObject(8).getJSONObject("data").getJSONObject("list");
+            place.setCommentList(avocado.getJSONArray("comment_list").toString());
+            // 景点评论数
+            place.setCommentNumber(avocado.getInt("totalNum"));
         }
-        list = dataInfo.getJSONArray("imgList");
-        place.setImgList(list.toString());
-        Integer count = dataInfo.getInt("count");
-        place.setCount(count);
-        //印象标签
-        avocado = cards.getJSONObject(2);
-        dataInfo = avocado.getJSONObject("data");
-        list = dataInfo.getJSONArray("content");
-        place.setContent(list.toString());
-        //部分评论
-        avocado = cards.getJSONObject(3);
-        dataInfo = avocado.getJSONObject("data");
-        dataInfo = dataInfo.getJSONObject("list");
-        Integer totalNum = dataInfo.getInt("totalNum");
-        place.setCommentNumber(totalNum);
-        list = avocado.getJSONObject("data").getJSONObject("list").getJSONArray("comment_list");
-        place.setCommentList(list.toString());
         System.out.println(jsonObject.toString(2));
     }
 

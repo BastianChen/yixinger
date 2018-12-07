@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 06/12/2018 17:21:17
+ Date: 07/12/2018 14:38:31
 */
 
 SET NAMES utf8mb4;
@@ -50,12 +50,15 @@ CREATE TABLE `place`  (
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '印象标签',
   `comment_list` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '部分评论',
   `comment_number` int(10) NULL DEFAULT NULL COMMENT '评论数量',
-  `photo_list` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '列表图片',
+  `photo_list` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '列表图片(相册)',
   `introduce` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '介绍',
-  `latitude` double(11, 11) NULL DEFAULT NULL COMMENT '维度',
-  `longitude` double(11, 11) NULL DEFAULT NULL COMMENT '经度',
+  `latitude` double(11, 11) NULL DEFAULT NULL COMMENT '维度（前端传值）',
+  `longitude` double(11, 11) NULL DEFAULT NULL COMMENT '经度（前端传值）',
   `price` double(10, 2) NULL DEFAULT NULL COMMENT '餐馆平均价格',
   `overall_rating` double(10, 2) NOT NULL COMMENT '评分',
+  `sug_time` varchar(0) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '建议游玩时间（景点）',
+  `best_time` varchar(0) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最佳游玩季节（景点）',
+  `weather` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '天气（景点）',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
