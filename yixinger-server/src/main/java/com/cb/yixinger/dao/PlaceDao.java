@@ -1,5 +1,6 @@
 package com.cb.yixinger.dao;
 
+import com.cb.yixinger.entity.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,4 +13,8 @@ import org.springframework.stereotype.Component;
 public class PlaceDao {
     @Autowired
     private PlaceMapper placeMapper;
+
+    public void addPlace(Place place){
+        placeMapper.insertSelective(place);
+    }
 }

@@ -1,6 +1,7 @@
 package com.cb.yixinger;
 
 import com.cb.yixinger.entity.Place;
+import com.cb.yixinger.service.PlaceService;
 import com.cb.yixinger.utils.HttpRequestor;
 import com.cb.yixinger.entity.TkMybatisTest;
 import com.cb.yixinger.service.TestService;
@@ -28,6 +29,8 @@ public class YixingerApplicationTests {
     @Autowired
     private TestService testService;
     @Autowired
+    private PlaceService placeService;
+    @Autowired
     RedisTemplate<String, String> redisTemplate;
 
     @Test
@@ -46,6 +49,12 @@ public class YixingerApplicationTests {
         con.header("Referer", "https://map.baidu.com/");
         con.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
         Place place = new Place();
+        //西湖坐标
+        place.setLatitude(30.22108071251);
+        place.setLongitude(120.11136539319);
+        //绿茶餐厅（城西银泰店）坐标
+//        place.setLatitude(30.298707077632);
+//        place.setLongitude(120.10645974812);
         Boolean type = false; //false为餐馆 true为景点
         byte[] doc = new byte[0];
         try {
@@ -89,7 +98,7 @@ public class YixingerApplicationTests {
         JSONArray cards = avocado.getJSONArray("cards");
         avocado = cards.getJSONObject(1);
         try {
-            // 餐馆推荐菜
+            // 餐馆推荐菜数
             JSONObject dataInfo = avocado.getJSONObject("data");
             JSONArray list = dataInfo.getJSONArray("wordList");
             for (int i = 0; i < list.size(); i++) {
@@ -109,15 +118,20 @@ public class YixingerApplicationTests {
             dataInfo = avocado.getJSONObject("data");
             list = dataInfo.getJSONArray("content");
             place.setContent(list.toString());
-            // 餐馆部分评论
-            avocado = cards.getJSONObject(3);
-            dataInfo = avocado.getJSONObject("data");
-            dataInfo = dataInfo.getJSONObject("list");
-            Integer totalNum = dataInfo.getInt("totalNum");
-            place.setCommentNumber(totalNum);
             // 餐馆评论数
+            avocado = cards.getJSONObject(3);
+//            dataInfo = avocado.getJSONObject("data");
+//            dataInfo = dataInfo.getJSONObject("list");
+//            Integer totalNum = dataInfo.getInt("totalNum");
+//            place.setCommentNumber(totalNum);
+            // 餐馆部分评论
             list = avocado.getJSONObject("data").getJSONObject("list").getJSONArray("comment_list");
             place.setCommentList(list.toString());
+            if(list.size()==0){
+                place.setCommentNumber(0);
+            }else {
+                place.setCommentNumber(list.size());
+            }
         } catch (JSONException jsonException) {
             //景点图片列表
             avocado = cards.getJSONObject(2);
@@ -147,10 +161,16 @@ public class YixingerApplicationTests {
             // 景点部分评论
             avocado = cards.getJSONObject(8).getJSONObject("data").getJSONObject("list");
             place.setCommentList(avocado.getJSONArray("comment_list").toString());
-            // 景点评论数
-            place.setCommentNumber(avocado.getInt("totalNum"));
+            // 景点评论数  avocado.getInt("totalNum")
+            if (avocado.getJSONArray("comment_list").size()==0){
+                place.setCommentNumber(0);
+            }else {
+                place.setCommentNumber(avocado.getJSONArray("comment_list").size());
+            }
         }
+        placeService.addPlace(place);
         System.out.println(jsonObject.toString(2));
+        System.out.println(place);
     }
 
     @Test
