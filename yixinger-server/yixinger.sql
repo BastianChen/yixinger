@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Ben
+ Source Server         : ben
  Source Server Type    : MySQL
- Source Server Version : 50722
+ Source Server Version : 50721
  Source Host           : localhost:3306
  Source Schema         : yixinger
 
  Target Server Type    : MySQL
- Target Server Version : 50722
+ Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 11/12/2018 13:56:46
+ Date: 12/12/2018 21:59:00
 */
 
 SET NAMES utf8mb4;
@@ -182,7 +182,7 @@ CREATE TABLE `user`  (
   `avatar_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户头像url',
   `city` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所属城市',
   `province` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所属省份',
-  `country` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所属国家',
+  `country` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户国籍',
   `gender` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户性别（1.男2.女）',
   `language` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所选语言',
   `create_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建时间',
