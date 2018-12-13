@@ -3,6 +3,9 @@ package com.cb.yixinger.service.impl;
 import com.cb.yixinger.dao.UserDao;
 import com.cb.yixinger.entity.User;
 import com.cb.yixinger.service.UserService;
+import com.cb.yixinger.utils.Constants;
+import com.cb.yixinger.utils.HttpRequestor;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +43,22 @@ public class UserServiceImpl implements UserService {
         String date = sdf.format(System.currentTimeMillis());
         user.setUpdateDate(date);
         userDao.updateUser(user);
+    }
+
+    @Override
+    public String getOpenId(String code) {
+        String appid = Constants.APPID;
+        String secret = Constants.SECRET;
+        String requestUrl = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appid + "&secret=" + secret + "&js_code="+code+"&grant_type=authorization_code";
+        //获取openid
+        String oppid = null;
+        try {
+            oppid = new HttpRequestor().doGet(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject oppidObj = JSONObject.fromObject(oppid);
+        String openid = (String) oppidObj.get("openid");
+        return openid;
     }
 }

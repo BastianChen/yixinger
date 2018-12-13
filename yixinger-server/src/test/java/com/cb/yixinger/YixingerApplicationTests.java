@@ -239,7 +239,8 @@ public class YixingerApplicationTests {
     protected String doPost() throws ServletException, IOException {
         String appid = "wx52a9380821d85603";
         String secret = "353ae1409d24e026d2bdcb0b180953e8";
-        String requestUrl = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appid + "&secret=" + secret + "&js_code=0217ZmJI0Adv6g2LDAII0zWaJI07ZmJb&grant_type=authorization_code";
+        String code = "061887yC00wDVi2Kq1BC0T6RxC0887yI"; // 前端传值
+        String requestUrl = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appid + "&secret=" + secret + "&js_code="+code+"&grant_type=authorization_code";
         //获取openid
         String oppid = null;
         try {

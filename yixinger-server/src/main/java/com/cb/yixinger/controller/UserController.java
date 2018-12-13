@@ -30,8 +30,9 @@ public class UserController {
 
     @LoggerManage(logDescription = "添加用户信息")
     @RequestMapping(value = "/addUser", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public ResponseEntity<BaseMessage> addUser(@RequestBody User user) {
+    public ResponseEntity<BaseMessage> addUser(@RequestBody User user,@RequestParam String code) {
         BaseMessage baseMessage = new BaseMessage();
+        user.setOpenid(userService.getOpenId(code));
         userService.addUser(user);
         logger.info("添加用户 {} 成功", user.getNickName());
         baseMessage.setMessage("添加用户 " + user.getNickName() + " 成功");

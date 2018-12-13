@@ -53,7 +53,7 @@ Page({
     BMap.suggestion({
       query: e.detail.value,
       region: city,
-      city_limit: true,
+      city_limit: false,
       fail: fail,
       success: success
     });

@@ -126,6 +126,33 @@ export default {
               //})
             }
           })
+          wx.getLocation({
+            type: 'wgs84',
+            success(res) {
+              console.log(res)
+              const latitude = res.latitude
+              const longitude = res.longitude
+              const speed = res.speed
+              const accuracy = res.accuracy
+              wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+                url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+                data: {},
+                header: {
+                  'Content-Type': 'application/json'
+                },
+                success(res) {
+                  console.log(res.data.result);
+                  console.log(res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+                },
+                fail: function () {
+                  // fail
+                },
+                complete: function () {
+                  // complete
+                }
+              })
+            }
+          })
         }
       })
     },

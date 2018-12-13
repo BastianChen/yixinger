@@ -13,4 +13,6 @@ public interface UserService {
     User getUser(String id);
 
     void updateUser(User user);
+
+    String getOpenId(String code);
 }

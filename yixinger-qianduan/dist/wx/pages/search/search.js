@@ -3,7 +3,7 @@ var config = require('../../libs/config.js');
 var wxMarkerData = [];
 var city = '';
 //var queryType = '景点';
-var queryType = '美食';
+var queryType = '美食$景点';
 
 Page({
   data: {
@@ -23,6 +23,7 @@ Page({
     var BMap = new bmap.BMapWX({
       ak: config.Config.ak
     });
+    console.log(BMap)
     var fail = function(data) {
       console.log(data)
     };
@@ -31,14 +32,16 @@ Page({
       wxMarkerData = data.wxMarkerData;
       city = data.originalData.results[0].city
       that.setData({
-        markers: wxMarkerData
-      });
-      that.setData({
-        latitude: wxMarkerData[0].latitude
-      });
-      that.setData({
+        markers: wxMarkerData,
+        latitude: wxMarkerData[0].latitude,
         longitude: wxMarkerData[0].longitude
       });
+      // that.setData({
+      //   latitude: wxMarkerData[0].latitude
+      // });
+      // that.setData({
+      //   longitude: wxMarkerData[0].longitude
+      // });
     }
     BMap.search({
       "query": queryType,
