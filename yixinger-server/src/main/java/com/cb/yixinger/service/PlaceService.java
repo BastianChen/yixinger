@@ -8,5 +8,5 @@ import com.cb.yixinger.entity.Place;
  * @create: 2018-12-11 13:40
  **/
 public interface PlaceService {
-    void addPlace(Place place);
+    void addPlace(Place place,String uid);
 }

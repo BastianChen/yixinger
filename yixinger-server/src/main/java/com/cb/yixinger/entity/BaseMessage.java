@@ -3,6 +3,7 @@ package com.cb.yixinger.entity;
 import com.cb.yixinger.utils.CommonUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,10 @@ import java.io.StringWriter;
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2018-11-30 13:18
  **/
+@Data
 @ApiModel("返回message")
 public class BaseMessage implements Serializable {
-
+    private static final long serialVersionUID = -8347793328187379207L;
     @ApiModelProperty("0:正常 其他值 都是异常情况")
     private Integer state;
 
@@ -107,39 +109,5 @@ public class BaseMessage implements Serializable {
         BaseMessage baseMessage = new BaseMessage();
         baseMessage.setData(data);
         return new ResponseEntity<>(baseMessage, HttpStatus.OK);
-    }
-
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getMessageDetail() {
-        return messageDetail;
-    }
-
-    public void setMessageDetail(Object messageDetail) {
-        this.messageDetail = messageDetail;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public BaseMessage setData(Object data) {
-        this.data = data;
-        return this;
     }
 }

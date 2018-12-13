@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Data
 @ApiModel(value = "用户表")
 public class User implements Serializable {
+    private static final long serialVersionUID = 4673297262329304310L;
     @Id
     @ApiModelProperty(value="用户微信openid")
     private String openid;
@@ -34,6 +35,4 @@ public class User implements Serializable {
     private String updateDate;
     @ApiModelProperty(value="用户所在国家")
     private String location;
-
-    private static final long serialVersionUID = 1L;
 }

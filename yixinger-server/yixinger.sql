@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : ben
+ Source Server         : Ben
  Source Server Type    : MySQL
- Source Server Version : 50721
+ Source Server Version : 50722
  Source Host           : localhost:3306
  Source Schema         : yixinger
 
  Target Server Type    : MySQL
- Target Server Version : 50721
+ Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 12/12/2018 21:59:00
+ Date: 13/12/2018 17:41:24
 */
 
 SET NAMES utf8mb4;
@@ -61,7 +61,7 @@ CREATE TABLE `place`  (
   `weather` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '天气（景点）',
   `count` int(11) NULL DEFAULT NULL COMMENT '餐馆推荐菜数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of place
@@ -83,7 +83,7 @@ CREATE TABLE `place_comment`  (
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
   `user_image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户头像',
-  `overall_rating` double(10, 2) NOT NULL COMMENT '评分',
+  `overall_rating` double(10, 2) NOT NULL COMMENT '对该游玩地点的评分',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -94,9 +94,9 @@ DROP TABLE IF EXISTS `place_photo`;
 CREATE TABLE `place_photo`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `place_id` int(11) NOT NULL COMMENT '地点id',
-  `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片列表（主要用于景点）',
+  `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片url（主要用于景点）',
   `image_source` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片来源',
-  `read_times` int(10) UNSIGNED ZEROFILL NOT NULL DEFAULT 0000000000 COMMENT '流量次数',
+  `read_times` int(10) UNSIGNED ZEROFILL NOT NULL DEFAULT 0000000000 COMMENT '浏览次数',
   `upload_date` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '上传时间',
   `user_id` int(11) NULL DEFAULT NULL COMMENT '用户id',
   `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
@@ -187,7 +187,7 @@ CREATE TABLE `user`  (
   `language` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所选语言',
   `create_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建时间',
   `update_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户数据更新时间',
-  `location` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所在国家',
+  `location` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所在国家（前端定位获取）',
   PRIMARY KEY (`openid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 

@@ -10,7 +10,8 @@ import java.io.Serializable;
 
 @Data
 @ApiModel(value = "地点表")
-public class Place implements Serializable {
+public class Place implements Serializable{
+    private static final long serialVersionUID = -2347664989744015390L;
     @Id
     @OrderBy("desc")
     @ApiModelProperty(value="地点id")
@@ -61,6 +62,4 @@ public class Place implements Serializable {
     private String bestTime;
     @ApiModelProperty(value="天气（景点）")
     private String weather;
-
-    private static final long serialVersionUID = 1L;
 }

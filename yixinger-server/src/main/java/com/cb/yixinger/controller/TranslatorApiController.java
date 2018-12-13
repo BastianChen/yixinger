@@ -1,18 +1,12 @@
 package com.cb.yixinger.controller;
 
-import com.cb.yixinger.config.LoggerManage;
-import com.cb.yixinger.entity.BaseMessage;
-import com.cb.yixinger.entity.User;
+import com.cb.yixinger.api.TranslatorApi;
 import com.cb.yixinger.service.TranslatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Description:
@@ -20,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @create: 2018-11-30 17:09
  **/
 @Controller
-@RequestMapping(value = "/Translator")
-public class TranslatorController {
+public class TranslatorApiController implements TranslatorApi {
     @Autowired
     private TranslatorService translatorService;
-    private static final Logger logger = LoggerFactory.getLogger(TranslatorController.class);
+    private static final Logger logger = LoggerFactory.getLogger(TranslatorApiController.class);
 
 //    @LoggerManage(logDescription = "翻译用户信息")
 //    @RequestMapping(value = "/translateUser", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")

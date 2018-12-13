@@ -168,7 +168,7 @@ public class YixingerApplicationTests {
                 place.setCommentNumber(avocado.getJSONArray("comment_list").size());
             }
         }
-        placeService.addPlace(place);
+        //placeService.addPlace(place);
         System.out.println(jsonObject.toString(2));
         System.out.println(place);
     }
