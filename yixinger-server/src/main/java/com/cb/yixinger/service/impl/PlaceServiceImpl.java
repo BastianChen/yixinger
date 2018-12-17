@@ -28,8 +28,8 @@ public class PlaceServiceImpl implements PlaceService {
     private static final Logger logger = LoggerFactory.getLogger(PlaceServiceImpl.class);
 
     @Override
-    public void addPlace(Place place,String uid) {
-        String url = "https://map.baidu.com/?ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=1&compat=1&t=1542763086565&uid="+uid+"&primaryUid=1175400224615406276&auth=XALx853BcA248H7bWFvB%40wZv%3DSaJXBA4uxHEzNLBVRztykiOxAXXwy1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3Guzt7xjhN%40ThwzBDGJ4P6VWvcEWe1GD8zv7u%40ZPuxtfvAughxehwzJGBP4B6GBvgjLLwWvrZZWux";
+    public Place addPlace(Place place, String uid) {
+        String url = "https://map.baidu.com/?ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=1&compat=1&t=1542763086565&uid=" + uid + "&primaryUid=1175400224615406276&auth=XALx853BcA248H7bWFvB%40wZv%3DSaJXBA4uxHEzNLBVRztykiOxAXXwy1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3Guzt7xjhN%40ThwzBDGJ4P6VWvcEWe1GD8zv7u%40ZPuxtfvAughxehwzJGBP4B6GBvgjLLwWvrZZWux";
         Connection con = Jsoup.connect(url).ignoreContentType(true);
         con.header("Referer", "https://map.baidu.com/");
         con.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
@@ -100,9 +100,9 @@ public class PlaceServiceImpl implements PlaceService {
             // 餐馆部分评论
             list = avocado.getJSONObject("data").getJSONObject("list").getJSONArray("comment_list");
             place.setCommentList(list.toString());
-            if(list.size()==0){
+            if (list.size() == 0) {
                 place.setCommentNumber(0);
-            }else {
+            } else {
                 place.setCommentNumber(list.size());
             }
         } catch (JSONException jsonException) {
@@ -135,12 +135,18 @@ public class PlaceServiceImpl implements PlaceService {
             avocado = cards.getJSONObject(8).getJSONObject("data").getJSONObject("list");
             place.setCommentList(avocado.getJSONArray("comment_list").toString());
             // 景点评论数  avocado.getInt("totalNum")
-            if (avocado.getJSONArray("comment_list").size()==0){
+            if (avocado.getJSONArray("comment_list").size() == 0) {
                 place.setCommentNumber(0);
-            }else {
+            } else {
                 place.setCommentNumber(avocado.getJSONArray("comment_list").size());
             }
         }
         placeDao.addPlace(place);
+        return place;
+    }
+
+    @Override
+    public Place getPlaceByUid(String uid) {
+        return placeDao.getPlaceByUid(uid);
     }
 }

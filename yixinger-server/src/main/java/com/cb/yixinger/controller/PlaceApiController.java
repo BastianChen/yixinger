@@ -26,16 +26,32 @@ public class PlaceApiController implements PlaceApi {
     private static final Logger logger = LoggerFactory.getLogger(UserApiController.class);
 
     @Override
-    public ResponseEntity<BaseMessage> addPlace(@ApiParam(value = "前端传回的uid" ,required=true ) @RequestParam String uid,
-                                                @ApiParam(value = "前端传回的地点经度" ,required=true ) @RequestParam Double latitude,
-                                                @ApiParam(value = "前端传回的地点维度" ,required=true ) @RequestParam Double longitude) {
+    public ResponseEntity<BaseMessage> addPlace(@ApiParam(value = "前端传回的uid", required = true) @RequestParam String uid,
+                                                @ApiParam(value = "前端传回的地点经度", required = true) @RequestParam Double latitude,
+                                                @ApiParam(value = "前端传回的地点维度", required = true) @RequestParam Double longitude) {
         BaseMessage baseMessage = new BaseMessage();
         Place place = new Place();
         place.setLatitude(latitude);
         place.setLongitude(longitude);
-        placeService.addPlace(place,uid);
+        place = placeService.addPlace(place, uid);
         logger.info("添加游玩地点 {} 成功", place.getName());
         baseMessage.setMessage("添加游玩地点 " + place.getName() + " 成功");
+        baseMessage.setData(place);
+        return baseMessage.response();
+    }
+
+    @Override
+    public ResponseEntity<BaseMessage> getPlaceByUid(@ApiParam(value = "地点uid", required = true) @RequestParam String uid) {
+        BaseMessage baseMessage = new BaseMessage();
+        Place place = placeService.getPlaceByUid(uid);
+        if (place != null) {
+            logger.info("获取uid为 {} 的游玩地点 {} 成功", uid, place.getName());
+            baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点 " + place.getName() + " 成功");
+            baseMessage.setData(place);
+        }else {
+            logger.info("没有uid为 {} 的游玩地点", uid);
+            baseMessage.setMessage("没有uid为 " + uid + " 的游玩地点 ");
+        }
         return baseMessage.response();
     }
 }

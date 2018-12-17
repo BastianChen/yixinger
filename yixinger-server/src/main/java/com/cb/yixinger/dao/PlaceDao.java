@@ -3,6 +3,9 @@ package com.cb.yixinger.dao;
 import com.cb.yixinger.entity.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -16,5 +19,16 @@ public class PlaceDao {
 
     public void addPlace(Place place){
         placeMapper.insertSelective(place);
+    }
+
+    public Place getPlaceByUid(String uid){
+        Example example = new Example(Place.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("uid", uid);
+        List<Place> placeList = placeMapper.selectByExample(example);
+        if (placeList != null && placeList.size() > 0) {
+            return placeList.get(0);
+        }
+        return null;
     }
 }
