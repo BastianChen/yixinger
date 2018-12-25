@@ -2,6 +2,7 @@ package com.cb.yixinger;
 
 import com.cb.yixinger.entity.Place;
 import com.cb.yixinger.service.PlaceService;
+import com.cb.yixinger.utils.Constants;
 import com.cb.yixinger.utils.HttpRequestor;
 import com.cb.yixinger.entity.TkMybatisTest;
 import com.cb.yixinger.service.TestService;
@@ -21,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
@@ -251,5 +253,18 @@ public class YixingerApplicationTests {
         JSONObject oppidObj = JSONObject.fromObject(oppid);
         String openid = (String) oppidObj.get("openid");
         return openid;
+    }
+
+    @Test
+    public void fieldTest() throws NoSuchFieldException, IllegalAccessException {
+        Field[] fields = Constants.class.getDeclaredFields();
+        Constants a=new Constants();
+        for (Field field:fields){
+            System.out.println(field.getName());
+        }
+        Field field = Constants.class.getDeclaredField("APPID");
+        System.out.println("APPID："+Constants.APPID);
+        field.set(a, "aaaa");
+        System.out.println("APPID："+Constants.APPID);
     }
 }

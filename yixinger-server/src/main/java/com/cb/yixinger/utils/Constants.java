@@ -16,5 +16,4 @@ public class Constants {
     public static final String SECRET = "353ae1409d24e026d2bdcb0b180953e8";
     //百度翻译url
     public static final String TRANS_API_HOST = "http://api.fanyi.baidu.com/api/trans/vip/translate";
-
 }
