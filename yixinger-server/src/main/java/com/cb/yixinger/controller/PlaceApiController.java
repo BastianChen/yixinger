@@ -1,6 +1,7 @@
 package com.cb.yixinger.controller;
 
 import com.cb.yixinger.api.PlaceApi;
+import com.cb.yixinger.config.LoggerManage;
 import com.cb.yixinger.entity.BaseMessage;
 import com.cb.yixinger.entity.Place;
 import com.cb.yixinger.service.PlaceService;
@@ -26,6 +27,7 @@ public class PlaceApiController implements PlaceApi {
     private static final Logger logger = LoggerFactory.getLogger(UserApiController.class);
 
     @Override
+    @LoggerManage(logDescription = "添加游玩地点")
     public ResponseEntity<BaseMessage> addPlace(@ApiParam(value = "前端传回的uid", required = true) @RequestParam String uid,
                                                 @ApiParam(value = "前端传回的地点经度", required = true) @RequestParam Double latitude,
                                                 @ApiParam(value = "前端传回的地点维度", required = true) @RequestParam Double longitude) {
@@ -41,6 +43,7 @@ public class PlaceApiController implements PlaceApi {
     }
 
     @Override
+    @LoggerManage(logDescription = "根据uid获取游玩地点信息")
     public ResponseEntity<BaseMessage> getPlaceByUid(@ApiParam(value = "地点uid", required = true) @RequestParam String uid) {
         BaseMessage baseMessage = new BaseMessage();
         Place place = placeService.getPlaceByUid(uid);
@@ -48,7 +51,7 @@ public class PlaceApiController implements PlaceApi {
             logger.info("获取uid为 {} 的游玩地点 {} 成功", uid, place.getName());
             baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点 " + place.getName() + " 成功");
             baseMessage.setData(place);
-        }else {
+        } else {
             logger.info("没有uid为 {} 的游玩地点", uid);
             baseMessage.setMessage("没有uid为 " + uid + " 的游玩地点 ");
         }
