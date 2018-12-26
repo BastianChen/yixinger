@@ -125,7 +125,8 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__);
 
-var host = 'http://139.196.139.249:8080';
+// const host = 'http://139.196.139.249:8080'
+var host = 'http://localhost:8080';
 
 function request(url, method, data) {
   var header = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};

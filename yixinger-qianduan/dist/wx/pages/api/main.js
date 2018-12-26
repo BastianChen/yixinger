@@ -103,14 +103,15 @@ if (false) {(function () {
     };
   },
   created: function created() {
-    this.getArticle();
+    //this.getArticle()
+    this.getPlace();
   },
 
   methods: {
     getArticle: function getArticle() {
       var _this = this;
 
-      var url = "/getArticleByType?typeNumber=1&start=20}";
+      var url = "/Article/getArticleByType?typeNumber=1&start=20";
       this.$httpWX.post({
         url: url
       }).then(function (res) {
@@ -118,6 +119,14 @@ if (false) {(function () {
 
         (_newsList = _this.newsList).push.apply(_newsList, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default()(res.data.articleJSONArray));
         console.log(res);
+      });
+    },
+    getPlace: function getPlace() {
+      var url = "/Place/getPlaceByUid?uid=df95f91c9c62cbb438221c0e";
+      this.$httpWX.get({
+        url: url
+      }).then(function (res) {
+        console.log("res" + res.message);
       });
     }
   }
