@@ -119,7 +119,12 @@ public class YixingerApplicationTests {
             avocado = cards.getJSONObject(2);
             dataInfo = avocado.getJSONObject("data");
             list = dataInfo.getJSONArray("content");
-            place.setContent(list.toString());
+            JSONArray placeContent = new JSONArray();
+            for (int i=0;i<list.size();i++){
+                dataInfo = (JSONObject) list.get(i);
+                placeContent.add(dataInfo.getJSONArray("labels"));
+            }
+            place.setContent(placeContent.toString());
             // 餐馆评论数
             avocado = cards.getJSONObject(3);
 //            dataInfo = avocado.getJSONObject("data");
