@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
+ * @Description: PlaceApiController
  * @Auther: Administrator Chen Ben
  * @Date: 2018/12/12/012 21:42
- * @Description:
  */
 @Controller
 public class PlaceApiController implements PlaceApi {
     @Autowired
     private PlaceService placeService;
-    private static final Logger logger = LoggerFactory.getLogger(UserApiController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PlaceApiController.class);
 
     @Override
     @LoggerManage(logDescription = "添加游玩地点")
@@ -57,4 +57,6 @@ public class PlaceApiController implements PlaceApi {
         }
         return baseMessage.response();
     }
+
+
 }

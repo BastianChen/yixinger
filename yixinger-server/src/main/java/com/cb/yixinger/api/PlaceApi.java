@@ -35,4 +35,12 @@ public interface PlaceApi {
             produces = {"application/json"},
             method = RequestMethod.GET)
     ResponseEntity<BaseMessage> getPlaceByUid(@ApiParam(value = "地点uid", required = true) @RequestParam String uid);
+
+//    @ApiOperation(value = "定时更新游玩地点信息", notes = "定时更新游玩地点信息 ", response = BaseMessage.class)
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "定时更新成功", response = BaseMessage.class)})
+//    @RequestMapping(value = "/Place/updatePlaceScheduled",
+//            produces = {"application/json"},
+//            method = RequestMethod.POST)
+//    ResponseEntity<BaseMessage> updatePlaceScheduled();
 }

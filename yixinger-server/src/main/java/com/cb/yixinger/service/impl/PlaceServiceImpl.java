@@ -94,7 +94,12 @@ public class PlaceServiceImpl implements PlaceService {
             avocado = cards.getJSONObject(2);
             dataInfo = avocado.getJSONObject("data");
             list = dataInfo.getJSONArray("content");
-            place.setContent(list.toString());
+            JSONArray placeContent = new JSONArray();
+            for (int i=0;i<list.size();i++){
+                dataInfo = (JSONObject) list.get(i);
+                placeContent.add(dataInfo.getJSONArray("labels"));
+            }
+            place.setContent(placeContent.toString());
             // 餐馆评论数
             avocado = cards.getJSONObject(3);
             // 餐馆部分评论
@@ -130,7 +135,13 @@ public class PlaceServiceImpl implements PlaceService {
             place.setWeather(avocado.getJSONObject("weather").toString());
             // 景点印象标签
             avocado = cards.getJSONObject(7).getJSONObject("data");
-            place.setContent(avocado.getJSONArray("content").toString());
+            list = avocado.getJSONArray("content");
+            JSONArray placeContent = new JSONArray();
+            for (int i=0;i<list.size();i++){
+                dataInfo = (JSONObject) list.get(i);
+                placeContent.add(dataInfo.getJSONArray("labels"));
+            }
+            place.setContent(placeContent.toString());
             // 景点部分评论
             avocado = cards.getJSONObject(8).getJSONObject("data").getJSONObject("list");
             place.setCommentList(avocado.getJSONArray("comment_list").toString());

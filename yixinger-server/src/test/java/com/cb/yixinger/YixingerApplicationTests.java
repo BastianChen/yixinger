@@ -46,7 +46,7 @@ public class YixingerApplicationTests {
         //String url = "https://ugcapi.baidu.com/richindex/2/comment?uid=df95f91c9c62cbb438221c0e&pageIndex=1&pageCount=10";// 评论爬取
         //df95f91c9c62cbb438221c0e //西湖uid
         //96d38a845c08e6492902e13b //餐馆uid
-        String url = "https://map.baidu.com/?ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=1&compat=1&t=1542763086565&uid=96d38a845c08e6492902e13b&primaryUid=1175400224615406276&auth=XALx853BcA248H7bWFvB%40wZv%3DSaJXBA4uxHEzNLBVRztykiOxAXXwy1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3Guzt7xjhN%40ThwzBDGJ4P6VWvcEWe1GD8zv7u%40ZPuxtfvAughxehwzJGBP4B6GBvgjLLwWvrZZWux";// 地点信息爬取
+        String url = "https://map.baidu.com/?ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=1&compat=1&t=1542763086565&uid=df95f91c9c62cbb438221c0e&primaryUid=1175400224615406276&auth=XALx853BcA248H7bWFvB%40wZv%3DSaJXBA4uxHEzNLBVRztykiOxAXXwy1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3Guzt7xjhN%40ThwzBDGJ4P6VWvcEWe1GD8zv7u%40ZPuxtfvAughxehwzJGBP4B6GBvgjLLwWvrZZWux";// 地点信息爬取
         Connection con = Jsoup.connect(url).ignoreContentType(true);
         con.header("Referer", "https://map.baidu.com/");
         con.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
@@ -164,7 +164,13 @@ public class YixingerApplicationTests {
             place.setWeather(avocado.getJSONObject("weather").toString());
             // 景点印象标签
             avocado = cards.getJSONObject(7).getJSONObject("data");
-            place.setContent(avocado.getJSONArray("content").toString());
+            list = avocado.getJSONArray("content");
+            JSONArray placeContent = new JSONArray();
+            for (int i=0;i<list.size();i++){
+                dataInfo = (JSONObject) list.get(i);
+                placeContent.add(dataInfo.getJSONArray("labels"));
+            }
+            place.setContent(placeContent.toString());
             // 景点部分评论
             avocado = cards.getJSONObject(8).getJSONObject("data").getJSONObject("list");
             place.setCommentList(avocado.getJSONArray("comment_list").toString());

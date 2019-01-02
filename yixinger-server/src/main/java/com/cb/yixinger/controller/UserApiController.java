@@ -6,7 +6,6 @@ import com.cb.yixinger.entity.BaseMessage;
 import com.cb.yixinger.entity.User;
 import com.cb.yixinger.service.TranslatorService;
 import com.cb.yixinger.service.UserService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @Description:
+ * @Description: UserApiController
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2018-11-30 11:33
  **/
