@@ -17,17 +17,17 @@ export default {
   },
 
   created () {
-    //this.getArticle()
+    this.getArticle()
     this.getPlace();
   },
   methods:{
     getArticle(){
-      let url =`/Article/getArticleByType?typeNumber=1&start=20`
-      this.$httpWX.post({
+      let url =`/User/getUser?openid=oE9el5Hx6LplsHe2roGhrkxkEUsk&language=zh`
+      this.$httpWX.get({
         url: url
       }).then(res => {
-        this.newsList.push(...res.data.articleJSONArray)
-        console.log(res)
+        //this.newsList.push(...res.data.articleJSONArray)
+        console.log("getArticle"+res.data.openid)
       })
     },
     getPlace(){

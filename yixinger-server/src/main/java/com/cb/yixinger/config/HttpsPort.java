@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2019-01-15 11:56
  **/
-@Configuration
+//@Configuration
 public class HttpsPort {
 
     // 在某配置类中添加如下内容

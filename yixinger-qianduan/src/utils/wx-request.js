@@ -1,5 +1,6 @@
 // const host = 'http://139.196.139.249:8080'
-const host = 'http://localhost:8080'
+//const host = 'http://localhost:8080'
+const host = 'https://wzcb97.top'
 
 function request (url, method, data, header = {}) {
   wx.showLoading({
