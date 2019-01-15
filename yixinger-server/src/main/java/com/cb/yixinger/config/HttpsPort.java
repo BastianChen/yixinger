@@ -22,7 +22,7 @@ public class HttpsPort {
     @Value("${http.port}")
     Integer httpPort;
 
-    //正常启用的https端口 如443
+    // 正常启用的https端口 如443
     @Value("${server.port}")
     Integer httpsPort;
 
