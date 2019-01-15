@@ -1,6 +1,5 @@
 package com.cb.yixinger.controller;
 
-import com.cb.yixinger.api.TranslatorApi;
 import com.cb.yixinger.service.TranslatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @create: 2018-11-30 17:09
  **/
 @Controller
-public class TranslatorApiController implements TranslatorApi {
+public class TranslatorApiController {
     @Autowired
     private TranslatorService translatorService;
     private static final Logger logger = LoggerFactory.getLogger(TranslatorApiController.class);
