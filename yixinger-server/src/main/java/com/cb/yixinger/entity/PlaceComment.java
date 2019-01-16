@@ -16,7 +16,7 @@ public class PlaceComment implements Serializable {
     @OrderBy("desc")
     private Integer id;
     @ApiModelProperty(value="地点id")
-    private Integer placeId;
+    private String placeId;
     @ApiModelProperty(value="评论点赞数")
     private Integer likes;
     @ApiModelProperty(value="评论时间")
@@ -33,4 +33,6 @@ public class PlaceComment implements Serializable {
     private String comment;
     @ApiModelProperty(value="评论图片")
     private String imageList;
+    @ApiModelProperty(value="评论类型（1.爬虫数据2.用户评论）")
+    private Integer commentType;
 }

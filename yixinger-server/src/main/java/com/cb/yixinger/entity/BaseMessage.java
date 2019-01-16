@@ -30,8 +30,8 @@ public class BaseMessage implements Serializable {
     @ApiModelProperty("返回的数据")
     private Object data;
 
-//    @ApiModelProperty("返回的其他数据一般不用")
-//    private Object extra;
+    @ApiModelProperty("返回的其他数据一般不用")
+    private Object extra;
 
     @ApiModelProperty("详细错误消息")
     private Object messageDetail;
