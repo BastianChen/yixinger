@@ -16,13 +16,13 @@ public class PhotoDistinguish implements Serializable {
     @OrderBy("desc")
     private Integer id;
     @ApiModelProperty(value="用户openid")
-    private Integer userId;
+    private String userId;
     @ApiModelProperty(value="图片保存url")
     private String imageUrl;
     @ApiModelProperty(value="识别时间")
     private String date;
-    @ApiModelProperty(value="用户openid")
+    @ApiModelProperty(value="图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）")
     private String type;
-    @ApiModelProperty(value="用户openid")
+    @ApiModelProperty(value="结果")
     private String result;
 }
