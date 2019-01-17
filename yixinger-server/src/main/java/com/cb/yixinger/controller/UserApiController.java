@@ -5,13 +5,18 @@ import com.cb.yixinger.entity.BaseMessage;
 import com.cb.yixinger.entity.User;
 import com.cb.yixinger.service.TranslatorService;
 import com.cb.yixinger.service.UserService;
+import com.cb.yixinger.utils.CommonUtil;
 import io.swagger.annotations.*;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description: UserApiController
@@ -26,6 +31,8 @@ public class UserApiController {
     private UserService userService;
     @Autowired
     private TranslatorService translatorService;
+    @Autowired
+    RedisTemplate<String, String> redisTemplate;
     private static final Logger logger = LoggerFactory.getLogger(UserApiController.class);
 
     @LoggerManage(logDescription = "添加用户信息")
@@ -47,13 +54,27 @@ public class UserApiController {
     public ResponseEntity<BaseMessage> getUser(@ApiParam(value = "用户openid", required = true) @RequestParam(value = "openid") String openid,
                                                @ApiParam(value = "用户选择的翻译语言", required = true) @RequestParam(value = "language") String language) {
         BaseMessage baseMessage = new BaseMessage();
-        User user = userService.getUser(openid);
-        baseMessage.setData(user);
-        logger.info("获取用户 {} 信息成功", user.getNickName());
-        user = translatorService.translateUserInfo(user, language);
-        logger.info("翻译用户 {} 信息成功", user.getNickName());
-        baseMessage.setMessage("获取并翻译用户 " + user.getNickName() + " 信息成功");
-        return baseMessage.response();
+        String userValue = redisTemplate.opsForValue().get("user");
+        if (CommonUtil.isNotEmpty(userValue)) {
+            logger.info("读取缓存的用户数据");
+            JSONObject jsonObject = JSONObject.fromObject(userValue);
+            User user = (User) JSONObject.toBean(jsonObject, User.class);
+            baseMessage.setData(user);
+            logger.info("获取用户 {} 信息成功", user.getNickName());
+            return baseMessage.response();
+        }else {
+            logger.info("未读取到缓存数据");
+            User user = userService.getUser(openid);
+            baseMessage.setData(user);
+            logger.info("获取用户 {} 信息成功", user.getNickName());
+            user = translatorService.translateUserInfo(user, language);
+            logger.info("翻译用户 {} 信息成功", user.getNickName());
+            baseMessage.setMessage("获取并翻译用户 " + user.getNickName() + " 信息成功");
+            logger.info("将用户数据添加到redis缓存中");
+            JSONObject jsonObject = JSONObject.fromObject(user);
+            redisTemplate.opsForValue().set("user",jsonObject.toString(),2,TimeUnit.HOURS);
+            return baseMessage.response();
+        }
     }
 
     @LoggerManage(logDescription = "更改用户信息")

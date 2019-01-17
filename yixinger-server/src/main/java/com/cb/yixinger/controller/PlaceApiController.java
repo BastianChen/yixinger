@@ -71,7 +71,7 @@ public class PlaceApiController {
         String placeCommentListName = "placeCommentList?uid=" + uid;
         String placeNameValue = redisTemplate.opsForValue().get(placeName);
         if (CommonUtil.isNotEmpty(placeNameValue)) {
-            logger.info("读取缓存数据");
+            logger.info("读取缓存的游玩地点数据");
             String placeCommentListNameValue = redisTemplate.opsForValue().get(placeCommentListName);
             JSONObject placeJsonObject = JSONObject.fromObject(placeNameValue);
             Place place = (Place) JSONObject.toBean(placeJsonObject, Place.class);
