@@ -20,7 +20,7 @@ public class PlaceCommentDao {
     public List<PlaceComment> getPlaceCommentByUid(String uid){
         Example example = new Example(PlaceComment.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("uid", uid);
+        criteria.andEqualTo("placeId", uid);
         List<PlaceComment> placeCommentList = placeCommentMapper.selectByExample(example);
         return placeCommentList;
     }

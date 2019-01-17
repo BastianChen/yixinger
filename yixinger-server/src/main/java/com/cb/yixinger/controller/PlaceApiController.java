@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.cb.yixinger.config.LoggerManage;
 import com.cb.yixinger.dto.PlaceDTO;
 import com.cb.yixinger.entity.*;
+import com.cb.yixinger.service.LikesService;
 import com.cb.yixinger.service.PlaceCommentService;
 import com.cb.yixinger.service.PlaceService;
 import com.cb.yixinger.utils.CommonUtil;
@@ -38,6 +39,8 @@ public class PlaceApiController {
     @Autowired
     private PlaceCommentService placeCommentService;
     @Autowired
+    private LikesService likesService;
+    @Autowired
     RedisTemplate<String, String> redisTemplate;
     private static final Logger logger = LoggerFactory.getLogger(PlaceApiController.class);
 
@@ -53,7 +56,7 @@ public class PlaceApiController {
         place.setLatitude(latitude);
         place.setLongitude(longitude);
         place = placeService.addPlace(place, uid);
-        placeCommentService.addPlaceCommentByReptile(place.getCommentList(),uid);
+        placeCommentService.addPlaceCommentByReptile(place.getCommentList(), uid);
         logger.info("添加游玩地点 {} 成功", place.getName());
         baseMessage.setMessage("添加游玩地点 " + place.getName() + " 成功");
         return baseMessage.response();
@@ -72,7 +75,7 @@ public class PlaceApiController {
             String placeCommentListNameValue = redisTemplate.opsForValue().get(placeCommentListName);
             JSONObject placeJsonObject = JSONObject.fromObject(placeNameValue);
             Place place = (Place) JSONObject.toBean(placeJsonObject, Place.class);
-            List<PlaceComment> placeCommentList = com.alibaba.fastjson.JSONObject.parseArray(placeCommentListNameValue,PlaceComment.class);
+            List<PlaceComment> placeCommentList = com.alibaba.fastjson.JSONObject.parseArray(placeCommentListNameValue, PlaceComment.class);
             PlaceDTO placeDTO = new PlaceDTO();
             placeDTO.setPlace(place);
             placeDTO.setPlaceCommentList(placeCommentList);
@@ -89,7 +92,7 @@ public class PlaceApiController {
                 placeDTO.setPlace(place);
                 placeDTO.setPlaceCommentList(placeCommentList);
                 JSONObject placeJsonObject = JSONObject.fromObject(place);
-                JSONArray placeCommentListJsonArray= JSONArray.parseArray(JSON.toJSONString(placeCommentList));
+                JSONArray placeCommentListJsonArray = JSONArray.parseArray(JSON.toJSONString(placeCommentList));
                 redisTemplate.opsForValue().set(placeName, placeJsonObject.toString(), 1, TimeUnit.HOURS);
                 redisTemplate.opsForValue().set(placeCommentListName, placeCommentListJsonArray.toString(), 1, TimeUnit.HOURS);
                 logger.info("获取uid为 {} 的游玩地点 {} 成功", uid, place.getName());
@@ -112,11 +115,11 @@ public class PlaceApiController {
             @ApiParam(value = "列数", required = true, defaultValue = "10") @RequestParam(value = "pageSize") Integer pageSize) {
         BaseMessage baseMessage = new BaseMessage();
         PageBean<PlaceComment> placeCommentPageBean = placeCommentService.getPlaceCommentByUid(uid, pageNo, pageSize);
-        if (placeCommentPageBean.getItems() != null && placeCommentPageBean.getItems().size() > 0){
+        if (placeCommentPageBean.getItems() != null && placeCommentPageBean.getItems().size() > 0) {
             logger.info("获取uid为 {} 的游玩地点的第 {} 页的评论成功", uid, pageNo);
             baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点的评论成功");
             baseMessage.setData(placeCommentPageBean);
-        }else {
+        } else {
             logger.info("没有uid为 {} 的游玩地点的评论", uid);
             baseMessage.setMessage("暂无评论");
         }
@@ -132,9 +135,37 @@ public class PlaceApiController {
         if (!result) {
             logger.error("给uid为 {} 的游玩地点添加评论失败", placeComment.getPlaceId());
             baseMessage.initStateAndMessage(1001, "添加失败");
-        }else {
+        } else {
             logger.info("给uid为 {} 的游玩地点添加评论成功", placeComment.getPlaceId());
             baseMessage.setMessage("评论成功");
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "更新点赞数")
+    @ApiOperation(value = "更新点赞数", notes = "更新点赞数 ", response = BaseMessage.class)
+    @RequestMapping(value = "/updateLikes", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> updateLikes(
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
+            @ApiParam(value = "评论id", required = true) @RequestParam(value = "placeCommentId") Integer placeCommentId) {
+        BaseMessage baseMessage = new BaseMessage();
+        PlaceComment placeComment = placeCommentService.getPlaceCommentByPlaceCommentId(placeCommentId);
+        if (placeComment != null) {
+            logger.info("获取id为 {} 的评论成功", placeCommentId);
+            List<Likes> likesList = likesService.getLikes(userId, placeCommentId);
+            if (likesList != null && !likesList.isEmpty()) {
+                logger.info("用户openid为 {} 的用户已经给该评论点过赞", userId);
+                PlaceComment updatedPlaceComment = placeCommentService.updateLikes(likesList.get(0), placeComment, true, userId);
+                baseMessage.setData(updatedPlaceComment);
+            } else {
+                logger.info("用户openid为 {} 的用户没有给该评论点过赞", userId);
+                PlaceComment updatedPlaceComment = placeCommentService.updateLikes(null, placeComment, false, userId);
+                baseMessage.setData(updatedPlaceComment);
+            }
+            baseMessage.setMessage("点赞成功");
+        } else {
+            logger.error("不存在id为 {} 的评论", placeCommentId);
+            baseMessage.initStateAndMessage(1002, "不存在该条评论");
         }
         return baseMessage.response();
     }

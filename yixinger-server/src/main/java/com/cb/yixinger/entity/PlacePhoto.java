@@ -26,7 +26,7 @@ public class PlacePhoto implements Serializable {
     @ApiModelProperty(value="上传时间")
     private String uploadDate;
     @ApiModelProperty(value="用户openid")
-    private Integer userId;
+    private String userId;
     @ApiModelProperty(value="用户昵称")
     private String userName;
 }

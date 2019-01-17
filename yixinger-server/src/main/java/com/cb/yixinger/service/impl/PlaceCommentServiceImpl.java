@@ -1,7 +1,9 @@
 package com.cb.yixinger.service.impl;
 
+import com.cb.yixinger.dao.LikesMapper;
 import com.cb.yixinger.dao.PlaceCommentDao;
 import com.cb.yixinger.dao.PlaceCommentMapper;
+import com.cb.yixinger.entity.Likes;
 import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.PlaceComment;
 import com.cb.yixinger.service.PlaceCommentService;
@@ -29,6 +31,8 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
     private PlaceCommentDao placeCommentDao;
     @Autowired
     private PlaceCommentMapper placeCommentMapper;
+    @Autowired
+    private LikesMapper likesMapper;
     private static final Logger logger = LoggerFactory.getLogger(PlaceServiceImpl.class);
 
     @Override
@@ -91,5 +95,28 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
         criteria.andEqualTo("commentType", 1);
         List<PlaceComment> placeCommentList = placeCommentMapper.selectByExample(example);
         return placeCommentList;
+    }
+
+    @Override
+    public PlaceComment getPlaceCommentByPlaceCommentId(Integer placeCommentId) {
+        return placeCommentMapper.selectByPrimaryKey(placeCommentId);
+    }
+
+    @Override
+    public PlaceComment updateLikes(Likes likes, PlaceComment placeComment, Boolean isLikes, String userId) {
+        if (isLikes == false) {
+            logger.info("用户点赞操作开始");
+            placeComment.setLikes(placeComment.getLikes() + 1);
+            likes = new Likes();
+            likes.setUserId(userId);
+            likes.setPlaceCommentId(placeComment.getId());
+            likesMapper.insertSelective(likes);
+        } else {
+            logger.info("用户取消点赞操作开始");
+            placeComment.setLikes(placeComment.getLikes() - 1);
+            likesMapper.deleteByPrimaryKey(likes);
+        }
+        placeCommentMapper.updateByPrimaryKeySelective(placeComment);
+        return placeComment;
     }
 }

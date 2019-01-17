@@ -1,5 +1,6 @@
 package com.cb.yixinger.service;
 
+import com.cb.yixinger.entity.Likes;
 import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.PlaceComment;
 
@@ -15,7 +16,11 @@ public interface PlaceCommentService {
 
     boolean addPlaceComment(PlaceComment placeComment);
 
-    void addPlaceCommentByReptile(String commentList,String placeId);
+    void addPlaceCommentByReptile(String commentList, String placeId);
 
     List<PlaceComment> getPlaceComment(String uid);
+
+    PlaceComment getPlaceCommentByPlaceCommentId(Integer placeCommentId);
+
+    PlaceComment updateLikes(Likes likes, PlaceComment placeComment, Boolean isLikes, String userId);
 }
