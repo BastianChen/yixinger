@@ -63,8 +63,11 @@ public class AIOperateController {
                 logger.info("---文件保存目录--" + dir);
                 File file = new File(dir, saveName + "_src.jpg");
                 imageFile.transferTo(file);
-                logger.info("----------------通用图像开始----------------");
-                PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(resourcePath + saveName + "_src.jpg", "1", userId);
+                logger.info("----------------图像识别开始----------------");
+                PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(
+                        resourcePath + saveName + "_src.jpg", type, userId,
+                        "/yixinger-server/src/main/resources/static/images/" + saveName + "_src.jpg");
+                logger.info("----------------图像识别结束----------------");
                 baseMessage.setData(photoDistinguish);
                 baseMessage.setMessage("识别成功");
             }

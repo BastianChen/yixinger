@@ -8,5 +8,5 @@ import com.cb.yixinger.entity.PhotoDistinguish;
  * @create: 2019-01-17 14:50
  **/
 public interface PhotoDistinguishService {
-    PhotoDistinguish photoDistinguishBytype(String imagePath, String type, String userId);
+    PhotoDistinguish photoDistinguishBytype(String imagePath, String type, String userId, String imageSavePath);
 }
