@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Description:
@@ -77,5 +78,15 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
         }
         photoDistinguishMapper.insertSelective(photoDistinguish);
         return photoDistinguish;
+    }
+
+    @Override
+    public List<PhotoDistinguish> getPhotoDistinguishList() {
+        return photoDistinguishMapper.selectAll();
+    }
+
+    @Override
+    public void deletePhotoDistinguishById(Integer id) {
+        photoDistinguishMapper.deleteByPrimaryKey(id);
     }
 }

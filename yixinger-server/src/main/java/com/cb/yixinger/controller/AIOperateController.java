@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Description:
@@ -46,7 +47,7 @@ public class AIOperateController {
     public ResponseEntity<BaseMessage> imageClassify(
             @ApiParam(value = "imgFile", required = true) @RequestParam(value = "imgFile") MultipartFile imageFile,
             @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）", required = true) @RequestParam(value = "type") String type,
-            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "用户openid") String userId) throws IOException {
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
         String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/";
         if (imageFile != null) {
@@ -66,12 +67,41 @@ public class AIOperateController {
                 logger.info("----------------图像识别开始----------------");
                 PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(
                         resourcePath + saveName + "_src.jpg", type, userId,
-                        "/yixinger-server/src/main/resources/static/images/" + saveName + "_src.jpg");
+                        "/images/" + saveName + "_src.jpg");
                 logger.info("----------------图像识别结束----------------");
                 baseMessage.setData(photoDistinguish);
                 baseMessage.setMessage("识别成功");
             }
         }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "获取图像识别所有记录")
+    @ApiOperation(value = "获取图像识别所有记录", notes = "获取图像识别所有记录 ", response = BaseMessage.class)
+    @RequestMapping(value = "/getPhotoDistinguishList", produces = {"application/json"}, method = RequestMethod.GET)
+    public ResponseEntity<BaseMessage> getPhotoDistinguishList() {
+        BaseMessage baseMessage = new BaseMessage();
+        List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList();
+        if (photoDistinguishList != null && photoDistinguishList.size() > 0) {
+            logger.info("获取图像识别所有记录成功");
+            baseMessage.setMessage("获取图像识别所有记录成功");
+            baseMessage.setData(photoDistinguishList);
+        } else {
+            logger.info("暂无图像识别的历史记录");
+            baseMessage.setMessage("暂无历史记录");
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "根据id删除图像识别记录")
+    @ApiOperation(value = "根据id删除图像识别记录", notes = "根据id删除图像识别记录 ", response = BaseMessage.class)
+    @RequestMapping(value = "/deletePhotoDistinguishById", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> deletePhotoDistinguishById(
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") Integer id) {
+        BaseMessage baseMessage = new BaseMessage();
+        photoDistinguishService.deletePhotoDistinguishById(id);
+        logger.info("成功删除id为 {} 的图像识别记录",id);
+        baseMessage.setMessage("删除成功");
         return baseMessage.response();
     }
 }
