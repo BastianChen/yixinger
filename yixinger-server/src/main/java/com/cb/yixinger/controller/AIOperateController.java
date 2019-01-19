@@ -6,6 +6,7 @@ import com.cb.yixinger.entity.PhotoDistinguish;
 import com.cb.yixinger.service.PhotoDistinguishService;
 import com.cb.yixinger.service.TextDistinguishService;
 import com.cb.yixinger.service.TranslatorService;
+import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.FileUploadUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -97,11 +98,16 @@ public class AIOperateController {
     @ApiOperation(value = "根据id删除图像识别记录", notes = "根据id删除图像识别记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/deletePhotoDistinguishById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deletePhotoDistinguishById(
-            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") Integer id) {
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") String idList) {
         BaseMessage baseMessage = new BaseMessage();
-        photoDistinguishService.deletePhotoDistinguishById(id);
-        logger.info("成功删除id为 {} 的图像识别记录",id);
-        baseMessage.setMessage("删除成功");
+        if (!CommonUtil.isNullOrWhiteSpace(idList)){
+            photoDistinguishService.deletePhotoDistinguishById(idList);
+            logger.info("成功删除id为 {} 的图像识别记录",idList);
+            baseMessage.setMessage("删除成功");
+        }else {
+            logger.info("idList为空",idList);
+            baseMessage.setMessage("idList为空");
+        }
         return baseMessage.response();
     }
 }

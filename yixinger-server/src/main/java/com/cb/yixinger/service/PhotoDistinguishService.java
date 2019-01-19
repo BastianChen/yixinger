@@ -14,5 +14,5 @@ public interface PhotoDistinguishService {
 
     List<PhotoDistinguish> getPhotoDistinguishList();
 
-    void deletePhotoDistinguishById(Integer id);
+    void deletePhotoDistinguishById(String idList);
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,7 +87,10 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
     }
 
     @Override
-    public void deletePhotoDistinguishById(Integer id) {
-        photoDistinguishMapper.deleteByPrimaryKey(id);
+    public void deletePhotoDistinguishById(String idList) {
+        List<String> integerList = Arrays.asList(idList.split(";"));
+        for (String id:integerList){
+            photoDistinguishMapper.deleteByPrimaryKey(Integer.valueOf(id));
+        }
     }
 }

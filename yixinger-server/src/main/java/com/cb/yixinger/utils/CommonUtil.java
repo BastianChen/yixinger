@@ -22,4 +22,14 @@ public class CommonUtil {
     public static boolean isEmpty(String s) {
         return s == null || "".equals(s);
     }
+
+    /**
+     * isNullOrWhiteSpace
+     *
+     * @param
+     * @return
+     */
+    public static boolean isNullOrWhiteSpace(String value) {
+        return value == null || value.equals("null") || (value.length() >= 0 && value.trim().length() <= 0);
+    }
 }
