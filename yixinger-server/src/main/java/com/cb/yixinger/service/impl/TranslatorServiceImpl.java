@@ -1,5 +1,6 @@
 package com.cb.yixinger.service.impl;
 
+import com.cb.yixinger.dao.TranslatorDao;
 import com.cb.yixinger.dao.TranslatorMapper;
 import com.cb.yixinger.entity.Translator;
 import com.cb.yixinger.entity.User;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Description: 翻译service
@@ -24,7 +27,10 @@ import java.text.SimpleDateFormat;
 public class TranslatorServiceImpl implements TranslatorService {
     @Autowired
     private TranslatorMapper translatorMapper;
+    @Autowired
+    private TranslatorDao translatorDao;
     private static final Logger logger = LoggerFactory.getLogger(TranslatorServiceImpl.class);
+
     @Override
     public User translateUserInfo(User user, String language) {
         TransApi api = new TransApi(Constants.APP_ID, Constants.SECURITY_KEY);
@@ -55,15 +61,15 @@ public class TranslatorServiceImpl implements TranslatorService {
         com.alibaba.fastjson.JSONObject jsonObject;
         JSONObject resultObject;
         com.alibaba.fastjson.JSONArray translatedText = new com.alibaba.fastjson.JSONArray();
-        JSONArray resultArray = new JSONArray();//JSONArray.fromObject(jsonObject.getString("trans_result"));
+        JSONArray resultArray;
         logger.info("----------------开始翻译----------------");
         for (int i = 0; i < originalText.size(); i++) {
             jsonObject = (com.alibaba.fastjson.JSONObject) originalText.get(i);
-            logger.info("原文为：{}",jsonObject.getString("word"));
+            logger.info("原文为：{}", jsonObject.getString("word"));
             resultObject = JSONObject.fromObject(api.getTransResult(jsonObject.getString("word"), from, to));
             resultArray = JSONArray.fromObject(resultObject.getString("trans_result"));
             jsonObject.put("word", resultArray.getJSONObject(0).getString("dst"));
-            logger.info("译文为：{}",jsonObject.getString("word"));
+            logger.info("译文为：{}", jsonObject.getString("word"));
             translatedText.add(jsonObject);
         }
         logger.info("----------------翻译结束----------------");
@@ -77,12 +83,25 @@ public class TranslatorServiceImpl implements TranslatorService {
         translator.setType(type);
         translator.setOriginalText(originalText.toString());
         translator.setTranslatedText(translatedText.toString());
-        Boolean isSuccess = translatorMapper.insertSelective(translator)>0;
-        if (isSuccess){
+        Boolean isSuccess = translatorMapper.insertSelective(translator) > 0;
+        if (isSuccess) {
             logger.info("添加翻译记录成功");
-        }else {
+        } else {
             logger.error("添加翻译记录失败");
         }
         return translatedText;
+    }
+
+    @Override
+    public List<Translator> getTranslatorListByType(String type) {
+        return translatorDao.getTranslatorListByType(type);
+    }
+
+    @Override
+    public void deleteTranslatorById(String idList) {
+        List<String> integerList = Arrays.asList(idList.split(";"));
+        for (String id : integerList) {
+            translatorMapper.deleteByPrimaryKey(Integer.valueOf(id));
+        }
     }
 }

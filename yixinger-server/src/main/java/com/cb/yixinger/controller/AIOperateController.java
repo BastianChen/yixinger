@@ -5,6 +5,7 @@ import com.cb.yixinger.config.LoggerManage;
 import com.cb.yixinger.entity.BaseMessage;
 import com.cb.yixinger.entity.PhotoDistinguish;
 import com.cb.yixinger.entity.TextDistinguish;
+import com.cb.yixinger.entity.Translator;
 import com.cb.yixinger.service.PhotoDistinguishService;
 import com.cb.yixinger.service.TextDistinguishService;
 import com.cb.yixinger.service.TranslatorService;
@@ -206,6 +207,46 @@ public class AIOperateController {
             baseMessage.setMessage("翻译成功");
         } else {
             baseMessage.initStateAndMessage(1001, "翻译失败");
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "根据type获取所有翻译记录")
+    @ApiOperation(value = "根据type获取所有翻译记录", notes = "根据type获取所有翻译记录 ", response = BaseMessage.class)
+    @RequestMapping(value = "/getTranslatorListByType", produces = {"application/json"}, method = RequestMethod.GET)
+    public ResponseEntity<BaseMessage> getTranslatorListByType(
+            @ApiParam(value = "type类型", required = true) @RequestParam(value = "type") String type) {
+        BaseMessage baseMessage = new BaseMessage();
+        List<Translator> translatorList = translatorService.getTranslatorListByType(type);
+        if (translatorList != null && translatorList.size() > 0) {
+            if(type.equals("1")){
+                logger.info("获取type类型为 {} 的所有翻译记录成功","文字识别");
+                baseMessage.setMessage("获取文字识别的所有翻译记录成功");
+            }else if (type.equals("2")){
+                logger.info("获取type类型为 {} 的所有翻译记录成功","图像识别");
+                baseMessage.setMessage("获取图像识别的所有翻译记录成功");
+            }
+            baseMessage.setData(translatorList);
+        } else {
+            logger.info("暂无该类型的翻译记录");
+            baseMessage.initStateAndMessage(1001, "暂无历史记录");
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "根据id删除翻译记录")
+    @ApiOperation(value = "根据id删除翻译记录", notes = "根据id删除翻译记录 ", response = BaseMessage.class)
+    @RequestMapping(value = "/deleteTranslatorById", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> deleteTranslatorById(
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") String idList) {
+        BaseMessage baseMessage = new BaseMessage();
+        if (!CommonUtil.isNullOrWhiteSpace(idList)) {
+            translatorService.deleteTranslatorById(idList);
+            logger.info("成功删除id为 {} 的翻译记录", idList);
+            baseMessage.setMessage("删除成功");
+        } else {
+            logger.info("idList为空", idList);
+            baseMessage.initStateAndMessage(1001, "idList为空");
         }
         return baseMessage.response();
     }

@@ -1,7 +1,10 @@
 package com.cb.yixinger.service;
 
+import com.cb.yixinger.entity.Translator;
 import com.cb.yixinger.entity.User;
 import com.alibaba.fastjson.JSONArray;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -12,4 +15,8 @@ public interface TranslatorService {
     User translateUserInfo(User user, String language);
 
     JSONArray translateText(JSONArray originalText, String userId, Integer textId, String from, String to, String type);
+
+    List<Translator> getTranslatorListByType(String type);
+
+    void deleteTranslatorById(String idList);
 }

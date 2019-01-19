@@ -17,18 +17,19 @@ public class PlaceDao {
     @Autowired
     private PlaceMapper placeMapper;
 
-    public void addPlace(Place place){
+    public void addPlace(Place place) {
         placeMapper.insertSelective(place);
     }
 
-    public Place getPlaceByUid(String uid){
+    public Place getPlaceByUid(String uid) {
         Example example = new Example(Place.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("uid", uid);
         List<Place> placeList = placeMapper.selectByExample(example);
         if (placeList != null && placeList.size() > 0) {
             return placeList.get(0);
+        } else {
+            return null;
         }
-        return null;
     }
 }
