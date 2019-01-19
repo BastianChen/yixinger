@@ -16,13 +16,13 @@ public class Translator implements Serializable {
     @OrderBy("desc")
     private Integer id;
     @ApiModelProperty(value="用户openid")
-    private Integer userId;
+    private String userId;
     @ApiModelProperty(value="文字或图像识别表中的id")
     private Integer textId;
     @ApiModelProperty(value="原文语种")
-    private String from;
+    private String originalLanguage;
     @ApiModelProperty(value="译文语种")
-    private String to;
+    private String translatedLanguage;
     @ApiModelProperty(value="翻译时间")
     private String date;
     @ApiModelProperty(value="来源文本表的类型（1.文字识别表2.图像识别表）")

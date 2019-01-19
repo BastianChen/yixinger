@@ -1,22 +1,32 @@
 package com.cb.yixinger.service.impl;
 
+import com.cb.yixinger.dao.TranslatorMapper;
+import com.cb.yixinger.entity.Translator;
 import com.cb.yixinger.entity.User;
 import com.cb.yixinger.service.TranslatorService;
 import com.cb.yixinger.utils.Constants;
 import com.cb.yixinger.utils.TransApi;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+
 /**
- * @Description:
+ * @Description: 翻译service
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2018-11-30 16:54
  **/
 @Service("TranslatorService")
 public class TranslatorServiceImpl implements TranslatorService {
+    @Autowired
+    private TranslatorMapper translatorMapper;
+    private static final Logger logger = LoggerFactory.getLogger(TranslatorServiceImpl.class);
     @Override
-    public User translateUserInfo(User user,String language) {
+    public User translateUserInfo(User user, String language) {
         TransApi api = new TransApi(Constants.APP_ID, Constants.SECURITY_KEY);
         JSONObject jsonObject = JSONObject.fromObject(api.getTransResult(user.getCity(), "auto", language));
         JSONArray jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
@@ -28,5 +38,51 @@ public class TranslatorServiceImpl implements TranslatorService {
         jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
         user.setCountry(jsonArray.getJSONObject(0).getString("dst"));
         return user;
+    }
+
+    /**
+     * @Description: 对图像识别以及文字识别的文字进行翻译
+     * JSON串格式：[{word:""},{word:""}]
+     * @Param: [originalText, language]
+     * @return: net.sf.json.JSONArray
+     * @Author: Chen Ben
+     * @Date: 2019/1/19
+     */
+    @Override
+    public com.alibaba.fastjson.JSONArray translateText(com.alibaba.fastjson.JSONArray originalText, String userId, Integer textId, String from, String to, String type) {
+        TransApi api = new TransApi(Constants.APP_ID, Constants.SECURITY_KEY);
+        Translator translator = new Translator();
+        com.alibaba.fastjson.JSONObject jsonObject;
+        JSONObject resultObject;
+        com.alibaba.fastjson.JSONArray translatedText = new com.alibaba.fastjson.JSONArray();
+        JSONArray resultArray = new JSONArray();//JSONArray.fromObject(jsonObject.getString("trans_result"));
+        logger.info("----------------开始翻译----------------");
+        for (int i = 0; i < originalText.size(); i++) {
+            jsonObject = (com.alibaba.fastjson.JSONObject) originalText.get(i);
+            logger.info("原文为：{}",jsonObject.getString("word"));
+            resultObject = JSONObject.fromObject(api.getTransResult(jsonObject.getString("word"), from, to));
+            resultArray = JSONArray.fromObject(resultObject.getString("trans_result"));
+            jsonObject.put("word", resultArray.getJSONObject(0).getString("dst"));
+            logger.info("译文为：{}",jsonObject.getString("word"));
+            translatedText.add(jsonObject);
+        }
+        logger.info("----------------翻译结束----------------");
+        translator.setUserId(userId);
+        translator.setTextId(textId);
+        translator.setOriginalLanguage(from);
+        translator.setTranslatedLanguage(to);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(System.currentTimeMillis());
+        translator.setDate(date);
+        translator.setType(type);
+        translator.setOriginalText(originalText.toString());
+        translator.setTranslatedText(translatedText.toString());
+        Boolean isSuccess = translatorMapper.insertSelective(translator)>0;
+        if (isSuccess){
+            logger.info("添加翻译记录成功");
+        }else {
+            logger.error("添加翻译记录失败");
+        }
+        return translatedText;
     }
 }

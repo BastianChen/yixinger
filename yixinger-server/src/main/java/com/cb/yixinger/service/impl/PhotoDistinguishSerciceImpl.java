@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 图像识别相关service
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2019-01-17 14:51
  **/
@@ -77,8 +78,12 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        photoDistinguishMapper.insertSelective(photoDistinguish);
-        logger.info("新增图像识别记录成功");
+        Boolean isSuccess = photoDistinguishMapper.insertSelective(photoDistinguish) > 0;
+        if (isSuccess){
+            logger.info("新增图像识别记录成功");
+        }else {
+            logger.error("新增图像识别记录失败");
+        }
         return photoDistinguish;
     }
 
@@ -88,6 +93,7 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deletePhotoDistinguishById(String idList) {
         List<String> integerList = Arrays.asList(idList.split(";"));
         for (String id : integerList) {

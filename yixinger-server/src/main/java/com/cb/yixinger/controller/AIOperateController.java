@@ -1,5 +1,6 @@
 package com.cb.yixinger.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.cb.yixinger.config.LoggerManage;
 import com.cb.yixinger.entity.BaseMessage;
 import com.cb.yixinger.entity.PhotoDistinguish;
@@ -71,8 +72,12 @@ public class AIOperateController {
                         resourcePath + saveName + "_src.jpg", type, userId,
                         "/images/photo/" + saveName + "_src.jpg");
                 logger.info("----------------图像识别结束----------------");
-                baseMessage.setData(photoDistinguish);
-                baseMessage.setMessage("图像识别成功");
+                if (photoDistinguish != null) {
+                    baseMessage.setData(photoDistinguish);
+                    baseMessage.setMessage("图像识别成功");
+                } else {
+                    baseMessage.initStateAndMessage(1001, "图像识别失败");
+                }
             }
         }
         return baseMessage.response();
@@ -90,7 +95,7 @@ public class AIOperateController {
             baseMessage.setData(photoDistinguishList);
         } else {
             logger.info("暂无图像识别的历史记录");
-            baseMessage.setMessage("暂无历史记录");
+            baseMessage.initStateAndMessage(1001, "暂无历史记录");
         }
         return baseMessage.response();
     }
@@ -107,7 +112,7 @@ public class AIOperateController {
             baseMessage.setMessage("删除成功");
         } else {
             logger.info("idList为空", idList);
-            baseMessage.setMessage("idList为空");
+            baseMessage.initStateAndMessage(1001, "idList为空");
         }
         return baseMessage.response();
     }
@@ -138,8 +143,12 @@ public class AIOperateController {
                 TextDistinguish textDistinguish = textDistinguishService.textDistinguish(resourcePath + saveName + "_src.jpg",
                         userId, "/images/text/" + saveName + "_src.jpg");
                 logger.info("----------------文字识别结束----------------");
-                baseMessage.setData(textDistinguish);
-                baseMessage.setMessage("文字识别成功");
+                if (textDistinguish != null) {
+                    baseMessage.setData(textDistinguish);
+                    baseMessage.setMessage("文字识别成功");
+                } else {
+                    baseMessage.initStateAndMessage(1001, "文字识别失败");
+                }
             }
         }
         return baseMessage.response();
@@ -157,7 +166,7 @@ public class AIOperateController {
             baseMessage.setData(textDistinguishList);
         } else {
             logger.info("暂无文字识别的历史记录");
-            baseMessage.setMessage("暂无历史记录");
+            baseMessage.initStateAndMessage(1001, "暂无历史记录");
         }
         return baseMessage.response();
     }
@@ -174,7 +183,29 @@ public class AIOperateController {
             baseMessage.setMessage("删除成功");
         } else {
             logger.info("idList为空", idList);
-            baseMessage.setMessage("idList为空");
+            baseMessage.initStateAndMessage(1001, "idList为空");
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "文字翻译")
+    @ApiOperation(value = "文字翻译", notes = "文字翻译 ", response = BaseMessage.class)
+    @RequestMapping(value = "/translateText", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> translateText(
+            @ApiParam(value = "原文（string类型）", required = true) @RequestParam(value = "originalText") String originalText,
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
+            @ApiParam(value = "文本来源表中的id", required = true) @RequestParam(value = "textId") Integer textId,
+            @ApiParam(value = "原文语种", required = true, defaultValue = "auto") @RequestParam(value = "from") String from,
+            @ApiParam(value = "用户选择的翻译语言", required = true, defaultValue = "zh") @RequestParam(value = "to") String to,
+            @ApiParam(value = "来源文本表的类型（1.文字识别表2.图像识别表）", required = true) @RequestParam(value = "type") String type) {
+        BaseMessage baseMessage = new BaseMessage();
+        JSONArray originalTextArray = JSONArray.parseArray(originalText);
+        JSONArray translatedText = translatorService.translateText(originalTextArray, userId, textId, from, to, type);
+        if (!translatedText.equals(null)) {
+            baseMessage.setData(translatedText);
+            baseMessage.setMessage("翻译成功");
+        } else {
+            baseMessage.initStateAndMessage(1001, "翻译失败");
         }
         return baseMessage.response();
     }

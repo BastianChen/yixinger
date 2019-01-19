@@ -52,7 +52,7 @@ public class UserApiController {
     @ApiOperation(value = "获取并翻译用户信息", notes = "获取并翻译用户信息 ", response = BaseMessage.class)
     @RequestMapping(value = "/getUser", produces = {"application/json"}, method = RequestMethod.GET)
     public ResponseEntity<BaseMessage> getUser(@ApiParam(value = "用户openid", required = true) @RequestParam(value = "openid") String openid,
-                                               @ApiParam(value = "用户选择的翻译语言", required = true) @RequestParam(value = "language") String language) {
+                                               @ApiParam(value = "用户选择的翻译语言", required = true, defaultValue = "zh") @RequestParam(value = "language") String language) {
         BaseMessage baseMessage = new BaseMessage();
         String userValue = redisTemplate.opsForValue().get("user");
         if (CommonUtil.isNotEmpty(userValue)) {

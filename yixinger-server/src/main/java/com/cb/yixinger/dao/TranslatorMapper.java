@@ -1,7 +1,7 @@
 package com.cb.yixinger.dao;
 
 import com.cb.yixinger.config.BaseMapper;
-import com.sun.java.accessibility.util.Translator;
+import com.cb.yixinger.entity.Translator;
 import org.springframework.stereotype.Repository;
 
 @Repository("TranslatorMapper")

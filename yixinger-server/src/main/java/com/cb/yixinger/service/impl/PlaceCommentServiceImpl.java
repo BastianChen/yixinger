@@ -60,8 +60,8 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
      * @Author: Chen Ben
      * @Date: 2019/1/16
      */
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addPlaceCommentByReptile(String commentList, String placeId) {
         JSONArray jsonArray = JSONArray.fromObject(commentList);
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -110,13 +110,28 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
             likes = new Likes();
             likes.setUserId(userId);
             likes.setPlaceCommentId(placeComment.getId());
-            likesMapper.insertSelective(likes);
+            Boolean isSuccessLike = likesMapper.insertSelective(likes) > 0;
+            if (isSuccessLike) {
+                logger.info("用户点赞成功");
+            } else {
+                logger.error("用户点赞失败");
+            }
         } else {
             logger.info("用户取消点赞操作开始");
             placeComment.setLikes(placeComment.getLikes() - 1);
-            likesMapper.deleteByPrimaryKey(likes);
+            Boolean isSuccessLikeCancel = likesMapper.deleteByPrimaryKey(likes) > 0;
+            if (isSuccessLikeCancel) {
+                logger.info("用户取消点赞成功");
+            } else {
+                logger.error("用户取消点赞失败");
+            }
         }
-        placeCommentMapper.updateByPrimaryKeySelective(placeComment);
+        Boolean isSuccessUpdate = placeCommentMapper.updateByPrimaryKeySelective(placeComment)>0;
+        if (isSuccessUpdate) {
+            logger.info("用户更新评论成功");
+        } else {
+            logger.error("用户更新评论失败");
+        }
         return placeComment;
     }
 }

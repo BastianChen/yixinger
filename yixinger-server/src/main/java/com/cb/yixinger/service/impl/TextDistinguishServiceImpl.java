@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 文字识别相关service
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2019-01-17 14:52
  **/

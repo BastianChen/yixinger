@@ -100,7 +100,7 @@ public class PlaceApiController {
                 baseMessage.setData(placeDTO);
             } else {
                 logger.info("没有uid为 {} 的游玩地点", uid);
-                baseMessage.setMessage("没有uid为 " + uid + " 的游玩地点 ");
+                baseMessage.initStateAndMessage(1001,"没有uid为 " + uid + " 的游玩地点 ");
             }
             return baseMessage.response();
         }
@@ -121,7 +121,7 @@ public class PlaceApiController {
             baseMessage.setData(placeCommentPageBean);
         } else {
             logger.info("没有uid为 {} 的游玩地点的评论", uid);
-            baseMessage.setMessage("暂无评论");
+            baseMessage.initStateAndMessage(1001,"暂无评论");
         }
         return baseMessage.response();
     }
@@ -165,7 +165,7 @@ public class PlaceApiController {
             baseMessage.setMessage("点赞成功");
         } else {
             logger.error("不存在id为 {} 的评论", placeCommentId);
-            baseMessage.initStateAndMessage(1002, "不存在该条评论");
+            baseMessage.initStateAndMessage(1001, "不存在该条评论");
         }
         return baseMessage.response();
     }
