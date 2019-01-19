@@ -78,6 +78,7 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
             e.printStackTrace();
         }
         photoDistinguishMapper.insertSelective(photoDistinguish);
+        logger.info("新增图像识别记录成功");
         return photoDistinguish;
     }
 
@@ -89,7 +90,7 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
     @Override
     public void deletePhotoDistinguishById(String idList) {
         List<String> integerList = Arrays.asList(idList.split(";"));
-        for (String id:integerList){
+        for (String id : integerList) {
             photoDistinguishMapper.deleteByPrimaryKey(Integer.valueOf(id));
         }
     }

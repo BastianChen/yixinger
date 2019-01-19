@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * @Description:
+ * @Description: 图像识别方法
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2019-01-17 16:04
  **/

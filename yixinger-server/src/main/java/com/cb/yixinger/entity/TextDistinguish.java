@@ -18,7 +18,7 @@ public class TextDistinguish implements Serializable {
     @ApiModelProperty(value="识别时间")
     private String date;
     @ApiModelProperty(value="用户openid")
-    private Integer userId;
+    private String userId;
     @ApiModelProperty(value="图片保存路径")
     private String imageUrl;
     @ApiModelProperty(value="文字识别结果")
