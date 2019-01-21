@@ -2,11 +2,10 @@ package com.cb.yixinger;
 
 import com.cb.yixinger.entity.Place;
 import com.cb.yixinger.service.PlaceService;
-import com.cb.yixinger.utils.Constants;
+import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.utils.HttpRequestor;
 import com.cb.yixinger.entity.TkMybatisTest;
 import com.cb.yixinger.service.TestService;
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -23,7 +22,6 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

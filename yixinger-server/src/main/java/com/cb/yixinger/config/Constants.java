@@ -1,4 +1,4 @@
-package com.cb.yixinger.utils;
+package com.cb.yixinger.config;
 
 /**
  * @Description: 静态变量
@@ -30,4 +30,10 @@ public class Constants {
     public static final String AI_APP_ID = "14831168";
     public static final String AI_API_KEY = "dCg3446RCU5F9IZkpGZGkVho";
     public static final String AI_SECRET_KEY = "famETHsyYSS4infgd1ykBj4GvfMVQ3yv";
+    /**
+     * 百度语音参数
+     */
+    public static final String APP_KEY = "dCg3446RCU5F9IZkpGZGkVho";
+    public static final String SECRET_KEY = "famETHsyYSS4infgd1ykBj4GvfMVQ3yv";
+    public static final String SPEECH_URL = "http://tsn.baidu.com/text2audio";
 }

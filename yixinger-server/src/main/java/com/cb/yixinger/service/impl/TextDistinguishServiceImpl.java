@@ -3,7 +3,7 @@ package com.cb.yixinger.service.impl;
 import com.cb.yixinger.dao.TextDistinguishMapper;
 import com.cb.yixinger.entity.TextDistinguish;
 import com.cb.yixinger.service.TextDistinguishService;
-import com.cb.yixinger.utils.Constants;
+import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.utils.ai.ocr.AipOcr;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @Description: 文字识别相关service
+ * @Description: 文字识别ServiceImpl
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2019-01-17 14:52
  **/

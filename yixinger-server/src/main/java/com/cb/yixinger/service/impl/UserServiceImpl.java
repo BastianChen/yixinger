@@ -3,7 +3,7 @@ package com.cb.yixinger.service.impl;
 import com.cb.yixinger.dao.UserDao;
 import com.cb.yixinger.entity.User;
 import com.cb.yixinger.service.UserService;
-import com.cb.yixinger.utils.Constants;
+import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.utils.HttpRequestor;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;

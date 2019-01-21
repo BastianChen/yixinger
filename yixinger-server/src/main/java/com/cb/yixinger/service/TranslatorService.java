@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSONArray;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 百度翻译Service
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2018-11-30 16:53
  **/

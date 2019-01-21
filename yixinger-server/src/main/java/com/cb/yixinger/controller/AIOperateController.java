@@ -7,13 +7,16 @@ import com.cb.yixinger.entity.PhotoDistinguish;
 import com.cb.yixinger.entity.TextDistinguish;
 import com.cb.yixinger.entity.Translator;
 import com.cb.yixinger.service.PhotoDistinguishService;
+import com.cb.yixinger.service.SpeechService;
 import com.cb.yixinger.service.TextDistinguishService;
 import com.cb.yixinger.service.TranslatorService;
 import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.FileUploadUtil;
+import com.cb.yixinger.utils.ai.speech.DemoException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,8 @@ public class AIOperateController {
     private PhotoDistinguishService photoDistinguishService;
     @Autowired
     private TextDistinguishService textDistinguishService;
+    @Autowired
+    private SpeechService speechService;
     private static final Logger logger = LoggerFactory.getLogger(AIOperateController.class);
 
     @LoggerManage(logDescription = "图像识别")
@@ -219,11 +224,11 @@ public class AIOperateController {
         BaseMessage baseMessage = new BaseMessage();
         List<Translator> translatorList = translatorService.getTranslatorListByType(type);
         if (translatorList != null && translatorList.size() > 0) {
-            if(type.equals("1")){
-                logger.info("获取type类型为 {} 的所有翻译记录成功","文字识别");
+            if (type.equals("1")) {
+                logger.info("获取type类型为 {} 的所有翻译记录成功", "文字识别");
                 baseMessage.setMessage("获取文字识别的所有翻译记录成功");
-            }else if (type.equals("2")){
-                logger.info("获取type类型为 {} 的所有翻译记录成功","图像识别");
+            } else if (type.equals("2")) {
+                logger.info("获取type类型为 {} 的所有翻译记录成功", "图像识别");
                 baseMessage.setMessage("获取图像识别的所有翻译记录成功");
             }
             baseMessage.setData(translatorList);
@@ -247,6 +252,25 @@ public class AIOperateController {
         } else {
             logger.info("idList为空", idList);
             baseMessage.initStateAndMessage(1001, "idList为空");
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "语音合成")
+    @ApiOperation(value = "语音合成", notes = "语音合成 ", response = BaseMessage.class)
+    @RequestMapping(value = "/speechSynthesis", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> addPlace(
+            @ApiParam(value = "文本List", required = true) @RequestParam(value = "textList") String text,
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws JSONException, DemoException, IOException {
+        BaseMessage baseMessage = new BaseMessage();
+        if (!CommonUtil.isNullOrWhiteSpace(text)) {
+            String speechPath = speechService.speechSynthesis(text, userId);
+            if (!CommonUtil.isNullOrWhiteSpace(speechPath)) {
+                baseMessage.setData(speechPath);
+                baseMessage.setMessage("语音合成成功");
+            } else {
+                baseMessage.initStateAndMessage(1001, "语音合成失败");
+            }
         }
         return baseMessage.response();
     }

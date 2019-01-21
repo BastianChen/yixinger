@@ -3,7 +3,7 @@ package com.cb.yixinger.service.impl;
 import com.cb.yixinger.dao.PhotoDistinguishMapper;
 import com.cb.yixinger.entity.PhotoDistinguish;
 import com.cb.yixinger.service.PhotoDistinguishService;
-import com.cb.yixinger.utils.Constants;
+import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.utils.ai.imageclassify.AipImageClassify;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @Description: 图像识别相关service
+ * @Description: 图像识别ServiceImpl
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2019-01-17 14:51
  **/

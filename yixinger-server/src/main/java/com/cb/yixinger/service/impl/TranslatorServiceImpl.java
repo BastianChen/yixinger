@@ -5,7 +5,7 @@ import com.cb.yixinger.dao.TranslatorMapper;
 import com.cb.yixinger.entity.Translator;
 import com.cb.yixinger.entity.User;
 import com.cb.yixinger.service.TranslatorService;
-import com.cb.yixinger.utils.Constants;
+import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.utils.TransApi;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Description: 翻译service
+ * @Description: 百度翻译ServiceImpl
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2018-11-30 16:54
  **/

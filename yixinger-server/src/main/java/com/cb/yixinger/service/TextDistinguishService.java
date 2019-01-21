@@ -5,7 +5,7 @@ import com.cb.yixinger.entity.TextDistinguish;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 文字识别Service
  * @author: YFZX-CB-1784 ChenBen
  * @create: 2019-01-17 14:52
  **/
