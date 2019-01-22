@@ -71,7 +71,7 @@ public class PlaceApiController {
         String placeCommentListName = "placeCommentList?uid=" + uid;
         String placeNameValue = redisTemplate.opsForValue().get(placeName);
         if (CommonUtil.isNotEmpty(placeNameValue)) {
-            logger.info("读取缓存的游玩地点数据");
+            logger.info("读取 {} 缓存数据", placeName);
             String placeCommentListNameValue = redisTemplate.opsForValue().get(placeCommentListName);
             JSONObject placeJsonObject = JSONObject.fromObject(placeNameValue);
             Place place = (Place) JSONObject.toBean(placeJsonObject, Place.class);
@@ -84,7 +84,7 @@ public class PlaceApiController {
             baseMessage.setData(placeDTO);
             return baseMessage.response();
         } else {
-            logger.info("未读取到缓存数据");
+            logger.info("未读取到 {} 缓存数据", placeName);
             Place place = placeService.getPlaceByUid(uid);
             if (place != null) {
                 List<PlaceComment> placeCommentList = placeCommentService.getPlaceComment(uid);
@@ -95,6 +95,8 @@ public class PlaceApiController {
                 JSONArray placeCommentListJsonArray = JSONArray.parseArray(JSON.toJSONString(placeCommentList));
                 redisTemplate.opsForValue().set(placeName, placeJsonObject.toString(), 1, TimeUnit.HOURS);
                 redisTemplate.opsForValue().set(placeCommentListName, placeCommentListJsonArray.toString(), 1, TimeUnit.HOURS);
+                logger.info("将游玩地点数据添加到redis缓存中，缓存名为{}，缓存时间为1小时", placeName);
+                logger.info("将uid为 {} 的游玩地点数据添加到redis缓存中，缓存名为{}，缓存时间为1小时", uid, placeCommentListName);
                 logger.info("获取uid为 {} 的游玩地点 {} 成功", uid, place.getName());
                 baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点 " + place.getName() + " 成功");
                 baseMessage.setData(placeDTO);

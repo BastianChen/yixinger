@@ -54,25 +54,25 @@ public class UserApiController {
     public ResponseEntity<BaseMessage> getUser(@ApiParam(value = "用户openid", required = true) @RequestParam(value = "openid") String openid,
                                                @ApiParam(value = "用户选择的翻译语言", required = true, defaultValue = "zh") @RequestParam(value = "language") String language) {
         BaseMessage baseMessage = new BaseMessage();
-        String userValue = redisTemplate.opsForValue().get("user");
-        if (CommonUtil.isNotEmpty(userValue)) {
-            logger.info("读取缓存的用户数据");
+        String userValue = redisTemplate.opsForValue().get("user-" + openid);
+        if (CommonUtil.isNullOrWhiteSpace(userValue)) {
+            logger.info("读取user-{}缓存数据", openid);
             JSONObject jsonObject = JSONObject.fromObject(userValue);
             User user = (User) JSONObject.toBean(jsonObject, User.class);
             baseMessage.setData(user);
             logger.info("获取用户 {} 信息成功", user.getNickName());
             return baseMessage.response();
-        }else {
-            logger.info("未读取到缓存数据");
+        } else {
+            logger.info("未读取到user-{}缓存数据", openid);
             User user = userService.getUser(openid);
             baseMessage.setData(user);
             logger.info("获取用户 {} 信息成功", user.getNickName());
             user = translatorService.translateUserInfo(user, language);
             logger.info("翻译用户 {} 信息成功", user.getNickName());
             baseMessage.setMessage("获取并翻译用户 " + user.getNickName() + " 信息成功");
-            logger.info("将用户数据添加到redis缓存中");
             JSONObject jsonObject = JSONObject.fromObject(user);
-            redisTemplate.opsForValue().set("user",jsonObject.toString(),2,TimeUnit.HOURS);
+            redisTemplate.opsForValue().set("user-" + openid, jsonObject.toString(), 2, TimeUnit.HOURS);
+            logger.info("将用户数据添加到redis缓存中，缓存名为user-{}，缓存时间为2小时", openid);
             return baseMessage.response();
         }
     }

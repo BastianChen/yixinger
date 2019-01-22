@@ -71,13 +71,13 @@ public class SpeechServiceImpl implements SpeechService {
         }
         String tokenValue = redisTemplate.opsForValue().get("speechToken");
         if (!CommonUtil.isNullOrWhiteSpace(tokenValue)) {
-            logger.info("读取token缓存数据");
+            logger.info("读取speechToken缓存数据");
             token = tokenValue;
         } else {
-            logger.info("未读取到缓存数据");
+            logger.info("未读取到speechToken缓存数据");
             token = holder.getToken();
-            redisTemplate.opsForValue().set("speechToken", token, 30, TimeUnit.DAYS);
-            logger.info("将token添加到redis缓存中，缓存时间为30天");
+            redisTemplate.opsForValue().set("speechToken", token, 29, TimeUnit.DAYS);
+            logger.info("将token添加到redis缓存中，缓存名为speechToken，缓存时间为29天");
         }
         // 此处2次urlEncode，确保特殊字符被正确编码
         String params = "tex=" + ConnUtil.urlEncode(ConnUtil.urlEncode(speechText));

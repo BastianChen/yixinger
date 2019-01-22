@@ -11,11 +11,14 @@ import org.json.JSONObject;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.Proxy;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * @Description:
  * @author: YFZX-CB-1784 ChenBen
@@ -26,9 +29,15 @@ public class BaseClient {
     protected String appId;
     protected String aipKey;
     protected String aipToken;
-    protected String accessToken;   // 不适用于使用公有云ak/sk的用户
+    /**
+     * 不适用于使用公有云ak/sk的用户
+     */
+    protected String accessToken;
     protected AtomicBoolean isAuthorized;
-    protected AtomicBoolean isBceKey;   // 是否为公有云用户
+    /**
+     * 是否为公有云用户
+     */
+    protected AtomicBoolean isBceKey;
     protected Calendar expireDate;
     protected AuthState state;
     protected AipClientConfiguration config;
@@ -61,8 +70,7 @@ public class BaseClient {
                     if (value) {
                         state = EAuthState.STATE_AIP_AUTH_OK;
                         isBceKey.set(false);
-                    }
-                    else {
+                    } else {
                         state = EAuthState.STATE_TRUE_CLOUD_USER;
                         isBceKey.set(true);
                     }
@@ -73,8 +81,7 @@ public class BaseClient {
                         state = EAuthState.STATE_TRUE_AIP_USER;
                         isBceKey.set(false);
                         isAuthorized.set(true);
-                    }
-                    else {
+                    } else {
                         state = EAuthState.STATE_POSSIBLE_CLOUD_USER;
                         isBceKey.set(true);
                     }
@@ -86,8 +93,7 @@ public class BaseClient {
                     if (value) {
                         state = EAuthState.STATE_TRUE_CLOUD_USER;
                         isBceKey.set(true);
-                    }
-                    else {
+                    } else {
                         state = EAuthState.STATE_TRUE_AIP_USER;
                         isBceKey.set(false);
                         isAuthorized.set(true);
@@ -119,14 +125,12 @@ public class BaseClient {
         String log4jConf = System.getProperty(AipClientConst.LOG4J_CONF_PROPERTY);
         if (log4jConf != null && !log4jConf.equals("")) {
             PropertyConfigurator.configure(log4jConf);
-        }
-        else {
+        } else {
             BasicConfigurator.configure();
         }
     }
 
     /**
-     *
      * @param timeout 服务器建立连接的超时时间（单位：毫秒）
      */
     public void setConnectionTimeoutInMillis(int timeout) {
@@ -137,7 +141,6 @@ public class BaseClient {
     }
 
     /**
-     *
      * @param timeout 通过打开的连接传输数据的超时时间（单位：毫秒）
      */
     public void setSocketTimeoutInMillis(int timeout) {
@@ -149,6 +152,7 @@ public class BaseClient {
 
     /**
      * 设置访问网络需要的http代理
+     *
      * @param host 代理服务器地址
      * @param port 代理服务器端口
      */
@@ -161,6 +165,7 @@ public class BaseClient {
 
     /**
      * 设置访问网络需要的socket代理
+     *
      * @param host 代理服务器地址
      * @param port 代理服务器端口
      */
@@ -173,6 +178,7 @@ public class BaseClient {
 
     /**
      * get OAuth access token, synchronized function
+     *
      * @param config 网络连接设置
      */
     protected synchronized void getAccessToken(AipClientConfiguration config) throws JSONException {
@@ -212,8 +218,7 @@ public class BaseClient {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("current state after check priviledge: " + state.toString());
             }
-        }
-        else if (!res.isNull("error_code")) {
+        } else if (!res.isNull("error_code")) {
             state.transfer(false);
             LOGGER.warn("oauth get error, current state: " + state.toString());
         }
@@ -271,8 +276,7 @@ public class BaseClient {
             request.addHeader(Headers.HOST, request.getUri().getHost());
             request.addHeader(Headers.BCE_DATE, timestamp);
             request.addHeader(Headers.AUTHORIZATION, CloudAuth.sign(request, this.aipKey, this.aipToken, timestamp));
-        }
-        else {
+        } else {
             request.addParam("aipSdk", "java");
             request.addParam("access_token", accessToken);
         }
@@ -280,6 +284,7 @@ public class BaseClient {
 
     /**
      * send request to server
+     *
      * @param request AipRequest object
      * @return JSONObject of server response
      */
@@ -290,7 +295,7 @@ public class BaseClient {
         Integer status = response.getStatus();
         if (status.equals(200) && !resData.equals("")) {
             try {
-                JSONObject res =  new JSONObject(resData);
+                JSONObject res = new JSONObject(resData);
                 if (state.getState().equals(EAuthState.STATE_POSSIBLE_CLOUD_USER)) {
                     boolean cloudAuthState = res.isNull("error_code")
                             || res.getInt("error_code") != AipClientConst.IAM_ERROR_CODE;
@@ -308,8 +313,7 @@ public class BaseClient {
             } catch (JSONException e) {
                 return Util.getGeneralError(-1, resData);
             }
-        }
-        else {
+        } else {
             LOGGER.warn(String.format("call failed! response status: %d, data: %s", status, resData));
             return AipError.NET_TIMEOUT_ERROR.toJsonResult();
 
