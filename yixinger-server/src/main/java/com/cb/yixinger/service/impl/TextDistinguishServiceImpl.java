@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -68,9 +69,22 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
 
     @Override
     public void deleteTextDistinguishById(String idList) {
+        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/";
         List<String> integerList = Arrays.asList(idList.split(";"));
         for (String id : integerList) {
-            textDistinguishMapper.deleteByPrimaryKey(Integer.valueOf(id));
+            TextDistinguish textDistinguish = textDistinguishMapper.selectByPrimaryKey(Integer.valueOf(id));
+            if (textDistinguish!=null){
+                File file = new File(resourcePath + textDistinguish.getImageUrl());
+                if (file.exists()) {
+                    logger.info("文字识别记录——删除项目中的图片文件，文件路径为 {}", resourcePath + textDistinguish.getImageUrl());
+                    file.delete();
+                    logger.info("文字识别记录——删除图片文件成功");
+                }
+                logger.info("文字识别记录——删除数据库中id为 {} 的数据", id);
+                textDistinguishMapper.deleteByPrimaryKey(Integer.valueOf(id));
+            }else {
+                logger.info("文字识别记录——数据库中并没有id为 {} 的数据",id);
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -79,9 +80,9 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
             e.printStackTrace();
         }
         Boolean isSuccess = photoDistinguishMapper.insertSelective(photoDistinguish) > 0;
-        if (isSuccess){
+        if (isSuccess) {
             logger.info("新增图像识别记录成功");
-        }else {
+        } else {
             logger.error("新增图像识别记录失败");
         }
         return photoDistinguish;
@@ -95,9 +96,22 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deletePhotoDistinguishById(String idList) {
+        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/";
         List<String> integerList = Arrays.asList(idList.split(";"));
         for (String id : integerList) {
-            photoDistinguishMapper.deleteByPrimaryKey(Integer.valueOf(id));
+            PhotoDistinguish photoDistinguish = photoDistinguishMapper.selectByPrimaryKey(Integer.valueOf(id));
+            if (photoDistinguish!=null){
+                File file = new File(resourcePath + photoDistinguish.getImageUrl());
+                if (file.exists()) {
+                    logger.info("图像识别记录——删除项目中的图片文件，文件路径为 {}", resourcePath + photoDistinguish.getImageUrl());
+                    file.delete();
+                    logger.info("图像识别记录——删除图片文件成功");
+                }
+                logger.info("图像识别记录——删除数据库中id为 {} 的数据", id);
+                photoDistinguishMapper.deleteByPrimaryKey(Integer.valueOf(id));
+            }else {
+                logger.info("图像识别记录——数据库中并没有id为 {} 的数据",id);
+            }
         }
     }
 }
