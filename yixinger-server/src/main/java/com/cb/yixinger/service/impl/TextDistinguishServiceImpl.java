@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -73,12 +74,13 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteTextDistinguishById(String idList) {
         String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/";
         List<String> integerList = Arrays.asList(idList.split(";"));
         for (String id : integerList) {
             TextDistinguish textDistinguish = textDistinguishMapper.selectByPrimaryKey(Integer.valueOf(id));
-            if (textDistinguish!=null){
+            if (textDistinguish != null) {
                 File file = new File(resourcePath + textDistinguish.getImageUrl());
                 if (file.exists()) {
                     logger.info("文字识别记录——删除项目中的图片文件，文件路径为 {}", resourcePath + textDistinguish.getImageUrl());
@@ -87,8 +89,8 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
                 }
                 logger.info("文字识别记录——删除数据库中id为 {} 的数据", id);
                 textDistinguishMapper.deleteByPrimaryKey(Integer.valueOf(id));
-            }else {
-                logger.info("文字识别记录——数据库中并没有id为 {} 的数据",id);
+            } else {
+                logger.info("文字识别记录——数据库中并没有id为 {} 的数据", id);
             }
         }
     }

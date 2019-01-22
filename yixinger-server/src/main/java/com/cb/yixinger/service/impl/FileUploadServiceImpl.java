@@ -39,11 +39,11 @@ public class FileUploadServiceImpl implements FileUploadService {
                 imageFile.transferTo(file);
                 return saveName;
             } else {
-                baseMessage.initStateAndMessage(1001, "不支持的图片格式");
+                baseMessage.setMessageDetail("不支持的图片格式");
                 return null;
             }
         } else {
-            baseMessage.initStateAndMessage(1001, "文件为空");
+            baseMessage.setMessageDetail("文件为空");
             return null;
         }
     }

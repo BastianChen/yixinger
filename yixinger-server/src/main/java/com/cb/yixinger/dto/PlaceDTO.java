@@ -2,6 +2,7 @@ package com.cb.yixinger.dto;
 
 import com.cb.yixinger.entity.Place;
 import com.cb.yixinger.entity.PlaceComment;
+import com.cb.yixinger.entity.PlacePhoto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,4 +19,6 @@ public class PlaceDTO {
     private Place place;
     @ApiModelProperty(value = "地点评论列表")
     private List<PlaceComment> placeCommentList;
+    @ApiModelProperty(value = "地点图片列表")
+    private List<PlacePhoto> placePhotoList;
 }

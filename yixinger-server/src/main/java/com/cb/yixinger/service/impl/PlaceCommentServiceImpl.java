@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -138,5 +140,37 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
             logger.error("用户更新评论失败");
         }
         return placeComment;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteCommentById(String idList) {
+        List<String> integerList = Arrays.asList(idList.split(";"));
+        for (String id : integerList) {
+            PlaceComment placeComment = placeCommentMapper.selectByPrimaryKey(Integer.valueOf(id));
+            if (placeComment != null) {
+                if (!CommonUtil.isNullOrWhiteSpace(placeComment.getImageList())) {
+                    String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/";
+                    JSONArray imageArray = JSONArray.fromObject(placeComment.getImageList());
+                    logger.info("id为{}的评论有{}张图片", id, imageArray.size());
+                    JSONObject imageObject;
+                    for (int i = 0; i < imageArray.size(); i++) {
+                        imageObject = (JSONObject) imageArray.get(i);
+                        File file = new File(resourcePath + imageObject.getString("pic_url"));
+                        if (file.exists()) {
+                            logger.info("评论记录——删除项目中的图片文件，文件路径为 {}", resourcePath + imageObject.getString("pic_url"));
+                            file.delete();
+                            logger.info("评论记录——删除图片文件成功");
+                        }
+                    }
+                } else {
+                    logger.info("id为{}的评论没有图片", id);
+                }
+                logger.info("评论记录——删除数据库中id为 {} 的数据", id);
+                placeCommentMapper.deleteByPrimaryKey(Integer.valueOf(id));
+            } else {
+                logger.info("评论记录——数据库中并没有id为 {} 的数据", id);
+            }
+        }
     }
 }

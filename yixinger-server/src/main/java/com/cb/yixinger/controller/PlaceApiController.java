@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.cb.yixinger.config.LoggerManage;
 import com.cb.yixinger.dto.PlaceDTO;
 import com.cb.yixinger.entity.*;
-import com.cb.yixinger.service.FileUploadService;
-import com.cb.yixinger.service.LikesService;
-import com.cb.yixinger.service.PlaceCommentService;
-import com.cb.yixinger.service.PlaceService;
+import com.cb.yixinger.service.*;
 import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.FileUploadUtil;
 import io.swagger.annotations.*;
@@ -47,6 +44,8 @@ public class PlaceApiController {
     @Autowired
     private FileUploadService fileUploadService;
     @Autowired
+    private PlacePhotoService placePhotoService;
+    @Autowired
     RedisTemplate<String, String> redisTemplate;
     private static final Logger logger = LoggerFactory.getLogger(PlaceApiController.class);
 
@@ -69,6 +68,7 @@ public class PlaceApiController {
             place.setLongitude(longitude);
             place = placeService.addPlace(place, uid);
             placeCommentService.addPlaceCommentByReptile(place.getCommentList(), uid);
+            placePhotoService.addPlacePhotoByReptile(place.getPhotoList(), uid);
             logger.info("添加游玩地点 {} 成功", place.getName());
             baseMessage.setMessage("添加游玩地点 " + place.getName() + " 成功");
         }
@@ -82,16 +82,20 @@ public class PlaceApiController {
         BaseMessage baseMessage = new BaseMessage();
         String placeName = "place?uid=" + uid;
         String placeCommentListName = "placeCommentList?uid=" + uid;
+        String placePhotoListName = "placePhotoList?uid=" + uid;
         String placeNameValue = redisTemplate.opsForValue().get(placeName);
         if (CommonUtil.isNotEmpty(placeNameValue)) {
             logger.info("读取 {} 缓存数据", placeName);
             String placeCommentListNameValue = redisTemplate.opsForValue().get(placeCommentListName);
+            String placePhotoListNameValue = redisTemplate.opsForValue().get(placePhotoListName);
             JSONObject placeJsonObject = JSONObject.fromObject(placeNameValue);
             Place place = (Place) JSONObject.toBean(placeJsonObject, Place.class);
             List<PlaceComment> placeCommentList = com.alibaba.fastjson.JSONObject.parseArray(placeCommentListNameValue, PlaceComment.class);
+            List<PlacePhoto> placePhotoList = com.alibaba.fastjson.JSONObject.parseArray(placePhotoListNameValue, PlacePhoto.class);
             PlaceDTO placeDTO = new PlaceDTO();
             placeDTO.setPlace(place);
             placeDTO.setPlaceCommentList(placeCommentList);
+            placeDTO.setPlacePhotoList(placePhotoList);
             logger.info("获取uid为 {} 的游玩地点 {} 成功", uid, place.getName());
             baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点 " + place.getName() + " 成功");
             baseMessage.setData(placeDTO);
@@ -101,15 +105,20 @@ public class PlaceApiController {
             Place place = placeService.getPlaceByUid(uid);
             if (place != null) {
                 List<PlaceComment> placeCommentList = placeCommentService.getPlaceComment(uid);
+                List<PlacePhoto> placePhotoList = placePhotoService.getPlacePhoto(uid);
                 PlaceDTO placeDTO = new PlaceDTO();
                 placeDTO.setPlace(place);
                 placeDTO.setPlaceCommentList(placeCommentList);
+                placeDTO.setPlacePhotoList(placePhotoList);
                 JSONObject placeJsonObject = JSONObject.fromObject(place);
                 JSONArray placeCommentListJsonArray = JSONArray.parseArray(JSON.toJSONString(placeCommentList));
+                JSONArray placePhotoListJsonArray = JSONArray.parseArray(JSON.toJSONString(placePhotoList));
                 redisTemplate.opsForValue().set(placeName, placeJsonObject.toString(), 1, TimeUnit.HOURS);
                 redisTemplate.opsForValue().set(placeCommentListName, placeCommentListJsonArray.toString(), 1, TimeUnit.HOURS);
+                redisTemplate.opsForValue().set(placePhotoListName, placePhotoListJsonArray.toString(), 1, TimeUnit.HOURS);
                 logger.info("将游玩地点数据添加到redis缓存中，缓存名为{}，缓存时间为1小时", placeName);
-                logger.info("将uid为 {} 的游玩地点数据添加到redis缓存中，缓存名为{}，缓存时间为1小时", uid, placeCommentListName);
+                logger.info("将uid为 {} 的游玩地点评论列表数据添加到redis缓存中，缓存名为{}，缓存时间为1小时", uid, placeCommentListName);
+                logger.info("将uid为 {} 的游玩地点图片列表数据添加到redis缓存中，缓存名为{}，缓存时间为1小时", uid, placePhotoListName);
                 logger.info("获取uid为 {} 的游玩地点 {} 成功", uid, place.getName());
                 baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点 " + place.getName() + " 成功");
                 baseMessage.setData(placeDTO);
@@ -145,25 +154,25 @@ public class PlaceApiController {
     @ApiOperation(value = "根据uid给游玩地点添加评论", notes = "根据uid给游玩地点添加评论 ", response = BaseMessage.class)
     @RequestMapping(value = "/addPlaceComment", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> addPlaceComment(
-            @ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
+            //@ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
             @ApiParam(value = "评论", required = true) @RequestBody PlaceComment placeComment) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
-        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/comment/";
-        String imageName;
-        JSONArray imageArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-        for (MultipartFile imageFile : imageFiles) {
-            imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
-            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
-                logger.info("返回的图片名称为 {}", imageName);
-                jsonObject.put("pic_url", "/images/comment/" + imageName + "_src.jpg");
-                imageArray.add(jsonObject);
-            } else {
-                logger.info("返回的图片名称为Null");
-                baseMessage.initStateAndMessage(1001, "添加评论失败");
-            }
-        }
-        placeComment.setImageList(imageArray.toString());
+//        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/comment/";
+//        String imageName;
+//        JSONArray imageArray = new JSONArray();
+//        JSONObject jsonObject = new JSONObject();
+//        for (MultipartFile imageFile : imageFiles) {
+//            imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
+//            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
+//                logger.info("返回的图片名称为 {}", imageName);
+//                jsonObject.put("pic_url", "/images/comment/" + imageName + "_src.jpg");
+//                imageArray.add(jsonObject);
+//            } else {
+//                logger.info("返回的图片名称为Null");
+//                baseMessage.initStateAndMessage(1001, "添加评论失败");
+//            }
+//        }
+//        placeComment.setImageList(imageArray.toString());
         boolean result = placeCommentService.addPlaceComment(placeComment);
         if (!result) {
             logger.error("给uid为 {} 的游玩地点添加评论失败", placeComment.getPlaceId());
@@ -202,4 +211,23 @@ public class PlaceApiController {
         }
         return baseMessage.response();
     }
+
+    @LoggerManage(logDescription = "根据id删除评论")
+    @ApiOperation(value = "根据id删除评论", notes = "根据id删除评论 ", response = BaseMessage.class)
+    @RequestMapping(value = "/deleteCommentById", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> deleteCommentById(
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") String idList) {
+        BaseMessage baseMessage = new BaseMessage();
+        if (!CommonUtil.isNullOrWhiteSpace(idList)) {
+            placeCommentService.deleteCommentById(idList);
+            logger.info("成功删除id为 {} 的文字识别记录", idList);
+            baseMessage.setMessage("删除成功");
+        } else {
+            logger.info("idList为空", idList);
+            baseMessage.initStateAndMessage(1001, "idList为空");
+        }
+        return baseMessage.response();
+    }
+
+
 }
