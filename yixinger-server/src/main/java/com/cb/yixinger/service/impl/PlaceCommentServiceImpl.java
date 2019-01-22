@@ -7,6 +7,7 @@ import com.cb.yixinger.entity.Likes;
 import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.PlaceComment;
 import com.cb.yixinger.service.PlaceCommentService;
+import com.cb.yixinger.utils.CommonUtil;
 import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -64,6 +65,7 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
     @Transactional(rollbackFor = Exception.class)
     public void addPlaceCommentByReptile(String commentList, String placeId) {
         JSONArray jsonArray = JSONArray.fromObject(commentList);
+        logger.info("对爬取下来的部分评论进行解析");
         for (int i = 0; i < jsonArray.size(); i++) {
             PlaceComment placeComment = new PlaceComment();
             JSONObject jsonObject = (JSONObject) jsonArray.get(i);
@@ -76,6 +78,9 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
             placeComment.setComment(jsonObject.getString("content"));
             placeComment.setImageList(jsonObject.getString("pics"));
             placeComment.setCommentType(1);
+            if (CommonUtil.isNullOrWhiteSpace(placeComment.getUserImage())) {
+                placeComment.setUserImage("/images/default.jpg");
+            }
             placeCommentMapper.insertSelective(placeComment);
         }
     }
@@ -126,7 +131,7 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
                 logger.error("用户取消点赞失败");
             }
         }
-        Boolean isSuccessUpdate = placeCommentMapper.updateByPrimaryKeySelective(placeComment)>0;
+        Boolean isSuccessUpdate = placeCommentMapper.updateByPrimaryKeySelective(placeComment) > 0;
         if (isSuccessUpdate) {
             logger.info("用户更新评论成功");
         } else {

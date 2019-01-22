@@ -60,7 +60,7 @@ public class PlaceServiceImpl implements PlaceService {
         place.setOverallRating(content.getString("overall_rating"));
         content = content.getJSONObject("vs_content").getJSONObject("invisible").getJSONObject("bigdata");
         JSONArray jsonArray = content.getJSONArray("tags1");
-        JSONArray tags1Array = new JSONArray();
+        JSONArray tags1Array;
         for (int i = 0; i < jsonArray.size(); i++) {
             tags1Array = (JSONArray) jsonArray.get(i);
             tags1Array = (JSONArray) tags1Array.get(0);
@@ -72,6 +72,7 @@ public class PlaceServiceImpl implements PlaceService {
         }
 
         JSONObject avocado = jsonObject.getJSONObject("avocado");
+        System.out.println(avocado.toString());
         JSONArray cards = avocado.getJSONArray("cards");
         avocado = cards.getJSONObject(1);
         try {
@@ -134,7 +135,7 @@ public class PlaceServiceImpl implements PlaceService {
             // 景点天气
             place.setWeather(avocado.getJSONObject("weather").toString());
             // 景点印象标签
-            avocado = cards.getJSONObject(7).getJSONObject("data");
+            avocado = cards.getJSONObject(6).getJSONObject("data");
             list = avocado.getJSONArray("content");
             JSONArray placeContent = new JSONArray();
             for (int i=0;i<list.size();i++){
@@ -143,7 +144,7 @@ public class PlaceServiceImpl implements PlaceService {
             }
             place.setContent(placeContent.toString());
             // 景点部分评论
-            avocado = cards.getJSONObject(8).getJSONObject("data").getJSONObject("list");
+            avocado = cards.getJSONObject(7).getJSONObject("data").getJSONObject("list");
             place.setCommentList(avocado.getJSONArray("comment_list").toString());
             // 景点评论数  avocado.getInt("totalNum")
             if (avocado.getJSONArray("comment_list").size() == 0) {
