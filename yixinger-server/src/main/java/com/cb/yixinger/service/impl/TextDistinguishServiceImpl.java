@@ -46,6 +46,11 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
         options.put("detect_direction", "true");
         options.put("detect_language", "true");
         options.put("probability", "true");
+        File dir = new File(imagePath);
+        if (!dir.exists()) {
+            logger.error("服务器中不存在该图片");
+            return null;
+        }
         try {
             JSONObject jsonObject = aipOcr.basicAccurateGeneral(imagePath, options);
             textDistinguish.setUserId(userId);

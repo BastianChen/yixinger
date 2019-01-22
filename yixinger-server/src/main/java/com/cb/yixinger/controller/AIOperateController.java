@@ -6,10 +6,7 @@ import com.cb.yixinger.entity.BaseMessage;
 import com.cb.yixinger.entity.PhotoDistinguish;
 import com.cb.yixinger.entity.TextDistinguish;
 import com.cb.yixinger.entity.Translator;
-import com.cb.yixinger.service.PhotoDistinguishService;
-import com.cb.yixinger.service.SpeechService;
-import com.cb.yixinger.service.TextDistinguishService;
-import com.cb.yixinger.service.TranslatorService;
+import com.cb.yixinger.service.*;
 import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.FileUploadUtil;
 import com.cb.yixinger.utils.ai.speech.DemoException;
@@ -48,43 +45,35 @@ public class AIOperateController {
     private TextDistinguishService textDistinguishService;
     @Autowired
     private SpeechService speechService;
+    @Autowired
+    private FileUploadService fileUploadService;
     private static final Logger logger = LoggerFactory.getLogger(AIOperateController.class);
 
     @LoggerManage(logDescription = "图像识别")
     @ApiOperation(value = "图像识别", notes = "图像识别 ", response = BaseMessage.class)
     @RequestMapping(value = "/imageClassify", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> imageClassify(
-            @ApiParam(value = "imgFile", required = true) @RequestParam(value = "imgFile") MultipartFile imageFile,
+            @ApiParam(value = "图片", required = true) @RequestParam(value = "imgFile") MultipartFile imageFile,
             @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）", required = true) @RequestParam(value = "type") String type,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
         String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/photo/";
-        if (imageFile != null) {
-            logger.info("获取到图像并校验文件类型是否是被允许的");
-            if (FileUploadUtil.allowUpload(imageFile.getContentType())) {
-                logger.info("该文件类型是被允许的");
-                String fileName = FileUploadUtil.rename(imageFile.getOriginalFilename());
-                int end = fileName.lastIndexOf(".");
-                String saveName = fileName.substring(0, end);
-                File dir = new File(resourcePath);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                logger.info("---文件保存目录--" + dir);
-                File file = new File(dir, saveName + "_src.jpg");
-                imageFile.transferTo(file);
-                logger.info("----------------图像识别开始----------------");
-                PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(
-                        resourcePath + saveName + "_src.jpg", type, userId,
-                        "/images/photo/" + saveName + "_src.jpg");
-                logger.info("----------------图像识别结束----------------");
-                if (photoDistinguish != null) {
-                    baseMessage.setData(photoDistinguish);
-                    baseMessage.setMessage("图像识别成功");
-                } else {
-                    baseMessage.initStateAndMessage(1001, "图像识别失败");
-                }
+        String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
+        if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
+            logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
+            logger.info("----------------图像识别开始----------------");
+            PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(resourcePath + imageName + "_src.jpg", type, userId,
+                    "/images/photo/" + imageName + "_src.jpg");
+            logger.info("----------------图像识别结束----------------");
+            if (photoDistinguish != null) {
+                baseMessage.setData(photoDistinguish);
+                baseMessage.setMessage("图像识别成功");
+            } else {
+                baseMessage.initStateAndMessage(1001, "图像识别失败");
             }
+        } else {
+            logger.info("返回的图片名称为Null");
+            baseMessage.initStateAndMessage(1001, "图像识别失败,返回的图片名称为Null");
         }
         return baseMessage.response();
     }
@@ -127,35 +116,26 @@ public class AIOperateController {
     @ApiOperation(value = "文字识别", notes = "文字识别 ", response = BaseMessage.class)
     @RequestMapping(value = "/aipOcr", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> aipOcr(
-            @ApiParam(value = "imgFile", required = true) @RequestParam(value = "imgFile") MultipartFile imageFile,
+            @ApiParam(value = "图片", required = true) @RequestParam(value = "imgFile") MultipartFile imageFile,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
         String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/text/";
-        if (imageFile != null) {
-            logger.info("获取到图像并校验文件类型是否是被允许的");
-            if (FileUploadUtil.allowUpload(imageFile.getContentType())) {
-                logger.info("该文件类型是被允许的");
-                String fileName = FileUploadUtil.rename(imageFile.getOriginalFilename());
-                int end = fileName.lastIndexOf(".");
-                String saveName = fileName.substring(0, end);
-                File dir = new File(resourcePath);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                logger.info("---文件保存目录--" + dir);
-                File file = new File(dir, saveName + "_src.jpg");
-                imageFile.transferTo(file);
-                logger.info("----------------文字识别开始----------------");
-                TextDistinguish textDistinguish = textDistinguishService.textDistinguish(resourcePath + saveName + "_src.jpg",
-                        userId, "/images/text/" + saveName + "_src.jpg");
-                logger.info("----------------文字识别结束----------------");
-                if (textDistinguish != null) {
-                    baseMessage.setData(textDistinguish);
-                    baseMessage.setMessage("文字识别成功");
-                } else {
-                    baseMessage.initStateAndMessage(1001, "文字识别失败");
-                }
+        String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
+        if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
+            logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
+            logger.info("----------------文字识别开始----------------");
+            TextDistinguish textDistinguish = textDistinguishService.textDistinguish(resourcePath + imageName + "_src.jpg",
+                    userId, "/images/text/" + imageName + "_src.jpg");
+            logger.info("----------------文字识别结束----------------");
+            if (textDistinguish != null) {
+                baseMessage.setData(textDistinguish);
+                baseMessage.setMessage("文字识别成功");
+            } else {
+                baseMessage.initStateAndMessage(1001, "文字识别失败");
             }
+        } else {
+            logger.info("返回的图片名称为Null");
+            baseMessage.initStateAndMessage(1001, "文字识别失败,返回的图片名称为Null");
         }
         return baseMessage.response();
     }

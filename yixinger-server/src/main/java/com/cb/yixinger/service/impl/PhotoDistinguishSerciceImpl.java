@@ -48,6 +48,11 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
         options.put("baike_num", "5");
         PhotoDistinguish photoDistinguish = new PhotoDistinguish();
         JSONObject jsonObject = new JSONObject();
+        File dir = new File(imagePath);
+        if (!dir.exists()) {
+            logger.error("服务器中不存在该图片");
+            return null;
+        }
         try {
             switch (type) {
                 case "1":
