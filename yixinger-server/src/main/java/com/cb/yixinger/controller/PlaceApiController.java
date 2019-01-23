@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -184,8 +185,8 @@ public class PlaceApiController {
         return baseMessage.response();
     }
 
-    @LoggerManage(logDescription = "更新点赞数")
-    @ApiOperation(value = "更新点赞数", notes = "更新点赞数 ", response = BaseMessage.class)
+    @LoggerManage(logDescription = "更新评论点赞数")
+    @ApiOperation(value = "更新评论点赞数", notes = "更新评论点赞数 ", response = BaseMessage.class)
     @RequestMapping(value = "/updateLikes", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> updateLikes(
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
@@ -216,7 +217,7 @@ public class PlaceApiController {
     @ApiOperation(value = "根据id删除评论", notes = "根据id删除评论 ", response = BaseMessage.class)
     @RequestMapping(value = "/deleteCommentById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deleteCommentById(
-            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") String idList) {
+            @ApiParam(value = "评论id", required = true) @RequestParam(value = "id") String idList) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             placeCommentService.deleteCommentById(idList);
@@ -229,5 +230,100 @@ public class PlaceApiController {
         return baseMessage.response();
     }
 
+    @LoggerManage(logDescription = "根据uid分页获取游玩地点图片")
+    @ApiOperation(value = "根据uid分页获取游玩地点图片", notes = "根据uid分页获取游玩地点图片 ", response = BaseMessage.class)
+    @RequestMapping(value = "/getPlacePhotoByUid", produces = {"application/json"}, method = RequestMethod.GET)
+    public ResponseEntity<BaseMessage> getPlacePhoto(
+            @ApiParam(value = "地点uid", required = true) @RequestParam(value = "uid") String uid,
+            @ApiParam(value = "页数", required = true, defaultValue = "1") @RequestParam(value = "pageNo") Integer pageNo,
+            @ApiParam(value = "列数", required = true, defaultValue = "10") @RequestParam(value = "pageSize") Integer pageSize) {
+        BaseMessage baseMessage = new BaseMessage();
+        PageBean<PlacePhoto> placePhotoPageBean = placePhotoService.getPlacePhotoByUid(uid, pageNo, pageSize);
+        if (placePhotoPageBean.getItems() != null && placePhotoPageBean.getItems().size() > 0) {
+            logger.info("获取uid为 {} 的游玩地点的第 {} 页的图片成功", uid, pageNo);
+            baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点的图片成功");
+            baseMessage.setData(placePhotoPageBean);
+        } else {
+            logger.info("没有uid为 {} 的游玩地点的图片", uid);
+            baseMessage.initStateAndMessage(1001, "暂无图片");
+        }
+        return baseMessage.response();
+    }
 
+    @LoggerManage(logDescription = "获取图片详细数据并更新图片浏览数")
+    @ApiOperation(value = "获取图片详细数据并更新图片浏览数", notes = "获取图片详细数据并更新图片浏览数 ", response = BaseMessage.class)
+    @RequestMapping(value = "/updateReadTimes", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> updateReadTimes(
+            @ApiParam(value = "图片id", required = true) @RequestParam(value = "userId") Integer placePhotoId) {
+        BaseMessage baseMessage = new BaseMessage();
+        PlacePhoto placePhoto = placePhotoService.getPlacePhotoByPlacePhotoId(placePhotoId);
+        if (placePhoto != null) {
+            logger.info("获取id为 {} 的图片成功", placePhotoId);
+            placePhoto = placePhotoService.updateReadTimes(placePhoto);
+            baseMessage.setData(placePhoto);
+            baseMessage.setMessage("获取图片详细数据并更新图片浏览数成功");
+        } else {
+            logger.error("不存在id为 {} 的图片", placePhotoId);
+            baseMessage.initStateAndMessage(1001, "不存在该张图片");
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "根据id删除图片")
+    @ApiOperation(value = "根据id删除图片", notes = "根据id删除图片 ", response = BaseMessage.class)
+    @RequestMapping(value = "/deletePhotoById", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> deletePhotoById(
+            @ApiParam(value = "图片id", required = true) @RequestParam(value = "id") String idList) {
+        BaseMessage baseMessage = new BaseMessage();
+        if (!CommonUtil.isNullOrWhiteSpace(idList)) {
+            placePhotoService.deletePlacePhotoById(idList);
+            logger.info("成功删除id为 {} 的图片", idList);
+            baseMessage.setMessage("删除成功");
+        } else {
+            logger.info("idList为空", idList);
+            baseMessage.initStateAndMessage(1001, "idList为空");
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "根据uid给游玩地点上传图片")
+    @ApiOperation(value = "根据uid给游玩地点上传图片", notes = "根据uid给游玩地点上传图片 ", response = BaseMessage.class)
+    @RequestMapping(value = "/addPlacePhoto", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> addPlacePhoto(
+            //@ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
+            @ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile imageFile,
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
+            @ApiParam(value = "用户昵称", required = true) @RequestParam(value = "userName") String userName,
+            @ApiParam(value = "地点uid", required = true) @RequestParam(value = "placeId") String placeId) throws IOException {
+        BaseMessage baseMessage = new BaseMessage();
+        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/placephoto/";
+        String imageName;
+        PlacePhoto placePhoto = new PlacePhoto();
+        placePhoto.setUserId(userId);
+        placePhoto.setUserName(userName);
+        placePhoto.setPlaceId(placeId);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(System.currentTimeMillis());
+        placePhoto.setUploadDate(date);
+        placePhoto.setCommentType(2);
+        placePhoto.setReadTimes(0);
+        placePhoto.setImageSource("易行ER");
+        //for (MultipartFile imageFile : imageFiles) {
+            imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
+            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
+                logger.info("返回的图片名称为 {}", imageName);
+                if (CommonUtil.isNullOrWhiteSpace(placePhoto.getImageUrl())) {
+                    placePhoto.setImageUrl("/images/placephoto/" + imageName + "_src.jpg");
+                } else {
+                    placePhoto.setImageUrl(placePhoto.getImageUrl() + ";" + "/images/placephoto/" + imageName + "_src.jpg");
+                }
+            } else {
+                logger.info("返回的图片名称为Null");
+                baseMessage.initStateAndMessage(1001, "上传失败");
+            }
+        //}
+        placePhotoService.addPlacePhoto(placePhoto);
+        baseMessage.setMessage("上传成功");
+        return baseMessage.response();
+    }
 }
