@@ -57,7 +57,7 @@ public class UserApiController {
             @ApiParam(value = "用户选择的翻译语言", required = true, defaultValue = "zh") @RequestParam(value = "language") String language) {
         BaseMessage baseMessage = new BaseMessage();
         String userValue = redisTemplate.opsForValue().get("user-" + openid);
-        if (CommonUtil.isNullOrWhiteSpace(userValue)) {
+        if (!CommonUtil.isNullOrWhiteSpace(userValue)) {
             logger.info("读取user-{}缓存数据", openid);
             JSONObject jsonObject = JSONObject.fromObject(userValue);
             User user = (User) JSONObject.toBean(jsonObject, User.class);
