@@ -3,7 +3,6 @@ package com.cb.yixinger.service.impl;
 import com.cb.yixinger.dao.PlacePhotoDao;
 import com.cb.yixinger.dao.PlacePhotoMapper;
 import com.cb.yixinger.entity.PageBean;
-import com.cb.yixinger.entity.PlaceComment;
 import com.cb.yixinger.entity.PlacePhoto;
 import com.cb.yixinger.service.PlacePhotoService;
 import com.cb.yixinger.utils.CommonUtil;
@@ -113,7 +112,6 @@ public class PlacePhotoServiceImpl implements PlacePhotoService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void addPlacePhoto(PlacePhoto placePhoto) {
         placePhotoMapper.insertSelective(placePhoto);
     }

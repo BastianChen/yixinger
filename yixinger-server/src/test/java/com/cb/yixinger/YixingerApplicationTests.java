@@ -80,7 +80,7 @@ public class YixingerApplicationTests {
         place.setImage(content.getString("image"));
         place.setShopHours(content.getString("shop_hours"));
         place.setPrice(content.getString("price"));
-        place.setOverallRating(content.getString("overall_rating"));
+        place.setOverallRating(Double.valueOf(content.getString("overall_rating")));
         content = content.getJSONObject("vs_content").getJSONObject("invisible").getJSONObject("bigdata");
         JSONArray jsonArray = content.getJSONArray("tags1");
         JSONArray tags1Array = new JSONArray();

@@ -38,8 +38,9 @@ public class UserApiController {
     @LoggerManage(logDescription = "添加用户信息")
     @ApiOperation(value = "添加用户信息", notes = "添加用户信息 ", response = BaseMessage.class)
     @RequestMapping(value = "/addUser", produces = {"application/json"}, method = RequestMethod.POST)
-    public ResponseEntity<BaseMessage> addUser(@ApiParam(value = "用户", required = true) @RequestBody User user,
-                                               @ApiParam(value = "前端传回的code", required = true) @RequestParam(value = "code") String code) {
+    public ResponseEntity<BaseMessage> addUser(
+            @ApiParam(value = "用户", required = true) @RequestBody User user,
+            @ApiParam(value = "前端传回的code", required = true) @RequestParam(value = "code") String code) {
         BaseMessage baseMessage = new BaseMessage();
         user.setOpenid(userService.getOpenId(code));
         userService.addUser(user);
@@ -51,8 +52,9 @@ public class UserApiController {
     @LoggerManage(logDescription = "获取并翻译用户信息")
     @ApiOperation(value = "获取并翻译用户信息", notes = "获取并翻译用户信息 ", response = BaseMessage.class)
     @RequestMapping(value = "/getUser", produces = {"application/json"}, method = RequestMethod.GET)
-    public ResponseEntity<BaseMessage> getUser(@ApiParam(value = "用户openid", required = true) @RequestParam(value = "openid") String openid,
-                                               @ApiParam(value = "用户选择的翻译语言", required = true, defaultValue = "zh") @RequestParam(value = "language") String language) {
+    public ResponseEntity<BaseMessage> getUser(
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "openid") String openid,
+            @ApiParam(value = "用户选择的翻译语言", required = true, defaultValue = "zh") @RequestParam(value = "language") String language) {
         BaseMessage baseMessage = new BaseMessage();
         String userValue = redisTemplate.opsForValue().get("user-" + openid);
         if (CommonUtil.isNullOrWhiteSpace(userValue)) {

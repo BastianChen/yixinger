@@ -16,7 +16,7 @@ public class UserHistory implements Serializable {
     @OrderBy("desc")
     private Integer id;
     @ApiModelProperty(value="用户openid")
-    private Integer userId;
+    private String userId;
     @ApiModelProperty(value="地点id")
     private String placeId;
     @ApiModelProperty(value="用户浏览时间")

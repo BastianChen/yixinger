@@ -1,7 +1,14 @@
 package com.cb.yixinger.dao;
 
+import com.cb.yixinger.config.SqlMapper;
+import com.cb.yixinger.dto.UserHistoryDTO;
+import com.cb.yixinger.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * @Description:
@@ -12,4 +19,19 @@ import org.springframework.stereotype.Component;
 public class UserHistoryDao {
     @Autowired
     private UserHistoryMapper userHistoryMapper;
+    @Autowired
+    private SqlMapper sqlMapper;
+
+    public List<UserHistoryDTO> getUserHistoryByUserId(String userId) {
+        String sql = "SELECT history.id,history.user_id AS userId, history.place_id AS placeId, history.read_date AS readDate," +
+                "place.name AS placeName,place.address,place.showtag,place.overall_rating AS overallRating,place.price," +
+                "place.image FROM place LEFT JOIN user_history history ON history.place_id = place.uid ";
+        Dictionary<String, Object> dictionary = new Hashtable<>();
+        if (!CommonUtil.isNullOrWhiteSpace(userId)) {
+            sql += " WHERE history.user_id = #{userId} order by readDate desc";
+            dictionary.put("userId", userId);
+        }
+        List<UserHistoryDTO> userHistoryDTOList = sqlMapper.selectList(sql, dictionary, UserHistoryDTO.class);
+        return userHistoryDTOList;
+    }
 }

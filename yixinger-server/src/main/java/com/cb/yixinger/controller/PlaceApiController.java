@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.cb.yixinger.config.LoggerManage;
 import com.cb.yixinger.dto.PlaceDTO;
+import com.cb.yixinger.dto.UserHistoryDTO;
 import com.cb.yixinger.entity.*;
 import com.cb.yixinger.service.*;
 import com.cb.yixinger.utils.CommonUtil;
@@ -46,6 +47,8 @@ public class PlaceApiController {
     private FileUploadService fileUploadService;
     @Autowired
     private PlacePhotoService placePhotoService;
+    @Autowired
+    private UserHistoryService userHistoryService;
     @Autowired
     RedisTemplate<String, String> redisTemplate;
     private static final Logger logger = LoggerFactory.getLogger(PlaceApiController.class);
@@ -217,7 +220,7 @@ public class PlaceApiController {
     @ApiOperation(value = "根据id删除评论", notes = "根据id删除评论 ", response = BaseMessage.class)
     @RequestMapping(value = "/deleteCommentById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deleteCommentById(
-            @ApiParam(value = "评论id", required = true) @RequestParam(value = "id") String idList) {
+            @ApiParam(value = "评论id", required = true) @RequestParam(value = "idList") String idList) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             placeCommentService.deleteCommentById(idList);
@@ -273,7 +276,7 @@ public class PlaceApiController {
     @ApiOperation(value = "根据id删除图片", notes = "根据id删除图片 ", response = BaseMessage.class)
     @RequestMapping(value = "/deletePhotoById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deletePhotoById(
-            @ApiParam(value = "图片id", required = true) @RequestParam(value = "id") String idList) {
+            @ApiParam(value = "图片id", required = true) @RequestParam(value = "idList") String idList) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             placePhotoService.deletePlacePhotoById(idList);
@@ -290,8 +293,8 @@ public class PlaceApiController {
     @ApiOperation(value = "根据uid给游玩地点上传图片", notes = "根据uid给游玩地点上传图片 ", response = BaseMessage.class)
     @RequestMapping(value = "/addPlacePhoto", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> addPlacePhoto(
-            //@ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
-            @ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile imageFile,
+            @ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
+            //@ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile imageFile,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
             @ApiParam(value = "用户昵称", required = true) @RequestParam(value = "userName") String userName,
             @ApiParam(value = "地点uid", required = true) @RequestParam(value = "placeId") String placeId) throws IOException {
@@ -308,7 +311,7 @@ public class PlaceApiController {
         placePhoto.setCommentType(2);
         placePhoto.setReadTimes(0);
         placePhoto.setImageSource("易行ER");
-        //for (MultipartFile imageFile : imageFiles) {
+        for (MultipartFile imageFile : imageFiles) {
             imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
             if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
                 logger.info("返回的图片名称为 {}", imageName);
@@ -321,9 +324,110 @@ public class PlaceApiController {
                 logger.info("返回的图片名称为Null");
                 baseMessage.initStateAndMessage(1001, "上传失败");
             }
-        //}
+        }
         placePhotoService.addPlacePhoto(placePhoto);
         baseMessage.setMessage("上传成功");
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "添加或更新用户浏览记录")
+    @ApiOperation(value = "添加或更新用户浏览记录", notes = "添加或更新用户浏览记录 ", response = BaseMessage.class)
+    @RequestMapping(value = "/addUserHistory", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> addUserHistory(
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
+            @ApiParam(value = "地点uid", required = true) @RequestParam(value = "placeId") String placeId) {
+        BaseMessage baseMessage = new BaseMessage();
+        UserHistory userHistory = userHistoryService.getUserHistory(userId, placeId);
+        if (userHistory != null) {
+            logger.info("存在该条浏览记录，则更新浏览时间");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date = sdf.format(System.currentTimeMillis());
+            userHistory.setReadDate(date);
+            Boolean isUpdateSuccess = userHistoryService.updateUserHistory(userHistory);
+            if (isUpdateSuccess) {
+                logger.info("更新成功");
+                baseMessage.setMessage("更新成功");
+                baseMessage.setData(userHistory);
+            } else {
+                logger.info("更新失败");
+                baseMessage.setMessage("更新失败");
+            }
+        } else {
+            logger.info("不存在该条浏览记录，则添加该条浏览记录");
+            userHistory = new UserHistory();
+            userHistory.setUserId(userId);
+            userHistory.setPlaceId(placeId);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date = sdf.format(System.currentTimeMillis());
+            userHistory.setReadDate(date);
+            Boolean isAddSuccess = userHistoryService.addUserHistory(userHistory);
+            if (isAddSuccess) {
+                logger.info("添加成功");
+                baseMessage.setMessage("添加成功");
+            } else {
+                logger.info("添加失败");
+                baseMessage.setMessage("添加失败");
+            }
+        }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "删除用户浏览记录")
+    @ApiOperation(value = "删除用户浏览记录", notes = "删除用户浏览记录 ", response = BaseMessage.class)
+    @RequestMapping(value = "/deleteUserHistory", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> deleteUserHistory(
+            @ApiParam(value = "用户浏览记录id", required = true) @RequestParam(value = "idList") String idList) {
+        BaseMessage baseMessage = new BaseMessage();
+        if (!CommonUtil.isNullOrWhiteSpace(idList)) {
+            userHistoryService.deleteUserHistoryById(idList);
+            logger.info("成功删除id为 {} 的浏览记录", idList);
+            baseMessage.setMessage("删除成功");
+        } else {
+            logger.info("idList为空", idList);
+            baseMessage.initStateAndMessage(1001, "idList为空");
+        }
+        return baseMessage.response();
+    }
+
+//    @LoggerManage(logDescription = "更改用户浏览时间")
+//    @ApiOperation(value = "更改用户浏览时间", notes = "更改用户浏览时间 ", response = BaseMessage.class)
+//    @RequestMapping(value = "/updateRadeDate", produces = {"application/json"}, method = RequestMethod.POST)
+//    public ResponseEntity<BaseMessage> updateRadeDate(
+//            @ApiParam(value = "用户浏览记录id", required = true) @RequestParam(value = "id") Integer id) {
+//        BaseMessage baseMessage = new BaseMessage();
+//        logger.info("根据id查询id为 {} 的用户浏览记录", id);
+//        UserHistory userHistory = userHistoryService.getUserHistoryById(id);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String date = sdf.format(System.currentTimeMillis());
+//        userHistory.setReadDate(date);
+//        Boolean isSuccess = userHistoryService.updateUserHistory(userHistory);
+//        if (isSuccess) {
+//            logger.info("更新成功");
+//            baseMessage.setMessage("更新成功");
+//            baseMessage.setData(userHistory);
+//        } else {
+//            logger.info("更新失败");
+//            baseMessage.setMessage("更新失败");
+//        }
+//        return baseMessage.response();
+//    }
+
+    @LoggerManage(logDescription = "根据用户openid获取浏览记录")
+    @ApiOperation(value = "根据用户openid获取浏览记录", notes = "根据用户openid获取浏览记录 ", response = BaseMessage.class)
+    @RequestMapping(value = "/getUserHistoryByUserId", produces = {"application/json"}, method = RequestMethod.GET)
+    public ResponseEntity<BaseMessage> getUserHistoryByUserId(
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
+        BaseMessage baseMessage = new BaseMessage();
+        List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
+        if (userHistoryList != null && userHistoryList.size() > 0) {
+            logger.info("获取openid为 {} 的浏览记录成功", userId);
+            baseMessage.setData(userHistoryList);
+            baseMessage.setMessage("获取用户浏览记录成功");
+        } else {
+            logger.info("不存在openid为 {} 的浏览记录", userId);
+            baseMessage.setMessageDetail("不存在浏览记录");
+            baseMessage.initStateAndMessage(1001, "获取用户浏览记录失败");
+        }
         return baseMessage.response();
     }
 }

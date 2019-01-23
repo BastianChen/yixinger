@@ -99,7 +99,7 @@ public class AIOperateController {
     @ApiOperation(value = "根据id删除图像识别记录", notes = "根据id删除图像识别记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/deletePhotoDistinguishById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deletePhotoDistinguishById(
-            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") String idList) {
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "idList") String idList) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             photoDistinguishService.deletePhotoDistinguishById(idList);
@@ -161,7 +161,7 @@ public class AIOperateController {
     @ApiOperation(value = "根据id删除文字识别记录", notes = "根据id删除文字识别记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/deleteTextDistinguishById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deleteTextDistinguishById(
-            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") String idList) {
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "idList") String idList) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             textDistinguishService.deleteTextDistinguishById(idList);
@@ -223,7 +223,7 @@ public class AIOperateController {
     @ApiOperation(value = "根据id删除翻译记录", notes = "根据id删除翻译记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/deleteTranslatorById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deleteTranslatorById(
-            @ApiParam(value = "记录id", required = true) @RequestParam(value = "id") String idList) {
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "idList") String idList) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             translatorService.deleteTranslatorById(idList);
