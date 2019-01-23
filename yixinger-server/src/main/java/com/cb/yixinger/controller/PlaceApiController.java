@@ -332,8 +332,8 @@ public class PlaceApiController {
 
     @LoggerManage(logDescription = "添加或更新用户浏览记录")
     @ApiOperation(value = "添加或更新用户浏览记录", notes = "添加或更新用户浏览记录 ", response = BaseMessage.class)
-    @RequestMapping(value = "/addUserHistory", produces = {"application/json"}, method = RequestMethod.POST)
-    public ResponseEntity<BaseMessage> addUserHistory(
+    @RequestMapping(value = "/addOrUpdateUserHistory", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> addOrUpdateUserHistory(
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
             @ApiParam(value = "地点uid", required = true) @RequestParam(value = "placeId") String placeId) {
         BaseMessage baseMessage = new BaseMessage();
@@ -388,29 +388,6 @@ public class PlaceApiController {
         }
         return baseMessage.response();
     }
-
-//    @LoggerManage(logDescription = "更改用户浏览时间")
-//    @ApiOperation(value = "更改用户浏览时间", notes = "更改用户浏览时间 ", response = BaseMessage.class)
-//    @RequestMapping(value = "/updateRadeDate", produces = {"application/json"}, method = RequestMethod.POST)
-//    public ResponseEntity<BaseMessage> updateRadeDate(
-//            @ApiParam(value = "用户浏览记录id", required = true) @RequestParam(value = "id") Integer id) {
-//        BaseMessage baseMessage = new BaseMessage();
-//        logger.info("根据id查询id为 {} 的用户浏览记录", id);
-//        UserHistory userHistory = userHistoryService.getUserHistoryById(id);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String date = sdf.format(System.currentTimeMillis());
-//        userHistory.setReadDate(date);
-//        Boolean isSuccess = userHistoryService.updateUserHistory(userHistory);
-//        if (isSuccess) {
-//            logger.info("更新成功");
-//            baseMessage.setMessage("更新成功");
-//            baseMessage.setData(userHistory);
-//        } else {
-//            logger.info("更新失败");
-//            baseMessage.setMessage("更新失败");
-//        }
-//        return baseMessage.response();
-//    }
 
     @LoggerManage(logDescription = "根据用户openid获取浏览记录")
     @ApiOperation(value = "根据用户openid获取浏览记录", notes = "根据用户openid获取浏览记录 ", response = BaseMessage.class)
