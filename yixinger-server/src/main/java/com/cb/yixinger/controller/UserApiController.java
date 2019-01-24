@@ -67,14 +67,19 @@ public class UserApiController {
         } else {
             logger.info("未读取到user-{}缓存数据", openid);
             User user = userService.getUser(openid);
-            baseMessage.setData(user);
-            logger.info("获取用户 {} 信息成功", user.getNickName());
-            user = translatorService.translateUserInfo(user, language);
-            logger.info("翻译用户 {} 信息成功", user.getNickName());
-            baseMessage.setMessage("获取并翻译用户 " + user.getNickName() + " 信息成功");
-            JSONObject jsonObject = JSONObject.fromObject(user);
-            redisTemplate.opsForValue().set("user-" + openid, jsonObject.toString(), 2, TimeUnit.HOURS);
-            logger.info("将用户数据添加到redis缓存中，缓存名为user-{}，缓存时间为2小时", openid);
+            if (user != null) {
+                baseMessage.setData(user);
+                logger.info("获取用户 {} 信息成功", user.getNickName());
+                user = translatorService.translateUserInfo(user, language);
+                logger.info("翻译用户 {} 信息成功", user.getNickName());
+                baseMessage.setMessage("获取并翻译用户 " + user.getNickName() + " 信息成功");
+                JSONObject jsonObject = JSONObject.fromObject(user);
+                redisTemplate.opsForValue().set("user-" + openid, jsonObject.toString(), 2, TimeUnit.HOURS);
+                logger.info("将用户数据添加到redis缓存中，缓存名为user-{}，缓存时间为2小时", openid);
+            } else {
+                logger.info("不存在openid为 {} 的用户", openid);
+                baseMessage.initStateAndMessage(1001, "不存在该用户");
+            }
             return baseMessage.response();
         }
     }
