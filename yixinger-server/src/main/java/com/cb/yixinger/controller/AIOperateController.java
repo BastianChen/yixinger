@@ -78,12 +78,14 @@ public class AIOperateController {
         return baseMessage.response();
     }
 
-    @LoggerManage(logDescription = "获取图像识别所有记录")
-    @ApiOperation(value = "获取图像识别所有记录", notes = "获取图像识别所有记录 ", response = BaseMessage.class)
+    @LoggerManage(logDescription = "根据用户openid以及type类型获取图像识别所有记录")
+    @ApiOperation(value = "根据用户openid以及type类型获取图像识别所有记录", notes = "根据用户openid以及type类型获取图像识别所有记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/getPhotoDistinguishList", produces = {"application/json"}, method = RequestMethod.GET)
-    public ResponseEntity<BaseMessage> getPhotoDistinguishList() {
+    public ResponseEntity<BaseMessage> getPhotoDistinguishList(
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
+            @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）") @RequestParam(value = "type", required = false) String type) {
         BaseMessage baseMessage = new BaseMessage();
-        List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList();
+        List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, type);
         if (photoDistinguishList != null && photoDistinguishList.size() > 0) {
             logger.info("获取图像识别所有记录成功");
             baseMessage.setMessage("获取图像识别所有记录成功");
@@ -140,12 +142,13 @@ public class AIOperateController {
         return baseMessage.response();
     }
 
-    @LoggerManage(logDescription = "获取文字识别所有记录")
-    @ApiOperation(value = "获取文字识别所有记录", notes = "获取文字识别所有记录 ", response = BaseMessage.class)
+    @LoggerManage(logDescription = "根据用户openid获取文字识别所有记录")
+    @ApiOperation(value = "根据用户openid获取文字识别所有记录", notes = "根据用户openid获取文字识别所有记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/getTextDistinguishList", produces = {"application/json"}, method = RequestMethod.GET)
-    public ResponseEntity<BaseMessage> getTextDistinguishList() {
+    public ResponseEntity<BaseMessage> getTextDistinguishList(
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
-        List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList();
+        List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId);
         if (textDistinguishList != null && textDistinguishList.size() > 0) {
             logger.info("获取文字识别所有记录成功");
             baseMessage.setMessage("获取文字识别所有记录成功");
@@ -196,20 +199,24 @@ public class AIOperateController {
         return baseMessage.response();
     }
 
-    @LoggerManage(logDescription = "根据type获取所有翻译记录")
-    @ApiOperation(value = "根据type获取所有翻译记录", notes = "根据type获取所有翻译记录 ", response = BaseMessage.class)
+    @LoggerManage(logDescription = "根据用户openid以及type类型获取所有翻译记录")
+    @ApiOperation(value = "根据用户openid以及type类型获取所有翻译记录", notes = "根据用户openid以及type类型获取所有翻译记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/getTranslatorListByType", produces = {"application/json"}, method = RequestMethod.GET)
     public ResponseEntity<BaseMessage> getTranslatorListByType(
-            @ApiParam(value = "type类型", required = true) @RequestParam(value = "type") String type) {
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
+            @ApiParam(value = "type类型（1.文字识别2.图像识别）") @RequestParam(value = "type", required = false) String type) {
         BaseMessage baseMessage = new BaseMessage();
-        List<Translator> translatorList = translatorService.getTranslatorListByType(type);
+        List<Translator> translatorList = translatorService.getTranslatorListByType(userId, type);
         if (translatorList != null && translatorList.size() > 0) {
-            if (type.equals("1")) {
+            if ("1".equals(type)) {
                 logger.info("获取type类型为 {} 的所有翻译记录成功", "文字识别");
                 baseMessage.setMessage("获取文字识别的所有翻译记录成功");
-            } else if (type.equals("2")) {
+            } else if ("2".equals(type)) {
                 logger.info("获取type类型为 {} 的所有翻译记录成功", "图像识别");
                 baseMessage.setMessage("获取图像识别的所有翻译记录成功");
+            } else if (CommonUtil.isNullOrWhiteSpace(type)) {
+                logger.info("获取所有翻译记录成功");
+                baseMessage.setMessage("获取所有翻译记录成功");
             }
             baseMessage.setData(translatorList);
         } else {

@@ -16,7 +16,7 @@ public interface TranslatorService {
 
     JSONArray translateText(JSONArray originalText, String userId, Integer textId, String from, String to, String type);
 
-    List<Translator> getTranslatorListByType(String type);
+    List<Translator> getTranslatorListByType(String userId, String type);
 
     void deleteTranslatorById(String idList);
 }

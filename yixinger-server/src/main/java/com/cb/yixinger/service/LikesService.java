@@ -11,4 +11,6 @@ import java.util.List;
  **/
 public interface LikesService {
     List<Likes> getLikes(String userId, Integer placeCommentId);
+
+    void deleteLikes(String idList);
 }

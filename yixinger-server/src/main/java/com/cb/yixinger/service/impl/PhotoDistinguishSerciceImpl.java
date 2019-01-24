@@ -4,6 +4,7 @@ import com.cb.yixinger.dao.PhotoDistinguishMapper;
 import com.cb.yixinger.entity.PhotoDistinguish;
 import com.cb.yixinger.service.PhotoDistinguishService;
 import com.cb.yixinger.config.Constants;
+import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.ai.imageclassify.AipImageClassify;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -94,8 +96,15 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
     }
 
     @Override
-    public List<PhotoDistinguish> getPhotoDistinguishList() {
-        return photoDistinguishMapper.selectAll();
+    public List<PhotoDistinguish> getPhotoDistinguishList(String userId, String type) {
+        Example example = new Example(PhotoDistinguish.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId", userId);
+        if (!CommonUtil.isNullOrWhiteSpace(type)) {
+            criteria.andEqualTo("type", type);
+        }
+        List<PhotoDistinguish> photoDistinguishList = photoDistinguishMapper.selectByExample(example);
+        return photoDistinguishList;
     }
 
     @Override
@@ -105,7 +114,7 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
         List<String> integerList = Arrays.asList(idList.split(";"));
         for (String id : integerList) {
             PhotoDistinguish photoDistinguish = photoDistinguishMapper.selectByPrimaryKey(Integer.valueOf(id));
-            if (photoDistinguish!=null){
+            if (photoDistinguish != null) {
                 File file = new File(resourcePath + photoDistinguish.getImageUrl());
                 if (file.exists()) {
                     logger.info("图像识别记录——删除项目中的图片文件，文件路径为 {}", resourcePath + photoDistinguish.getImageUrl());
@@ -114,8 +123,8 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
                 }
                 logger.info("图像识别记录——删除数据库中id为 {} 的数据", id);
                 photoDistinguishMapper.deleteByPrimaryKey(Integer.valueOf(id));
-            }else {
-                logger.info("图像识别记录——数据库中并没有id为 {} 的数据",id);
+            } else {
+                logger.info("图像识别记录——数据库中并没有id为 {} 的数据", id);
             }
         }
     }

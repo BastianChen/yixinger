@@ -93,8 +93,8 @@ public class TranslatorServiceImpl implements TranslatorService {
     }
 
     @Override
-    public List<Translator> getTranslatorListByType(String type) {
-        return translatorDao.getTranslatorListByType(type);
+    public List<Translator> getTranslatorListByType(String userId, String type) {
+        return translatorDao.getTranslatorListByType(userId, type);
     }
 
     @Override

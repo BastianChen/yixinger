@@ -12,7 +12,7 @@ import java.util.List;
 public interface PhotoDistinguishService {
     PhotoDistinguish photoDistinguishBytype(String imagePath, String type, String userId, String imageSavePath);
 
-    List<PhotoDistinguish> getPhotoDistinguishList();
+    List<PhotoDistinguish> getPhotoDistinguishList(String userId, String type);
 
     void deletePhotoDistinguishById(String idList);
 }

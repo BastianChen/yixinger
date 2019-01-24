@@ -4,6 +4,7 @@ import com.cb.yixinger.dao.TextDistinguishMapper;
 import com.cb.yixinger.entity.TextDistinguish;
 import com.cb.yixinger.service.TextDistinguishService;
 import com.cb.yixinger.config.Constants;
+import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.ai.ocr.AipOcr;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -69,8 +71,12 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
     }
 
     @Override
-    public List<TextDistinguish> getTextDistinguishList() {
-        return textDistinguishMapper.selectAll();
+    public List<TextDistinguish> getTextDistinguishList(String userId) {
+        Example example = new Example(TextDistinguish.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId", userId);
+        List<TextDistinguish> textDistinguishList = textDistinguishMapper.selectByExample(example);
+        return textDistinguishList;
     }
 
     @Override

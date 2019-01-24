@@ -203,12 +203,13 @@ public class PlaceApiController {
                 logger.info("用户openid为 {} 的用户已经给该评论点过赞", userId);
                 PlaceComment updatedPlaceComment = placeCommentService.updateLikes(likesList.get(0), placeComment, true, userId);
                 baseMessage.setData(updatedPlaceComment);
+                baseMessage.setMessage("取消点赞成功");
             } else {
                 logger.info("用户openid为 {} 的用户没有给该评论点过赞", userId);
                 PlaceComment updatedPlaceComment = placeCommentService.updateLikes(null, placeComment, false, userId);
                 baseMessage.setData(updatedPlaceComment);
+                baseMessage.setMessage("点赞成功");
             }
-            baseMessage.setMessage("点赞成功");
         } else {
             logger.error("不存在id为 {} 的评论", placeCommentId);
             baseMessage.initStateAndMessage(1001, "不存在该条评论");
@@ -224,7 +225,9 @@ public class PlaceApiController {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             placeCommentService.deleteCommentById(idList);
-            logger.info("成功删除id为 {} 的文字识别记录", idList);
+            logger.info("成功删除id为 {} 的评论记录", idList);
+            likesService.deleteLikes(idList);
+            logger.info("成功删除相关点赞记录", idList);
             baseMessage.setMessage("删除成功");
         } else {
             logger.info("idList为空", idList);
@@ -257,7 +260,7 @@ public class PlaceApiController {
     @ApiOperation(value = "获取图片详细数据并更新图片浏览数", notes = "获取图片详细数据并更新图片浏览数 ", response = BaseMessage.class)
     @RequestMapping(value = "/updateReadTimes", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> updateReadTimes(
-            @ApiParam(value = "图片id", required = true) @RequestParam(value = "userId") Integer placePhotoId) {
+            @ApiParam(value = "图片id", required = true) @RequestParam(value = "placePhotoId") Integer placePhotoId) {
         BaseMessage baseMessage = new BaseMessage();
         PlacePhoto placePhoto = placePhotoService.getPlacePhotoByPlacePhotoId(placePhotoId);
         if (placePhoto != null) {

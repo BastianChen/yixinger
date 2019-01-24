@@ -12,7 +12,7 @@ import java.util.List;
 public interface TextDistinguishService {
     TextDistinguish textDistinguish(String imagePath, String userId, String imageSavePath);
 
-    List<TextDistinguish> getTextDistinguishList();
+    List<TextDistinguish> getTextDistinguishList(String userId);
 
     void deleteTextDistinguishById(String idList);
 }
