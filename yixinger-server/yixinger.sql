@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 23/01/2019 15:29:38
+ Date: 24/01/2019 13:10:41
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `likes`  (
   `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户openid',
   `place_comment_id` int(10) NOT NULL COMMENT '评论id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of likes
@@ -115,7 +115,7 @@ CREATE TABLE `place_comment`  (
   `overall_rating` double(10, 2) NOT NULL COMMENT '对该游玩地点的评分',
   `comment_type` int(2) NOT NULL COMMENT '评论类型（1.爬虫评论2.用户评论）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 64 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 67 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of place_comment
@@ -129,6 +129,8 @@ INSERT INTO `place_comment` VALUES (42, '96d38a845c08e6492902e13b', '一直很�
 INSERT INTO `place_comment` VALUES (61, 'df95f91c9c62cbb438221c0e', '非常好，杭州标志之一，景色秀美，最重要的是免费游玩，如果登雷峰塔逛断桥，走到脚疼，建议租个自行车吧，3月春暖花开，柳树青青，风还是挺大的。另外最重要的是充电宝，别忘了！！', '[{\"pic_url\":\"http://hiphotos.baidu.com/lbsugc/pic/item/7e3e6709c93d70cf22700505f4dcd100baa12b2b.jpg\",\"pic_type\":\"0\",\"pic_name\":\"\",\"pic_pv\":4696},{\"pic_url\":\"http://hiphotos.baidu.com/lbsugc/pic/item/730e0cf3d7ca7bcb914c6927b2096b63f624a887.jpg\",\"pic_type\":\"0\",\"pic_name\":\"\",\"pic_pv\":4656},{\"pic_url\":\"http://hiphotos.baidu.com/lbsugc/pic/item/34fae6cd7b899e513004951c4ea7d933c8950d2b.jpg\",\"pic_type\":\"0\",\"pic_name\":\"\",\"pic_pv\":4490},{\"pic_url\":\"http://hiphotos.baidu.com/lbsugc/pic/item/6159252dd42a28349891980357b5c9ea15cebf87.jpg\",\"pic_type\":\"0\",\"pic_name\":\"\",\"pic_pv\":2183},{\"pic_url\":\"http://hiphotos.baidu.com/lbsugc/pic/item/cc11728b4710b912e9dd58f6cffdfc039245229d.jpg\",\"pic_type\":\"0\",\"pic_name\":\"\",\"pic_pv\":1535}]', 0, '2018-03-22 22:00', NULL, '004***98', 'http://himg.bdimg.com/sys/portrait/item/6df44601?r=1548224513', 5.00, 1);
 INSERT INTO `place_comment` VALUES (62, 'df95f91c9c62cbb438221c0e', '天气燥热，游人络绎未绝，信步西湖湖畔，垂柳随风飘荡，仿若美人长发般柔美；远眺西湖全貌尽收眼前，湖里🐟儿尽欢颜，水上游船来回穿梭；登雷峰塔叹古人之智慧，过“断桥”不知为何故称之；绕湖一周也未能一一品味这西湖全景，流连忘返吧，今日一别，何时重游……', '[{\"pic_name\":\"\\\"null\\\"\",\"pic_url\":\"http://g.hiphotos.baidu.com/lbsugc/pic/item/c995d143ad4bd113cdaca00757afa40f4bfb05a5.jpg\",\"pic_type\":\"0\",\"pic_pv\":1184},{\"pic_name\":\"\\\"null\\\"\",\"pic_url\":\"http://e.hiphotos.baidu.com/lbsugc/pic/item/b812c8fcc3cec3fd6073b040db88d43f879427b1.jpg\",\"pic_type\":\"0\",\"pic_pv\":1279},{\"pic_name\":\"\\\"null\\\"\",\"pic_url\":\"http://b.hiphotos.baidu.com/lbsugc/pic/item/d1160924ab18972b657717ffebcd7b899e510ab1.jpg\",\"pic_type\":\"0\",\"pic_pv\":1301},{\"pic_name\":\"\\\"null\\\"\",\"pic_url\":\"http://d.hiphotos.baidu.com/lbsugc/pic/item/ca1349540923dd5425dab05ddc09b3de9c82485d.jpg\",\"pic_type\":\"0\",\"pic_pv\":965},{\"pic_name\":\"\\\"null\\\"\",\"pic_url\":\"http://f.hiphotos.baidu.com/lbsugc/pic/item/9e3df8dcd100baa15885508e4a10b912c8fc2e5d.jpg\",\"pic_type\":\"0\",\"pic_pv\":837},{\"pic_name\":\"\\\"null\\\"\",\"pic_url\":\"http://g.hiphotos.baidu.com/lbsugc/pic/item/f9dcd100baa1cd11e41f6515b412c8fcc3ce2d5d.jpg\",\"pic_type\":\"0\",\"pic_pv\":728},{\"pic_name\":\"\\\"null\\\"\",\"pic_url\":\"http://c.hiphotos.baidu.com/lbsugc/pic/item/ac6eddc451da81cb937194f85f66d0160924316b.jpg\",\"pic_type\":\"0\",\"pic_pv\":645},{\"pic_name\":\"\\\"null\\\"\",\"pic_url\":\"http://f.hiphotos.baidu.com/lbsugc/pic/item/a50f4bfbfbedab64c6e55af5fa36afc379311e6b.jpg\",\"pic_type\":\"0\",\"pic_pv\":383}]', 0, '2018-08-17 02:05', NULL, '183******68', '/images/default.jpg', 5.00, 1);
 INSERT INTO `place_comment` VALUES (63, 'df95f91c9c62cbb438221c0e', '........第一次和大保镖出游，选择了西湖。因为无论是阴云密布、细雨绵绵，还是晴空万里、夜色迷蒙，西湖都有她无法替代的美。大保镖总是戏说，如果我跑了，他就跳西湖，那我说，好啊，带你去西湖，看你跳不跳~ \n........周六最早一班动车从上海出发，转地铁后出来租了一辆自行车，由于双人自行车不允许在景区出现了，所以只能租后座载人的，30块貌似，押金100块，这是第一次大保镖载我，踩向西湖的一路，穿着超短裙趴开坐在自行车后着实赚了不少回头率~ 微凉的早晨，他踩着踩着出了汗，我却被风吹得双手冰冷，他一路踩，一路帮我暖手~ 这一幕将成为最浪漫的回忆之一 ~ \n........4月中旬，春已深，那么好的周末自然是人挤人。泛舟是必须的，可以网上预约，可以现场谈价。为了等闺蜜和她朋友会合，我和大保镖在西湖旁的星巴克等了足足2个多小时，奇怪的是竟然一点都不觉得时间过得慢，因为二楼露台正对着西湖，我们去得早，从寥寥数人看到人潮涌动，而湖色依然静谧。 \n........对西湖水的印象，是孩提来时，船夫介绍的“冬暖夏凉”，一伸手触摸到的温润感，仿佛穿越了当时的自己。只是如今船夫生意匆匆，为了赶下一个班次，三潭印月是不给划去了，苏堤白堤也就指指，给我们拍个照而已。如果有时间的话，还是自己泛舟吧，三五人共力，划上它大半天！记得带着干粮~ \n........泛舟后，沿湖边走走，任凭柳絮抚摸脸颊，痒了鼻头。黄刺玫、海棠、杜鹃、紫藤，在湖水粼粼下，错落有致的色彩映衬地特别好看~ \n........晚上回上海前，又经过西湖边，堵得要命的自驾车上，有幸欣赏到了西湖夜景。遗憾的是必须得回去了，不然在夜色中的湖畔走走，私语窃窃，龙井品品，简直不能再好。\n........“谁在船上 写我从前\n........一说人间 再说江山”\n\n2015.04.11 9-20点', '[{\"pic_url\":\"https://file105.mafengwo.net/s8/M00/06/32/wKgBpVYFrVmABpTvAAxlP8sIoiQ67.jpeg?imageMogr2%2Fthumbnail%2F%21640x440r%2Fgravity%2FCenter%2Fcrop%2F%21640x440%2Fquality%2F100\",\"pic_type\":\"\",\"pic_name\":\"\",\"pic_pv\":2938},{\"pic_url\":\"https://file108.mafengwo.net/s8/M00/06/7C/wKgBpVYFsGuAQ_t8AHANws9VbUI81.jpeg?imageMogr2%2Fthumbnail%2F%21640x440r%2Fgravity%2FCenter%2Fcrop%2F%21640x440%2Fquality%2F100\",\"pic_type\":\"\",\"pic_name\":\"\",\"pic_pv\":2724},{\"pic_url\":\"https://file112.mafengwo.net/s8/M00/06/80/wKgBpVYFsJeAdn4ZADQY5dY7ryk11.jpeg?imageMogr2%2Fthumbnail%2F%21640x440r%2Fgravity%2FCenter%2Fcrop%2F%21640x440%2Fquality%2F100\",\"pic_type\":\"\",\"pic_name\":\"\",\"pic_pv\":2934},{\"pic_url\":\"https://file106.mafengwo.net/s8/M00/A8/1B/wKgBpVXymhiAUNK0AEMAAFbYW0Y80.jpeg?imageMogr2%2Fthumbnail%2F%21640x440r%2Fgravity%2FCenter%2Fcrop%2F%21640x440%2Fquality%2F100\",\"pic_type\":\"\",\"pic_name\":\"\",\"pic_pv\":2187},{\"pic_url\":\"https://file105.mafengwo.net/s8/M00/A8/07/wKgBpVXymgqAYQp4AD-AAFX2JC829.jpeg?imageMogr2%2Fthumbnail%2F%21640x440r%2Fgravity%2FCenter%2Fcrop%2F%21640x440%2Fquality%2F100\",\"pic_type\":\"\",\"pic_name\":\"\",\"pic_pv\":1499},{\"pic_url\":\"https://file106.mafengwo.net/s8/M00/A7/F8/wKgBpVXymfyAcrEsAEQAAKbSj7s96.jpeg?imageMogr2%2Fthumbnail%2F%21640x440r%2Fgravity%2FCenter%2Fcrop%2F%21640x440%2Fquality%2F100\",\"pic_type\":\"\",\"pic_name\":\"\",\"pic_pv\":1165}]', 0, '2017-04-21 13:03', NULL, '双鱼骨头', '/images/default.jpg', 5.00, 1);
+INSERT INTO `place_comment` VALUES (65, '3d068b8628a04927a1d230fe', 'string', '', 0, '2019-01-24 09:40:42', '545', 'string', 'string', 0.00, 0);
+INSERT INTO `place_comment` VALUES (66, '3d068b8628a04927a1d230fe', 'string', '', 0, '2019-01-24 09:40:46', '545222', 'string', 'string', 0.00, 0);
 
 -- ----------------------------
 -- Table structure for place_photo
@@ -154,7 +156,7 @@ INSERT INTO `place_photo` VALUES (21, 'df95f91c9c62cbb438221c0e', '/images/place
 INSERT INTO `place_photo` VALUES (26, 'df95f91c9c62cbb438221c0e', 'https://mapsv0.bdimg.com/?qt=pr3d&panoid=0902520001161118195307120IN&width=720&height=360&heading=292pitch=0fovy=75&quality=80', '百度地图', 0, '2019-01-23 14:21:53', NULL, '暂无', 1);
 INSERT INTO `place_photo` VALUES (27, 'df95f91c9c62cbb438221c0e', 'http://hiphotos.baidu.com/map/pic/item/6f061d950a7b020824feb71964d9f2d3572cc817.jpg', '百度地图', 0, '2019-01-23 14:21:53', NULL, '暂无', 1);
 INSERT INTO `place_photo` VALUES (28, 'df95f91c9c62cbb438221c0e', 'http://a.hiphotos.baidu.com/lbsugc/pic/item/0823dd54564e925859aebcb79182d158cdbf4ed4.jpg', '百度地图', 0, '2019-01-23 14:21:53', NULL, '暂无', 1);
-INSERT INTO `place_photo` VALUES (29, 'df95f91c9c62cbb438221c0e', 'https://mapsv0.bdimg.com/?qt=pr3dpoi&uid=df95f91c9c62cbb438221c0e&width=720&height=360&quality=80&fovx=120', '百度地图', 0, '2019-01-23 14:21:53', NULL, '暂无', 1);
+INSERT INTO `place_photo` VALUES (29, 'df95f91c9c62cbb438221c0e', 'https://mapsv0.bdimg.com/?qt=pr3dpoi&uid=df95f91c9c62cbb438221c0e&width=720&height=360&quality=80&fovx=120', '百度地图', 2, '2019-01-23 14:21:53', NULL, '暂无', 1);
 
 -- ----------------------------
 -- Table structure for text_distinguish
@@ -251,7 +253,7 @@ CREATE TABLE `user`  (
   `city` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所属城市',
   `province` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所属省份',
   `country` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户国籍',
-  `gender` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户性别（1.男2.女）',
+  `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户性别（1.男2.女）',
   `language` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户所选语言',
   `create_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建时间',
   `update_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户数据更新时间',
@@ -262,7 +264,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('oE9el5Hx6LplsHe2roGhrkxkEUsk', '😜  Ben', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaZauBTKp2NtvFsAtrJOpURw/132', 'Hangzhou', 'Zhejiang', 'China', '1', 'de', '2018-11-30 16:17:02', '2018-11-30 16:38:14', 'China');
+INSERT INTO `user` VALUES ('oE9el5Hx6LplsHe2roGhrkxkEUsk', '😜  Ben', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaZauBTKp2NtvFsAtrJOpURw/132', 'Hangzhou', 'Zhejiang', 'China', '1', 'de', '2018-11-30 16:17:02', '2019-01-24 09:28:49', 'China');
 
 -- ----------------------------
 -- Table structure for user_history
