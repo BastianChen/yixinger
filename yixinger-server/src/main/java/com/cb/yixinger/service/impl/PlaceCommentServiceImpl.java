@@ -66,24 +66,26 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addPlaceCommentByReptile(String commentList, String placeId) {
-        JSONArray jsonArray = JSONArray.fromObject(commentList);
-        logger.info("对爬取下来的部分评论进行解析");
-        for (int i = 0; i < jsonArray.size(); i++) {
-            PlaceComment placeComment = new PlaceComment();
-            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-            placeComment.setPlaceId(placeId);
-            placeComment.setLikes(0);
-            placeComment.setDate(jsonObject.getString("date"));
-            placeComment.setUserName(jsonObject.getString("user_name"));
-            placeComment.setUserImage(jsonObject.getString("user_logo"));
-            placeComment.setOverallRating(jsonObject.getDouble("overall_rating"));
-            placeComment.setComment(jsonObject.getString("content"));
-            placeComment.setImageList(jsonObject.getString("pics"));
-            placeComment.setCommentType(1);
-            if (CommonUtil.isNullOrWhiteSpace(placeComment.getUserImage())) {
-                placeComment.setUserImage("/images/default.jpg");
+        if (!CommonUtil.isNullOrWhiteSpace(commentList)){
+            JSONArray jsonArray = JSONArray.fromObject(commentList);
+            logger.info("对爬取下来的部分评论进行解析");
+            for (int i = 0; i < jsonArray.size(); i++) {
+                PlaceComment placeComment = new PlaceComment();
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                placeComment.setPlaceId(placeId);
+                placeComment.setLikes(0);
+                placeComment.setDate(jsonObject.getString("date"));
+                placeComment.setUserName(jsonObject.getString("user_name"));
+                placeComment.setUserImage(jsonObject.getString("user_logo"));
+                placeComment.setOverallRating(jsonObject.getDouble("overall_rating"));
+                placeComment.setComment(jsonObject.getString("content"));
+                placeComment.setImageList(jsonObject.getString("pics"));
+                placeComment.setCommentType(1);
+                if (CommonUtil.isNullOrWhiteSpace(placeComment.getUserImage())) {
+                    placeComment.setUserImage("/images/default.jpg");
+                }
+                placeCommentMapper.insertSelective(placeComment);
             }
-            placeCommentMapper.insertSelective(placeComment);
         }
     }
 

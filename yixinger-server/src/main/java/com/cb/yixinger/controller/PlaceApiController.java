@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -57,24 +59,27 @@ public class PlaceApiController {
     @ApiOperation(value = "添加游玩地址信息", notes = "添加游玩地址信息 ", response = BaseMessage.class)
     @RequestMapping(value = "/addPlace", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> addPlace(
-            @ApiParam(value = "前端传回的uid", required = true) @RequestParam(value = "uid") String uid,
-            @ApiParam(value = "前端传回的地点经度", required = true) @RequestParam(value = "latitude") Double latitude,
-            @ApiParam(value = "前端传回的地点维度", required = true) @RequestParam(value = "longitude") Double longitude) {
+            @ApiParam(value = "前端传回的uid", required = true) @RequestParam(value = "uidList") String uidList,
+            @ApiParam(value = "前端传回的地点经度", required = true) @RequestParam(value = "latitudeList") String latitudeList,
+            @ApiParam(value = "前端传回的地点维度", required = true) @RequestParam(value = "longitudeList") String longitudeList) {
         BaseMessage baseMessage = new BaseMessage();
-        Place place = placeService.getPlaceByUid(uid);
-        if (place != null) {
-            logger.info("uid为 {} 的游玩地点已经添加过", uid);
-            baseMessage.initStateAndMessage(1001, "该游玩地点已经添加过");
-        } else {
-            logger.info("uid为 {} 的游玩地点还未添加过", uid);
-            place = new Place();
-            place.setLatitude(latitude);
-            place.setLongitude(longitude);
-            place = placeService.addPlace(place, uid);
-            placeCommentService.addPlaceCommentByReptile(place.getCommentList(), uid);
-            placePhotoService.addPlacePhotoByReptile(place.getPhotoList(), uid);
-            logger.info("添加游玩地点 {} 成功", place.getName());
-            baseMessage.setMessage("添加游玩地点 " + place.getName() + " 成功");
+        List<String> uid = Arrays.asList(uidList.split(";"));
+        List<String> latitude = Arrays.asList(latitudeList.split(";"));
+        List<String> longitude = Arrays.asList(longitudeList.split(";"));
+        for (int i = 0; i < uid.size(); i++) {
+            Place place = placeService.getPlaceByUid(uid.get(i));
+            if (place != null) {
+                logger.info("uid为 {} 的游玩地点已经添加过", uid.get(i));
+            } else {
+                logger.info("uid为 {} 的游玩地点还未添加过", uid.get(i));
+                place = new Place();
+                place.setLatitude(Double.valueOf(latitude.get(i)));
+                place.setLongitude(Double.valueOf(longitude.get(i)));
+                place = placeService.addPlace(place, uid.get(i));
+                placeCommentService.addPlaceCommentByReptile(place.getCommentList(), uid.get(i));
+                placePhotoService.addPlacePhotoByReptile(place.getPhotoList(), uid.get(i));
+                logger.info("添加游玩地点 {} 成功", place.getName());
+            }
         }
         return baseMessage.response();
     }
