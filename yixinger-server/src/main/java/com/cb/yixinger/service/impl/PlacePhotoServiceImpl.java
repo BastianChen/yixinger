@@ -47,7 +47,7 @@ public class PlacePhotoServiceImpl implements PlacePhotoService {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String date = sdf.format(System.currentTimeMillis());
                 placePhoto.setUploadDate(date);
-                placePhoto.setUserName("暂无");
+                placePhoto.setUserName("百度地图网友");
                 placePhoto.setCommentType(1);
                 placePhotoMapper.insertSelective(placePhoto);
             }

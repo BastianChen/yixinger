@@ -72,14 +72,17 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
             for (int i = 0; i < jsonArray.size(); i++) {
                 PlaceComment placeComment = new PlaceComment();
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                placeComment.setComment(jsonObject.optString("content"));
+                if (CommonUtil.isNullOrWhiteSpace(placeComment.getComment())){
+                    continue;
+                }
                 placeComment.setPlaceId(placeId);
                 placeComment.setLikes(0);
-                placeComment.setDate(jsonObject.getString("date"));
-                placeComment.setUserName(jsonObject.getString("user_name"));
-                placeComment.setUserImage(jsonObject.getString("user_logo"));
-                placeComment.setOverallRating(jsonObject.getDouble("overall_rating"));
-                placeComment.setComment(jsonObject.getString("content"));
-                placeComment.setImageList(jsonObject.getString("pics"));
+                placeComment.setDate(jsonObject.optString("date"));
+                placeComment.setUserName(jsonObject.optString("user_name"));
+                placeComment.setUserImage(jsonObject.optString("user_logo"));
+                placeComment.setOverallRating(jsonObject.optDouble("overall_rating"));
+                placeComment.setImageList(jsonObject.optString("pics"));
                 placeComment.setCommentType(1);
                 if (CommonUtil.isNullOrWhiteSpace(placeComment.getUserImage())) {
                     placeComment.setUserImage("/images/default.jpg");

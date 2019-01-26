@@ -61,7 +61,8 @@ public class PlaceApiController {
     public ResponseEntity<BaseMessage> addPlace(
             @ApiParam(value = "前端传回的uid", required = true) @RequestParam(value = "uidList") String uidList,
             @ApiParam(value = "前端传回的地点经度", required = true) @RequestParam(value = "latitudeList") String latitudeList,
-            @ApiParam(value = "前端传回的地点维度", required = true) @RequestParam(value = "longitudeList") String longitudeList) {
+            @ApiParam(value = "前端传回的地点维度", required = true) @RequestParam(value = "longitudeList") String longitudeList,
+            @ApiParam(value = "游玩地点类型（1：餐馆 2:景点）", required = true) @RequestParam(value = "type") String type) {
         BaseMessage baseMessage = new BaseMessage();
         List<String> uid = Arrays.asList(uidList.split(";"));
         List<String> latitude = Arrays.asList(latitudeList.split(";"));
@@ -75,7 +76,7 @@ public class PlaceApiController {
                 place = new Place();
                 place.setLatitude(Double.valueOf(latitude.get(i)));
                 place.setLongitude(Double.valueOf(longitude.get(i)));
-                place = placeService.addPlace(place, uid.get(i));
+                place = placeService.addPlace(place, uid.get(i), type);
                 placeCommentService.addPlaceCommentByReptile(place.getCommentList(), uid.get(i));
                 placePhotoService.addPlacePhotoByReptile(place.getPhotoList(), uid.get(i));
                 logger.info("添加游玩地点 {} 成功", place.getName());
