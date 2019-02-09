@@ -34,12 +34,16 @@
       <van-tabbar-item icon="records" info="5" @click="regeocodingPage">逆地址</van-tabbar-item>
       <van-tabbar-item icon="gold-coin" info="20" @click="weatherPage">天气</van-tabbar-item>
     </van-tabbar>
+    <!--<div>-->
+      <!--<tabbar></tabbar>-->
+    <!--</div>-->
   </div>
 
 </template>
 
 <script>
 import card from '@/components/card'
+import tabbar from '@/components/tabbar'
 
 export default {
   data() {
@@ -60,7 +64,8 @@ export default {
   },
 
   components: {
-    card
+    card,
+    tabbar
   },
 
   methods: {
