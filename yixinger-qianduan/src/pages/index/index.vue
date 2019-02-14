@@ -1,11 +1,11 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover"/>
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div>
+  <!--<div class="container" @click="clickHandle('test click', $event)">-->
+    <!--<div class="userinfo" @click="bindViewTap">-->
+      <!--<img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover"/>-->
+      <!--<div class="userinfo-nickname">-->
+        <!--<card :text="userInfo.nickName"></card>-->
+      <!--</div>-->
+    <!--</div>-->
     <!--<div>-->
     <!--<radio-group class="radio-group" @change="radioChange">-->
     <!--<label class="radio" v-for="(item, index) in items" :key="item.name">-->
@@ -15,27 +15,147 @@
     <!--</radio-group>-->
     <!--</div>-->
 
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
+    <!--<div class="usermotto">-->
+      <!--<div class="user-motto">-->
+        <!--<card :text="motto"></card>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <!--<form class="form-container">-->
     <!--<input type="text" class="form-control" v-model="motto" placeholder="v-model"/>-->
     <!--<input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy"/>-->
     <!--</form>-->
     <!--<a @click="vuexPage" class="counter" open-type="getUserInfo">去往Vuex示例页面</a>-->
-    <van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>
-    <van-button type="primary" size="normal" round @click="photoPage">打开相机</van-button>
-    <van-tabbar active="0">
-      <van-tabbar-item icon="shop" @click="apiPage">POI</van-tabbar-item>
-      <van-tabbar-item icon="search" dot @click="suggestionPage">搜索</van-tabbar-item>
-      <van-tabbar-item icon="records" info="5" @click="regeocodingPage">逆地址</van-tabbar-item>
-      <van-tabbar-item icon="gold-coin" info="20" @click="weatherPage">天气</van-tabbar-item>
-    </van-tabbar>
+    <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
+    <!--<van-button type="primary" size="normal" round @click="photoPage">打开相机</van-button>-->
+    <!--<van-tabbar active="0">-->
+      <!--<van-tabbar-item icon="shop" @click="apiPage">POI</van-tabbar-item>-->
+      <!--<van-tabbar-item icon="search" dot @click="suggestionPage">搜索</van-tabbar-item>-->
+      <!--<van-tabbar-item icon="records" info="5" @click="regeocodingPage">逆地址</van-tabbar-item>-->
+      <!--<van-tabbar-item icon="gold-coin" info="20" @click="weatherPage">天气</van-tabbar-item>-->
+    <!--</van-tabbar>-->
+  <!--</div>-->
+  <div class="index">
+    <div class="search">
+      <div @click="toMappage">{{cityName}}</div>
+      <div @click="toSearch">
+        <input type="text" placeholder="搜索商品">
+        <span class="icon"></span>
+      </div>
+    </div>
+    <div class="swiper">
+      <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true" duration="500">
+        <block v-for="(item, index) in banner " :key="index">
+          <swiper-item class="swiper-item">
+            <image :src="item.image_url" class="slide-image" />
+          </swiper-item>
+        </block>
+      </swiper>
+    </div>
+    <div class="channel">
+      <div @click="categoryList(item.id)" v-for="(item, index) in channel" :key="index">
+        <img :src="item.icon_url" alt="">
+        <p>{{item.name}}</p>
+      </div>
+    </div>
+    <div class="brand">
+      <div @click="tobrandList" class="head">
+        品牌制造商直供
+      </div>
+      <div class="content">
+        <div @click="branddetail(item.id)" v-for="(item, index) in brandList" :key="index">
+          <div>
+            <p>{{item.name}}</p>
+            <p>{{item.floor_price}}元起</p>
+          </div>
+          <img :src="item.new_pic_url" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="newgoods">
+      <div @click="goodsList('new')" class="newgoods-top">
+        <div class="top">
+          <p>新品首发</p>
+          <p>查看全部</p>
+        </div>
+      </div>
+      <div class="list">
+        <ul>
+          <scroll-view class="scroll-view" :scroll-x="true">
+            <li @click="goodsDetail(item.id)" v-for="(item, index) in newGoods" :key="index">
+              <img :src="item.list_pic_url" alt="">
+              <p>{{item.name}}</p>
+              <p>{{item.goods_brief}}</p>
+              <p>￥{{item.retail_price}}</p>
+            </li>
+          </scroll-view>
+        </ul>
+      </div>
+    </div>
+    <div class="newgoods hotgoods">
+      <div @click="goodsList('hot')" class="newgoods-top">
+        <div class="top">
+          <p>人气推荐
+            <span></span> 好物精选</p>
+          <p>查看全部</p>
+        </div>
+      </div>
+      <div class="list">
+        <ul>
+          <scroll-view class="scroll-view" :scroll-x="true">
+            <li @click="goodsDetail(item.id)" v-for="(item, index) in hotGoods" :key="index">
+              <img :src="item.list_pic_url" alt="">
+              <p>{{item.name}}</p>
+              <p>{{item.goods_brief}}</p>
+              <p>￥{{item.retail_price}}</p>
+            </li>
+          </scroll-view>
+        </ul>
+      </div>
+    </div>
+    <div class="topicList">
+      <div @click="totopic" class="topicList-top">
+        专题精选
+        <span class="icon"></span>
+      </div>
+      <div class="list">
+        <ul>
+          <scroll-view class="scroll-view" :scroll-x="true">
+            <li @click="topicdetail(item.id)" v-for="(item, index) in topicList" :key="index">
+              <img :src="item.item_pic_url" alt="">
+              <div class="btom">
+                <div>
+                  <p>{{item.title}}</p>
+                  <p>{{item.subtitle}}</p>
+                </div>
+                <div>
+                  {{item.price_info}}元起
+                </div>
+              </div>
+            </li>
+          </scroll-view>
+        </ul>
+      </div>
+    </div>
+    <div class="newcategory">
+      <div class="list" v-for="(item, index) in newCategoryList" :key="index">
+        <div class="head">{{item.name}}好物</div>
+        <div class="sublist">
+          <div @click="goodsDetail(subitem.id)" v-for="(subitem, subindex) in item.goodsList" :key="subindex">
+            <img :src="subitem.list_pic_url" alt="">
+            <p>{{subitem.name}}</p>
+            <p>￥{{subitem.retail_price}}</p>
+          </div>
+          <div @click="categoryList(item.id)">
+            <div class="last">
+              <p>{{item.name}}好物</p>
+              <span class="icon"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
 </template>
 
 <script>

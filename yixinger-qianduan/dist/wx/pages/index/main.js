@@ -2,11 +2,131 @@ require("../../common/manifest.js");
 require("../../common/vendor.js");
 global.webpackJsonp([3],{
 
-/***/ 100:
+/***/ 101:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_card__ = __webpack_require__(37);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -178,119 +298,265 @@ global.webpackJsonp([3],{
 
 /***/ }),
 
-/***/ 104:
+/***/ 105:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container",
+    staticClass: "index"
+  }, [_c('div', {
+    staticClass: "search"
+  }, [_c('div', {
+    attrs: {
+      "eventid": '0'
+    },
+    on: {
+      "click": _vm.toMappage
+    }
+  }, [_vm._v(_vm._s(_vm.cityName))]), _vm._v(" "), _c('div', {
+    attrs: {
+      "eventid": '1'
+    },
+    on: {
+      "click": _vm.toSearch
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "text",
+      "placeholder": "搜索商品"
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "icon"
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "swiper"
+  }, [_c('swiper', {
+    staticClass: "swiper-container",
+    attrs: {
+      "indicator-dots": "true",
+      "autoplay": "true",
+      "interval": "3000",
+      "circular": "true",
+      "duration": "500"
+    }
+  }, _vm._l((_vm.banner), function(item, index) {
+    return _c('block', {
+      key: index
+    }, [_c('swiper-item', {
+      staticClass: "swiper-item",
+      attrs: {
+        "mpcomid": '0-' + index
+      }
+    }, [_c('image', {
+      staticClass: "slide-image",
+      attrs: {
+        "src": item.image_url
+      }
+    })])], 1)
+  }))], 1), _vm._v(" "), _c('div', {
+    staticClass: "channel"
+  }, _vm._l((_vm.channel), function(item, index) {
+    return _c('div', {
+      key: index,
+      attrs: {
+        "eventid": '2-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.categoryList(item.id)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": item.icon_url,
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.name))])], 1)
+  })), _vm._v(" "), _c('div', {
+    staticClass: "brand"
+  }, [_c('div', {
+    staticClass: "head",
+    attrs: {
+      "eventid": '3'
+    },
+    on: {
+      "click": _vm.tobrandList
+    }
+  }, [_vm._v("\n      品牌制造商直供\n    ")]), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, _vm._l((_vm.brandList), function(item, index) {
+    return _c('div', {
+      key: index,
+      attrs: {
+        "eventid": '4-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.branddetail(item.id)
+        }
+      }
+    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.floor_price) + "元起")])], 1), _vm._v(" "), _c('img', {
+      attrs: {
+        "src": item.new_pic_url,
+        "alt": ""
+      }
+    })])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "newgoods"
+  }, [_c('div', {
+    staticClass: "newgoods-top",
+    attrs: {
+      "eventid": '5'
+    },
+    on: {
+      "click": function($event) {
+        _vm.goodsList('new')
+      }
+    }
+  }, [_c('div', {
+    staticClass: "top"
+  }, [_c('p', [_vm._v("新品首发")]), _vm._v(" "), _c('p', [_vm._v("查看全部")])], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "list"
+  }, [_c('ul', [_c('scroll-view', {
+    staticClass: "scroll-view",
+    attrs: {
+      "scroll-x": true
+    }
+  }, _vm._l((_vm.newGoods), function(item, index) {
+    return _c('li', {
+      key: index,
+      attrs: {
+        "eventid": '6-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.goodsDetail(item.id)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": item.list_pic_url,
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.goods_brief))]), _vm._v(" "), _c('p', [_vm._v("￥" + _vm._s(item.retail_price))])], 1)
+  }))], 1)], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "newgoods hotgoods"
+  }, [_c('div', {
+    staticClass: "newgoods-top",
     attrs: {
       "eventid": '7'
     },
     on: {
       "click": function($event) {
-        _vm.clickHandle('test click', $event)
+        _vm.goodsList('hot')
       }
     }
   }, [_c('div', {
-    staticClass: "userinfo",
+    staticClass: "top"
+  }, [_c('p', [_vm._v("人气推荐\n          "), _c('span'), _vm._v(" 好物精选")]), _vm._v(" "), _c('p', [_vm._v("查看全部")])], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "list"
+  }, [_c('ul', [_c('scroll-view', {
+    staticClass: "scroll-view",
     attrs: {
-      "eventid": '0'
-    },
-    on: {
-      "click": _vm.bindViewTap
+      "scroll-x": true
     }
-  }, [(_vm.userInfo.avatarUrl) ? _c('img', {
-    staticClass: "userinfo-avatar",
-    attrs: {
-      "src": _vm.userInfo.avatarUrl,
-      "background-size": "cover"
-    }
-  }) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "userinfo-nickname"
-  }, [_c('card', {
-    attrs: {
-      "text": _vm.userInfo.nickName,
-      "mpcomid": '0'
-    }
-  })], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "usermotto"
+  }, _vm._l((_vm.hotGoods), function(item, index) {
+    return _c('li', {
+      key: index,
+      attrs: {
+        "eventid": '8-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.goodsDetail(item.id)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": item.list_pic_url,
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.goods_brief))]), _vm._v(" "), _c('p', [_vm._v("￥" + _vm._s(item.retail_price))])], 1)
+  }))], 1)], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "topicList"
   }, [_c('div', {
-    staticClass: "user-motto"
-  }, [_c('card', {
+    staticClass: "topicList-top",
     attrs: {
-      "text": _vm.motto,
-      "mpcomid": '1'
-    }
-  })], 1)]), _vm._v(" "), _c('van-button', {
-    attrs: {
-      "type": "primary",
-      "size": "normal",
-      "round": "",
-      "open-type": "getUserInfo",
-      "eventid": '1',
-      "mpcomid": '2'
+      "eventid": '9'
     },
     on: {
-      "click": _vm.getUserInfo
+      "click": _vm.totopic
     }
-  }, [_vm._v("获取个人信息")]), _vm._v(" "), _c('van-button', {
+  }, [_vm._v("\n      专题精选\n      "), _c('span', {
+    staticClass: "icon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "list"
+  }, [_c('ul', [_c('scroll-view', {
+    staticClass: "scroll-view",
     attrs: {
-      "type": "primary",
-      "size": "normal",
-      "round": "",
-      "eventid": '2',
-      "mpcomid": '3'
-    },
-    on: {
-      "click": _vm.photoPage
+      "scroll-x": true
     }
-  }, [_vm._v("打开相机")]), _vm._v(" "), _c('van-tabbar', {
-    attrs: {
-      "active": "0",
-      "mpcomid": '8'
-    }
-  }, [_c('van-tabbar-item', {
-    attrs: {
-      "icon": "shop",
-      "eventid": '3',
-      "mpcomid": '4'
-    },
-    on: {
-      "click": _vm.apiPage
-    }
-  }, [_vm._v("POI")]), _vm._v(" "), _c('van-tabbar-item', {
-    attrs: {
-      "icon": "search",
-      "dot": "",
-      "eventid": '4',
-      "mpcomid": '5'
-    },
-    on: {
-      "click": _vm.suggestionPage
-    }
-  }, [_vm._v("搜索")]), _vm._v(" "), _c('van-tabbar-item', {
-    attrs: {
-      "icon": "records",
-      "info": "5",
-      "eventid": '5',
-      "mpcomid": '6'
-    },
-    on: {
-      "click": _vm.regeocodingPage
-    }
-  }, [_vm._v("逆地址")]), _vm._v(" "), _c('van-tabbar-item', {
-    attrs: {
-      "icon": "gold-coin",
-      "info": "20",
-      "eventid": '6',
-      "mpcomid": '7'
-    },
-    on: {
-      "click": _vm.weatherPage
-    }
-  }, [_vm._v("天气")])], 1)], 1)
+  }, _vm._l((_vm.topicList), function(item, index) {
+    return _c('li', {
+      key: index,
+      attrs: {
+        "eventid": '10-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.topicdetail(item.id)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": item.item_pic_url,
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "btom"
+    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.subtitle))])], 1), _vm._v(" "), _c('div', [_vm._v("\n                " + _vm._s(item.price_info) + "元起\n              ")])])])
+  }))], 1)], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "newcategory"
+  }, _vm._l((_vm.newCategoryList), function(item, index) {
+    return _c('div', {
+      key: index,
+      staticClass: "list"
+    }, [_c('div', {
+      staticClass: "head"
+    }, [_vm._v(_vm._s(item.name) + "好物")]), _vm._v(" "), _c('div', {
+      staticClass: "sublist"
+    }, [_vm._l((item.goodsList), function(subitem, subindex) {
+      return _c('div', {
+        key: subindex,
+        attrs: {
+          "eventid": '11-' + index + '-' + subindex
+        },
+        on: {
+          "click": function($event) {
+            _vm.goodsDetail(subitem.id)
+          }
+        }
+      }, [_c('img', {
+        attrs: {
+          "src": subitem.list_pic_url,
+          "alt": ""
+        }
+      }), _vm._v(" "), _c('p', [_vm._v(_vm._s(subitem.name))]), _vm._v(" "), _c('p', [_vm._v("￥" + _vm._s(subitem.retail_price))])], 1)
+    }), _vm._v(" "), _c('div', {
+      attrs: {
+        "eventid": '12-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.categoryList(item.id)
+        }
+      }
+    }, [_c('div', {
+      staticClass: "last"
+    }, [_c('p', [_vm._v(_vm._s(item.name) + "好物")]), _vm._v(" "), _c('span', {
+      staticClass: "icon"
+    })], 1)])], 2)])
+  }))])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -325,8 +591,8 @@ app.$mount();
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_378baaca_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_378baaca_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(105);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
