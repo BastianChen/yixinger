@@ -2,6 +2,12 @@ import Vue from 'vue'
 import App from './App'
 import MpvueRouterPatch from 'mpvue-router-patch'
 import WXrequest from './utils/wx-request'
+import BaiduMap from 'vue-baidu-map'
+
+Vue.use(BaiduMap, {
+  ak: 'FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y'  //这个地方是官方提供的ak密钥
+})
+
 Vue.prototype.$httpWX = WXrequest
 
 Vue.use(MpvueRouterPatch)

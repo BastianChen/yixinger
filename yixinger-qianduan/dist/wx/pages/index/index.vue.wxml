@@ -2,7 +2,7 @@
   <view class="_div data-v-378baaca index">
     <view class="_div data-v-378baaca search">
       <view bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_div data-v-378baaca">{{cityName}}</view>
-      <view bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_div data-v-378baaca"><input type="text" placeholder="搜索商品" class="_input data-v-378baaca" /> <label class="_span data-v-378baaca icon"></label></view>
+      <view bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_div data-v-378baaca"><input type="text" placeholder="搜索" class="_input data-v-378baaca" /> <label class="_span data-v-378baaca icon"></label></view>
     </view>
     <view class="_div data-v-378baaca swiper">
       <swiper class="_swiper data-v-378baaca swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true" duration="500">
