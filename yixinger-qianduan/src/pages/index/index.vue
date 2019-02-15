@@ -1,39 +1,39 @@
 <template>
   <!--<div class="container" @click="clickHandle('test click', $event)">-->
-    <!--<div class="userinfo" @click="bindViewTap">-->
-      <!--<img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover"/>-->
-      <!--<div class="userinfo-nickname">-->
-        <!--<card :text="userInfo.nickName"></card>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div>-->
-    <!--<radio-group class="radio-group" @change="radioChange">-->
-    <!--<label class="radio" v-for="(item, index) in items" :key="item.name">-->
-    <!--<radio :value="item.name" :checked="item.checked"/>-->
-    <!--{{item.value}}-->
-    <!--</label>-->
-    <!--</radio-group>-->
-    <!--</div>-->
+  <!--<div class="userinfo" @click="bindViewTap">-->
+  <!--<img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover"/>-->
+  <!--<div class="userinfo-nickname">-->
+  <!--<card :text="userInfo.nickName"></card>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div>-->
+  <!--<radio-group class="radio-group" @change="radioChange">-->
+  <!--<label class="radio" v-for="(item, index) in items" :key="item.name">-->
+  <!--<radio :value="item.name" :checked="item.checked"/>-->
+  <!--{{item.value}}-->
+  <!--</label>-->
+  <!--</radio-group>-->
+  <!--</div>-->
 
-    <!--<div class="usermotto">-->
-      <!--<div class="user-motto">-->
-        <!--<card :text="motto"></card>-->
-      <!--</div>-->
-    <!--</div>-->
+  <!--<div class="usermotto">-->
+  <!--<div class="user-motto">-->
+  <!--<card :text="motto"></card>-->
+  <!--</div>-->
+  <!--</div>-->
 
-    <!--<form class="form-container">-->
-    <!--<input type="text" class="form-control" v-model="motto" placeholder="v-model"/>-->
-    <!--<input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy"/>-->
-    <!--</form>-->
-    <!--<a @click="vuexPage" class="counter" open-type="getUserInfo">去往Vuex示例页面</a>-->
-    <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
-    <!--<van-button type="primary" size="normal" round @click="photoPage">打开相机</van-button>-->
-    <!--<van-tabbar active="0">-->
-      <!--<van-tabbar-item icon="shop" @click="apiPage">POI</van-tabbar-item>-->
-      <!--<van-tabbar-item icon="search" dot @click="suggestionPage">搜索</van-tabbar-item>-->
-      <!--<van-tabbar-item icon="records" info="5" @click="regeocodingPage">逆地址</van-tabbar-item>-->
-      <!--<van-tabbar-item icon="gold-coin" info="20" @click="weatherPage">天气</van-tabbar-item>-->
-    <!--</van-tabbar>-->
+  <!--<form class="form-container">-->
+  <!--<input type="text" class="form-control" v-model="motto" placeholder="v-model"/>-->
+  <!--<input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy"/>-->
+  <!--</form>-->
+  <!--<a @click="vuexPage" class="counter" open-type="getUserInfo">去往Vuex示例页面</a>-->
+  <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
+  <!--<van-button type="primary" size="normal" round @click="photoPage">打开相机</van-button>-->
+  <!--<van-tabbar active="0">-->
+  <!--<van-tabbar-item icon="shop" @click="apiPage">POI</van-tabbar-item>-->
+  <!--<van-tabbar-item icon="search" dot @click="suggestionPage">搜索</van-tabbar-item>-->
+  <!--<van-tabbar-item icon="records" info="5" @click="regeocodingPage">逆地址</van-tabbar-item>-->
+  <!--<van-tabbar-item icon="gold-coin" info="20" @click="weatherPage">天气</van-tabbar-item>-->
+  <!--</van-tabbar>-->
   <!--</div>-->
   <div class="index">
     <div class="search">
@@ -44,10 +44,11 @@
       </div>
     </div>
     <div class="swiper">
-      <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true" duration="500">
+      <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true"
+              duration="500">
         <block v-for="(item, index) in banner " :key="index">
           <swiper-item class="swiper-item">
-            <image :src="item.image_url" class="slide-image" />
+            <image :src="item.image_url" class="slide-image"/>
           </swiper-item>
         </block>
       </swiper>
@@ -292,7 +293,417 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss' scoped>
+  .index {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+
+    .search {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 25rpx 0 10rpx;
+      position: fixed;
+      top: 0;
+      z-index: 99;
+      height: 80rpx;
+      display: flex;
+      align-items: center;
+      background: #fff;
+
+      div:nth-child(1) {
+        width: 115rpx;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 20rpx;
+        padding-right: 15rpx;
+      }
+
+      div:nth-child(2) {
+        flex: 1;
+        position: relative;
+
+        input {
+          width: 100%;
+          height: 56rpx;
+          border-radius: 8rpx;
+          background: #ededed;
+          box-sizing: border-box;
+          padding-left: 40rpx;
+        }
+
+        .icon {
+          position: absolute;
+          top: 15rpx;
+          left: 10rpx;
+          background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;
+          background-size: 100%;
+          width: 28rpx;
+          height: 28rpx;
+          margin-right: 10rpx;
+        }
+      }
+    }
+
+    .swiper {
+      width: 100%;
+      height: 417rpx;
+      margin-top: 80rpx;
+
+      .swiper-container {
+        width: 100%;
+        height: 100%;
+
+        .swiper-item {
+          width: 100%;
+          height: 100%;
+
+          .slide-image {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    .channel {
+      display: flex;
+      padding: 20rpx 0;
+      background: #ffffff;
+
+      div {
+        width: 25%;
+        text-align: center;
+
+        img {
+          height: 58rpx;
+          width: 58rpx;
+          display: inline-block;
+        }
+      }
+    }
+
+    .brand {
+      width: 100%;
+      margin-top: 20rpx;
+      background: #ffffff;
+
+      .head {
+        text-align: center;
+        padding: 40rpx 0;
+      }
+
+      .content {
+        width: 730rpx;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        div {
+          width: 360rpx;
+          height: 235rpx;
+          margin-bottom: 10rpx;
+          position: relative;
+
+          div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10rpx;
+
+            p:nth-child(2) {
+              font-size: 24rpx;
+            }
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    .newgoods {
+      .newgoods-top {
+        margin-top: 20rpx;
+        height: 260rpx;
+        width: 100%;
+        background: url('../../../static/images/bgnew.png') no-repeat;
+        background-size: 100% 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .top {
+          p {
+            color: #8c9bae;
+            font-size: 32rpx;
+          }
+
+          p:nth-child(2) {
+            width: 180rpx;
+            height: 50rpx;
+            line-height: 50rpx;
+            margin: 27rpx auto 0 auto;
+            font-size: 22rpx;
+            background: #d8e4f0;
+          }
+        }
+      }
+
+      .list {
+        margin-top: 20rpx;
+        background: #fff;
+        padding-bottom: 10rpx;
+
+        ul {
+          .scroll-view {
+            width: 100%; // height: 470rpx; // display: flex;
+            // flex-wrap: nowrap;
+            white-space: nowrap;
+
+            li {
+              width: 280rpx;
+              height: 416rpx;
+              margin: 5rpx 0 5rpx 25rpx;
+              display: inline-block;
+
+              img {
+                width: 280rpx;
+                height: 280rpx;
+              }
+
+              p:nth-child(2) {
+                font-size: 30rpx;
+                font-weight: bold;
+              }
+
+              p:nth-child(3) {
+                color: #8a8a8a;
+                font-size: 24rpx;
+              }
+
+              p:nth-child(4) {
+                color: #9c3232;
+                font-size: 24rpx;
+              }
+
+              p {
+                width: 94%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                margin-top: 8rpx;
+                text-indent: 1em;
+              }
+            }
+
+            li:nth-child(n+2) {
+              border-left: 1rpx solid #f4f4f4;
+            }
+          }
+        }
+      }
+    }
+
+    .hotgoods {
+      .newgoods-top {
+        background: url('../../../static/images/bgtopic.png') no-repeat;
+        background-size: 100% 100%;
+
+        .top {
+          p {
+            color: #b1a279;
+            font-size: 32rpx;
+            vertical-align: middle;
+          }
+
+          p:nth-child(1) {
+            span {
+              width: 4rpx;
+              height: 4rpx;
+              font-size: 14rpx;
+              display: inline-block;
+              vertical-align: middle;
+              background: #b1a279;
+            }
+          }
+
+          p:nth-child(2) {
+            background: #f4e9cb;
+          }
+        }
+      }
+    }
+
+    .topicList {
+      margin-top: 20rpx;
+      background: #fff;
+
+      .topicList-top {
+        text-align: center;
+        padding: 36rpx;
+        vertical-align: middle;
+
+        .icon {
+          display: inline-block;
+          width: 32rpx;
+          height: 32rpx;
+          margin-left: 5rpx;
+          background: url('../../../static//images/right.png') no-repeat;
+          background-size: 100% 100%;
+          vertical-align: middle;
+        }
+      }
+
+      .list {
+        .scroll-view {
+          white-space: nowrap;
+
+          li {
+            display: inline-block;
+            width: 575rpx;
+            margin-left: 25rpx;
+
+            img {
+              display: block;
+              width: 575rpx;
+              height: 325rpx;
+              border-radius: 10rpx;
+            }
+
+            .btom {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 42rpx;
+              width: 100%;
+
+              div:nth-child(1) {
+                width: 90%;
+
+                p {
+                  margin-top: 8rpx;
+                }
+
+                p:nth-child(1) {
+                  font-size: 30rpx;
+                  font-weight: bold;
+                }
+
+                p:nth-child(2) {
+                  width: 90%;
+                  color: #8a8a8a;
+                  font-size: 24rpx;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+              }
+
+              div:nth-child(2) {
+                margin-top: 8rpx;
+                color: #9c3232;
+                font-size: 24rpx;
+              }
+            }
+          }
+
+          li:last-child {
+            margin-right: 25rpx;
+          }
+        }
+      }
+    }
+
+    .newcategory {
+      margin-top: 20rpx;
+      padding: 0 10rpx 25rpx 10rpx;
+
+      .head {
+        padding: 25rpx 0;
+        text-align: center;
+      }
+
+      .sublist {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 730rpx;
+        margin: 0 auto;
+
+        div {
+          width: 360rpx;
+          background: #fff;
+          margin-bottom: 10rpx;
+          padding-bottom: 10rpx;
+
+          img {
+            display: block;
+            width: 302rpx;
+            height: 302rpx;
+            margin: 0 auto;
+          }
+
+          p {
+            margin-bottom: 5rpx;
+            text-indent: 1em;
+          }
+
+          p:nth-child(2) {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 98%;
+          }
+
+          p:nth-child(3) {
+            color: #9c3232;
+          }
+        }
+
+        .last {
+          display: block;
+          width: 302rpx;
+          height: 302rpx;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+
+          p {
+            height: 33rpx;
+            width: 100%;
+            line-height: 33rpx;
+            color: #333;
+            font-size: 33rpx;
+            text-align: center;
+          }
+
+          .icon {
+            display: inline-block;
+            width: 70rpx;
+            height: 70rpx;
+            background: url('../../../static/images/rightbig.png') no-repeat;
+            background-size: 100% 100%;
+            margin-top: 60rpx;
+          }
+        }
+
+        div:nth-child(2n) {
+          margin-left: 10rpx;
+        }
+      }
+    }
+  }
+
+
   .userinfo {
     display: flex;
     flex-direction: column;
@@ -333,5 +744,4 @@ export default {
     color: blue;
     background: aqua;
   }
-
 </style>
