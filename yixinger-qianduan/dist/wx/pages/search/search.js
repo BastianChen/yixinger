@@ -44,14 +44,7 @@ Page({
       // });
     }
     BMap.search({
-      "query": '美食',
-      fail: fail,
-      success: success,
-      iconPath: '../../img/marker_checked.png',
-      iconTapPath: '../../img/marker_checked.png'
-    });
-    BMap.search({
-      "query": '景点',
+      "query": queryType,
       fail: fail,
       success: success,
       iconPath: '../../img/marker_checked.png',

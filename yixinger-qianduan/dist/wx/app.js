@@ -12,17 +12,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mpvue_router_patch__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_wx_request__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_baidu_map__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_baidu_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_baidu_map__);
 
 
 
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_baidu_map___default.a, {
-  ak: 'FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' //这个地方是官方提供的ak密钥
-});
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$httpWX = __WEBPACK_IMPORTED_MODULE_3__utils_wx_request__["a" /* default */];
 
@@ -42,39 +34,7 @@ app.$mount();
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#ea5149',
       navigationBarTitleText: 'yixinger',
-      navigationBarTextStyle: 'white'
-    },
-    "tabBar": {
-      "backgroundColor": "#fff",
-      "borderStyle": "white",
-      "selectedColor": "#3A82F8",
-      "color": "#666666",
-      "list": [{
-        "pagePath": "pages/index/main",
-        "iconPath": "static/images/ic_menu_choice_nor.png",
-        "selectedIconPath": "static/images/ic_menu_choice_pressed.png",
-        "text": "首页"
-      }, {
-        "pagePath": "pages/search/search",
-        "iconPath": "static/images/ic_menu_topic_nor.png",
-        "selectedIconPath": "static/images/ic_menu_topic_pressed.png",
-        "text": "专题"
-      }, {
-        "pagePath": "pages/suggestion/suggestion",
-        "iconPath": "static/images/ic_menu_sort_nor.png",
-        "selectedIconPath": "static/images/ic_menu_sort_pressed.png",
-        "text": "分类"
-      }, {
-        "pagePath": "pages/regeocoding/regeocoding",
-        "iconPath": "static/images/ic_menu_shoping_nor.png",
-        "selectedIconPath": "static/images/ic_menu_shoping_pressed.png",
-        "text": "购物车"
-      }, {
-        "pagePath": "pages/weather/weather",
-        "iconPath": "static/images/ic_menu_me_nor.png",
-        "selectedIconPath": "static/images/ic_menu_me_pressed.png",
-        "text": "我的"
-      }]
+      navigationBarTextStyle: 'black'
     }
   }
 });

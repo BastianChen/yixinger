@@ -7,7 +7,6 @@ global.webpackJsonp([3],{
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_card__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__libs_bmap_wx_min__ = __webpack_require__(126);
 //
 //
 //
@@ -170,7 +169,6 @@ global.webpackJsonp([3],{
 //
 //
 //
-
 
 
 
@@ -181,8 +179,9 @@ global.webpackJsonp([3],{
       userInfo: {},
       items: [{ name: 'USA', value: '美国' }, { name: 'CHN', value: '中国', checked: 'true' }, { name: 'BRA', value: '巴西' }, { name: 'JPN', value: '日本' }, { name: 'ENG', value: '英国' }, { name: 'TUR', value: '法国' }],
       active: 0,
-      code: "",
-      cityName: ''
+      code: '',
+      cityName: '',
+      banner: [] // 轮播数据数组
     };
   },
 
@@ -193,9 +192,7 @@ global.webpackJsonp([3],{
   created: function created() {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo();
-  },
-  mounted: function mounted() {
-    this.getWeatherData();
+    this.getLocation();
   },
 
   methods: {
@@ -263,65 +260,81 @@ global.webpackJsonp([3],{
               //})
             }
           });
-          wx.getLocation({
-            type: 'wgs84',
+          // wx.getLocation({
+          //   type: 'wgs84',
+          //   success(res) {
+          //     console.log(res)
+          //     const latitude = res.latitude
+          //     const longitude = res.longitude
+          //     const speed = res.speed
+          //     const accuracy = res.accuracy
+          //     wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+          //       url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+          //       data: {},
+          //       header: {
+          //         'Content-Type': 'application/json'
+          //       },
+          //       success(res) {
+          //         console.log(res.data.result);
+          //         console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+          //         this.cityName = '杭州市';
+          //       },
+          //       fail: function () {
+          //         // fail
+          //         this.cityName = '杭州市';
+          //       },
+          //       complete: function () {
+          //         // complete
+          //       }
+          //     })
+          //   }
+          // })
+        }
+      });
+    },
+    getLocation: function getLocation() {
+      var _this = this;
+      wx.getLocation({
+        type: 'wgs84',
+        success: function success(res) {
+          console.log(res);
+          var latitude = res.latitude;
+          var longitude = res.longitude;
+          var speed = res.speed;
+          var accuracy = res.accuracy;
+          wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+            url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+            data: {},
+            header: {
+              'Content-Type': 'application/json'
+            },
             success: function success(res) {
-              console.log(res);
-              var latitude = res.latitude;
-              var longitude = res.longitude;
-              var speed = res.speed;
-              var accuracy = res.accuracy;
-              wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-                url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
-                data: {},
-                header: {
-                  'Content-Type': 'application/json'
-                },
-                success: function success(res) {
-                  console.log(res.data.result);
-                  console.log(res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-                },
+              console.log(res.data.result);
+              console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+              if (res.data.result.addressComponent.district != '') {
+                _this.cityName = res.data.result.addressComponent.district;
+              } else {
+                _this.cityName = res.data.result.addressComponent.city;
+              }
+            },
 
-                fail: function fail() {
-                  // fail
-                },
-                complete: function complete() {
-                  // complete
-                }
-              });
+            fail: function fail() {
+              // fail
+              _this.cityName = '杭州市';
+            },
+            complete: function complete() {
+              // complete
             }
           });
         }
       });
     },
+    getBannerData: function getBannerData() {},
     clickHandle: function clickHandle(msg, ev) {
       console.log('clickHandle:', msg, ev);
     },
     radioChange: function radioChange(e) {
       console.log('radio发生change事件，携带value值为：', e.target.value);
-    },
-    getWeatherData: function getWeatherData() {
-      var _this = this;
-      var BMap = new __WEBPACK_IMPORTED_MODULE_1__libs_bmap_wx_min__["default"].BMapWX({
-        ak: 'FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y'
-      });
-      var fail = function fail(data) {
-        console.log('fail!!!!');
-      };
-      var success = function success(data) {
-        console.log(data);
-        console.log('success!!!');
-        var weatherData = data.currentWeather[0];
-        weatherData = '城市：' + weatherData.currentCity + '\n' + 'PM2.5：' + weatherData.pm25 + '\n' + '日期：' + weatherData.date + '\n' + '温度：' + weatherData.temperature + '\n' + '天气：' + weatherData.weatherDesc + '\n' + '风力：' + weatherData.wind + '\n';
-        _this.setData({
-          weatherData: weatherData
-        });
-        _this.cityName = weatherData.currentCity;
-      };
-      BMap.weather({
-        fail: fail,
-        success: success
-      });
     }
   }
 });
@@ -598,114 +611,6 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-378baaca", esExports)
   }
 }
-
-/***/ }),
-
-/***/ 126:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_define_property__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_define_property___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_define_property__);
-
-
-function _classCallCheck(t, a) {
-  if (!(t instanceof a)) throw new TypeError("Cannot call a class as a function");
-}var _createClass = function () {
-  function t(t, a) {
-    for (var e = 0; e < a.length; e++) {
-      var i = a[e];i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_define_property___default()(t, i.key, i);
-    }
-  }return function (a, e, i) {
-    return e && t(a.prototype, e), i && t(a, i), a;
-  };
-}(),
-    BMapWX = function () {
-  function t(a) {
-    _classCallCheck(this, t), this.ak = a.ak;
-  }return _createClass(t, [{ key: "getWXLocation", value: function value(t, a, e, i) {
-      t = t || "gcj02", a = a || function () {}, e = e || function () {}, i = i || function () {}, wx.getLocation({ type: t, success: a, fail: e, complete: i });
-    } }, { key: "search", value: function value(t) {
-      var a = this;t = t || {};var e = { query: t.query || "生活服务$美食&酒店", scope: t.scope || 1, filter: t.filter || "", coord_type: t.coord_type || 2, page_size: t.page_size || 10, page_num: t.page_num || 0, output: t.output || "json", ak: a.ak, sn: t.sn || "", timestamp: t.timestamp || "", radius: t.radius || 2e3, ret_coordtype: "gcj02ll" },
-          i = { iconPath: t.iconPath, iconTapPath: t.iconTapPath, width: t.width, height: t.height, alpha: t.alpha || 1, success: t.success || function () {}, fail: t.fail || function () {} },
-          n = "gcj02",
-          o = function o(t) {
-        e.location = t.latitude + "," + t.longitude, wx.request({ url: "https://api.map.baidu.com/place/v2/search", data: e, header: { "content-type": "application/json" }, method: "GET", success: function success(t) {
-            var a = t.data;if (0 === a.status) {
-              var e = a.results,
-                  n = {};n.originalData = a, n.wxMarkerData = [];for (var o = 0; o < e.length; o++) {
-                n.wxMarkerData[o] = { id: o, latitude: e[o].location.lat, longitude: e[o].location.lng, title: e[o].name, iconPath: i.iconPath, iconTapPath: i.iconTapPath, address: e[o].address, telephone: e[o].telephone, alpha: i.alpha, width: i.width, height: i.height };
-              }i.success(n);
-            } else i.fail({ errMsg: a.message, statusCode: a.status });
-          }, fail: function fail(t) {
-            i.fail(t);
-          } });
-      },
-          s = function s(t) {
-        i.fail(t);
-      },
-          c = function c() {};if (t.location) {
-        var u = t.location.split(",")[1],
-            r = t.location.split(",")[0],
-            l = "input location",
-            p = { errMsg: l, latitude: r, longitude: u };o(p);
-      } else a.getWXLocation(n, o, s, c);
-    } }, { key: "suggestion", value: function value(t) {
-      var a = this;t = t || {};var e = { query: t.query || "", region: t.region || "全国", city_limit: t.city_limit || !1, output: t.output || "json", ak: a.ak, sn: t.sn || "", timestamp: t.timestamp || "", ret_coordtype: "gcj02ll" },
-          i = { success: t.success || function () {}, fail: t.fail || function () {} };wx.request({ url: "https://api.map.baidu.com/place/v2/suggestion", data: e, header: { "content-type": "application/json" }, method: "GET", success: function success(t) {
-          var a = t.data;0 === a.status ? i.success(a) : i.fail({ errMsg: a.message, statusCode: a.status });
-        }, fail: function fail(t) {
-          i.fail(t);
-        } });
-    } }, { key: "regeocoding", value: function value(t) {
-      var a = this;t = t || {};var e = { coordtype: t.coordtype || "gcj02ll", pois: t.pois || 0, output: t.output || "json", ak: a.ak, sn: t.sn || "", timestamp: t.timestamp || "", ret_coordtype: "gcj02ll" },
-          i = { iconPath: t.iconPath, iconTapPath: t.iconTapPath, width: t.width, height: t.height, alpha: t.alpha || 1, success: t.success || function () {}, fail: t.fail || function () {} },
-          n = "gcj02",
-          o = function o(t) {
-        e.location = t.latitude + "," + t.longitude, wx.request({ url: "https://api.map.baidu.com/geocoder/v2/", data: e, header: { "content-type": "application/json" }, method: "GET", success: function success(a) {
-            var e = a.data;if (0 === e.status) {
-              var n = e.result,
-                  o = {};o.originalData = e, o.wxMarkerData = [], o.wxMarkerData[0] = { id: 0, latitude: t.latitude, longitude: t.longitude, address: n.formatted_address, iconPath: i.iconPath, iconTapPath: i.iconTapPath, desc: n.sematic_description, business: n.business, alpha: i.alpha, width: i.width, height: i.height }, i.success(o);
-            } else i.fail({ errMsg: e.message, statusCode: e.status });
-          }, fail: function fail(t) {
-            i.fail(t);
-          } });
-      },
-          s = function s(t) {
-        i.fail(t);
-      },
-          c = function c() {};if (t.location) {
-        var u = t.location.split(",")[1],
-            r = t.location.split(",")[0],
-            l = "input location",
-            p = { errMsg: l, latitude: r, longitude: u };o(p);
-      } else a.getWXLocation(n, o, s, c);
-    } }, { key: "weather", value: function value(t) {
-      var a = this;t = t || {};var e = { coord_type: t.coord_type || "gcj02", output: t.output || "json", ak: a.ak, sn: t.sn || "", timestamp: t.timestamp || "" },
-          i = { success: t.success || function () {}, fail: t.fail || function () {} },
-          n = "gcj02",
-          o = function o(t) {
-        e.location = t.longitude + "," + t.latitude, wx.request({ url: "https://api.map.baidu.com/telematics/v3/weather", data: e, header: { "content-type": "application/json" }, method: "GET", success: function success(t) {
-            var a = t.data;if (0 === a.error && "success" === a.status) {
-              var e = a.results,
-                  n = {};n.originalData = a, n.currentWeather = [], n.currentWeather[0] = { currentCity: e[0].currentCity, pm25: e[0].pm25, date: e[0].weather_data[0].date, temperature: e[0].weather_data[0].temperature, weatherDesc: e[0].weather_data[0].weather, wind: e[0].weather_data[0].wind }, i.success(n);
-            } else i.fail({ errMsg: a.message, statusCode: a.status });
-          }, fail: function fail(t) {
-            i.fail(t);
-          } });
-      },
-          s = function s(t) {
-        i.fail(t);
-      },
-          c = function c() {};if (t.location) {
-        var u = t.location.split(",")[0],
-            r = t.location.split(",")[1],
-            l = "input location",
-            p = { errMsg: l, latitude: r, longitude: u };o(p);
-      } else a.getWXLocation(n, o, s, c);
-    } }]), t;
-}();module.exports.BMapWX = BMapWX;
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(127)(module)))
 
 /***/ }),
 
