@@ -1,8 +1,11 @@
 package com.cb.yixinger.service.impl;
 
 import com.cb.yixinger.dao.PlaceDao;
+import com.cb.yixinger.dao.PlaceMapper;
+import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.Place;
 import com.cb.yixinger.service.PlaceService;
+import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -13,9 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * @Description:
@@ -26,6 +31,8 @@ import java.io.UnsupportedEncodingException;
 public class PlaceServiceImpl implements PlaceService {
     @Autowired
     private PlaceDao placeDao;
+    @Autowired
+    private PlaceMapper placeMapper;
     private static final Logger logger = LoggerFactory.getLogger(PlaceServiceImpl.class);
 
     @Override
@@ -149,6 +156,7 @@ public class PlaceServiceImpl implements PlaceService {
                             place.setCommentNumber(0);
                         }
                     }
+                    place.setType(1);
                     break;
                 case "2":
                     //景点图片列表
@@ -197,6 +205,7 @@ public class PlaceServiceImpl implements PlaceService {
                     } else {
                         place.setCommentNumber(avocado.optJSONArray("comment_list").size());
                     }
+                    place.setType(2);
                     break;
                 default:
                     break;
@@ -211,5 +220,14 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public Place getPlaceByUid(String uid) {
         return placeDao.getPlaceByUid(uid);
+    }
+
+    @Override
+    public List<Place> getPlaceList(Integer type) {
+        Example example = new Example(Place.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("type", type);
+        List<Place> placeList = placeMapper.selectByExample(example);
+        return placeList;
     }
 }

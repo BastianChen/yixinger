@@ -2,6 +2,8 @@ package com.cb.yixinger.service;
 
 import com.cb.yixinger.entity.Place;
 
+import java.util.List;
+
 /**
  * @Description:
  * @author: YFZX-CB-1784 ChenBen
@@ -11,4 +13,6 @@ public interface PlaceService {
     Place addPlace(Place place, String uid, String type);
 
     Place getPlaceByUid(String uid);
+
+    List<Place> getPlaceList(Integer type);
 }

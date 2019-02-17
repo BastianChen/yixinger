@@ -86,9 +86,10 @@ public class PlaceApiController {
     }
 
     @LoggerManage(logDescription = "根据uid获取游玩地点信息")
-    @ApiOperation(value = "获取游玩地址信息", notes = "获取游玩地址信息 ", response = BaseMessage.class)
+    @ApiOperation(value = "根据uid获取游玩地点信息", notes = "根据uid获取游玩地点信息 ", response = BaseMessage.class)
     @RequestMapping(value = "/getPlaceByUid", produces = {"application/json"}, method = RequestMethod.GET)
-    public ResponseEntity<BaseMessage> getPlaceByUid(@ApiParam(value = "地点uid", required = true) @RequestParam(value = "uid") String uid) {
+    public ResponseEntity<BaseMessage> getPlaceByUid(
+            @ApiParam(value = "地点uid", required = true) @RequestParam(value = "uid") String uid) {
         BaseMessage baseMessage = new BaseMessage();
         String placeName = "place?uid=" + uid;
         String placeCommentListName = "placeCommentList?uid=" + uid;
@@ -138,6 +139,24 @@ public class PlaceApiController {
             }
             return baseMessage.response();
         }
+    }
+
+    @LoggerManage(logDescription = "根据type获取附近推荐的游玩地点")
+    @ApiOperation(value = "根据type获取附近推荐的游玩地点", notes = "根据type获取附近推荐的游玩地点 ", response = BaseMessage.class)
+    @RequestMapping(value = "/getPlaceList", produces = {"application/json"}, method = RequestMethod.GET)
+    public ResponseEntity<BaseMessage> getPlaceList(
+            @ApiParam(value = "游玩地点类型", required = true) @RequestParam(value = "type") Integer type) {
+        BaseMessage baseMessage = new BaseMessage();
+        List<Place> placeList = placeService.getPlaceList(type);
+        if (placeList != null & placeList.size() > 0) {
+            logger.info("获取附近推荐游玩地点成功");
+            baseMessage.setMessage("获取附近推荐游玩地点成功");
+            baseMessage.setData(placeList);
+        } else {
+            logger.info("附近暂无可以推荐的游玩地点");
+            baseMessage.initStateAndMessage(1001, "附近暂无可以推荐的游玩地点");
+        }
+        return baseMessage.response();
     }
 
     @LoggerManage(logDescription = "根据uid分页获取游玩地点评论")

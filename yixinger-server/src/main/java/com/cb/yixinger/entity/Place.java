@@ -62,4 +62,6 @@ public class Place implements Serializable {
     private String bestTime;
     @ApiModelProperty(value = "天气（景点）")
     private String weather;
+    @ApiModelProperty(value = "游玩地点类型（1：景点；2：餐馆）")
+    private Integer type;
 }

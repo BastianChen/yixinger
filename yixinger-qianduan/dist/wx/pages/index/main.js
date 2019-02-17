@@ -6,7 +6,6 @@ global.webpackJsonp([3],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_card__ = __webpack_require__(37);
 //
 //
 //
@@ -169,7 +168,6 @@ global.webpackJsonp([3],{
 //
 //
 //
-
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -186,13 +184,14 @@ global.webpackJsonp([3],{
   },
 
 
-  components: {
-    card: __WEBPACK_IMPORTED_MODULE_0__components_card__["a" /* default */]
-  },
+  components: {},
   created: function created() {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo();
     this.getLocation();
+  },
+  mounted: function mounted() {
+    this.getWeatherData();
   },
 
   methods: {
@@ -328,6 +327,54 @@ global.webpackJsonp([3],{
           });
         }
       });
+    },
+    getWeatherData: function getWeatherData() {
+      wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+        url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=120.20523%2C30.25727',
+        data: {},
+        header: {
+          'Content-Type': 'application/json'
+        },
+        success: function success(res) {
+          console.log(res.data.results[0].index);
+          // console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+          // if (res.data.result.addressComponent.district!=''){
+          //   _this.cityName =res.data.result.addressComponent.district;
+          // }else {
+          //   _this.cityName = res.data.result.addressComponent.city;
+          // }
+        },
+
+        fail: function fail() {
+          // fail
+          // _this.cityName = '杭州市';
+        },
+        complete: function complete() {
+          // complete
+        }
+      });
+      // var _this = this;
+      // var BMap = new BMap.Map('allmap');
+      // // var BMap = new bmap.BMapWX({
+      // //   ak: 'FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y'
+      // // });
+      // var fail = function (data) {
+      //   console.log('fail!!!!')
+      // };
+      // var success = function (data) {
+      //   console.log(data)
+      //   console.log('success!!!');
+      //   var weatherData = data.currentWeather[0];
+      //   weatherData = '城市：' + weatherData.currentCity + '\n' + 'PM2.5：' + weatherData.pm25 + '\n' + '日期：' + weatherData.date + '\n' + '温度：' + weatherData.temperature + '\n' + '天气：' + weatherData.weatherDesc + '\n' + '风力：' + weatherData.wind + '\n';
+      //   _this.setData({
+      //     weatherData: weatherData
+      //   });
+      //   _this.cityName = weatherData.currentCity;
+      // }
+      // BMap.weather({
+      //   fail: fail,
+      //   success: success
+      // });
     },
     getBannerData: function getBannerData() {},
     clickHandle: function clickHandle(msg, ev) {
