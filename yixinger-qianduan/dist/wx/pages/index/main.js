@@ -179,7 +179,9 @@ global.webpackJsonp([3],{
       active: 0,
       code: '',
       cityName: '',
-      banner: [] // 轮播数据数组
+      banner: [], // 轮播数据数组
+      temperature: '',
+      dayPictureUrl: ''
     };
   },
 
@@ -302,7 +304,7 @@ global.webpackJsonp([3],{
           var speed = res.speed;
           var accuracy = res.accuracy;
           wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-            url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+            url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' + '&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -329,28 +331,44 @@ global.webpackJsonp([3],{
       });
     },
     getWeatherData: function getWeatherData() {
-      wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-        url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=120.20523%2C30.25727',
-        data: {},
-        header: {
-          'Content-Type': 'application/json'
-        },
+      var _this = this;
+      wx.getLocation({
+        type: 'wgs84',
         success: function success(res) {
-          console.log(res.data.results[0].index);
-          // console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-          // if (res.data.result.addressComponent.district!=''){
-          //   _this.cityName =res.data.result.addressComponent.district;
-          // }else {
-          //   _this.cityName = res.data.result.addressComponent.city;
-          // }
-        },
+          console.log(res);
+          var latitude = res.latitude;
+          var longitude = res.longitude;
+          var speed = res.speed;
+          var accuracy = res.accuracy;
+          wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+            url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' + '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + longitude + '%2C' + latitude,
+            data: {},
+            header: {
+              'Content-Type': 'application/json'
+            },
+            success: function success(res) {
+              console.log(res.data.results[0].weather_data[0].date);
+              _this.temperature = res.data.results[0].weather_data[0].date;
+              _this.temperature = _this.temperature.substring(_this.temperature.length - 3, _this.temperature.length - 1);
+              console.log(_this.temperature);
+              _this.dayPictureUrl = res.data.results[0].weather_data[0].dayPictureUrl;
+              console.log(_this.dayPictureUrl);
+              // console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+              // if (res.data.result.addressComponent.district!=''){
+              //   _this.cityName =res.data.result.addressComponent.district;
+              // }else {
+              //   _this.cityName = res.data.result.addressComponent.city;
+              // }
+            },
 
-        fail: function fail() {
-          // fail
-          // _this.cityName = '杭州市';
-        },
-        complete: function complete() {
-          // complete
+            fail: function fail() {
+              // fail
+              // _this.cityName = '杭州市';
+            },
+            complete: function complete() {
+              // complete
+            }
+          });
         }
       });
       // var _this = this;
@@ -388,7 +406,7 @@ global.webpackJsonp([3],{
 
 /***/ }),
 
-/***/ 104:
+/***/ 101:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -682,7 +700,7 @@ app.$mount();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_378baaca_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_378baaca_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(101);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return

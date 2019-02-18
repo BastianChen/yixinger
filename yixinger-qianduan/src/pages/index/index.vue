@@ -179,6 +179,8 @@
         code: '',
         cityName: '',
         banner: [],// 轮播数据数组
+        temperature: '',
+        dayPictureUrl: ''
       }
     },
 
@@ -297,7 +299,8 @@
             const speed = res.speed
             const accuracy = res.accuracy
             wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-              url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+              url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' +
+              '&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
               data: {},
               header: {
                 'Content-Type': 'application/json'
@@ -323,27 +326,44 @@
         })
       },
       getWeatherData() {
-        wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-          url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=120.20523%2C30.25727',
-          data: {},
-          header: {
-            'Content-Type': 'application/json'
-          },
+        let _this = this;
+        wx.getLocation({
+          type: 'wgs84',
           success(res) {
-            console.log(res.data.results[0].index);
-            // console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-            // if (res.data.result.addressComponent.district!=''){
-            //   _this.cityName =res.data.result.addressComponent.district;
-            // }else {
-            //   _this.cityName = res.data.result.addressComponent.city;
-            // }
-          },
-          fail: function () {
-            // fail
-            // _this.cityName = '杭州市';
-          },
-          complete: function () {
-            // complete
+            console.log(res)
+            const latitude = res.latitude
+            const longitude = res.longitude
+            const speed = res.speed
+            const accuracy = res.accuracy
+            wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+              url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' +
+              '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + longitude + '%2C' + latitude,
+              data: {},
+              header: {
+                'Content-Type': 'application/json'
+              },
+              success(res) {
+                console.log(res.data.results[0].weather_data[0].date);
+                _this.temperature = res.data.results[0].weather_data[0].date;
+                _this.temperature = _this.temperature.substring(_this.temperature.length-3,_this.temperature.length-1);
+                console.log(_this.temperature)
+                _this.dayPictureUrl = res.data.results[0].weather_data[0].dayPictureUrl;
+                console.log(_this.dayPictureUrl)
+                // console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+                // if (res.data.result.addressComponent.district!=''){
+                //   _this.cityName =res.data.result.addressComponent.district;
+                // }else {
+                //   _this.cityName = res.data.result.addressComponent.city;
+                // }
+              },
+              fail: function () {
+                // fail
+                // _this.cityName = '杭州市';
+              },
+              complete: function () {
+                // complete
+              }
+            })
           }
         })
         // var _this = this;
