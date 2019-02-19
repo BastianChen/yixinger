@@ -390,6 +390,18 @@ export default {
               console.log("_this.latitudeList" + _this.latitudeList);
               console.log("_this.longitudeList" + _this.longitudeList);
               console.log("url"+apiurl.addPlace)
+              _this.$httpWX.post({
+                url: apiurl.addPlace,
+                param: {
+                  'uidList': _this.uidList,
+                  'latitudeList': _this.latitudeList,
+                  'longitudeList': _this.longitudeList,
+                  'type': 1
+                }
+              }).then(res => {
+                //this.newsList.push(...res.data.articleJSONArray)
+                console.log("addPlace" + res)
+              })
             },
             fail: function () {
               // fail
@@ -397,18 +409,6 @@ export default {
             complete: function () {
               // complete
             }
-          })
-          _this.$httpWX.post({
-            url: apiurl.addPlace,
-            param: {
-              uidList: _this.uidList,
-              latitudeList: _this.latitudeList,
-              longitudeList: _this.longitudeList,
-              type: 1
-            }
-          }).then(res => {
-            //this.newsList.push(...res.data.articleJSONArray)
-            console.log("addPlace" + res)
           })
         }
       })
