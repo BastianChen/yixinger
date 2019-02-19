@@ -161,245 +161,269 @@
 </template>
 
 <script>
+import {apiurl} from "@/service/api.js";
 
-  export default {
-    data() {
-      return {
-        motto: 'Hello World',
-        userInfo: {},
-        items: [
-          {name: 'USA', value: '美国'},
-          {name: 'CHN', value: '中国', checked: 'true'},
-          {name: 'BRA', value: '巴西'},
-          {name: 'JPN', value: '日本'},
-          {name: 'ENG', value: '英国'},
-          {name: 'TUR', value: '法国'}
-        ],
-        active: 0,
-        code: '',
-        cityName: '',
-        banner: [],// 轮播数据数组
-        temperature: '',
-        dayPictureUrl: ''
-      }
-    },
+export default {
+  data() {
+    return {
+      motto: 'Hello World',
+      userInfo: {},
+      items: [
+        {name: 'USA', value: '美国'},
+        {name: 'CHN', value: '中国', checked: 'true'},
+        {name: 'BRA', value: '巴西'},
+        {name: 'JPN', value: '日本'},
+        {name: 'ENG', value: '英国'},
+        {name: 'TUR', value: '法国'}
+      ],
+      active: 0,
+      code: '',
+      cityName: '',
+      banner: [],// 轮播数据数组
+      temperature: '',
+      dayPictureUrl: '',
+      uidList: '',// 游玩地点uidList
+      latitudeList: '',// 经度list
+      longitudeList: '',// 维度list
+      type: ''// 游玩地点类型
+    }
+  },
 
-    components: {},
-    created() {
-      // 调用应用实例的方法获取全局数据
-      this.getUserInfo();
-      this.getLocation();
+  components: {},
+  created() {
+    // 调用应用实例的方法获取全局数据
+    this.getUserInfo();
+    this.getLocation();
+    this.getIndexData();
+  },
+  mounted() {
+
+  },
+  methods: {
+    onChange(event) {
+      console.log(event.detail)
     },
-    mounted() {
-      this.getWeatherData();
+    vuexPage() {
+      this.$router.push('../counter/main')
     },
-    methods: {
-      onChange(event) {
-        console.log(event.detail)
-      },
-      vuexPage() {
-        this.$router.push('../counter/main')
-      },
-      apiPage() {
-        this.$router.push('../search/search')
-      },
-      suggestionPage() {
-        this.$router.push('../suggestion/suggestion')
-      },
-      regeocodingPage() {
-        this.$router.push('../regeocoding/regeocoding')
-      },
-      weatherPage() {
-        this.$router.push('../weather/weather')
-      },
-      bindViewTap() {
-        // const url = '../logs/main'
-        // wx.navigateTo({url})
-        this.$router.push('../logs/main')
-      },
-      photoPage() {
-        this.$router.push('../photo/photo')
-      },
-      getUserInfo() {
-        // 调用登录接口
-        // wx.login({
-        //   success: () => {
-        //     wx.getUserInfo({
-        //       success: (res) => {
-        //         this.userInfo = res.userInfo
-        //         console.log(res)
-        //         console.log(this.userInfo)
-        //       }
-        //     })
-        //   }
-        // }),
-        wx.login({
-          //获取code
-          success: (res) => {
-            this.code = res.code;
-            console.log(res.code) //返回code
-            wx.getUserInfo({
-              success: (res) => {
-                this.userInfo = res.userInfo
-                console.log(res)
-                console.log(this.userInfo)
-                // wx.request({
-                //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
-                //   data: {},
-                //   header: {
-                //     'content-type': 'application/json'
-                //   },
-                //   success: (res) => {
-                //     console.log("openid"+res)
-                //     openid = res.data.openid //返回openid
-                //   }
-                //})
+    apiPage() {
+      this.$router.push('../search/search')
+    },
+    suggestionPage() {
+      this.$router.push('../suggestion/suggestion')
+    },
+    regeocodingPage() {
+      this.$router.push('../regeocoding/regeocoding')
+    },
+    weatherPage() {
+      this.$router.push('../weather/weather')
+    },
+    bindViewTap() {
+      // const url = '../logs/main'
+      // wx.navigateTo({url})
+      this.$router.push('../logs/main')
+    },
+    photoPage() {
+      this.$router.push('../photo/photo')
+    },
+    getUserInfo() {
+      // 调用登录接口
+      // wx.login({
+      //   success: () => {
+      //     wx.getUserInfo({
+      //       success: (res) => {
+      //         this.userInfo = res.userInfo
+      //         console.log(res)
+      //         console.log(this.userInfo)
+      //       }
+      //     })
+      //   }
+      // }),
+      wx.login({
+        //获取code
+        success: (res) => {
+          this.code = res.code;
+          console.log(res.code) //返回code
+          wx.getUserInfo({
+            success: (res) => {
+              this.userInfo = res.userInfo
+              console.log(res)
+              console.log(this.userInfo)
+              // wx.request({
+              //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
+              //   data: {},
+              //   header: {
+              //     'content-type': 'application/json'
+              //   },
+              //   success: (res) => {
+              //     console.log("openid"+res)
+              //     openid = res.data.openid //返回openid
+              //   }
+              //})
+            }
+          })
+          // wx.getLocation({
+          //   type: 'wgs84',
+          //   success(res) {
+          //     console.log(res)
+          //     const latitude = res.latitude
+          //     const longitude = res.longitude
+          //     const speed = res.speed
+          //     const accuracy = res.accuracy
+          //     wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+          //       url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+          //       data: {},
+          //       header: {
+          //         'Content-Type': 'application/json'
+          //       },
+          //       success(res) {
+          //         console.log(res.data.result);
+          //         console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+          //         this.cityName = '杭州市';
+          //       },
+          //       fail: function () {
+          //         // fail
+          //         this.cityName = '杭州市';
+          //       },
+          //       complete: function () {
+          //         // complete
+          //       }
+          //     })
+          //   }
+          // })
+        }
+      })
+    },
+    getLocation() {
+      let _this = this;
+      wx.getLocation({
+        type: 'wgs84',
+        success(res) {
+          console.log(res)
+          const latitude = res.latitude
+          const longitude = res.longitude
+          const speed = res.speed
+          const accuracy = res.accuracy
+          wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+            url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' +
+            '&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+            data: {},
+            header: {
+              'Content-Type': 'application/json'
+            },
+            success(res) {
+              console.log(res.data.result);
+              console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+              if (res.data.result.addressComponent.district != '') {
+                _this.cityName = res.data.result.addressComponent.district;
+              } else {
+                _this.cityName = res.data.result.addressComponent.city;
               }
-            })
-            // wx.getLocation({
-            //   type: 'wgs84',
-            //   success(res) {
-            //     console.log(res)
-            //     const latitude = res.latitude
-            //     const longitude = res.longitude
-            //     const speed = res.speed
-            //     const accuracy = res.accuracy
-            //     wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-            //       url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
-            //       data: {},
-            //       header: {
-            //         'Content-Type': 'application/json'
-            //       },
-            //       success(res) {
-            //         console.log(res.data.result);
-            //         console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-            //         this.cityName = '杭州市';
-            //       },
-            //       fail: function () {
-            //         // fail
-            //         this.cityName = '杭州市';
-            //       },
-            //       complete: function () {
-            //         // complete
-            //       }
-            //     })
-            //   }
-            // })
-          }
-        })
-      },
-      getLocation() {
-        let _this = this;
-        wx.getLocation({
-          type: 'wgs84',
-          success(res) {
-            console.log(res)
-            const latitude = res.latitude
-            const longitude = res.longitude
-            const speed = res.speed
-            const accuracy = res.accuracy
-            wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-              url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' +
-              '&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
-              data: {},
-              header: {
-                'Content-Type': 'application/json'
-              },
-              success(res) {
-                console.log(res.data.result);
-                console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-                if (res.data.result.addressComponent.district != '') {
-                  _this.cityName = res.data.result.addressComponent.district;
+            },
+            fail: function () {
+              // fail
+              _this.cityName = '杭州市';
+            },
+            complete: function () {
+              // complete
+            }
+          })
+        }
+      })
+    },
+    getIndexData() {
+      let _this = this;
+      wx.getLocation({
+        type: 'wgs84',
+        success(res) {
+          console.log(res)
+          const latitude = res.latitude
+          const longitude = res.longitude
+          const speed = res.speed
+          const accuracy = res.accuracy
+          // 获取天气信息
+          wx.request({
+            url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' +
+            '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + longitude + '%2C' + latitude,
+            data: {},
+            header: {
+              'Content-Type': 'application/json'
+            },
+            success(res) {
+              console.log(res.data.results[0].weather_data[0].date);
+              _this.temperature = res.data.results[0].weather_data[0].date;
+              _this.temperature = _this.temperature.substring(_this.temperature.length - 3, _this.temperature.length - 1);
+              console.log(_this.temperature);
+              _this.dayPictureUrl = res.data.results[0].weather_data[0].dayPictureUrl;
+              console.log(_this.dayPictureUrl);
+            },
+            fail: function () {
+              // fail
+            },
+            complete: function () {
+              // complete
+            }
+          })
+          // 获取周边景点信息
+          wx.request({
+            url: 'https://api.map.baidu.com/place/v2/search?query=%E6%99%AF%E7%82%B9&scope=1&filter=&coord_type=2' +
+            '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
+            '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+            data: {},
+            header: {
+              'Content-Type': 'application/json'
+            },
+            success(res) {
+              let results = res.data.results;
+              for (let i = 0; i < results.length; i++) {
+                if (_this.uidList == '') {
+                  _this.uidList = results[i].uid;
+                  _this.latitudeList = results[i].location.lat;
+                  _this.longitudeList = results[i].location.lng;
                 } else {
-                  _this.cityName = res.data.result.addressComponent.city;
+                  _this.uidList = _this.uidList + ';' + results[i].uid;
+                  _this.latitudeList = _this.latitudeList + ';' + results[i].location.lat;
+                  _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
                 }
-              },
-              fail: function () {
-                // fail
-                _this.cityName = '杭州市';
-              },
-              complete: function () {
-                // complete
               }
-            })
-          }
-        })
-      },
-      getWeatherData() {
-        let _this = this;
-        wx.getLocation({
-          type: 'wgs84',
-          success(res) {
-            console.log(res)
-            const latitude = res.latitude
-            const longitude = res.longitude
-            const speed = res.speed
-            const accuracy = res.accuracy
-            wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-              url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' +
-              '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + longitude + '%2C' + latitude,
-              data: {},
-              header: {
-                'Content-Type': 'application/json'
-              },
-              success(res) {
-                console.log(res.data.results[0].weather_data[0].date);
-                _this.temperature = res.data.results[0].weather_data[0].date;
-                _this.temperature = _this.temperature.substring(_this.temperature.length-3,_this.temperature.length-1);
-                console.log(_this.temperature)
-                _this.dayPictureUrl = res.data.results[0].weather_data[0].dayPictureUrl;
-                console.log(_this.dayPictureUrl)
-                // console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-                // if (res.data.result.addressComponent.district!=''){
-                //   _this.cityName =res.data.result.addressComponent.district;
-                // }else {
-                //   _this.cityName = res.data.result.addressComponent.city;
-                // }
-              },
-              fail: function () {
-                // fail
-                // _this.cityName = '杭州市';
-              },
-              complete: function () {
-                // complete
-              }
-            })
-          }
-        })
-        // var _this = this;
-        // var BMap = new BMap.Map('allmap');
-        // // var BMap = new bmap.BMapWX({
-        // //   ak: 'FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y'
-        // // });
-        // var fail = function (data) {
-        //   console.log('fail!!!!')
-        // };
-        // var success = function (data) {
-        //   console.log(data)
-        //   console.log('success!!!');
-        //   var weatherData = data.currentWeather[0];
-        //   weatherData = '城市：' + weatherData.currentCity + '\n' + 'PM2.5：' + weatherData.pm25 + '\n' + '日期：' + weatherData.date + '\n' + '温度：' + weatherData.temperature + '\n' + '天气：' + weatherData.weatherDesc + '\n' + '风力：' + weatherData.wind + '\n';
-        //   _this.setData({
-        //     weatherData: weatherData
-        //   });
-        //   _this.cityName = weatherData.currentCity;
-        // }
-        // BMap.weather({
-        //   fail: fail,
-        //   success: success
-        // });
-      },
-      getBannerData() {
+              console.log("_this.uidList" + _this.uidList);
+              console.log("_this.latitudeList" + _this.latitudeList);
+              console.log("_this.longitudeList" + _this.longitudeList);
+              console.log("url"+apiurl.addPlace)
+            },
+            fail: function () {
+              // fail
+            },
+            complete: function () {
+              // complete
+            }
+          })
+          _this.$httpWX.post({
+            url: apiurl.addPlace,
+            param: {
+              uidList: _this.uidList,
+              latitudeList: _this.latitudeList,
+              longitudeList: _this.longitudeList,
+              type: 1
+            }
+          }).then(res => {
+            //this.newsList.push(...res.data.articleJSONArray)
+            console.log("addPlace" + res)
+          })
+        }
+      })
+    },
+    getBannerData() {
 
-      },
-      clickHandle(msg, ev) {
-        console.log('clickHandle:', msg, ev)
-      },
-      radioChange(e) {
-        console.log('radio发生change事件，携带value值为：', e.target.value)
-      }
+    },
+    clickHandle(msg, ev) {
+      console.log('clickHandle:', msg, ev)
+    },
+    radioChange(e) {
+      console.log('radio发生change事件，携带value值为：', e.target.value)
     }
   }
+}
 </script>
 
 <style lang='scss' scoped>

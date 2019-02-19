@@ -1,11 +1,12 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([3],{
+global.webpackJsonp([2],{
 
 /***/ 100:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_api_js__ = __webpack_require__(101);
 //
 //
 //
@@ -168,6 +169,7 @@ global.webpackJsonp([3],{
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -181,7 +183,11 @@ global.webpackJsonp([3],{
       cityName: '',
       banner: [], // 轮播数据数组
       temperature: '',
-      dayPictureUrl: ''
+      dayPictureUrl: '',
+      uidList: '', // 游玩地点uidList
+      latitudeList: '', // 经度list
+      longitudeList: '', // 维度list
+      type: '' // 游玩地点类型
     };
   },
 
@@ -191,10 +197,9 @@ global.webpackJsonp([3],{
     // 调用应用实例的方法获取全局数据
     this.getUserInfo();
     this.getLocation();
+    this.getIndexData();
   },
-  mounted: function mounted() {
-    this.getWeatherData();
-  },
+  mounted: function mounted() {},
 
   methods: {
     onChange: function onChange(event) {
@@ -330,7 +335,7 @@ global.webpackJsonp([3],{
         }
       });
     },
-    getWeatherData: function getWeatherData() {
+    getIndexData: function getIndexData() {
       var _this = this;
       wx.getLocation({
         type: 'wgs84',
@@ -340,7 +345,8 @@ global.webpackJsonp([3],{
           var longitude = res.longitude;
           var speed = res.speed;
           var accuracy = res.accuracy;
-          wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+          // 获取天气信息
+          wx.request({
             url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' + '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + longitude + '%2C' + latitude,
             data: {},
             header: {
@@ -353,46 +359,62 @@ global.webpackJsonp([3],{
               console.log(_this.temperature);
               _this.dayPictureUrl = res.data.results[0].weather_data[0].dayPictureUrl;
               console.log(_this.dayPictureUrl);
-              // console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-              // if (res.data.result.addressComponent.district!=''){
-              //   _this.cityName =res.data.result.addressComponent.district;
-              // }else {
-              //   _this.cityName = res.data.result.addressComponent.city;
-              // }
             },
 
             fail: function fail() {
               // fail
-              // _this.cityName = '杭州市';
             },
             complete: function complete() {
               // complete
             }
           });
+          // 获取周边景点信息
+          wx.request({
+            url: 'https://api.map.baidu.com/place/v2/search?query=%E6%99%AF%E7%82%B9&scope=1&filter=&coord_type=2' + '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' + '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+            data: {},
+            header: {
+              'Content-Type': 'application/json'
+            },
+            success: function success(res) {
+              var results = res.data.results;
+              for (var i = 0; i < results.length; i++) {
+                if (_this.uidList == '') {
+                  _this.uidList = results[i].uid;
+                  _this.latitudeList = results[i].location.lat;
+                  _this.longitudeList = results[i].location.lng;
+                } else {
+                  _this.uidList = _this.uidList + ';' + results[i].uid;
+                  _this.latitudeList = _this.latitudeList + ';' + results[i].location.lat;
+                  _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
+                }
+              }
+              console.log("_this.uidList" + _this.uidList);
+              console.log("_this.latitudeList" + _this.latitudeList);
+              console.log("_this.longitudeList" + _this.longitudeList);
+              console.log("url" + __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace);
+            },
+
+            fail: function fail() {
+              // fail
+            },
+            complete: function complete() {
+              // complete
+            }
+          });
+          _this.$httpWX.post({
+            url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace,
+            param: {
+              uidList: _this.uidList,
+              latitudeList: _this.latitudeList,
+              longitudeList: _this.longitudeList,
+              type: 1
+            }
+          }).then(function (res) {
+            //this.newsList.push(...res.data.articleJSONArray)
+            console.log("addPlace" + res);
+          });
         }
       });
-      // var _this = this;
-      // var BMap = new BMap.Map('allmap');
-      // // var BMap = new bmap.BMapWX({
-      // //   ak: 'FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y'
-      // // });
-      // var fail = function (data) {
-      //   console.log('fail!!!!')
-      // };
-      // var success = function (data) {
-      //   console.log(data)
-      //   console.log('success!!!');
-      //   var weatherData = data.currentWeather[0];
-      //   weatherData = '城市：' + weatherData.currentCity + '\n' + 'PM2.5：' + weatherData.pm25 + '\n' + '日期：' + weatherData.date + '\n' + '温度：' + weatherData.temperature + '\n' + '天气：' + weatherData.weatherDesc + '\n' + '风力：' + weatherData.wind + '\n';
-      //   _this.setData({
-      //     weatherData: weatherData
-      //   });
-      //   _this.cityName = weatherData.currentCity;
-      // }
-      // BMap.weather({
-      //   fail: fail,
-      //   success: success
-      // });
     },
     getBannerData: function getBannerData() {},
     clickHandle: function clickHandle(msg, ev) {
@@ -407,6 +429,46 @@ global.webpackJsonp([3],{
 /***/ }),
 
 /***/ 101:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return apiurl; });
+var apiurl = {
+  /**游玩地点API*/
+  addPlace: '/Place/addPlace', // 添加游玩地点
+  getPlaceByUid: '/Place/getPlaceByUid', // 根据uid获取游玩地点信息
+  getPlaceList: '/Place/getPlaceList', // 根据type获取附近推荐的游玩地点
+  getPlaceCommentByUid: '/Place/getPlaceCommentByUid', // 根据uid分页获取游玩地点评论
+  addPlaceComment: '/Place/addPlaceComment', // 根据uid给游玩地点添加评论
+  updateLikes: '/Place/updateLikes', // 更新评论点赞数
+  deleteCommentById: '/Place/deleteCommentById', // 根据id删除评论
+  getPlacePhotoByUid: '/Place/getPlacePhotoByUid', // 根据uid分页获取游玩地点图片
+  updateReadTimes: '/Place/updateReadTimes', // 获取图片详细数据并更新图片浏览数
+  deletePhotoById: '/Place/deletePhotoById', // 根据id删除图片
+  addPlacePhoto: '/Place/addPlacePhoto', // 根据uid给游玩地点上传图片
+  addOrUpdateUserHistory: '/Place/addOrUpdateUserHistory', // 添加或更新用户浏览记录
+  deleteUserHistory: '/Place/deleteUserHistory', // 删除用户浏览记录
+  getUserHistoryByUserId: '/Place/getUserHistoryByUserId', // 根据用户openid获取浏览记录
+  /**用户信息API*/
+  addUser: '/User/addUser', // 添加用户信息
+  getUser: '/User/getUser', // 获取并翻译用户信息
+  updateUser: '/User/updateUser', // 更改用户信息
+  /**AI操作API*/
+  imageClassify: '/AIOperate/imageClassify', // 图像识别
+  getPhotoDistinguishList: '/AIOperate/getPhotoDistinguishList', // 根据用户openid以及type类型获取图像识别所有记录
+  deletePhotoDistinguishById: '/AIOperate/deletePhotoDistinguishById', // 根据id删除图像识别记录
+  aipOcr: '/AIOperate/aipOcr', // 文字识别
+  getTextDistinguishList: '/AIOperate/getTextDistinguishList', // 根据用户openid获取文字识别所有记录
+  deleteTextDistinguishById: '/AIOperate/deleteTextDistinguishById', // 根据id删除文字识别记录
+  translateText: '/AIOperate/translateText', // 文字翻译
+  getTranslatorListByType: '/AIOperate/getTranslatorListByType', // 根据用户openid以及type类型获取所有翻译记录
+  deleteTranslatorById: '/AIOperate/deleteTranslatorById', // 根据id删除翻译记录
+  speechSynthesis: '/AIOperate/speechSynthesis' // 语音合成
+};
+
+/***/ }),
+
+/***/ 102:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -700,7 +762,7 @@ app.$mount();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_378baaca_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_378baaca_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(102);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return

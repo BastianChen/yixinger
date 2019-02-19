@@ -2,8 +2,8 @@ var bmap = require('../../libs/bmap-wx.min.js');
 var config = require('../../libs/config.js');
 var wxMarkerData = [];
 var city = '';
-//var queryType = '景点';
-var queryType = '美食$景点';
+var queryType = '景点';
+// var queryType = '美食';
 
 Page({
   data: {

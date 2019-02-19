@@ -62,7 +62,7 @@ public class PlaceApiController {
             @ApiParam(value = "前端传回的uid", required = true) @RequestParam(value = "uidList") String uidList,
             @ApiParam(value = "前端传回的地点经度", required = true) @RequestParam(value = "latitudeList") String latitudeList,
             @ApiParam(value = "前端传回的地点维度", required = true) @RequestParam(value = "longitudeList") String longitudeList,
-            @ApiParam(value = "游玩地点类型（1：餐馆 2:景点）", required = true) @RequestParam(value = "type") String type) {
+            @ApiParam(value = "游玩地点类型（1：景点；2：餐馆）", required = true) @RequestParam(value = "type") String type) {
         BaseMessage baseMessage = new BaseMessage();
         List<String> uid = Arrays.asList(uidList.split(";"));
         List<String> latitude = Arrays.asList(latitudeList.split(";"));
@@ -183,25 +183,25 @@ public class PlaceApiController {
     @ApiOperation(value = "根据uid给游玩地点添加评论", notes = "根据uid给游玩地点添加评论 ", response = BaseMessage.class)
     @RequestMapping(value = "/addPlaceComment", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> addPlaceComment(
-            //@ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
+            @ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
             @ApiParam(value = "评论", required = true) @RequestBody PlaceComment placeComment) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
-//        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/comment/";
-//        String imageName;
-//        JSONArray imageArray = new JSONArray();
-//        JSONObject jsonObject = new JSONObject();
-//        for (MultipartFile imageFile : imageFiles) {
-//            imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
-//            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
-//                logger.info("返回的图片名称为 {}", imageName);
-//                jsonObject.put("pic_url", "/images/comment/" + imageName + "_src.jpg");
-//                imageArray.add(jsonObject);
-//            } else {
-//                logger.info("返回的图片名称为Null");
-//                baseMessage.initStateAndMessage(1001, "添加评论失败");
-//            }
-//        }
-//        placeComment.setImageList(imageArray.toString());
+        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/comment/";
+        String imageName;
+        JSONArray imageArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        for (MultipartFile imageFile : imageFiles) {
+            imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
+            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
+                logger.info("返回的图片名称为 {}", imageName);
+                jsonObject.put("pic_url", "/images/comment/" + imageName + "_src.jpg");
+                imageArray.add(jsonObject);
+            } else {
+                logger.info("返回的图片名称为Null");
+                baseMessage.initStateAndMessage(1001, "添加评论失败");
+            }
+        }
+        placeComment.setImageList(imageArray.toString());
         boolean result = placeCommentService.addPlaceComment(placeComment);
         if (!result) {
             logger.error("给uid为 {} 的游玩地点添加评论失败", placeComment.getPlaceId());
