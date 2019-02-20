@@ -1,3 +1,4 @@
+const baseUrl = 'https://wzcb97.top'
 export const apiurl = {
   /**游玩地点API*/
   addPlace: '/Place/addPlace', // 添加游玩地点

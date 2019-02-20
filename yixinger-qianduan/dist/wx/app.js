@@ -129,9 +129,7 @@ if (false) {(function () {
 //const host = 'http://localhost:8080'
 var host = 'https://wzcb97.top';
 
-function request(url, method, data) {
-  var header = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-
+function request(url, method, data, header) {
   wx.showLoading({
     title: '加载中' // 数据请求前loading
   });
@@ -140,8 +138,10 @@ function request(url, method, data) {
       url: host + url, // 仅为示例，并非真实的接口地址
       method: method,
       data: data,
-      headers: {
-        'content-type': 'application/json' // 默认值
+      header: method == 'POST' ? {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' // POST默认值
+      } : {
+        'Content-type': 'application/json' // GET默认值
       },
       success: function success(res) {
         wx.hideLoading();

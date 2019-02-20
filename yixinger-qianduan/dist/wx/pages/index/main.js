@@ -388,17 +388,54 @@ global.webpackJsonp([2],{
                   _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
                 }
               }
-              console.log("_this.uidList" + _this.uidList);
-              console.log("_this.latitudeList" + _this.latitudeList);
-              console.log("_this.longitudeList" + _this.longitudeList);
-              console.log("url" + __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace);
               _this.$httpWX.post({
                 url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace,
-                param: {
-                  'uidList': _this.uidList,
-                  'latitudeList': _this.latitudeList,
-                  'longitudeList': _this.longitudeList,
-                  'type': 1
+                data: {
+                  uidList: _this.uidList,
+                  latitudeList: _this.latitudeList,
+                  longitudeList: _this.longitudeList,
+                  type: 1
+                }
+              }).then(function (res) {
+                //this.newsList.push(...res.data.articleJSONArray)
+                console.log("addPlace" + res);
+              });
+            },
+
+            fail: function fail() {
+              // fail
+            },
+            complete: function complete() {
+              // complete
+            }
+          });
+          // 获取周边餐馆信息
+          wx.request({
+            url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' + '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' + '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+            data: {},
+            header: {
+              'Content-Type': 'application/json'
+            },
+            success: function success(res) {
+              var results = res.data.results;
+              for (var i = 0; i < results.length; i++) {
+                if (_this.uidList == '') {
+                  _this.uidList = results[i].uid;
+                  _this.latitudeList = results[i].location.lat;
+                  _this.longitudeList = results[i].location.lng;
+                } else {
+                  _this.uidList = _this.uidList + ';' + results[i].uid;
+                  _this.latitudeList = _this.latitudeList + ';' + results[i].location.lat;
+                  _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
+                }
+              }
+              _this.$httpWX.post({
+                url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace,
+                data: {
+                  uidList: _this.uidList,
+                  latitudeList: _this.latitudeList,
+                  longitudeList: _this.longitudeList,
+                  type: 2
                 }
               }).then(function (res) {
                 //this.newsList.push(...res.data.articleJSONArray)
@@ -433,6 +470,7 @@ global.webpackJsonp([2],{
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return apiurl; });
+var baseUrl = 'https://wzcb97.top';
 var apiurl = {
   /**游玩地点API*/
   addPlace: '/Place/addPlace', // 添加游玩地点

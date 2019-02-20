@@ -2,7 +2,7 @@
 //const host = 'http://localhost:8080'
 const host = 'https://wzcb97.top'
 
-function request (url, method, data, header = {}) {
+function request(url, method, data, header) {
   wx.showLoading({
     title: '加载中' // 数据请求前loading
   })
@@ -11,8 +11,10 @@ function request (url, method, data, header = {}) {
       url: host + url, // 仅为示例，并非真实的接口地址
       method: method,
       data: data,
-      headers: {
-        'content-type': 'application/json' // 默认值
+      header: method == 'POST' ? {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'// POST默认值
+      } : {
+        'Content-type': 'application/json' // GET默认值
       },
       success: function (res) {
         wx.hideLoading()
@@ -29,11 +31,11 @@ function request (url, method, data, header = {}) {
   })
 }
 
-function get (obj) {
+function get(obj) {
   return request(obj.url, 'GET', obj.data)
 }
 
-function post (obj) {
+function post(obj) {
   return request(obj.url, 'POST', obj.data)
 }
 
