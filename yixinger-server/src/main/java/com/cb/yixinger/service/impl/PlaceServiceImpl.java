@@ -142,7 +142,7 @@ public class PlaceServiceImpl implements PlaceService {
                         dataInfo = dataInfo.optJSONObject("list");
                         if (dataInfo != null) {
                             list = dataInfo.optJSONArray("comment_list");
-                            if (list!=null){
+                            if (list != null) {
                                 logger.info("index为2的JSONObject有餐馆评论数");
                                 place.setCommentList(list.toString());
                             }
@@ -167,49 +167,87 @@ public class PlaceServiceImpl implements PlaceService {
                 case "1":
                     //景点图片列表
                     avocado = cards.optJSONObject(2);
-                    dataInfo = avocado.optJSONObject("data").optJSONObject("list");
+                    dataInfo = avocado.optJSONObject("data");
+                    JSONArray list;
                     JSONObject photoList;
-                    JSONArray list = dataInfo.optJSONArray("photo_list");
-                    if (list != null && list.size() > 0) {
-                        for (int i = 0; i < list.size(); i++) {
-                            photoList = (JSONObject) list.get(i);
-                            if (place.getPhotoList() == null) {
-                                place.setPhotoList(photoList.optString("imgUrl", "暂无"));
-                            } else {
-                                place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
+                    if (dataInfo != null) {
+                        dataInfo = dataInfo.optJSONObject("list");
+                        list = dataInfo.optJSONArray("photo_list");
+                        if (list != null && list.size() > 0) {
+                            for (int i = 0; i < list.size(); i++) {
+                                photoList = (JSONObject) list.get(i);
+                                if (place.getPhotoList() == null) {
+                                    place.setPhotoList(photoList.optString("imgUrl", "暂无"));
+                                } else {
+                                    place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
+                                }
                             }
                         }
                     }
                     // 景点介绍
                     avocado = cards.optJSONObject(3).optJSONObject("data");
-                    if (avocado.optJSONObject("introduce") != null) {
-                        place.setIntroduce(avocado.optJSONObject("introduce").optString("abstract", "暂无"));
-                    } else {
-                        place.setIntroduce("暂无");
+                    if (avocado != null) {
+                        if (avocado.optJSONObject("list") != null) {
+                            list = dataInfo.optJSONArray("photo_list");
+                            if (list != null && list.size() > 0) {
+                                for (int i = 0; i < list.size(); i++) {
+                                    photoList = (JSONObject) list.get(i);
+                                    if (place.getPhotoList() == null) {
+                                        place.setPhotoList(photoList.optString("imgUrl", "暂无"));
+                                    } else {
+                                        place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
+                                    }
+                                }
+                            }
+                        }
+                        if (avocado.optJSONObject("introduce") != null) {
+                            place.setIntroduce(avocado.optJSONObject("introduce").optString("abstract", "暂无"));
+                        } else {
+                            place.setIntroduce("暂无");
+                        }
+                        // 景点建议游玩时间
+                        place.setSugTime(avocado.optString("sug_time", "暂无"));
+                        // 景点最佳季节
+                        place.setBestTime(avocado.optString("best_time", "暂无"));
+                        // 景点天气
+                        //place.setWeather(avocado.optJSONObject("weather").toString());
                     }
-                    // 景点建议游玩时间
-                    place.setSugTime(avocado.optString("sug_time", "暂无"));
-                    // 景点最佳季节
-                    place.setBestTime(avocado.optString("best_time", "暂无"));
-                    // 景点天气
-                    place.setWeather(avocado.optJSONObject("weather").toString());
+                    avocado = cards.optJSONObject(4).optJSONObject("data");
+                    if (avocado != null) {
+                        if (avocado.optJSONObject("introduce") != null) {
+                            place.setIntroduce(avocado.optJSONObject("introduce").optString("abstract", "暂无"));
+                        } else {
+                            place.setIntroduce("暂无");
+                        }
+                        // 景点建议游玩时间
+                        place.setSugTime(avocado.optString("sug_time", "暂无"));
+                        // 景点最佳季节
+                        place.setBestTime(avocado.optString("best_time", "暂无"));
+                        // 景点天气
+                        //place.setWeather(avocado.optJSONObject("weather").toString());
+                    }
                     // 景点印象标签
                     avocado = cards.optJSONObject(6).optJSONObject("data");
-                    list = avocado.optJSONArray("content");
-                    JSONArray placeContent = new JSONArray();
-                    for (int i = 0; i < list.size(); i++) {
-                        dataInfo = (JSONObject) list.get(i);
-                        placeContent.add(dataInfo.optJSONArray("labels"));
+                    if (avocado!=null){
+                        list = avocado.optJSONArray("content");
+                        JSONArray placeContent = new JSONArray();
+                        for (int i = 0; i < list.size(); i++) {
+                            dataInfo = (JSONObject) list.get(i);
+                            placeContent.add(dataInfo.optJSONArray("labels"));
+                        }
+                        place.setContent(placeContent.toString());
                     }
-                    place.setContent(placeContent.toString());
                     // 景点部分评论
-                    avocado = cards.optJSONObject(7).optJSONObject("data").optJSONObject("list");
-                    place.setCommentList(avocado.optJSONArray("comment_list").toString());
-                    // 景点评论数  avocado.getInt("totalNum")
-                    if (avocado.optJSONArray("comment_list").size() == 0) {
-                        place.setCommentNumber(0);
-                    } else {
-                        place.setCommentNumber(avocado.optJSONArray("comment_list").size());
+                    avocado = cards.optJSONObject(7).optJSONObject("data");
+                    if (avocado != null) {
+                        avocado = avocado.optJSONObject("list");
+                        place.setCommentList(avocado.optJSONArray("comment_list").toString());
+                        // 景点评论数  avocado.getInt("totalNum")
+                        if (avocado.optJSONArray("comment_list").size() == 0) {
+                            place.setCommentNumber(0);
+                        } else {
+                            place.setCommentNumber(avocado.optJSONArray("comment_list").size());
+                        }
                     }
                     place.setType(1);
                     break;
