@@ -228,25 +228,30 @@ public class PlaceServiceImpl implements PlaceService {
                     }
                     // 景点印象标签
                     avocado = cards.optJSONObject(6).optJSONObject("data");
-                    if (avocado!=null){
+                    if (avocado != null) {
                         list = avocado.optJSONArray("content");
                         JSONArray placeContent = new JSONArray();
-                        for (int i = 0; i < list.size(); i++) {
-                            dataInfo = (JSONObject) list.get(i);
-                            placeContent.add(dataInfo.optJSONArray("labels"));
+                        if (list != null && list.size() > 0) {
+                            for (int i = 0; i < list.size(); i++) {
+                                dataInfo = (JSONObject) list.get(i);
+                                placeContent.add(dataInfo.optJSONArray("labels"));
+                            }
                         }
                         place.setContent(placeContent.toString());
                     }
                     // 景点部分评论
-                    avocado = cards.optJSONObject(7).optJSONObject("data");
+                    avocado = cards.optJSONObject(7);
                     if (avocado != null) {
-                        avocado = avocado.optJSONObject("list");
-                        place.setCommentList(avocado.optJSONArray("comment_list").toString());
-                        // 景点评论数  avocado.getInt("totalNum")
-                        if (avocado.optJSONArray("comment_list").size() == 0) {
-                            place.setCommentNumber(0);
-                        } else {
-                            place.setCommentNumber(avocado.optJSONArray("comment_list").size());
+                        avocado = avocado.optJSONObject("data");
+                        if (avocado != null) {
+                            avocado = avocado.optJSONObject("list");
+                            place.setCommentList(avocado.optJSONArray("comment_list").toString());
+                            // 景点评论数  avocado.getInt("totalNum")
+                            if (avocado.optJSONArray("comment_list").size() == 0) {
+                                place.setCommentNumber(0);
+                            } else {
+                                place.setCommentNumber(avocado.optJSONArray("comment_list").size());
+                            }
                         }
                     }
                     place.setType(1);
