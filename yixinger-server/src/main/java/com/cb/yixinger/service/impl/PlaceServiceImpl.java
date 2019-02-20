@@ -87,7 +87,7 @@ public class PlaceServiceImpl implements PlaceService {
         JSONObject dataInfo;
         try {
             switch (type) {
-                case "1":
+                case "2":
                     avocado = cards.optJSONObject(1);
                     dataInfo = avocado.optJSONObject("data");
                     // 餐馆推荐菜数
@@ -162,9 +162,9 @@ public class PlaceServiceImpl implements PlaceService {
                             place.setCommentNumber(0);
                         }
                     }
-                    place.setType(1);
+                    place.setType(2);
                     break;
-                case "2":
+                case "1":
                     //景点图片列表
                     avocado = cards.optJSONObject(2);
                     dataInfo = avocado.optJSONObject("data").optJSONObject("list");
@@ -211,7 +211,7 @@ public class PlaceServiceImpl implements PlaceService {
                     } else {
                         place.setCommentNumber(avocado.optJSONArray("comment_list").size());
                     }
-                    place.setType(2);
+                    place.setType(1);
                     break;
                 default:
                     break;
