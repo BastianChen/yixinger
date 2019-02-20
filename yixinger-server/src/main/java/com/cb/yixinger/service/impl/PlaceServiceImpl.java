@@ -71,13 +71,15 @@ public class PlaceServiceImpl implements PlaceService {
         content = content.optJSONObject("vs_content").optJSONObject("invisible").optJSONObject("bigdata");
         JSONArray jsonArray = content.optJSONArray("tags1");
         JSONArray tags1Array;
-        for (int i = 0; i < jsonArray.size(); i++) {
-            tags1Array = (JSONArray) jsonArray.get(i);
-            tags1Array = (JSONArray) tags1Array.get(0);
-            if (place.getTags1() == null) {
-                place.setTags1((String) tags1Array.get(0));
-            } else {
-                place.setTags1(place.getTags1() + ";" + tags1Array.get(0));
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.size(); i++) {
+                tags1Array = (JSONArray) jsonArray.get(i);
+                tags1Array = (JSONArray) tags1Array.get(0);
+                if (place.getTags1() == null) {
+                    place.setTags1((String) tags1Array.get(0));
+                } else {
+                    place.setTags1(place.getTags1() + ";" + tags1Array.get(0));
+                }
             }
         }
         JSONObject avocado = jsonObject.optJSONObject("avocado");
@@ -124,7 +126,9 @@ public class PlaceServiceImpl implements PlaceService {
                         } else {
                             logger.info("index为1的JSONObject没有餐馆印象标签数据");
                             avocado = cards.optJSONObject(2);
-                            dataInfo = avocado.optJSONObject("data");
+                            if (avocado.optJSONObject("data") != null) {
+                                dataInfo = avocado.optJSONObject("data");
+                            }
                             list = dataInfo.optJSONArray("content");
                             if (list != null && list.size() > 0) {
                                 for (int i = 0; i < list.size(); i++) {
@@ -137,9 +141,11 @@ public class PlaceServiceImpl implements PlaceService {
                         // 餐馆评论数
                         dataInfo = dataInfo.optJSONObject("list");
                         if (dataInfo != null) {
-                            logger.info("index为2的JSONObject有餐馆评论数");
                             list = dataInfo.optJSONArray("comment_list");
-                            place.setCommentList(list.toString());
+                            if (list!=null){
+                                logger.info("index为2的JSONObject有餐馆评论数");
+                                place.setCommentList(list.toString());
+                            }
                         } else {
                             logger.info("index为2的JSONObject没有餐馆评论数");
                             avocado = cards.optJSONObject(3);
