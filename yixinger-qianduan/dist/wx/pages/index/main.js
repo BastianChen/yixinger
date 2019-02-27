@@ -169,6 +169,39 @@ global.webpackJsonp([2],{
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -182,12 +215,16 @@ global.webpackJsonp([2],{
       code: '',
       cityName: '',
       banner: [], // 轮播数据数组
+      sceneryData: [], // 附近景点数组
+      restaurantData: [], // 附近餐馆数组
       temperature: '',
       dayPictureUrl: '',
-      uidList: '', // 游玩地点uidList
+      uidListForType1: '', // 景点uidList
+      uidListForType2: '', // 餐馆uidList
       latitudeList: '', // 经度list
       longitudeList: '', // 维度list
-      type: '' // 游玩地点类型
+      type: '', // 游玩地点类型
+      uids: '' // 用于轮播
     };
   },
 
@@ -308,7 +345,8 @@ global.webpackJsonp([2],{
           var longitude = res.longitude;
           var speed = res.speed;
           var accuracy = res.accuracy;
-          wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+          // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
+          wx.request({
             url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' + '&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
             data: {},
             header: {
@@ -356,9 +394,7 @@ global.webpackJsonp([2],{
               console.log(res.data.results[0].weather_data[0].date);
               _this.temperature = res.data.results[0].weather_data[0].date;
               _this.temperature = _this.temperature.substring(_this.temperature.length - 3, _this.temperature.length - 1);
-              console.log(_this.temperature);
               _this.dayPictureUrl = res.data.results[0].weather_data[0].dayPictureUrl;
-              console.log(_this.dayPictureUrl);
             },
 
             fail: function fail() {
@@ -377,29 +413,31 @@ global.webpackJsonp([2],{
             },
             success: function success(res) {
               var results = res.data.results;
+              _this.uidListForType1 == '';
+              _this.latitudeList = '';
+              _this.longitudeList = '';
               for (var i = 0; i < results.length; i++) {
-                if (_this.uidList == '') {
-                  _this.uidList = results[i].uid;
+                if (_this.uidListForType1 == '') {
+                  _this.uidListForType1 = results[i].uid;
                   _this.latitudeList = results[i].location.lat;
                   _this.longitudeList = results[i].location.lng;
+                  _this.uids = results[i].uid;
                 } else {
-                  _this.uidList = _this.uidList + ';' + results[i].uid;
+                  _this.uidListForType1 = _this.uidListForType1 + ';' + results[i].uid;
                   _this.latitudeList = _this.latitudeList + ';' + results[i].location.lat;
                   _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
+                  _this.uids = _this.uids + ';' + results[i].uid;
                 }
               }
               _this.$httpWX.post({
                 url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace,
                 data: {
-                  uidList: _this.uidList,
+                  uidList: _this.uidListForType1,
                   latitudeList: _this.latitudeList,
                   longitudeList: _this.longitudeList,
                   type: 1
                 }
-              }).then(function (res) {
-                //this.newsList.push(...res.data.articleJSONArray)
-                console.log("addPlace" + res);
-              });
+              }).then(function (res) {});
             },
 
             fail: function fail() {
@@ -418,28 +456,34 @@ global.webpackJsonp([2],{
             },
             success: function success(res) {
               var results = res.data.results;
+              _this.uidListForType2 == '';
+              _this.latitudeList = '';
+              _this.longitudeList = '';
               for (var i = 0; i < results.length; i++) {
-                if (_this.uidList == '') {
-                  _this.uidList = results[i].uid;
+                if (_this.uidListForType2 == '') {
+                  _this.uidListForType2 = results[i].uid;
                   _this.latitudeList = results[i].location.lat;
                   _this.longitudeList = results[i].location.lng;
+                  _this.uids = _this.uids + ';' + results[i].uid;
                 } else {
-                  _this.uidList = _this.uidList + ';' + results[i].uid;
+                  _this.uidListForType2 = _this.uidListForType2 + ';' + results[i].uid;
                   _this.latitudeList = _this.latitudeList + ';' + results[i].location.lat;
                   _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
+                  _this.uids = _this.uids + ';' + results[i].uid;
                 }
               }
               _this.$httpWX.post({
                 url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace,
                 data: {
-                  uidList: _this.uidList,
+                  uidList: _this.uidListForType2,
                   latitudeList: _this.latitudeList,
                   longitudeList: _this.longitudeList,
                   type: 2
                 }
               }).then(function (res) {
-                //this.newsList.push(...res.data.articleJSONArray)
-                console.log("addPlace" + res);
+                _this.getBannerData();
+                _this.getSceneryData();
+                _this.getRestaurantData();
               });
             },
 
@@ -453,7 +497,44 @@ global.webpackJsonp([2],{
         }
       });
     },
-    getBannerData: function getBannerData() {},
+    getBannerData: function getBannerData() {
+      var _this3 = this;
+
+      this.$httpWX.get({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
+        data: {
+          uidList: this.uids
+        }
+      }).then(function (res) {
+        for (var i = 0; i < 6; i++) {
+          _this3.banner.push(res.data[i]);
+        }
+      });
+    },
+    getSceneryData: function getSceneryData() {
+      var _this4 = this;
+
+      this.$httpWX.get({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
+        data: {
+          uidList: this.uidListForType1
+        }
+      }).then(function (res) {
+        _this4.sceneryData = res.data;
+      });
+    },
+    getRestaurantData: function getRestaurantData() {
+      var _this5 = this;
+
+      this.$httpWX.get({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
+        data: {
+          uidList: this.uidListForType2
+        }
+      }).then(function (res) {
+        _this5.restaurantData = res.data;
+      });
+    },
     clickHandle: function clickHandle(msg, ev) {
       console.log('clickHandle:', msg, ev);
     },
@@ -475,6 +556,7 @@ var apiurl = {
   /**游玩地点API*/
   addPlace: '/Place/addPlace', // 添加游玩地点
   getPlaceByUid: '/Place/getPlaceByUid', // 根据uid获取游玩地点信息
+  getPlaceListByUids: '/Place/getPlaceListByUids', // 获取游玩地点信息以用于轮播
   getPlaceList: '/Place/getPlaceList', // 根据type获取附近推荐的游玩地点
   getPlaceCommentByUid: '/Place/getPlaceCommentByUid', // 根据uid分页获取游玩地点评论
   addPlaceComment: '/Place/addPlaceComment', // 根据uid给游玩地点添加评论
@@ -527,6 +609,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "eventid": '1'
     },
     on: {
+      "click": _vm.toMappage
+    }
+  }, [_vm._v(_vm._s(_vm.temperature) + "\n      ")]), _vm._v(" "), _c('div', {
+    attrs: {
+      "eventid": '2'
+    },
+    on: {
       "click": _vm.toSearch
     }
   }, [_c('input', {
@@ -558,144 +647,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('image', {
       staticClass: "slide-image",
       attrs: {
-        "src": item.image_url
+        "src": item.image
       }
     })])], 1)
   }))], 1), _vm._v(" "), _c('div', {
-    staticClass: "channel"
-  }, _vm._l((_vm.channel), function(item, index) {
-    return _c('div', {
-      key: index,
-      attrs: {
-        "eventid": '2-' + index
-      },
-      on: {
-        "click": function($event) {
-          _vm.categoryList(item.id)
-        }
-      }
-    }, [_c('img', {
-      attrs: {
-        "src": item.icon_url,
-        "alt": ""
-      }
-    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.name))])], 1)
-  })), _vm._v(" "), _c('div', {
-    staticClass: "brand"
-  }, [_c('div', {
-    staticClass: "head",
-    attrs: {
-      "eventid": '3'
-    },
-    on: {
-      "click": _vm.tobrandList
-    }
-  }, [_vm._v("\n      品牌制造商直供\n    ")]), _vm._v(" "), _c('div', {
-    staticClass: "content"
-  }, _vm._l((_vm.brandList), function(item, index) {
-    return _c('div', {
-      key: index,
-      attrs: {
-        "eventid": '4-' + index
-      },
-      on: {
-        "click": function($event) {
-          _vm.branddetail(item.id)
-        }
-      }
-    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.floor_price) + "元起")])], 1), _vm._v(" "), _c('img', {
-      attrs: {
-        "src": item.new_pic_url,
-        "alt": ""
-      }
-    })])
-  }))]), _vm._v(" "), _c('div', {
-    staticClass: "newgoods"
-  }, [_c('div', {
-    staticClass: "newgoods-top",
-    attrs: {
-      "eventid": '5'
-    },
-    on: {
-      "click": function($event) {
-        _vm.goodsList('new')
-      }
-    }
-  }, [_c('div', {
-    staticClass: "top"
-  }, [_c('p', [_vm._v("新品首发")]), _vm._v(" "), _c('p', [_vm._v("查看全部")])], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "list"
-  }, [_c('ul', [_c('scroll-view', {
-    staticClass: "scroll-view",
-    attrs: {
-      "scroll-x": true
-    }
-  }, _vm._l((_vm.newGoods), function(item, index) {
-    return _c('li', {
-      key: index,
-      attrs: {
-        "eventid": '6-' + index
-      },
-      on: {
-        "click": function($event) {
-          _vm.goodsDetail(item.id)
-        }
-      }
-    }, [_c('img', {
-      attrs: {
-        "src": item.list_pic_url,
-        "alt": ""
-      }
-    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.goods_brief))]), _vm._v(" "), _c('p', [_vm._v("￥" + _vm._s(item.retail_price))])], 1)
-  }))], 1)], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "newgoods hotgoods"
-  }, [_c('div', {
-    staticClass: "newgoods-top",
-    attrs: {
-      "eventid": '7'
-    },
-    on: {
-      "click": function($event) {
-        _vm.goodsList('hot')
-      }
-    }
-  }, [_c('div', {
-    staticClass: "top"
-  }, [_c('p', [_vm._v("人气推荐\n          "), _c('span'), _vm._v(" 好物精选")]), _vm._v(" "), _c('p', [_vm._v("查看全部")])], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "list"
-  }, [_c('ul', [_c('scroll-view', {
-    staticClass: "scroll-view",
-    attrs: {
-      "scroll-x": true
-    }
-  }, _vm._l((_vm.hotGoods), function(item, index) {
-    return _c('li', {
-      key: index,
-      attrs: {
-        "eventid": '8-' + index
-      },
-      on: {
-        "click": function($event) {
-          _vm.goodsDetail(item.id)
-        }
-      }
-    }, [_c('img', {
-      attrs: {
-        "src": item.list_pic_url,
-        "alt": ""
-      }
-    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.goods_brief))]), _vm._v(" "), _c('p', [_vm._v("￥" + _vm._s(item.retail_price))])], 1)
-  }))], 1)], 1)]), _vm._v(" "), _c('div', {
     staticClass: "topicList"
   }, [_c('div', {
     staticClass: "topicList-top",
     attrs: {
-      "eventid": '9'
+      "eventid": '3'
     },
     on: {
       "click": _vm.totopic
     }
-  }, [_vm._v("\n      专题精选\n      "), _c('span', {
+  }, [_vm._v("\n      附近景点\n      "), _c('span', {
     staticClass: "icon"
   })]), _vm._v(" "), _c('div', {
     staticClass: "list"
@@ -704,11 +669,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "scroll-x": true
     }
-  }, _vm._l((_vm.topicList), function(item, index) {
+  }, _vm._l((_vm.sceneryData), function(item, index) {
     return _c('li', {
       key: index,
       attrs: {
-        "eventid": '10-' + index
+        "eventid": '4-' + index
       },
       on: {
         "click": function($event) {
@@ -717,54 +682,51 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('img', {
       attrs: {
-        "src": item.item_pic_url,
+        "src": item.image,
         "alt": ""
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "btom"
-    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.subtitle))])], 1), _vm._v(" "), _c('div', [_vm._v("\n                " + _vm._s(item.price_info) + "元起\n              ")])])])
+    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
   }))], 1)], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "newcategory"
-  }, _vm._l((_vm.newCategoryList), function(item, index) {
-    return _c('div', {
+    staticClass: "topicList"
+  }, [_c('div', {
+    staticClass: "topicList-top",
+    attrs: {
+      "eventid": '5'
+    },
+    on: {
+      "click": _vm.totopic
+    }
+  }, [_vm._v("\n      附近餐馆\n      "), _c('span', {
+    staticClass: "icon"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "list"
+  }, [_c('ul', [_c('scroll-view', {
+    staticClass: "scroll-view",
+    attrs: {
+      "scroll-x": true
+    }
+  }, _vm._l((_vm.restaurantData), function(item, index) {
+    return _c('li', {
       key: index,
-      staticClass: "list"
-    }, [_c('div', {
-      staticClass: "head"
-    }, [_vm._v(_vm._s(item.name) + "好物")]), _vm._v(" "), _c('div', {
-      staticClass: "sublist"
-    }, [_vm._l((item.goodsList), function(subitem, subindex) {
-      return _c('div', {
-        key: subindex,
-        attrs: {
-          "eventid": '11-' + index + '-' + subindex
-        },
-        on: {
-          "click": function($event) {
-            _vm.goodsDetail(subitem.id)
-          }
-        }
-      }, [_c('img', {
-        attrs: {
-          "src": subitem.list_pic_url,
-          "alt": ""
-        }
-      }), _vm._v(" "), _c('p', [_vm._v(_vm._s(subitem.name))]), _vm._v(" "), _c('p', [_vm._v("￥" + _vm._s(subitem.retail_price))])], 1)
-    }), _vm._v(" "), _c('div', {
       attrs: {
-        "eventid": '12-' + index
+        "eventid": '6-' + index
       },
       on: {
         "click": function($event) {
-          _vm.categoryList(item.id)
+          _vm.topicdetail(item.id)
         }
       }
-    }, [_c('div', {
-      staticClass: "last"
-    }, [_c('p', [_vm._v(_vm._s(item.name) + "好物")]), _vm._v(" "), _c('span', {
-      staticClass: "icon"
-    })], 1)])], 2)])
-  }))])
+    }, [_c('img', {
+      attrs: {
+        "src": item.image,
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "btom"
+    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
+  }))], 1)], 1)])])
 }
 var staticRenderFns = []
 render._withStripped = true

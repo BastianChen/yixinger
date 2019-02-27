@@ -3,6 +3,7 @@ export const apiurl = {
   /**游玩地点API*/
   addPlace: '/Place/addPlace', // 添加游玩地点
   getPlaceByUid: '/Place/getPlaceByUid', // 根据uid获取游玩地点信息
+  getPlaceListByUids: '/Place/getPlaceListByUids', // 获取游玩地点信息以用于轮播
   getPlaceList: '/Place/getPlaceList', // 根据type获取附近推荐的游玩地点
   getPlaceCommentByUid: '/Place/getPlaceCommentByUid', // 根据uid分页获取游玩地点评论
   addPlaceComment: '/Place/addPlaceComment', // 根据uid给游玩地点添加评论

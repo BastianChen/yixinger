@@ -3,45 +3,132 @@
   overflow: hidden;
   position: relative;
 
-  .search {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0 25rpx 0 10rpx;
-    position: fixed;
-    top: 0;
-    z-index: 99;
-    height: 80rpx;
-    display: flex;
-    align-items: center;
-    background: #fff;
+  //.search {
+  //  width: 100%;
+  //  //box-sizing: border-box;
+  //  padding: 0 25rpx 0 10rpx;
+  //  //position: fixed;
+  //  top: 0;
+  //  z-index: 99;
+  //  height: 200rpx;
+  //  //display: flex;
+  //  //align-items: center;
+  //  background: #fff;
+  //
+  //  div:nth-child(1) {
+  //   // width: 100%;
+  //    div:nth-child(1){
+  //      width: 115rpx;
+  //      text-align: center;
+  //      overflow: hidden;
+  //      white-space: nowrap;
+  //      text-overflow: ellipsis;
+  //      font-size: 20rpx;
+  //      padding-right: 15rpx;
+  //    }
+  //    div:nth-child(2){
+  //      width: 115rpx;
+  //      text-align: center;
+  //      overflow: hidden;
+  //      white-space: nowrap;
+  //      text-overflow: ellipsis;
+  //      font-size: 20rpx;
+  //      padding-right: 15rpx;
+  //      right: 15rpx;
+  //    }
+  //  }
+  //
+  //  //div:nth-child(2) {
+  //  //  width: 115rpx;
+  //  //  text-align: center;
+  //  //  overflow: hidden;
+  //  //  white-space: nowrap;
+  //  //  text-overflow: ellipsis;
+  //  //  font-size: 20rpx;
+  //  //  padding-right: 15rpx;
+  //  //  margin-right: 15px;
+  //  //}
+  //
+  //  div:nth-child(2) {
+  //    flex: 1;
+  //    position: relative;
+  //    top: 50rpx;
+  //    left: 15rpx;
+  //
+  //    input {
+  //      width: 100%;
+  //      height: 56rpx;
+  //      border-radius: 8rpx;
+  //      background: #ededed;
+  //      box-sizing: border-box;
+  //      padding-left: 40rpx;
+  //    }
+  //
+  //    .icon {
+  //      position: absolute;
+  //      top: 15rpx;
+  //      left: 10rpx;
+  //      background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;
+  //      background-size: 100%;
+  //      width: 28rpx;
+  //      height: 28rpx;
+  //      margin-right: 10rpx;
+  //    }
+  //  }
+  //}
 
-    div:nth-child(1) {
-      width: 115rpx;
+  .search{
+    width: 100%;
+    padding: 0 25rpx 0 10rpx;
+    top: 0;
+    height: 130rpx;
+    background: #fff;
+    position: fixed;
+    z-index: 99;
+
+    div:nth-child(1){
+      float: left;
+      width: 130rpx;
       text-align: center;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      font-size: 20rpx;
-      padding-right: 15rpx;
+      font-weight: bold;
+      font-size: 35rpx;
     }
 
-    div:nth-child(2) {
-      flex: 1;
-      position: relative;
-
+    div:nth-child(2){
+      float: right;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      //font-weight: bold;
+      font-size: 35rpx;
+      color: #027BFF;
+      padding-right: 45rpx;
+    }
+    div:nth-child(3) {
+      position: absolute;
+      top: 50rpx;
+      width: 100%;
       input {
-        width: 100%;
+        position: absolute;
+        width: 90%;
         height: 56rpx;
-        border-radius: 8rpx;
+        border-radius: 40rpx;
         background: #ededed;
         box-sizing: border-box;
-        padding-left: 40rpx;
+        text-align: center;
+        padding-left: 15rpx;
+        font-size: 30rpx;
+        left: 13rpx;
       }
 
       .icon {
         position: absolute;
         top: 15rpx;
-        left: 10rpx;
+        left: 310rpx;
         background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;
         background-size: 100%;
         width: 28rpx;
@@ -53,8 +140,8 @@
 
   .swiper {
     width: 100%;
-    height: 417rpx;
-    margin-top: 80rpx;
+    height: 450rpx;
+    margin-top: 50rpx;
 
     .swiper-container {
       width: 100%;
@@ -277,7 +364,7 @@
           img {
             display: block;
             width: 575rpx;
-            height: 325rpx;
+            height: 400rpx;
             border-radius: 10rpx;
           }
 
