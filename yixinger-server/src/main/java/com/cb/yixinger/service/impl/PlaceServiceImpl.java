@@ -5,6 +5,7 @@ import com.cb.yixinger.dao.PlaceMapper;
 import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.Place;
 import com.cb.yixinger.service.PlaceService;
+import com.cb.yixinger.utils.CommonUtil;
 import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
@@ -69,7 +70,11 @@ public class PlaceServiceImpl implements PlaceService {
         place.setImage(content.optString("image", "暂无"));
         place.setShopHours(content.optString("shop_hours", "暂无"));
         place.setPrice(content.optString("price", "暂无"));
-        place.setOverallRating(Double.valueOf(content.optString("overall_rating")));
+        if (CommonUtil.isNotEmpty(content.optString("overall_rating"))) {
+            place.setOverallRating(Double.valueOf(content.optString("overall_rating")));
+        } else {
+            place.setOverallRating(0.0);
+        }
         content = content.optJSONObject("vs_content").optJSONObject("invisible").optJSONObject("bigdata");
         JSONArray jsonArray = content.optJSONArray("tags1");
         JSONArray tags1Array;
@@ -286,7 +291,7 @@ public class PlaceServiceImpl implements PlaceService {
     public List<Place> getPlaceList(String uidList) {
         List<String> uid = Arrays.asList(uidList.split(";"));
         List<Place> placeList = new ArrayList<>();
-        for (String id:uid){
+        for (String id : uid) {
             Place place = new Place();
             place.setUid(id);
             place = placeMapper.selectOne(place);
