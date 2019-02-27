@@ -25,11 +25,7 @@ public class PlaceDao {
         Example example = new Example(Place.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("uid", uid);
-        List<Place> placeList = placeMapper.selectByExample(example);
-        if (placeList != null && placeList.size() > 0) {
-            return placeList.get(0);
-        } else {
-            return null;
-        }
+        Place place = placeMapper.selectOneByExample(example);
+        return place;
     }
 }
