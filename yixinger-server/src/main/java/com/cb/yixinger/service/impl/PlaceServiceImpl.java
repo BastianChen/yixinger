@@ -297,6 +297,26 @@ public class PlaceServiceImpl implements PlaceService {
             place = placeMapper.selectOne(place);
             placeList.add(place);
         }
+        logger.info("对用于轮播的数据进行设置边界的冒泡排序");
+        // 设置边界的冒泡排序
+        int len = placeList.size();
+        int flag = len;
+        // 如果flag>0则排序结束
+        while (flag > 0) {
+            flag = 0;
+            for (int i = 1; i < len; i++) {
+                // 比较评分，若前面小于后面则交换数据
+                if (placeList.get(i - 1).getOverallRating() < placeList.get(i).getOverallRating()) {
+                    Place temp = placeList.get(i);
+                    placeList.set(i, placeList.get(i - 1));
+                    placeList.set(i - 1, temp);
+                    // 设置最新边界
+                    flag = i;
+                }
+            }
+            // 记录遍历的边界
+            len = flag;
+        }
         return placeList;
     }
 }
