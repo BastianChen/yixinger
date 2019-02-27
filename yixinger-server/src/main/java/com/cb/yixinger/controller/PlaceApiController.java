@@ -141,6 +141,21 @@ public class PlaceApiController {
         }
     }
 
+    @LoggerManage(logDescription = "获取游玩地点信息以用于轮播")
+    @ApiOperation(value = "获取游玩地点信息以用于轮播", notes = "获取游玩地点信息以用于轮播 ", response = BaseMessage.class)
+    @RequestMapping(value = "/getPlaceListByUids", produces = {"application/json"}, method = RequestMethod.GET)
+    public ResponseEntity<BaseMessage> getPlaceListByUids(
+            @ApiParam(value = "前端传回的uid", required = true) @RequestParam(value = "uidList") String uidList) {
+        BaseMessage baseMessage = new BaseMessage();
+        List<Place> placeList = placeService.getPlaceList(uidList);
+        if (placeList != null && placeList.size() > 0) {
+            baseMessage.setData(placeList);
+        } else {
+            baseMessage.initStateAndMessage(1001, "暂无数据");
+        }
+        return baseMessage.response();
+    }
+
     @LoggerManage(logDescription = "根据type获取附近推荐的游玩地点")
     @ApiOperation(value = "根据type获取附近推荐的游玩地点", notes = "根据type获取附近推荐的游玩地点 ", response = BaseMessage.class)
     @RequestMapping(value = "/getPlaceList", produces = {"application/json"}, method = RequestMethod.GET)

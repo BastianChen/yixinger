@@ -15,4 +15,6 @@ public interface PlaceService {
     Place getPlaceByUid(String uid);
 
     List<Place> getPlaceList(Integer type);
+
+    List<Place> getPlaceList(String uidList);
 }

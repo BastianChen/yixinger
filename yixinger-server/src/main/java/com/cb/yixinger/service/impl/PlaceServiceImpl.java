@@ -20,6 +20,8 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -277,6 +279,19 @@ public class PlaceServiceImpl implements PlaceService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("type", type);
         List<Place> placeList = placeMapper.selectByExample(example);
+        return placeList;
+    }
+
+    @Override
+    public List<Place> getPlaceList(String uidList) {
+        List<String> uid = Arrays.asList(uidList.split(";"));
+        List<Place> placeList = new ArrayList<>();
+        for (String id:uid){
+            Place place = new Place();
+            place.setUid(id);
+            place = placeMapper.selectOne(place);
+            placeList.add(place);
+        }
         return placeList;
     }
 }
