@@ -75,20 +75,26 @@ public class PlaceServiceImpl implements PlaceService {
         } else {
             place.setOverallRating(0.0);
         }
-        content = content.optJSONObject("vs_content").optJSONObject("invisible").optJSONObject("bigdata");
-        JSONArray jsonArray = content.optJSONArray("tags1");
-        JSONArray tags1Array;
-        if (jsonArray != null) {
-            for (int i = 0; i < jsonArray.size(); i++) {
-                tags1Array = (JSONArray) jsonArray.get(i);
-                tags1Array = (JSONArray) tags1Array.get(0);
-                if (place.getTags1() == null) {
-                    place.setTags1((String) tags1Array.get(0));
-                } else {
-                    place.setTags1(place.getTags1() + ";" + tags1Array.get(0));
+        if (content.optJSONObject("vs_content") != null) {
+            content = content.optJSONObject("vs_content");
+            if (content.optJSONObject("invisible") != null) {
+                content = content.optJSONObject("bigdata");
+                JSONArray jsonArray = content.optJSONArray("tags1");
+                JSONArray tags1Array;
+                if (jsonArray != null && jsonArray.size() > 0) {
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        tags1Array = (JSONArray) jsonArray.get(i);
+                        tags1Array = (JSONArray) tags1Array.get(0);
+                        if (place.getTags1() == null) {
+                            place.setTags1((String) tags1Array.get(0));
+                        } else {
+                            place.setTags1(place.getTags1() + ";" + tags1Array.get(0));
+                        }
+                    }
                 }
             }
         }
+
         JSONObject avocado = jsonObject.optJSONObject("avocado");
         JSONArray cards = avocado.optJSONArray("cards");
         JSONObject dataInfo;
