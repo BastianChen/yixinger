@@ -38,27 +38,14 @@
 
   <div class="index">
     <div class="search">
-
+      <span class="dingwei"></span>
       <div @click="toMappage">{{cityName}}</div>
       <div @click="toMappage">{{temperature}}
-        <!--<image :src="dayPictureUrl"  style="width: 30rpx;height: 30rpx"/>-->
       </div>
       <div @click="toSearch">
         <input type="text" placeholder="搜索">
         <span class="icon"></span>
       </div>
-      <!--<div @click="toSearch">-->
-      <!--<input type="text" placeholder="搜索">-->
-      <!--<span class="icon"></span>-->
-      <!--</div>-->
-
-
-      <!--<div class="se">-->
-      <!--<div @click="toSearch">-->
-      <!--<input type="text" placeholder="搜索">-->
-      <!--<span class="icon"></span>-->
-      <!--</div>-->
-      <!--</div>-->
     </div>
 
     <div class="swiper">
@@ -66,14 +53,14 @@
               duration="500">
         <block v-for="(item, index) in banner " :key="index">
           <swiper-item class="swiper-item">
-            <image :src="item.image" class="slide-image"/>
+            <image :src="item.image" class="slide-image" @click="swipclick(item.uid)"/>
           </swiper-item>
         </block>
       </swiper>
     </div>
     <!--<div class="channel">-->
-    <!--<div @click="categoryList(item.id)" v-for="(item, index) in channel" :key="index">-->
-    <!--<img :src="item.icon_url" alt="">-->
+    <!--<div @click="categoryList(item.id)" v-for="(item, index) in banner" :key="index">-->
+    <!--<img :src="item.image" alt="">-->
     <!--<p>{{item.name}}</p>-->
     <!--</div>-->
     <!--</div>-->
@@ -91,45 +78,53 @@
     <!--</div>-->
     <!--</div>-->
     <!--</div>-->
-    <!--<div class="newgoods">-->
-    <!--<div @click="goodsList('new')" class="newgoods-top">-->
-    <!--<div class="top">-->
-    <!--<p>新品首发</p>-->
-    <!--<p>查看全部</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="list">-->
-    <!--<ul>-->
-    <!--<scroll-view class="scroll-view" :scroll-x="true">-->
-    <!--<li @click="goodsDetail(item.id)" v-for="(item, index) in banner" :key="index">-->
-    <!--<img :src="item.image" alt="">-->
-    <!--<p>{{item.name}}</p>-->
-    <!--<p>{{item.address}}</p>-->
-    <!--</li>-->
-    <!--</scroll-view>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="newgoods hotgoods">-->
-    <!--<div @click="goodsList('hot')" class="newgoods-top">-->
-    <!--<div class="top">-->
-    <!--<p>人气推荐-->
-    <!--<span></span> 好物精选</p>-->
-    <!--<p>查看全部</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="list">-->
-    <!--<ul>-->
-    <!--<scroll-view class="scroll-view" :scroll-x="true">-->
-    <!--<li @click="goodsDetail(item.id)" v-for="(item, index) in banner" :key="index">-->
-    <!--<img :src="item.image" alt="">-->
-    <!--<p>{{item.name}}</p>-->
-    <!--<p>{{item.address}}</p>-->
-    <!--</li>-->
-    <!--</scroll-view>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!--</div>-->
+    <div class="newgoods">
+      <div @click="goodsList('new')" class="newgoods-top">
+        <div class="top">
+          <p>附近景点</p>
+          <p>查看全部</p>
+        </div>
+      </div>
+      <div class="list">
+        <ul>
+          <scroll-view class="scroll-view" :scroll-x="true">
+            <li @click="goodsDetail(item.id)" v-for="(item, index) in sceneryData" :key="index">
+              <img :src="item.image" alt="">
+              <div class="btom">
+                <div>
+                  <p>{{item.name}}</p>
+                  <p>{{item.address}}</p>
+                </div>
+              </div>
+            </li>
+          </scroll-view>
+        </ul>
+      </div>
+    </div>
+    <div class="newgoods hotgoods">
+      <div @click="goodsList('hot')" class="newgoods-top">
+        <div class="top">
+          <p>附近餐馆
+            <span>·</span> 人气推荐</p>
+          <p>查看全部</p>
+        </div>
+      </div>
+      <div class="list">
+        <ul>
+          <scroll-view class="scroll-view" :scroll-x="true">
+            <li @click="goodsDetail(item.id)" v-for="(item, index) in restaurantData" :key="index">
+              <img :src="item.image" alt="">
+              <div class="btom">
+                <div>
+                  <p>{{item.name}}</p>
+                  <p>{{item.address}}</p>
+                </div>
+              </div>
+            </li>
+          </scroll-view>
+        </ul>
+      </div>
+    </div>
     <div class="topicList">
       <div @click="totopic" class="topicList-top">
         附近景点
@@ -533,6 +528,10 @@ export default {
     },
     radioChange(e) {
       console.log('radio发生change事件，携带value值为：', e.target.value)
+    },
+    swipclick(uid) {
+      console.log("uid" + uid);
+      /**此处对接getPlaceByUid接口*/
     }
   }
 }

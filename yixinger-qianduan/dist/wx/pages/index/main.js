@@ -197,11 +197,6 @@ global.webpackJsonp([2],{
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -540,6 +535,10 @@ global.webpackJsonp([2],{
     },
     radioChange: function radioChange(e) {
       console.log('radio发生change事件，携带value值为：', e.target.value);
+    },
+    swipclick: function swipclick(uid) {
+      console.log("uid" + uid);
+      /**此处对接getPlaceByUid接口*/
     }
   }
 });
@@ -597,7 +596,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "index"
   }, [_c('div', {
     staticClass: "search"
-  }, [_c('div', {
+  }, [_c('span', {
+    staticClass: "dingwei"
+  }), _vm._v(" "), _c('div', {
     attrs: {
       "eventid": '0'
     },
@@ -611,7 +612,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.toMappage
     }
-  }, [_vm._v(_vm._s(_vm.temperature) + "\n      ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.temperature) + "\n    ")]), _vm._v(" "), _c('div', {
     attrs: {
       "eventid": '2'
     },
@@ -647,15 +648,101 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('image', {
       staticClass: "slide-image",
       attrs: {
-        "src": item.image
+        "src": item.image,
+        "eventid": '3-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.swipclick(item.uid)
+        }
       }
     })])], 1)
   }))], 1), _vm._v(" "), _c('div', {
+    staticClass: "newgoods"
+  }, [_c('div', {
+    staticClass: "newgoods-top",
+    attrs: {
+      "eventid": '4'
+    },
+    on: {
+      "click": function($event) {
+        _vm.goodsList('new')
+      }
+    }
+  }, [_c('div', {
+    staticClass: "top"
+  }, [_c('p', [_vm._v("附近景点")]), _vm._v(" "), _c('p', [_vm._v("查看全部")])], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "list"
+  }, [_c('ul', [_c('scroll-view', {
+    staticClass: "scroll-view",
+    attrs: {
+      "scroll-x": true
+    }
+  }, _vm._l((_vm.sceneryData), function(item, index) {
+    return _c('li', {
+      key: index,
+      attrs: {
+        "eventid": '5-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.goodsDetail(item.id)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": item.image,
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "btom"
+    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
+  }))], 1)], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "newgoods hotgoods"
+  }, [_c('div', {
+    staticClass: "newgoods-top",
+    attrs: {
+      "eventid": '6'
+    },
+    on: {
+      "click": function($event) {
+        _vm.goodsList('hot')
+      }
+    }
+  }, [_c('div', {
+    staticClass: "top"
+  }, [_c('p', [_vm._v("附近餐馆\n          "), _c('span', [_vm._v("·")]), _vm._v(" 人气推荐")]), _vm._v(" "), _c('p', [_vm._v("查看全部")])], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "list"
+  }, [_c('ul', [_c('scroll-view', {
+    staticClass: "scroll-view",
+    attrs: {
+      "scroll-x": true
+    }
+  }, _vm._l((_vm.restaurantData), function(item, index) {
+    return _c('li', {
+      key: index,
+      attrs: {
+        "eventid": '7-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.goodsDetail(item.id)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": item.image,
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "btom"
+    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
+  }))], 1)], 1)]), _vm._v(" "), _c('div', {
     staticClass: "topicList"
   }, [_c('div', {
     staticClass: "topicList-top",
     attrs: {
-      "eventid": '3'
+      "eventid": '8'
     },
     on: {
       "click": _vm.totopic
@@ -673,7 +760,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     return _c('li', {
       key: index,
       attrs: {
-        "eventid": '4-' + index
+        "eventid": '9-' + index
       },
       on: {
         "click": function($event) {
@@ -693,7 +780,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "topicList-top",
     attrs: {
-      "eventid": '5'
+      "eventid": '10'
     },
     on: {
       "click": _vm.totopic
@@ -711,7 +798,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     return _c('li', {
       key: index,
       attrs: {
-        "eventid": '6-' + index
+        "eventid": '11-' + index
       },
       on: {
         "click": function($event) {

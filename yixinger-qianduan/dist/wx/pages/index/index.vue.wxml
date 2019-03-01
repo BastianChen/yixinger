@@ -1,6 +1,6 @@
 <template name="576527af">
   <view class="_div data-v-378baaca index">
-    <view class="_div data-v-378baaca search">
+    <view class="_div data-v-378baaca search"><label class="_span data-v-378baaca dingwei"></label>
       <view bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_div data-v-378baaca">{{cityName}}</view>
       <view bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_div data-v-378baaca">{{temperature}}
       </view>
@@ -10,17 +10,45 @@
       <swiper class="_swiper data-v-378baaca swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true" duration="500">
         <block wx:key="index" key="{{index}}" wx:for="{{banner}}" wx:for-index="index" wx:for-item="item">
           <swiper-item class="_swiper-item data-v-378baaca swiper-item">
-            <image src="{{item.image}}" class="_image data-v-378baaca slide-image"></image>
+            <image src="{{item.image}}" class="_image data-v-378baaca slide-image" bindtap="handleProxy" data-eventid="{{'3-'+index}}" data-comkey="{{$k}}"></image>
           </swiper-item>
         </block>
       </swiper>
     </view>
-    <view class="_div data-v-378baaca topicList">
-      <view bindtap="handleProxy" class="_div data-v-378baaca topicList-top" data-eventid="{{'3'}}" data-comkey="{{$k}}"> 附近景点 <label class="_span data-v-378baaca icon"></label></view>
+    <view class="_div data-v-378baaca newgoods">
+      <view bindtap="handleProxy" class="_div data-v-378baaca newgoods-top" data-eventid="{{'4'}}" data-comkey="{{$k}}">
+        <view class="_div data-v-378baaca top">
+          <view class="_p data-v-378baaca">附近景点</view>
+          <view class="_p data-v-378baaca">查看全部</view>
+        </view>
+      </view>
       <view class="_div data-v-378baaca list">
         <view class="_ul data-v-378baaca">
           <scroll-view class="_scroll-view data-v-378baaca scroll-view" scroll-x="{{true}}">
-            <view bindtap="handleProxy" wx:key="index" key="{{index}}" data-eventid="{{'4-'+index}}" data-comkey="{{$k}}" wx:for="{{sceneryData}}" wx:for-index="index" wx:for-item="item" class="_li data-v-378baaca">
+            <view bindtap="handleProxy" wx:key="index" key="{{index}}" data-eventid="{{'5-'+index}}" data-comkey="{{$k}}" wx:for="{{sceneryData}}" wx:for-index="index" wx:for-item="item" class="_li data-v-378baaca">
+              <image src="{{item.image}}" alt class="_img data-v-378baaca"></image>
+              <view class="_div data-v-378baaca btom">
+                <view class="_div data-v-378baaca">
+                  <view class="_p data-v-378baaca">{{item.name}}</view>
+                  <view class="_p data-v-378baaca">{{item.address}}</view>
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-378baaca newgoods hotgoods">
+      <view bindtap="handleProxy" class="_div data-v-378baaca newgoods-top" data-eventid="{{'6'}}" data-comkey="{{$k}}">
+        <view class="_div data-v-378baaca top">
+          <view class="_p data-v-378baaca">附近餐馆 <label class="_span data-v-378baaca">·</label> 人气推荐</view>
+          <view class="_p data-v-378baaca">查看全部</view>
+        </view>
+      </view>
+      <view class="_div data-v-378baaca list">
+        <view class="_ul data-v-378baaca">
+          <scroll-view class="_scroll-view data-v-378baaca scroll-view" scroll-x="{{true}}">
+            <view bindtap="handleProxy" wx:key="index" key="{{index}}" data-eventid="{{'7-'+index}}" data-comkey="{{$k}}" wx:for="{{restaurantData}}" wx:for-index="index" wx:for-item="item" class="_li data-v-378baaca">
               <image src="{{item.image}}" alt class="_img data-v-378baaca"></image>
               <view class="_div data-v-378baaca btom">
                 <view class="_div data-v-378baaca">
@@ -34,11 +62,29 @@
       </view>
     </view>
     <view class="_div data-v-378baaca topicList">
-      <view bindtap="handleProxy" class="_div data-v-378baaca topicList-top" data-eventid="{{'5'}}" data-comkey="{{$k}}"> 附近餐馆 <label class="_span data-v-378baaca icon"></label></view>
+      <view bindtap="handleProxy" class="_div data-v-378baaca topicList-top" data-eventid="{{'8'}}" data-comkey="{{$k}}"> 附近景点 <label class="_span data-v-378baaca icon"></label></view>
       <view class="_div data-v-378baaca list">
         <view class="_ul data-v-378baaca">
           <scroll-view class="_scroll-view data-v-378baaca scroll-view" scroll-x="{{true}}">
-            <view bindtap="handleProxy" wx:key="index" key="{{index}}" data-eventid="{{'6-'+index}}" data-comkey="{{$k}}" wx:for="{{restaurantData}}" wx:for-index="index" wx:for-item="item" class="_li data-v-378baaca">
+            <view bindtap="handleProxy" wx:key="index" key="{{index}}" data-eventid="{{'9-'+index}}" data-comkey="{{$k}}" wx:for="{{sceneryData}}" wx:for-index="index" wx:for-item="item" class="_li data-v-378baaca">
+              <image src="{{item.image}}" alt class="_img data-v-378baaca"></image>
+              <view class="_div data-v-378baaca btom">
+                <view class="_div data-v-378baaca">
+                  <view class="_p data-v-378baaca">{{item.name}}</view>
+                  <view class="_p data-v-378baaca">{{item.address}}</view>
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-378baaca topicList">
+      <view bindtap="handleProxy" class="_div data-v-378baaca topicList-top" data-eventid="{{'10'}}" data-comkey="{{$k}}"> 附近餐馆 <label class="_span data-v-378baaca icon"></label></view>
+      <view class="_div data-v-378baaca list">
+        <view class="_ul data-v-378baaca">
+          <scroll-view class="_scroll-view data-v-378baaca scroll-view" scroll-x="{{true}}">
+            <view bindtap="handleProxy" wx:key="index" key="{{index}}" data-eventid="{{'11-'+index}}" data-comkey="{{$k}}" wx:for="{{restaurantData}}" wx:for-index="index" wx:for-item="item" class="_li data-v-378baaca">
               <image src="{{item.image}}" alt class="_img data-v-378baaca"></image>
               <view class="_div data-v-378baaca btom">
                 <view class="_div data-v-378baaca">

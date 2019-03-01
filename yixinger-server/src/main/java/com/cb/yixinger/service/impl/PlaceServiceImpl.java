@@ -79,16 +79,18 @@ public class PlaceServiceImpl implements PlaceService {
             content = content.optJSONObject("vs_content");
             if (content.optJSONObject("invisible") != null) {
                 content = content.optJSONObject("bigdata");
-                JSONArray jsonArray = content.optJSONArray("tags1");
-                JSONArray tags1Array;
-                if (jsonArray != null && jsonArray.size() > 0) {
-                    for (int i = 0; i < jsonArray.size(); i++) {
-                        tags1Array = (JSONArray) jsonArray.get(i);
-                        tags1Array = (JSONArray) tags1Array.get(0);
-                        if (place.getTags1() == null) {
-                            place.setTags1((String) tags1Array.get(0));
-                        } else {
-                            place.setTags1(place.getTags1() + ";" + tags1Array.get(0));
+                if (content != null) {
+                    JSONArray jsonArray = content.optJSONArray("tags1");
+                    JSONArray tags1Array;
+                    if (jsonArray != null && jsonArray.size() > 0) {
+                        for (int i = 0; i < jsonArray.size(); i++) {
+                            tags1Array = (JSONArray) jsonArray.get(i);
+                            tags1Array = (JSONArray) tags1Array.get(0);
+                            if (place.getTags1() == null) {
+                                place.setTags1((String) tags1Array.get(0));
+                            } else {
+                                place.setTags1(place.getTags1() + ";" + tags1Array.get(0));
+                            }
                         }
                     }
                 }
