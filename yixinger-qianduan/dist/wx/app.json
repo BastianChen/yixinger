@@ -1,9 +1,6 @@
 {
   "pages": [
     "pages/index/main",
-    "pages/logs/main",
-    "pages/counter/main",
-    "pages/api/main",
     "pages/search/search",
     "pages/suggestion/suggestion",
     "pages/regeocoding/regeocoding",
@@ -36,19 +33,13 @@
         "pagePath": "pages/search/search",
         "iconPath": "static/images/ic_menu_topic_nor.png",
         "selectedIconPath": "static/images/ic_menu_topic_pressed.png",
-        "text": "专题"
+        "text": "附近"
       },
       {
         "pagePath": "pages/suggestion/suggestion",
         "iconPath": "static/images/ic_menu_sort_nor.png",
         "selectedIconPath": "static/images/ic_menu_sort_pressed.png",
-        "text": "分类"
-      },
-      {
-        "pagePath": "pages/regeocoding/regeocoding",
-        "iconPath": "static/images/ic_menu_shoping_nor.png",
-        "selectedIconPath": "static/images/ic_menu_shoping_pressed.png",
-        "text": "购物车"
+        "text": "辅助功能"
       },
       {
         "pagePath": "pages/weather/weather",
