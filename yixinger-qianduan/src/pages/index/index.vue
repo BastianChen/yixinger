@@ -38,6 +38,7 @@
 
   <div class="index">
     <div class="search">
+      <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
       <span class="dingwei"></span>
       <div @click="toMappage">{{cityName}}</div>
       <div @click="toMappage">{{temperature}}
@@ -89,7 +90,7 @@
         <ul>
           <scroll-view class="scroll-view" :scroll-x="true">
             <li @click="goodsDetail(item.id)" v-for="(item, index) in sceneryData" :key="index">
-              <img :src="item.image" alt="">
+              <img :src="item.image">
               <div class="btom">
                 <div>
                   <p>{{item.name}}</p>
@@ -125,48 +126,48 @@
         </ul>
       </div>
     </div>
-    <div class="topicList">
-      <div @click="totopic" class="topicList-top">
-        附近景点
-        <span class="icon"></span>
-      </div>
-      <div class="list">
-        <ul>
-          <scroll-view class="scroll-view" :scroll-x="true">
-            <li @click="topicdetail(item.id)" v-for="(item, index) in sceneryData" :key="index">
-              <img :src="item.image" alt="">
-              <div class="btom">
-                <div>
-                  <p>{{item.name}}</p>
-                  <p>{{item.address}}</p>
-                </div>
-              </div>
-            </li>
-          </scroll-view>
-        </ul>
-      </div>
-    </div>
-    <div class="topicList">
-      <div @click="totopic" class="topicList-top">
-        附近餐馆
-        <span class="icon"></span>
-      </div>
-      <div class="list">
-        <ul>
-          <scroll-view class="scroll-view" :scroll-x="true">
-            <li @click="topicdetail(item.id)" v-for="(item, index) in restaurantData" :key="index">
-              <img :src="item.image" alt="">
-              <div class="btom">
-                <div>
-                  <p>{{item.name}}</p>
-                  <p>{{item.address}}</p>
-                </div>
-              </div>
-            </li>
-          </scroll-view>
-        </ul>
-      </div>
-    </div>
+    <!--<div class="topicList">-->
+      <!--<div @click="totopic" class="topicList-top">-->
+        <!--附近景点-->
+        <!--<span class="icon"></span>-->
+      <!--</div>-->
+      <!--<div class="list">-->
+        <!--<ul>-->
+          <!--<scroll-view class="scroll-view" :scroll-x="true">-->
+            <!--<li @click="topicdetail(item.id)" v-for="(item, index) in sceneryData" :key="index">-->
+              <!--<img :src="item.image" alt="">-->
+              <!--<div class="btom">-->
+                <!--<div>-->
+                  <!--<p>{{item.name}}</p>-->
+                  <!--<p>{{item.address}}</p>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</scroll-view>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="topicList">-->
+      <!--<div @click="totopic" class="topicList-top">-->
+        <!--附近餐馆-->
+        <!--<span class="icon"></span>-->
+      <!--</div>-->
+      <!--<div class="list">-->
+        <!--<ul>-->
+          <!--<scroll-view class="scroll-view" :scroll-x="true">-->
+            <!--<li @click="topicdetail(item.id)" v-for="(item, index) in restaurantData" :key="index">-->
+              <!--<img :src="item.image" alt="">-->
+              <!--<div class="btom">-->
+                <!--<div>-->
+                  <!--<p>{{item.name}}</p>-->
+                  <!--<p>{{item.address}}</p>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</scroll-view>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
     <!--<div class="newcategory">-->
     <!--<div class="list" v-for="(item, index) in banner" :key="index">-->
     <!--<div class="head">{{item.name}}好物</div>-->
@@ -190,6 +191,7 @@
 
 <script>
 import {apiurl} from "@/service/api.js";
+import { mapMutations } from 'vuex';
 
 export default {
   data() {
@@ -210,6 +212,8 @@ export default {
       banner: [],// 轮播数据数组
       sceneryData: [],// 附近景点数组
       restaurantData: [],// 附近餐馆数组
+      allSceneryData: [],// 附近景点数组
+      allRestaurantData: [],// 附近餐馆数组
       temperature: '',
       dayPictureUrl: '',
       uidListForType1: '',// 景点uidList
@@ -232,6 +236,9 @@ export default {
 
   },
   methods: {
+    ...mapMutations({
+      setDisc: 'set_disc'
+    }),
     onChange(event) {
       console.log(event.detail)
     },
@@ -279,8 +286,10 @@ export default {
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo
+              // localStorage.setItem("userInfo",JSON.stringify(this.userInfo));
               console.log(res)
               console.log(this.userInfo)
+              this.setDisc(this.userInfo)
               // wx.request({
               //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
               //   data: {},
@@ -510,7 +519,16 @@ export default {
           uidList: this.uidListForType1
         },
       }).then(res => {
-        this.sceneryData = res.data;
+        this.allSceneryData = res.data;
+        if (res.data.length<=6){
+          for (let i=0;i<res.data.length;i++){
+            this.sceneryData.push(res.data[i]);
+          }
+        }else {
+          for (let i=0;i<6;i++){
+            this.sceneryData.push(res.data[i]);
+          }
+        }
       })
     },
     getRestaurantData() {
@@ -520,7 +538,16 @@ export default {
           uidList: this.uidListForType2
         },
       }).then(res => {
-        this.restaurantData = res.data;
+        this.allRestaurantData = res.data;
+        if (res.data.length<=6){
+          for (let i=0;i<res.data.length;i++){
+            this.restaurantData.push(res.data[i]);
+          }
+        }else {
+          for (let i=0;i<6;i++){
+            this.restaurantData.push(res.data[i]);
+          }
+        }
       })
     },
     clickHandle(msg, ev) {

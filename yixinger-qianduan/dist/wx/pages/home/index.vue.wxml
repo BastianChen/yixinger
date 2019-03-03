@@ -1,0 +1,14 @@
+<template name="5ee601b2">
+  <view class="_div data-v-40d83a4c my">
+    <view class="_div data-v-40d83a4c myinfo">
+      <image src="{{userInfo.avatarUrl}}" class="_img data-v-40d83a4c"></image>
+      <view class="_div data-v-40d83a4c">
+        <view class="_p data-v-40d83a4c">{{userInfo.nickName}}</view>
+        <van-button type="primary" size="normal" hidden="{{!(userInfo==null)}}" open-type="getUserInfo" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_van-button data-v-40d83a4c">点击登录</van-button>
+      </view>
+    </view>
+    <view class="_div data-v-40d83a4c iconlist">
+      <view bindtap="handleProxy" wx:key="index" key="{{index}}" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{listData}}" wx:for-index="index" wx:for-item="item" class="_div data-v-40d83a4c"><label class="_span data-v-40d83a4c iconfont {{item.icon}}"></label> <label class="_span data-v-40d83a4c">{{item.title}}</label></view>
+    </view>
+  </view>
+</template>

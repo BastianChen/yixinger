@@ -1,22 +1,29 @@
 require("common/manifest.js");
 require("common/vendor.js");
-global.webpackJsonp([3],{
+global.webpackJsonp([1],{
 
-/***/ 37:
+/***/ 42:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mpvue_router_patch__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_wx_request__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mpvue_router_patch__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_wx_request__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_index__ = __webpack_require__(83);
 
 
+
+
+//引入store
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$httpWX = __WEBPACK_IMPORTED_MODULE_3__utils_wx_request__["a" /* default */];
+
+//把store挂载到全局
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$store = __WEBPACK_IMPORTED_MODULE_4__store_index__["a" /* default */];
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_mpvue_router_patch__["a" /* default */]);
 
@@ -41,17 +48,17 @@ app.$mount();
 
 /***/ }),
 
-/***/ 39:
+/***/ 44:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(47);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(40)
+  __webpack_require__(45)
 }
-var normalizeComponent = __webpack_require__(15)
+var normalizeComponent = __webpack_require__(11)
 /* script */
 
 /* template */
@@ -93,14 +100,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 40:
+/***/ 45:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 41:
+/***/ 47:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -118,11 +125,11 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 43:
+/***/ 49:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__);
 
 // const host = 'http://139.196.139.249:8080'
@@ -173,7 +180,71 @@ function post(obj) {
   host: host
 });
 
+/***/ }),
+
+/***/ 83:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getters__ = __webpack_require__(86);
+
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+  state: __WEBPACK_IMPORTED_MODULE_2__state__["a" /* default */],
+  mutations: __WEBPACK_IMPORTED_MODULE_3__mutations__["a" /* default */],
+  getters: __WEBPACK_IMPORTED_MODULE_4__getters__
+}));
+
+/***/ }),
+
+/***/ 84:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var state = {
+  disc: {}
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (state);
+
+/***/ }),
+
+/***/ 85:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var mutations = {
+  set_disc: function set_disc(state, disc) {
+    state.disc = disc;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (mutations);
+
+/***/ }),
+
+/***/ 86:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "disc", function() { return disc; });
+var disc = function disc(state) {
+  return state.disc;
+};
+
 /***/ })
 
-},[37]);
+},[42]);
 //# sourceMappingURL=app.js.map

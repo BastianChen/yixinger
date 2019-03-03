@@ -2,7 +2,13 @@ import Vue from 'vue'
 import App from './App'
 import MpvueRouterPatch from 'mpvue-router-patch'
 import WXrequest from './utils/wx-request'
+//引入store
+import store from './store/index'
+
 Vue.prototype.$httpWX = WXrequest
+
+//把store挂载到全局
+Vue.prototype.$store = store;
 
 Vue.use(MpvueRouterPatch)
 

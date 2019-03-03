@@ -1,15 +1,15 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([1],{
+global.webpackJsonp([2],{
 
-/***/ 85:
+/***/ 107:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(108);
 
 
 
@@ -18,18 +18,18 @@ app.$mount();
 
 /***/ }),
 
-/***/ 86:
+/***/ 108:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_378baaca_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_378baaca_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(112);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(87)
+  __webpack_require__(109)
 }
-var normalizeComponent = __webpack_require__(15)
+var normalizeComponent = __webpack_require__(11)
 /* script */
 
 /* template */
@@ -72,18 +72,22 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 87:
+/***/ 109:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 88:
+/***/ 110:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_api_js__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(25);
+
 //
 //
 //
@@ -274,6 +278,8 @@ if (false) {(function () {
 //
 //
 //
+//
+
 
 
 
@@ -289,6 +295,8 @@ if (false) {(function () {
       banner: [], // 轮播数据数组
       sceneryData: [], // 附近景点数组
       restaurantData: [], // 附近餐馆数组
+      allSceneryData: [], // 附近景点数组
+      allRestaurantData: [], // 附近餐馆数组
       temperature: '',
       dayPictureUrl: '',
       uidListForType1: '', // 景点uidList
@@ -310,7 +318,9 @@ if (false) {(function () {
   },
   mounted: function mounted() {},
 
-  methods: {
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])({
+    setDisc: 'set_disc'
+  }), {
     onChange: function onChange(event) {
       console.log(event.detail);
     },
@@ -360,8 +370,10 @@ if (false) {(function () {
           wx.getUserInfo({
             success: function success(res) {
               _this2.userInfo = res.userInfo;
+              // localStorage.setItem("userInfo",JSON.stringify(this.userInfo));
               console.log(res);
               console.log(_this2.userInfo);
+              _this2.setDisc(_this2.userInfo);
               // wx.request({
               //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
               //   data: {},
@@ -502,7 +514,7 @@ if (false) {(function () {
                 }
               }
               _this.$httpWX.post({
-                url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace,
+                url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].addPlace,
                 data: {
                   uidList: _this.uidListForType1,
                   latitudeList: _this.latitudeList,
@@ -545,7 +557,7 @@ if (false) {(function () {
                 }
               }
               _this.$httpWX.post({
-                url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].addPlace,
+                url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].addPlace,
                 data: {
                   uidList: _this.uidListForType2,
                   latitudeList: _this.latitudeList,
@@ -573,7 +585,7 @@ if (false) {(function () {
       var _this3 = this;
 
       this.$httpWX.get({
-        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
+        url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPlaceListByUids,
         data: {
           uidList: this.uids
         }
@@ -587,24 +599,42 @@ if (false) {(function () {
       var _this4 = this;
 
       this.$httpWX.get({
-        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
+        url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPlaceListByUids,
         data: {
           uidList: this.uidListForType1
         }
       }).then(function (res) {
-        _this4.sceneryData = res.data;
+        _this4.allSceneryData = res.data;
+        if (res.data.length <= 6) {
+          for (var i = 0; i < res.data.length; i++) {
+            _this4.sceneryData.push(res.data[i]);
+          }
+        } else {
+          for (var _i = 0; _i < 6; _i++) {
+            _this4.sceneryData.push(res.data[_i]);
+          }
+        }
       });
     },
     getRestaurantData: function getRestaurantData() {
       var _this5 = this;
 
       this.$httpWX.get({
-        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
+        url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPlaceListByUids,
         data: {
           uidList: this.uidListForType2
         }
       }).then(function (res) {
-        _this5.restaurantData = res.data;
+        _this5.allRestaurantData = res.data;
+        if (res.data.length <= 6) {
+          for (var i = 0; i < res.data.length; i++) {
+            _this5.restaurantData.push(res.data[i]);
+          }
+        } else {
+          for (var _i2 = 0; _i2 < 6; _i2++) {
+            _this5.restaurantData.push(res.data[_i2]);
+          }
+        }
       });
     },
     clickHandle: function clickHandle(msg, ev) {
@@ -617,12 +647,12 @@ if (false) {(function () {
       console.log("uid" + uid);
       /**此处对接getPlaceByUid接口*/
     }
-  }
+  })
 });
 
 /***/ }),
 
-/***/ 89:
+/***/ 111:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -664,7 +694,7 @@ var apiurl = {
 
 /***/ }),
 
-/***/ 90:
+/***/ 112:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -768,8 +798,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('img', {
       attrs: {
-        "src": item.image,
-        "alt": ""
+        "src": item.image
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "btom"
@@ -814,82 +843,6 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }), _vm._v(" "), _c('div', {
       staticClass: "btom"
     }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
-  }))], 1)], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "topicList"
-  }, [_c('div', {
-    staticClass: "topicList-top",
-    attrs: {
-      "eventid": '8'
-    },
-    on: {
-      "click": _vm.totopic
-    }
-  }, [_vm._v("\n      附近景点\n      "), _c('span', {
-    staticClass: "icon"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "list"
-  }, [_c('ul', [_c('scroll-view', {
-    staticClass: "scroll-view",
-    attrs: {
-      "scroll-x": true
-    }
-  }, _vm._l((_vm.sceneryData), function(item, index) {
-    return _c('li', {
-      key: index,
-      attrs: {
-        "eventid": '9-' + index
-      },
-      on: {
-        "click": function($event) {
-          _vm.topicdetail(item.id)
-        }
-      }
-    }, [_c('img', {
-      attrs: {
-        "src": item.image,
-        "alt": ""
-      }
-    }), _vm._v(" "), _c('div', {
-      staticClass: "btom"
-    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
-  }))], 1)], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "topicList"
-  }, [_c('div', {
-    staticClass: "topicList-top",
-    attrs: {
-      "eventid": '10'
-    },
-    on: {
-      "click": _vm.totopic
-    }
-  }, [_vm._v("\n      附近餐馆\n      "), _c('span', {
-    staticClass: "icon"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "list"
-  }, [_c('ul', [_c('scroll-view', {
-    staticClass: "scroll-view",
-    attrs: {
-      "scroll-x": true
-    }
-  }, _vm._l((_vm.restaurantData), function(item, index) {
-    return _c('li', {
-      key: index,
-      attrs: {
-        "eventid": '11-' + index
-      },
-      on: {
-        "click": function($event) {
-          _vm.topicdetail(item.id)
-        }
-      }
-    }, [_c('img', {
-      attrs: {
-        "src": item.image,
-        "alt": ""
-      }
-    }), _vm._v(" "), _c('div', {
-      staticClass: "btom"
-    }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
   }))], 1)], 1)])])
 }
 var staticRenderFns = []
@@ -905,5 +858,5 @@ if (false) {
 
 /***/ })
 
-},[85]);
+},[107]);
 //# sourceMappingURL=main.js.map
