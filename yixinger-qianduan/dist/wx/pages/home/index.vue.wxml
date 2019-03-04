@@ -2,10 +2,16 @@
   <view class="_div data-v-40d83a4c">
     <view class="_div data-v-40d83a4c my">
       <view class="_div data-v-40d83a4c myinfo" wx:if="{{isLogin}}">
-        <image src="{{userInfo.avatarUrl}}" open-type="getUserInfo" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-40d83a4c"></image>
         <view class="_div data-v-40d83a4c">
-          <view class="_p data-v-40d83a4c">{{userInfo.nickName}}</view>
+          <image src="{{userInfo.avatarUrl}}" open-type="getUserInfo" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-40d83a4c"></image>
+          <view class="_div data-v-40d83a4c">
+            <view class="_p data-v-40d83a4c">{{userInfo.nickName}}</view>
+          </view>
         </view>
+      </view>
+      <view wx:if="{{isLogin}}" class="_div data-v-40d83a4c">
+        <van-cell title="性别" value="{{userInfo.gender}}" size="large" class="_van-cell data-v-40d83a4c"></van-cell>
+        <van-cell title="地区" value="内容" size="large" label="描述信息" class="_van-cell data-v-40d83a4c"></van-cell>
       </view>
       <view class="_div data-v-40d83a4c login" wx:if="{{!isLogin}}">
         <view class="_div data-v-40d83a4c button"><button type="primary" size="default" plain="false" bindtap="handleProxy" style="background-color: #1989FA;border-color: #1989FA;color: #ffffff" open-type="getUserInfo" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-40d83a4c"> 登录 </button></view>

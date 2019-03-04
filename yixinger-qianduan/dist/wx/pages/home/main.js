@@ -11,7 +11,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "my"
   }, [(_vm.isLogin) ? _c('div', {
     staticClass: "myinfo"
-  }, [_c('img', {
+  }, [_c('div', [_c('img', {
     attrs: {
       "src": _vm.userInfo.avatarUrl,
       "open-type": "getUserInfo",
@@ -20,7 +20,22 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.getUserInfo
     }
-  }), _vm._v(" "), _c('div', [_c('p', [_vm._v(_vm._s(_vm.userInfo.nickName))])], 1)]) : _vm._e(), _vm._v(" "), (!_vm.isLogin) ? _c('div', {
+  }), _vm._v(" "), _c('div', [_c('p', [_vm._v(_vm._s(_vm.userInfo.nickName))])], 1)])]) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('div', [_c('van-cell', {
+    attrs: {
+      "title": "性别",
+      "value": _vm.userInfo.gender,
+      "size": "large",
+      "mpcomid": '0'
+    }
+  }), _vm._v(" "), _c('van-cell', {
+    attrs: {
+      "title": "地区",
+      "value": "内容",
+      "size": "large",
+      "label": "描述信息",
+      "mpcomid": '1'
+    }
+  })], 1) : _vm._e(), _vm._v(" "), (!_vm.isLogin) ? _c('div', {
     staticClass: "login"
   }, [_c('div', {
     staticClass: "button"
@@ -140,6 +155,7 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_api_js__ = __webpack_require__(111);
 
 //
 //
@@ -201,6 +217,20 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -216,6 +246,8 @@ if (false) {(function () {
   data: function data() {
     return {
       isLogin: false,
+      code: '',
+      openid: '',
 
       avator: "http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png",
       allcheck: false,
@@ -248,15 +280,28 @@ if (false) {(function () {
         //获取code
         success: function success(res) {
           _this.code = res.code;
-          console.log(res.code); //返回code
           wx.getUserInfo({
             success: function success(res) {
               _this.userInfo = res.userInfo;
               _this.isLogin = true;
-              console.log("this.isLogin" + _this.isLogin);
-              // localStorage.setItem("userInfo",JSON.stringify(this.userInfo));
-              console.log(res);
-              console.log(_this.userInfo);
+              _this.$httpWX.post({
+                url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].addUser,
+                data: {
+                  newUser: _this.userInfo,
+                  code: _this.code
+                }
+              }).then(function (res) {
+                _this.openid = res.data;
+                _this.$httpWX.get({
+                  url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].getUser,
+                  data: {
+                    openid: _this.openid,
+                    language: 'zh'
+                  }
+                }).then(function (res) {
+                  _this.userInfo = res.data;
+                });
+              });
               // wx.request({
               //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
               //   data: {},

@@ -1,14 +1,27 @@
 <template>
   <div>
     <div class="my">
-      <div class="myinfo"v-if="isLogin">
-        <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
-        <img :src="userInfo.avatarUrl" open-type="getUserInfo" @click="getUserInfo">
+      <div class="myinfo" v-if="isLogin">
         <div>
-          <p>{{userInfo.nickName}}</p>
-          <!--<van-button type="primary" size="normal" v-if="!isLogin" open-type="getUserInfo" @click="getUserInfo">点击登录</van-button>-->
-          <!--<p v-else>微信用户</p>-->
+          <img :src="userInfo.avatarUrl" open-type="getUserInfo" @click="getUserInfo">
+          <div>
+            <p>{{userInfo.nickName}}</p>
+          </div>
         </div>
+        <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
+      </div>
+      <div v-if="isLogin">
+        <van-cell
+          title="性别"
+          :value="userInfo.gender"
+          size="large"
+        />
+        <van-cell
+          title="地区"
+          value="内容"
+          size="large"
+          label="描述信息"
+        />
       </div>
       <div class="login" v-if="!isLogin">
         <div class="button">
@@ -33,33 +46,34 @@
       <!--</div>-->
     </div>
     <!--<div class="my" v-show="!isLogin">-->
-      <!--<div class="login">-->
-        <!--<div class="button">-->
-          <!--&lt;!&ndash;<van-button type="primary" size="normal" square open-type="getUserInfo" @click="getUserInfo">登录</van-button>&ndash;&gt;-->
-          <!--<button-->
-            <!--type="primary"-->
-            <!--size="default"-->
-            <!--plain="false"-->
-            <!--bindtap="primary"-->
-            <!--style="background-color: #1989FA;border-color: #1989FA;color: #ffffff"-->
-            <!--open-type="getUserInfo" @click="getUserInfo"-->
-          <!--&gt;-->
-            <!--登录-->
-          <!--</button>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="iconlist">-->
-      <!--<div @click="goTo(item.url)" v-for="(item, index) in listData" :key="index">-->
-      <!--<span class="iconfont" :class="item.icon"></span>-->
-      <!--<span>{{item.title}}</span>-->
-      <!--</div>-->
-      <!--</div>-->
+    <!--<div class="login">-->
+    <!--<div class="button">-->
+    <!--&lt;!&ndash;<van-button type="primary" size="normal" square open-type="getUserInfo" @click="getUserInfo">登录</van-button>&ndash;&gt;-->
+    <!--<button-->
+    <!--type="primary"-->
+    <!--size="default"-->
+    <!--plain="false"-->
+    <!--bindtap="primary"-->
+    <!--style="background-color: #1989FA;border-color: #1989FA;color: #ffffff"-->
+    <!--open-type="getUserInfo" @click="getUserInfo"-->
+    <!--&gt;-->
+    <!--登录-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="iconlist">-->
+    <!--<div @click="goTo(item.url)" v-for="(item, index) in listData" :key="index">-->
+    <!--<span class="iconfont" :class="item.icon"></span>-->
+    <!--<span>{{item.title}}</span>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
   </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters} from 'vuex';
+import {apiurl} from "@/service/api.js";
 
 export default {
   computed: {
@@ -77,6 +91,8 @@ export default {
   data() {
     return {
       isLogin: false,
+      code: '',
+      openid: '',
 
 
       avator: "http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png",
@@ -107,15 +123,28 @@ export default {
         //获取code
         success: (res) => {
           this.code = res.code;
-          console.log(res.code) //返回code
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo;
               this.isLogin = true;
-              console.log("this.isLogin" + this.isLogin)
-              // localStorage.setItem("userInfo",JSON.stringify(this.userInfo));
-              console.log(res)
-              console.log(this.userInfo)
+              this.$httpWX.post({
+                url: apiurl.addUser,
+                data: {
+                  newUser: this.userInfo,
+                  code: this.code
+                },
+              }).then(res => {
+                this.openid = res.data;
+                this.$httpWX.get({
+                  url: apiurl.getUser,
+                  data: {
+                    openid: this.openid,
+                    language: 'zh'
+                  },
+                }).then(res => {
+                  this.userInfo = res.data;
+                })
+              })
               // wx.request({
               //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
               //   data: {},

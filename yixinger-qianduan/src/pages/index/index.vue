@@ -291,12 +291,11 @@ export default {
       wx.login({
         //获取code
         success: (res) => {
-          this.code = res.code;
-          console.log(res.code) //返回code
+          // this.code = res.code;
+          // console.log(res.code) //返回code
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo
-              // localStorage.setItem("userInfo",JSON.stringify(this.userInfo));
               console.log(res)
               console.log(this.userInfo)
               this.isLogin = true;

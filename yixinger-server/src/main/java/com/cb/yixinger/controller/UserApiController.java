@@ -51,6 +51,7 @@ public class UserApiController {
             userService.addUser(user);
             logger.info("添加用户 {} 成功", user.getNickName());
             baseMessage.setMessage("添加用户 " + user.getNickName() + " 成功");
+            baseMessage.setData(openId);
         }
         return baseMessage.response();
     }
