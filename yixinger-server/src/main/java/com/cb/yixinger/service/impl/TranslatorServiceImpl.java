@@ -43,6 +43,11 @@ public class TranslatorServiceImpl implements TranslatorService {
         jsonObject = JSONObject.fromObject(api.getTransResult(user.getCountry(), "auto", language));
         jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
         user.setCountry(jsonArray.getJSONObject(0).getString("dst"));
+        if ("1".equals(user.getGender())){
+            user.setGender("男");
+        }else if ("2".equals(user.getGender())){
+            user.setGender("女");
+        }
         return user;
     }
 

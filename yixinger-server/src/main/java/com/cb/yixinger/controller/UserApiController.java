@@ -39,13 +39,19 @@ public class UserApiController {
     @ApiOperation(value = "添加用户信息", notes = "添加用户信息 ", response = BaseMessage.class)
     @RequestMapping(value = "/addUser", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> addUser(
-            @ApiParam(value = "用户", required = true) @RequestBody User user,
+            @ApiParam(value = "用户", required = true) @RequestBody User newUser,
             @ApiParam(value = "前端传回的code", required = true) @RequestParam(value = "code") String code) {
         BaseMessage baseMessage = new BaseMessage();
-        user.setOpenid(userService.getOpenId(code));
-        userService.addUser(user);
-        logger.info("添加用户 {} 成功", user.getNickName());
-        baseMessage.setMessage("添加用户 " + user.getNickName() + " 成功");
+        String openId = userService.getOpenId(code);
+        User user = userService.getUser(openId);
+        if (user != null) {
+            baseMessage.initStateAndMessage(1001, "该用户已存在");
+        } else {
+            newUser.setOpenid(openId);
+            userService.addUser(user);
+            logger.info("添加用户 {} 成功", user.getNickName());
+            baseMessage.setMessage("添加用户 " + user.getNickName() + " 成功");
+        }
         return baseMessage.response();
     }
 
