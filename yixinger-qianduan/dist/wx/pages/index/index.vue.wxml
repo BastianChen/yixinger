@@ -1,4 +1,4 @@
-<template name="4c9ac67b">
+<template name="576527af">
   <view class="_div data-v-378baaca index">
     <view class="_div data-v-378baaca search"><label class="_span data-v-378baaca dingwei"></label>
       <view bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_div data-v-378baaca">{{cityName}}</view>
@@ -15,18 +15,14 @@
         </block>
       </swiper>
     </view>
-    <view class="_div data-v-378baaca newgoods">
-      <view bindtap="handleProxy" class="_div data-v-378baaca newgoods-top" data-eventid="{{'4'}}" data-comkey="{{$k}}">
-        <view class="_div data-v-378baaca top">
-          <view class="_p data-v-378baaca">附近景点</view>
-          <view class="_p data-v-378baaca">查看全部</view>
-        </view>
-      </view>
+    <van-dialog id="van-dialog" style="text-align: center" class="_van-dialog data-v-378baaca"></van-dialog>
+    <view class="_div data-v-378baaca topicList">
+      <view bindtap="handleProxy" class="_div data-v-378baaca topicList-top" data-eventid="{{'4'}}" data-comkey="{{$k}}"> 附近景点 <label class="_span data-v-378baaca icon"></label></view>
       <view class="_div data-v-378baaca list">
         <view class="_ul data-v-378baaca">
           <scroll-view class="_scroll-view data-v-378baaca scroll-view" scroll-x="{{true}}">
             <view bindtap="handleProxy" wx:key="index" key="{{index}}" data-eventid="{{'5-'+index}}" data-comkey="{{$k}}" wx:for="{{sceneryData}}" wx:for-index="index" wx:for-item="item" class="_li data-v-378baaca">
-              <image src="{{item.image}}" class="_img data-v-378baaca"></image>
+              <image src="{{item.image}}" alt class="_img data-v-378baaca"></image>
               <view class="_div data-v-378baaca btom">
                 <view class="_div data-v-378baaca">
                   <view class="_p data-v-378baaca">{{item.name}}</view>
@@ -38,13 +34,8 @@
         </view>
       </view>
     </view>
-    <view class="_div data-v-378baaca newgoods hotgoods">
-      <view bindtap="handleProxy" class="_div data-v-378baaca newgoods-top" data-eventid="{{'6'}}" data-comkey="{{$k}}">
-        <view class="_div data-v-378baaca top">
-          <view class="_p data-v-378baaca">附近餐馆 <label class="_span data-v-378baaca">·</label> 人气推荐</view>
-          <view class="_p data-v-378baaca">查看全部</view>
-        </view>
-      </view>
+    <view class="_div data-v-378baaca topicList">
+      <view bindtap="handleProxy" class="_div data-v-378baaca topicList-top" data-eventid="{{'6'}}" data-comkey="{{$k}}"> 附近餐馆 <label class="_span data-v-378baaca icon"></label></view>
       <view class="_div data-v-378baaca list">
         <view class="_ul data-v-378baaca">
           <scroll-view class="_scroll-view data-v-378baaca scroll-view" scroll-x="{{true}}">

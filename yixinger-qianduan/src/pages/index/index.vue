@@ -79,41 +79,63 @@
     <!--</div>-->
     <!--</div>-->
     <!--</div>-->
-    <div class="newgoods">
-      <div @click="goodsList('new')" class="newgoods-top">
-        <div class="top">
-          <p>附近景点</p>
-          <p>查看全部</p>
-        </div>
+    <!--<div class="newgoods">-->
+      <!--<div @click="goodsList('new')" class="newgoods-top">-->
+        <!--<div class="top">-->
+          <!--<p>附近景点</p>-->
+          <!--<p>查看全部</p>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="list">-->
+        <!--<ul>-->
+          <!--<scroll-view class="scroll-view" :scroll-x="true">-->
+            <!--<li @click="goodsDetail(item.id)" v-for="(item, index) in sceneryData" :key="index">-->
+              <!--<img :src="item.image">-->
+              <!--<div class="btom">-->
+                <!--<div>-->
+                  <!--<p>{{item.name}}</p>-->
+                  <!--<p>{{item.address}}</p>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</scroll-view>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="newgoods hotgoods">-->
+      <!--<div @click="goodsList('hot')" class="newgoods-top">-->
+        <!--<div class="top">-->
+          <!--<p>附近餐馆-->
+            <!--<span>·</span> 人气推荐</p>-->
+          <!--<p>查看全部</p>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="list">-->
+        <!--<ul>-->
+          <!--<scroll-view class="scroll-view" :scroll-x="true">-->
+            <!--<li @click="goodsDetail(item.id)" v-for="(item, index) in restaurantData" :key="index">-->
+              <!--<img :src="item.image" alt="">-->
+              <!--<div class="btom">-->
+                <!--<div>-->
+                  <!--<p>{{item.name}}</p>-->
+                  <!--<p>{{item.address}}</p>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</scroll-view>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+    <van-dialog id="van-dialog" style="text-align: center"/>
+    <div class="topicList">
+      <div @click="totopic" class="topicList-top">
+        附近景点
+        <span class="icon"></span>
       </div>
       <div class="list">
         <ul>
           <scroll-view class="scroll-view" :scroll-x="true">
-            <li @click="goodsDetail(item.id)" v-for="(item, index) in sceneryData" :key="index">
-              <img :src="item.image">
-              <div class="btom">
-                <div>
-                  <p>{{item.name}}</p>
-                  <p>{{item.address}}</p>
-                </div>
-              </div>
-            </li>
-          </scroll-view>
-        </ul>
-      </div>
-    </div>
-    <div class="newgoods hotgoods">
-      <div @click="goodsList('hot')" class="newgoods-top">
-        <div class="top">
-          <p>附近餐馆
-            <span>·</span> 人气推荐</p>
-          <p>查看全部</p>
-        </div>
-      </div>
-      <div class="list">
-        <ul>
-          <scroll-view class="scroll-view" :scroll-x="true">
-            <li @click="goodsDetail(item.id)" v-for="(item, index) in restaurantData" :key="index">
+            <li @click="topicdetail(item.id)" v-for="(item, index) in sceneryData" :key="index">
               <img :src="item.image" alt="">
               <div class="btom">
                 <div>
@@ -126,48 +148,27 @@
         </ul>
       </div>
     </div>
-    <!--<div class="topicList">-->
-      <!--<div @click="totopic" class="topicList-top">-->
-        <!--附近景点-->
-        <!--<span class="icon"></span>-->
-      <!--</div>-->
-      <!--<div class="list">-->
-        <!--<ul>-->
-          <!--<scroll-view class="scroll-view" :scroll-x="true">-->
-            <!--<li @click="topicdetail(item.id)" v-for="(item, index) in sceneryData" :key="index">-->
-              <!--<img :src="item.image" alt="">-->
-              <!--<div class="btom">-->
-                <!--<div>-->
-                  <!--<p>{{item.name}}</p>-->
-                  <!--<p>{{item.address}}</p>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</li>-->
-          <!--</scroll-view>-->
-        <!--</ul>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div class="topicList">-->
-      <!--<div @click="totopic" class="topicList-top">-->
-        <!--附近餐馆-->
-        <!--<span class="icon"></span>-->
-      <!--</div>-->
-      <!--<div class="list">-->
-        <!--<ul>-->
-          <!--<scroll-view class="scroll-view" :scroll-x="true">-->
-            <!--<li @click="topicdetail(item.id)" v-for="(item, index) in restaurantData" :key="index">-->
-              <!--<img :src="item.image" alt="">-->
-              <!--<div class="btom">-->
-                <!--<div>-->
-                  <!--<p>{{item.name}}</p>-->
-                  <!--<p>{{item.address}}</p>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</li>-->
-          <!--</scroll-view>-->
-        <!--</ul>-->
-      <!--</div>-->
-    <!--</div>-->
+    <div class="topicList">
+      <div @click="totopic" class="topicList-top">
+        附近餐馆
+        <span class="icon"></span>
+      </div>
+      <div class="list">
+        <ul>
+          <scroll-view class="scroll-view" :scroll-x="true">
+            <li @click="topicdetail(item.id)" v-for="(item, index) in restaurantData" :key="index">
+              <img :src="item.image" alt="">
+              <div class="btom">
+                <div>
+                  <p>{{item.name}}</p>
+                  <p>{{item.address}}</p>
+                </div>
+              </div>
+            </li>
+          </scroll-view>
+        </ul>
+      </div>
+    </div>
     <!--<div class="newcategory">-->
     <!--<div class="list" v-for="(item, index) in banner" :key="index">-->
     <!--<div class="head">{{item.name}}好物</div>-->
@@ -191,21 +192,14 @@
 
 <script>
 import {apiurl} from "@/service/api.js";
-import { mapMutations } from 'vuex';
+import {mapMutations} from 'vuex';
+import Dialog from '../../../static/vant-weapp/dist/dialog/dialog.js';
 
 export default {
   data() {
     return {
       motto: 'Hello World',
       userInfo: {},
-      items: [
-        {name: 'USA', value: '美国'},
-        {name: 'CHN', value: '中国', checked: 'true'},
-        {name: 'BRA', value: '巴西'},
-        {name: 'JPN', value: '日本'},
-        {name: 'ENG', value: '英国'},
-        {name: 'TUR', value: '法国'}
-      ],
       active: 0,
       code: '',
       cityName: '',
@@ -222,10 +216,24 @@ export default {
       longitudeList: '',// 维度list
       type: '',// 游玩地点类型
       uids: '',// 用于轮播
+      isLogin: false,// 判断是否已经授权登录
     }
   },
-
   components: {},
+  onLoad() {
+    setTimeout(() => {
+      if (!this.isLogin) {
+        Dialog.alert({
+          title: '温馨提示',
+          message: '欢迎使用易行ER，请您先登录！'
+        }).then(() => {
+          wx.switchTab({
+            url: '../../pages/home/main'
+          });
+        });
+      }
+    }, 1000)
+  },
   created() {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo();
@@ -239,8 +247,10 @@ export default {
     ...mapMutations({
       setDisc: 'set_disc'
     }),
-    onChange(event) {
-      console.log(event.detail)
+    a(event) {
+      if (event.detail === 'confirm') {
+        console.log("aaaaa")
+      }
     },
     vuexPage() {
       this.$router.push('../counter/main')
@@ -289,7 +299,8 @@ export default {
               // localStorage.setItem("userInfo",JSON.stringify(this.userInfo));
               console.log(res)
               console.log(this.userInfo)
-              this.setDisc(this.userInfo)
+              this.isLogin = true;
+              this.setDisc(this.userInfo);
               // wx.request({
               //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
               //   data: {},
@@ -394,7 +405,12 @@ export default {
             success(res) {
               console.log(res.data.results[0].weather_data[0].date);
               _this.temperature = res.data.results[0].weather_data[0].date;
-              _this.temperature = _this.temperature.substring(_this.temperature.length - 3, _this.temperature.length - 1);
+              //console.log("温度"+_this.temperature.substring(_this.temperature.length - 5, _this.temperature.length - 4))
+              if (_this.temperature.substring(_this.temperature.length - 5, _this.temperature.length - 4) == '：') {
+                _this.temperature = _this.temperature.substring(_this.temperature.length - 4, _this.temperature.length - 1);
+              } else {
+                _this.temperature = _this.temperature.substring(_this.temperature.length - 3, _this.temperature.length - 1);
+              }
               _this.dayPictureUrl = res.data.results[0].weather_data[0].dayPictureUrl;
             },
             fail: function () {
@@ -520,12 +536,12 @@ export default {
         },
       }).then(res => {
         this.allSceneryData = res.data;
-        if (res.data.length<=6){
-          for (let i=0;i<res.data.length;i++){
+        if (res.data.length <= 6) {
+          for (let i = 0; i < res.data.length; i++) {
             this.sceneryData.push(res.data[i]);
           }
-        }else {
-          for (let i=0;i<6;i++){
+        } else {
+          for (let i = 0; i < 6; i++) {
             this.sceneryData.push(res.data[i]);
           }
         }
@@ -539,12 +555,12 @@ export default {
         },
       }).then(res => {
         this.allRestaurantData = res.data;
-        if (res.data.length<=6){
-          for (let i=0;i<res.data.length;i++){
+        if (res.data.length <= 6) {
+          for (let i = 0; i < res.data.length; i++) {
             this.restaurantData.push(res.data[i]);
           }
-        }else {
-          for (let i=0;i<6;i++){
+        } else {
+          for (let i = 0; i < 6; i++) {
             this.restaurantData.push(res.data[i]);
           }
         }

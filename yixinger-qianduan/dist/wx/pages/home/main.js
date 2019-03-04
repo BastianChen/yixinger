@@ -7,49 +7,41 @@ global.webpackJsonp([3],{
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('div', [_c('div', {
     staticClass: "my"
-  }, [_c('div', {
+  }, [(_vm.isLogin) ? _c('div', {
     staticClass: "myinfo"
   }, [_c('img', {
     attrs: {
-      "src": _vm.userInfo.avatarUrl
-    }
-  }), _vm._v(" "), _c('div', [_c('p', [_vm._v(_vm._s(_vm.userInfo.nickName))]), _vm._v(" "), _c('van-button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.userInfo == null),
-      expression: "userInfo==null"
-    }],
-    attrs: {
-      "type": "primary",
-      "size": "normal",
+      "src": _vm.userInfo.avatarUrl,
       "open-type": "getUserInfo",
-      "eventid": '0',
-      "mpcomid": '0'
+      "eventid": '0'
     },
     on: {
       "click": _vm.getUserInfo
     }
-  }, [_vm._v("点击登录")])], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "iconlist"
-  }, _vm._l((_vm.listData), function(item, index) {
-    return _c('div', {
-      key: index,
-      attrs: {
-        "eventid": '1-' + index
-      },
-      on: {
-        "click": function($event) {
-          _vm.goTo(item.url)
-        }
-      }
-    }, [_c('span', {
-      staticClass: "iconfont",
-      class: item.icon
-    }), _vm._v(" "), _c('span', [_vm._v(_vm._s(item.title))])])
-  }))])
+  }), _vm._v(" "), _c('div', [_c('p', [_vm._v(_vm._s(_vm.userInfo.nickName))])], 1)]) : _vm._e(), _vm._v(" "), (!_vm.isLogin) ? _c('div', {
+    staticClass: "login"
+  }, [_c('div', {
+    staticClass: "button"
+  }, [_c('button', {
+    staticStyle: {
+      "background-color": "#1989FA",
+      "border-color": "#1989FA",
+      "color": "#ffffff"
+    },
+    attrs: {
+      "type": "primary",
+      "size": "default",
+      "plain": "false",
+      "bindtap": "primary",
+      "open-type": "getUserInfo",
+      "eventid": '1'
+    },
+    on: {
+      "click": _vm.getUserInfo
+    }
+  }, [_vm._v("\n          登录\n        ")])], 1)]) : _vm._e()])])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -145,13 +137,50 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(25);
 
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -176,53 +205,24 @@ if (false) {(function () {
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])(['disc'])),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['disc'])),
   created: function created() {
+    this.getUserInfo();
     //this.userInfo = this.$store.getters.disc;
   },
   mounted: function mounted() {
     //this.userInfo = this.$store.getters.disc;
   },
   data: function data() {
-    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()({
+    return {
+      isLogin: false,
+
       avator: "http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png",
       allcheck: false,
       listData: [],
       Listids: [],
       userInfo: {}
-    }, 'listData', [{
-      title: "我的订单",
-      icon: "icon-unie64a",
-      url: ""
-    }, {
-      title: "优惠券",
-      icon: "icon-youhuiquan",
-      url: ""
-    }, {
-      title: "我的足迹",
-      icon: "icon-zuji",
-      url: ""
-    }, {
-      title: "我的收藏",
-      icon: "icon-shoucang",
-      url: "/pages/collectlist/main"
-    }, {
-      title: "地址管理",
-      icon: "icon-dizhiguanli",
-      url: "/pages/address/main"
-    }, {
-      title: "联系客服",
-      icon: "icon-lianxikefu",
-      url: ""
-    }, {
-      title: "帮助中心",
-      icon: "icon-bangzhuzhongxin",
-      url: ""
-    }, {
-      title: "意见反馈",
-      icon: "icon-yijianfankui",
-      url: "/pages/feedback/main"
-    }]);
+    };
   },
 
   components: {},
@@ -252,6 +252,8 @@ if (false) {(function () {
           wx.getUserInfo({
             success: function success(res) {
               _this.userInfo = res.userInfo;
+              _this.isLogin = true;
+              console.log("this.isLogin" + _this.isLogin);
               // localStorage.setItem("userInfo",JSON.stringify(this.userInfo));
               console.log(res);
               console.log(_this.userInfo);

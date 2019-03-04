@@ -79,7 +79,7 @@
 
   .search{
     width: 100%;
-    padding: 0 25rpx 0 10rpx;
+    padding: 5rpx 25rpx 0 10rpx;
     top: 0;
     height: 145rpx;
     background: #fff;
@@ -88,7 +88,7 @@
 
     .dingwei{
       position: absolute;
-      top: 6rpx;
+      top: 11rpx;
       left: 20rpx;
       background: url('../../../static/images/dingwei.png') center no-repeat;
       background-size: 100%;
@@ -123,7 +123,7 @@
     }
     div:nth-child(4) {
       position: absolute;
-      top: 60rpx;
+      top: 65rpx;
       width: 100%;
       input {
         position: absolute;

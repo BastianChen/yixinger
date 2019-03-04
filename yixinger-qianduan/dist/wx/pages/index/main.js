@@ -87,6 +87,7 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(123);
 
 //
 //
@@ -279,6 +280,8 @@ if (false) {(function () {
 //
 //
 //
+//
+
 
 
 
@@ -288,7 +291,6 @@ if (false) {(function () {
     return {
       motto: 'Hello World',
       userInfo: {},
-      items: [{ name: 'USA', value: '美国' }, { name: 'CHN', value: '中国', checked: 'true' }, { name: 'BRA', value: '巴西' }, { name: 'JPN', value: '日本' }, { name: 'ENG', value: '英国' }, { name: 'TUR', value: '法国' }],
       active: 0,
       code: '',
       cityName: '',
@@ -304,12 +306,28 @@ if (false) {(function () {
       latitudeList: '', // 经度list
       longitudeList: '', // 维度list
       type: '', // 游玩地点类型
-      uids: '' // 用于轮播
+      uids: '', // 用于轮播
+      isLogin: false // 判断是否已经授权登录
     };
   },
 
-
   components: {},
+  onLoad: function onLoad() {
+    var _this2 = this;
+
+    setTimeout(function () {
+      if (!_this2.isLogin) {
+        __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__["a" /* default */].alert({
+          title: '温馨提示',
+          message: '欢迎使用易行ER，请您先登录！'
+        }).then(function () {
+          wx.switchTab({
+            url: '../../pages/home/main'
+          });
+        });
+      }
+    }, 1000);
+  },
   created: function created() {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo();
@@ -321,8 +339,10 @@ if (false) {(function () {
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])({
     setDisc: 'set_disc'
   }), {
-    onChange: function onChange(event) {
-      console.log(event.detail);
+    a: function a(event) {
+      if (event.detail === 'confirm') {
+        console.log("aaaaa");
+      }
     },
     vuexPage: function vuexPage() {
       this.$router.push('../counter/main');
@@ -348,7 +368,7 @@ if (false) {(function () {
       this.$router.push('../photo/photo');
     },
     getUserInfo: function getUserInfo() {
-      var _this2 = this;
+      var _this3 = this;
 
       // 调用登录接口
       // wx.login({
@@ -365,15 +385,16 @@ if (false) {(function () {
       wx.login({
         //获取code
         success: function success(res) {
-          _this2.code = res.code;
+          _this3.code = res.code;
           console.log(res.code); //返回code
           wx.getUserInfo({
             success: function success(res) {
-              _this2.userInfo = res.userInfo;
+              _this3.userInfo = res.userInfo;
               // localStorage.setItem("userInfo",JSON.stringify(this.userInfo));
               console.log(res);
-              console.log(_this2.userInfo);
-              _this2.setDisc(_this2.userInfo);
+              console.log(_this3.userInfo);
+              _this3.isLogin = true;
+              _this3.setDisc(_this3.userInfo);
               // wx.request({
               //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
               //   data: {},
@@ -477,7 +498,12 @@ if (false) {(function () {
             success: function success(res) {
               console.log(res.data.results[0].weather_data[0].date);
               _this.temperature = res.data.results[0].weather_data[0].date;
-              _this.temperature = _this.temperature.substring(_this.temperature.length - 3, _this.temperature.length - 1);
+              //console.log("温度"+_this.temperature.substring(_this.temperature.length - 5, _this.temperature.length - 4))
+              if (_this.temperature.substring(_this.temperature.length - 5, _this.temperature.length - 4) == '：') {
+                _this.temperature = _this.temperature.substring(_this.temperature.length - 4, _this.temperature.length - 1);
+              } else {
+                _this.temperature = _this.temperature.substring(_this.temperature.length - 3, _this.temperature.length - 1);
+              }
               _this.dayPictureUrl = res.data.results[0].weather_data[0].dayPictureUrl;
             },
 
@@ -582,7 +608,7 @@ if (false) {(function () {
       });
     },
     getBannerData: function getBannerData() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$httpWX.get({
         url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPlaceListByUids,
@@ -591,12 +617,12 @@ if (false) {(function () {
         }
       }).then(function (res) {
         for (var i = 0; i < 6; i++) {
-          _this3.banner.push(res.data[i]);
+          _this4.banner.push(res.data[i]);
         }
       });
     },
     getSceneryData: function getSceneryData() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$httpWX.get({
         url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPlaceListByUids,
@@ -604,20 +630,20 @@ if (false) {(function () {
           uidList: this.uidListForType1
         }
       }).then(function (res) {
-        _this4.allSceneryData = res.data;
+        _this5.allSceneryData = res.data;
         if (res.data.length <= 6) {
           for (var i = 0; i < res.data.length; i++) {
-            _this4.sceneryData.push(res.data[i]);
+            _this5.sceneryData.push(res.data[i]);
           }
         } else {
           for (var _i = 0; _i < 6; _i++) {
-            _this4.sceneryData.push(res.data[_i]);
+            _this5.sceneryData.push(res.data[_i]);
           }
         }
       });
     },
     getRestaurantData: function getRestaurantData() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.$httpWX.get({
         url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPlaceListByUids,
@@ -625,14 +651,14 @@ if (false) {(function () {
           uidList: this.uidListForType2
         }
       }).then(function (res) {
-        _this5.allRestaurantData = res.data;
+        _this6.allRestaurantData = res.data;
         if (res.data.length <= 6) {
           for (var i = 0; i < res.data.length; i++) {
-            _this5.restaurantData.push(res.data[i]);
+            _this6.restaurantData.push(res.data[i]);
           }
         } else {
           for (var _i2 = 0; _i2 < 6; _i2++) {
-            _this5.restaurantData.push(res.data[_i2]);
+            _this6.restaurantData.push(res.data[_i2]);
           }
         }
       });
@@ -764,21 +790,27 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }
       }
     })])], 1)
-  }))], 1), _vm._v(" "), _c('div', {
-    staticClass: "newgoods"
+  }))], 1), _vm._v(" "), _c('van-dialog', {
+    staticStyle: {
+      "text-align": "center"
+    },
+    attrs: {
+      "id": "van-dialog",
+      "mpcomid": '1'
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "topicList"
   }, [_c('div', {
-    staticClass: "newgoods-top",
+    staticClass: "topicList-top",
     attrs: {
       "eventid": '4'
     },
     on: {
-      "click": function($event) {
-        _vm.goodsList('new')
-      }
+      "click": _vm.totopic
     }
-  }, [_c('div', {
-    staticClass: "top"
-  }, [_c('p', [_vm._v("附近景点")]), _vm._v(" "), _c('p', [_vm._v("查看全部")])], 1)]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n      附近景点\n      "), _c('span', {
+    staticClass: "icon"
+  })]), _vm._v(" "), _c('div', {
     staticClass: "list"
   }, [_c('ul', [_c('scroll-view', {
     staticClass: "scroll-view",
@@ -793,31 +825,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       },
       on: {
         "click": function($event) {
-          _vm.goodsDetail(item.id)
+          _vm.topicdetail(item.id)
         }
       }
     }, [_c('img', {
       attrs: {
-        "src": item.image
+        "src": item.image,
+        "alt": ""
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "btom"
     }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
   }))], 1)], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "newgoods hotgoods"
+    staticClass: "topicList"
   }, [_c('div', {
-    staticClass: "newgoods-top",
+    staticClass: "topicList-top",
     attrs: {
       "eventid": '6'
     },
     on: {
-      "click": function($event) {
-        _vm.goodsList('hot')
-      }
+      "click": _vm.totopic
     }
-  }, [_c('div', {
-    staticClass: "top"
-  }, [_c('p', [_vm._v("附近餐馆\n          "), _c('span', [_vm._v("·")]), _vm._v(" 人气推荐")]), _vm._v(" "), _c('p', [_vm._v("查看全部")])], 1)]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n      附近餐馆\n      "), _c('span', {
+    staticClass: "icon"
+  })]), _vm._v(" "), _c('div', {
     staticClass: "list"
   }, [_c('ul', [_c('scroll-view', {
     staticClass: "scroll-view",
@@ -832,7 +863,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       },
       on: {
         "click": function($event) {
-          _vm.goodsDetail(item.id)
+          _vm.topicdetail(item.id)
         }
       }
     }, [_c('img', {
@@ -843,7 +874,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }), _vm._v(" "), _c('div', {
       staticClass: "btom"
     }, [_c('div', [_c('p', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.address))])], 1)])])
-  }))], 1)], 1)])])
+  }))], 1)], 1)])], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -855,6 +886,83 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-378baaca", esExports)
   }
 }
+
+/***/ }),
+
+/***/ 123:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+var queue = [];
+
+var Dialog = function Dialog(options) {
+  return new Promise(function (resolve, reject) {
+    var pages = getCurrentPages();
+    var ctx = pages[pages.length - 1];
+    var dialog = ctx.selectComponent(options.selector);
+    delete options.selector;
+
+    if (dialog) {
+      dialog.setData(_extends({
+        onCancel: reject,
+        onConfirm: resolve
+      }, options));
+      queue.push(dialog);
+    }
+  });
+};
+
+Dialog.defaultOptions = {
+  show: true,
+  title: '',
+  message: '',
+  zIndex: 100,
+  overlay: true,
+  asyncClose: false,
+  selector: '#van-dialog',
+  confirmButtonText: '确认',
+  cancelButtonText: '取消',
+  showConfirmButton: true,
+  showCancelButton: false,
+  closeOnClickOverlay: false,
+  confirmButtonOpenType: ''
+};
+
+Dialog.alert = function (options) {
+  return Dialog(_extends({}, Dialog.currentOptions, options));
+};
+
+Dialog.confirm = function (options) {
+  return Dialog(_extends({}, Dialog.currentOptions, {
+    showCancelButton: true
+  }, options));
+};
+
+Dialog.close = function () {
+  queue.forEach(function (dialog) {
+    dialog.close();
+  });
+  queue = [];
+};
+
+Dialog.stopLoading = function () {
+  queue.forEach(function (dialog) {
+    dialog.stopLoading();
+  });
+};
+
+Dialog.setDefaultOptions = function (options) {
+  Object.assign(Dialog.currentOptions, options);
+};
+
+Dialog.resetDefaultOptions = function () {
+  Dialog.currentOptions = _extends({}, Dialog.defaultOptions);
+};
+
+Dialog.resetDefaultOptions();
+/* harmony default export */ __webpack_exports__["a"] = (Dialog);
 
 /***/ })
 
