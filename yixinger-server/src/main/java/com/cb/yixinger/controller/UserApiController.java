@@ -48,7 +48,7 @@ public class UserApiController {
             baseMessage.initStateAndMessage(1001, "该用户已存在");
         } else {
             newUser.setOpenid(openId);
-            userService.addUser(user);
+            userService.addUser(newUser);
             logger.info("添加用户 {} 成功", user.getNickName());
             baseMessage.setMessage("添加用户 " + user.getNickName() + " 成功");
         }
