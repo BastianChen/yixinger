@@ -60,24 +60,24 @@
       </swiper>
     </div>
     <!--<div class="channel">-->
-    <!--<div @click="categoryList(item.id)" v-for="(item, index) in banner" :key="index">-->
-    <!--<img :src="item.image" alt="">-->
-    <!--<p>{{item.name}}</p>-->
-    <!--</div>-->
+      <!--<div @click="categoryList(item.id)" v-for="(item, index) in banner" :key="index">-->
+        <!--<img :src="item.image" alt="">-->
+        <!--<p>{{item.name}}</p>-->
+      <!--</div>-->
     <!--</div>-->
     <!--<div class="brand">-->
-    <!--<div @click="tobrandList" class="head">-->
-    <!--附近景点-->
-    <!--</div>-->
-    <!--<div class="content">-->
-    <!--<div @click="branddetail(item.id)" v-for="(item, index) in banner" :key="index">-->
-    <!--<div>-->
-    <!--<p>{{item.name}}</p>-->
-    <!--<p>{{item.address}}</p>-->
-    <!--</div>-->
-    <!--<img :src="item.image" alt="">-->
-    <!--</div>-->
-    <!--</div>-->
+      <!--<div @click="tobrandList" class="head">-->
+        <!--附近景点-->
+      <!--</div>-->
+      <!--<div class="content">-->
+        <!--<div @click="branddetail(item.id)" v-for="(item, index) in banner" :key="index">-->
+          <!--<div>-->
+            <!--<p>{{item.name}}</p>-->
+            <!--<p>{{item.address}}</p>-->
+          <!--</div>-->
+          <!--<img :src="item.image" alt="">-->
+        <!--</div>-->
+      <!--</div>-->
     <!--</div>-->
     <!--<div class="newgoods">-->
     <!--<div @click="goodsList('new')" class="newgoods-top">-->

@@ -1,0 +1,20 @@
+<template name="15166f23">
+  <view class="_div data-v-1babaa8f index">
+    <view class="_div data-v-1babaa8f photo">
+      <view class="_div data-v-1babaa8f">
+        <view class="_div data-v-1babaa8f">
+          <view class="_p data-v-1babaa8f">图像识别</view>
+        </view>
+        <image src="/static/images/dingwei.png" class="_img data-v-1babaa8f"></image>
+      </view>
+    </view>
+    <view class="_div data-v-1babaa8f text">
+      <view class="_div data-v-1babaa8f">
+        <view class="_div data-v-1babaa8f">
+          <view class="_p data-v-1babaa8f">文字识别</view>
+        </view>
+        <image src="{{'../../../static/images/dingwei.png'}}" class="_img data-v-1babaa8f"></image>
+      </view>
+    </view>
+  </view>
+</template>

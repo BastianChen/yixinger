@@ -1,0 +1,18 @@
+.index {
+  .photo{
+    display: flex;
+    padding: 20rpx 0;
+    background: #ffffff;
+
+    div {
+      width: 90%;
+      text-align: center;
+
+      img {
+        height: 58rpx;
+        width: 58rpx;
+        display: inline-block;
+      }
+    }
+  }
+}
