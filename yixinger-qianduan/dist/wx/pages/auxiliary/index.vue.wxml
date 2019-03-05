@@ -1,20 +1,26 @@
 <template name="15166f23">
   <view class="_div data-v-1babaa8f index">
-    <view class="_div data-v-1babaa8f photo">
-      <view class="_div data-v-1babaa8f">
+    <view class="_div data-v-1babaa8f auxiliary">
+      <view class="_div data-v-1babaa8f content">
         <view class="_div data-v-1babaa8f">
-          <view class="_p data-v-1babaa8f">图像识别</view>
+          <view class="_div data-v-1babaa8f">
+            <view class="_p data-v-1babaa8f">图像识别</view>
+          </view>
+          <image src="https://wzcb97.top/images/index/photo.jpg" class="_img data-v-1babaa8f"></image>
         </view>
-        <image src="/static/images/dingwei.png" class="_img data-v-1babaa8f"></image>
       </view>
     </view>
-    <view class="_div data-v-1babaa8f text">
-      <view class="_div data-v-1babaa8f">
+    <view class="_div data-v-1babaa8f auxiliary">
+      <view class="_div data-v-1babaa8f content">
         <view class="_div data-v-1babaa8f">
-          <view class="_p data-v-1babaa8f">文字识别</view>
+          <view class="_div data-v-1babaa8f">
+            <view class="_p data-v-1babaa8f">文字识别</view>
+          </view>
+          <image src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551787214368&di=1603f11da101544e417a131ff1bb9ba5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201406%2F18%2F20140618110551_vL3iQ.jpeg" class="_img data-v-1babaa8f"></image>
         </view>
-        <image src="{{'../../../static/images/dingwei.png'}}" class="_img data-v-1babaa8f"></image>
       </view>
     </view>
+    <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="primary" style="background-color: #1989FA;border-color: #1989FA;color: #ffffff;width: 90%;margin-top: 20px" class="_button data-v-1babaa8f"> 图像识别 </button></view>
+    <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="primary" style="width: 90%;margin-top: 20px" class="_button data-v-1babaa8f"> 文字识别 </button></view>
   </view>
 </template>

@@ -21,6 +21,7 @@
 }
 .my .myinfo ._div.data-v-40d83a4c:nth-child(1) {
   margin: auto;
+  text-align: center;
 }
 .my .myinfo ._div:nth-child(1) ._img.data-v-40d83a4c {
   height: 148rpx;
@@ -31,9 +32,6 @@
   color: #fff;
   font-size: 30rpx;
   margin-bottom: 10rpx;
-}
-.my .myinfo ._div:nth-child(1) ._div ._p.data-v-40d83a4c:nth-child(2) {
-  font-size: 28rpx;
 }
 .my .iconlist.data-v-40d83a4c {
   display: flex;

@@ -20,6 +20,7 @@
     box-sizing: border-box;
     div:nth-child(1) {
       margin: auto;
+      text-align:center;
       img {
         height: 148rpx;
         width: 148rpx;
@@ -30,9 +31,6 @@
           color: #fff;
           font-size: 30rpx;
           margin-bottom: 10rpx
-        }
-        p:nth-child(2) {
-          font-size: 28rpx;
         }
       }
     }

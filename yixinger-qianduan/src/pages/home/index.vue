@@ -8,7 +8,6 @@
             <p>{{userInfo.nickName}}</p>
           </div>
         </div>
-        <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
       </div>
       <div v-if="isLogin">
         <div style="padding-top: 20px">

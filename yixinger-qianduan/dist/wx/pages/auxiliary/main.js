@@ -106,6 +106,32 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: "index.vue"
@@ -121,18 +147,47 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "index"
   }, [_c('div', {
-    staticClass: "photo"
+    staticClass: "auxiliary"
+  }, [_c('div', {
+    staticClass: "content"
   }, [_c('div', [_c('div', [_c('p', [_vm._v("图像识别")])], 1), _vm._v(" "), _c('img', {
     attrs: {
-      "src": "../../../static/images/dingwei.png"
+      "src": "https://wzcb97.top/images/index/photo.jpg"
     }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "text"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "auxiliary"
+  }, [_c('div', {
+    staticClass: "content"
   }, [_c('div', [_c('div', [_c('p', [_vm._v("文字识别")])], 1), _vm._v(" "), _c('img', {
     attrs: {
-      "src": '../../../static/images/dingwei.png'
+      "src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551787214368&di=1603f11da101544e417a131ff1bb9ba5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201406%2F18%2F20140618110551_vL3iQ.jpeg"
     }
-  })])])])
+  })])])]), _vm._v(" "), _c('div', [_c('button', {
+    staticStyle: {
+      "background-color": "#1989FA",
+      "border-color": "#1989FA",
+      "color": "#ffffff",
+      "width": "90%",
+      "margin-top": "20px"
+    },
+    attrs: {
+      "type": "primary",
+      "size": "default",
+      "plain": "false",
+      "bindtap": "primary"
+    }
+  }, [_vm._v("\n      图像识别\n    ")])], 1), _vm._v(" "), _c('div', [_c('button', {
+    staticStyle: {
+      "width": "90%",
+      "margin-top": "20px"
+    },
+    attrs: {
+      "type": "primary",
+      "size": "default",
+      "plain": "false",
+      "bindtap": "primary"
+    }
+  }, [_vm._v("\n      文字识别\n    ")])], 1)])
 }
 var staticRenderFns = []
 render._withStripped = true
