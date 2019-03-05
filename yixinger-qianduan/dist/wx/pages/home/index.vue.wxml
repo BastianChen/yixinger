@@ -10,8 +10,14 @@
         </view>
       </view>
       <view wx:if="{{isLogin}}" class="_div data-v-40d83a4c">
-        <van-cell title="性别" value="{{userInfo.gender}}" size="large" class="_van-cell data-v-40d83a4c"></van-cell>
-        <van-cell title="地区" value="{{userInfo.province+' '+userInfo.city}}" size="large" class="_van-cell data-v-40d83a4c"></van-cell>
+        <view style="padding-top: 20px" class="_div data-v-40d83a4c">
+          <van-cell title="性别" value="{{userInfo.gender}}" size="large" class="_van-cell data-v-40d83a4c"></van-cell>
+          <van-cell title="地区" value="{{userInfo.province+' '+userInfo.city}}" size="large" class="_van-cell data-v-40d83a4c"></van-cell>
+        </view>
+        <view style="padding-top: 20px" class="_div data-v-40d83a4c">
+          <van-cell title="浏览记录" is-link class="_van-cell data-v-40d83a4c"></van-cell>
+          <van-cell title="操作记录" is-link class="_van-cell data-v-40d83a4c"></van-cell>
+        </view>
       </view>
       <view class="_div data-v-40d83a4c login" wx:if="{{!isLogin}}">
         <view class="_div data-v-40d83a4c button"><button type="primary" size="default" plain="false" bindtap="handleProxy" style="background-color: #1989FA;border-color: #1989FA;color: #ffffff" open-type="getUserInfo" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-40d83a4c"> 登录 </button></view>

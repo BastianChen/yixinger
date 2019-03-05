@@ -290,7 +290,16 @@ if (false) {(function () {
   data: function data() {
     return {
       motto: 'Hello World',
-      userInfo: {},
+      userInfo: {
+        avatarUrl: '',
+        city: '',
+        country: '',
+        gender: 1,
+        language: '',
+        nickName: '',
+        province: '',
+        location: ''
+      },
       active: 0,
       code: '',
       cityName: '',
@@ -307,7 +316,10 @@ if (false) {(function () {
       longitudeList: '', // 维度list
       type: '', // 游玩地点类型
       uids: '', // 用于轮播
-      isLogin: false // 判断是否已经授权登录
+      isLogin: false, // 判断是否已经授权登录
+      vuexInfo: {
+        location: '' // 现在所在地
+      }
     };
   },
 
@@ -339,11 +351,6 @@ if (false) {(function () {
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])({
     setDisc: 'set_disc'
   }), {
-    a: function a(event) {
-      if (event.detail === 'confirm') {
-        console.log("aaaaa");
-      }
-    },
     vuexPage: function vuexPage() {
       this.$router.push('../counter/main');
     },
@@ -393,7 +400,7 @@ if (false) {(function () {
               console.log(res);
               console.log(_this3.userInfo);
               _this3.isLogin = true;
-              _this3.setDisc(_this3.userInfo);
+              //this.setDisc(this.userInfo);
               // wx.request({
               //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
               //   data: {},
@@ -459,6 +466,8 @@ if (false) {(function () {
             success: function success(res) {
               console.log(res.data.result);
               console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
+              // _this.vuexInfo.location = res.data.result.addressComponent.country;
+              // _this.setDisc(_this.vuexInfo);
               if (res.data.result.addressComponent.district != '') {
                 _this.cityName = res.data.result.addressComponent.district;
               } else {

@@ -20,7 +20,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.getUserInfo
     }
-  }), _vm._v(" "), _c('div', [_c('p', [_vm._v(_vm._s(_vm.userInfo.nickName))])], 1)])]) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('div', [_c('van-cell', {
+  }), _vm._v(" "), _c('div', [_c('p', [_vm._v(_vm._s(_vm.userInfo.nickName))])], 1)])]) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('div', [_c('div', {
+    staticStyle: {
+      "padding-top": "20px"
+    }
+  }, [_c('van-cell', {
     attrs: {
       "title": "性别",
       "value": _vm.userInfo.gender,
@@ -34,7 +38,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "size": "large",
       "mpcomid": '1'
     }
-  })], 1) : _vm._e(), _vm._v(" "), (!_vm.isLogin) ? _c('div', {
+  })], 1), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "padding-top": "20px"
+    }
+  }, [_c('van-cell', {
+    attrs: {
+      "title": "浏览记录",
+      "is-link": "",
+      "mpcomid": '2'
+    }
+  }), _vm._v(" "), _c('van-cell', {
+    attrs: {
+      "title": "操作记录",
+      "is-link": "",
+      "mpcomid": '3'
+    }
+  })], 1)]) : _vm._e(), _vm._v(" "), (!_vm.isLogin) ? _c('div', {
     staticClass: "login"
   }, [_c('div', {
     staticClass: "button"
@@ -228,6 +248,18 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -282,12 +314,11 @@ if (false) {(function () {
           wx.getUserInfo({
             success: function success(res) {
               _this.userInfo = res.userInfo;
+              // console.log("userInfo++++" + JSON.stringify(this.userInfo))
               _this.isLogin = true;
               _this.$httpWX.post({
                 url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].addUser + '?code=' + _this.code,
-                data: {
-                  newUser: _this.userInfo
-                },
+                data: _this.userInfo,
                 header: {
                   'Content-type': 'application/json'
                 }
