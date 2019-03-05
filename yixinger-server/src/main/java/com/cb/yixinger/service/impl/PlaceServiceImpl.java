@@ -99,7 +99,7 @@ public class PlaceServiceImpl implements PlaceService {
 
         JSONObject avocado = jsonObject.optJSONObject("avocado");
         JSONArray cards = avocado.optJSONArray("cards");
-        JSONObject dataInfo;
+        JSONObject dataInfo = new JSONObject();
         try {
             switch (type) {
                 case "2":
@@ -181,40 +181,71 @@ public class PlaceServiceImpl implements PlaceService {
                     break;
                 case "1":
                     //景点图片列表
+                    JSONArray list = new JSONArray();
+                    JSONObject photoList = new JSONObject();
+                    avocado = cards.optJSONObject(1);
+                    if (avocado!=null){
+                        setPhotoList(dataInfo,avocado,list,photoList,place);
+//                        dataInfo = avocado.optJSONObject("data");
+//                        if (dataInfo != null) {
+//                            dataInfo = dataInfo.optJSONObject("list");
+//                            if (dataInfo !=null){
+//                                list = dataInfo.optJSONArray("photo_list");
+//                                if (list != null && list.size() > 0) {
+//                                    for (int i = 0; i < list.size(); i++) {
+//                                        photoList = (JSONObject) list.get(i);
+//                                        if (place.getPhotoList() == null) {
+//                                            place.setPhotoList(photoList.optString("imgUrl", "暂无"));
+//                                        } else {
+//                                            place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+                    }
                     avocado = cards.optJSONObject(2);
-                    dataInfo = avocado.optJSONObject("data");
-                    JSONArray list;
-                    JSONObject photoList;
-                    if (dataInfo != null) {
-                        dataInfo = dataInfo.optJSONObject("list");
-                        list = dataInfo.optJSONArray("photo_list");
-                        if (list != null && list.size() > 0) {
-                            for (int i = 0; i < list.size(); i++) {
-                                photoList = (JSONObject) list.get(i);
-                                if (place.getPhotoList() == null) {
-                                    place.setPhotoList(photoList.optString("imgUrl", "暂无"));
-                                } else {
-                                    place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
-                                }
-                            }
-                        }
+                    if (avocado!=null){
+                        setPhotoList(dataInfo,avocado,list,photoList,place);
+//                        dataInfo = avocado.optJSONObject("data");
+//                        if (dataInfo != null) {
+//                            dataInfo = dataInfo.optJSONObject("list");
+//                            if (dataInfo !=null){
+//                                list = dataInfo.optJSONArray("photo_list");
+//                                if (list != null && list.size() > 0) {
+//                                    for (int i = 0; i < list.size(); i++) {
+//                                        photoList = (JSONObject) list.get(i);
+//                                        if (place.getPhotoList() == null) {
+//                                            place.setPhotoList(photoList.optString("imgUrl", "暂无"));
+//                                        } else {
+//                                            place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
                     }
                     // 景点介绍
-                    avocado = cards.optJSONObject(3).optJSONObject("data");
+                    avocado = cards.optJSONObject(3);
                     if (avocado != null) {
-                        if (avocado.optJSONObject("list") != null) {
-                            list = dataInfo.optJSONArray("photo_list");
-                            if (list != null && list.size() > 0) {
-                                for (int i = 0; i < list.size(); i++) {
-                                    photoList = (JSONObject) list.get(i);
-                                    if (place.getPhotoList() == null) {
-                                        place.setPhotoList(photoList.optString("imgUrl", "暂无"));
-                                    } else {
-                                        place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
-                                    }
-                                }
-                            }
-                        }
+                        setPhotoList(dataInfo,avocado,list,photoList,place);
+//                        dataInfo = avocado.optJSONObject("data");
+//                        if (dataInfo != null) {
+//                            dataInfo = dataInfo.optJSONObject("list");
+//                            if (dataInfo !=null){
+//                                list = dataInfo.optJSONArray("photo_list");
+//                                if (list != null && list.size() > 0) {
+//                                    for (int i = 0; i < list.size(); i++) {
+//                                        photoList = (JSONObject) list.get(i);
+//                                        if (place.getPhotoList() == null) {
+//                                            place.setPhotoList(photoList.optString("imgUrl", "暂无"));
+//                                        } else {
+//                                            place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
                         if (avocado.optJSONObject("introduce") != null) {
                             place.setIntroduce(avocado.optJSONObject("introduce").optString("abstract", "暂无"));
                         } else {
@@ -326,5 +357,24 @@ public class PlaceServiceImpl implements PlaceService {
             len = flag;
         }
         return placeList;
+    }
+    public void setPhotoList(JSONObject dataInfo,JSONObject avocado,JSONArray list,JSONObject photoList,Place place){
+        dataInfo = avocado.optJSONObject("data");
+        if (dataInfo != null) {
+            dataInfo = dataInfo.optJSONObject("list");
+            if (dataInfo !=null){
+                list = dataInfo.optJSONArray("photo_list");
+                if (list != null && list.size() > 0) {
+                    for (int i = 0; i < list.size(); i++) {
+                        photoList = (JSONObject) list.get(i);
+                        if (place.getPhotoList() == null) {
+                            place.setPhotoList(photoList.optString("imgUrl", "暂无"));
+                        } else {
+                            place.setPhotoList(place.getPhotoList() + ";" + photoList.optString("imgUrl", "暂无"));
+                        }
+                    }
+                }
+            }
+        }
     }
 }
