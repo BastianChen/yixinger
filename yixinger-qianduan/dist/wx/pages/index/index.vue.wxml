@@ -1,4 +1,4 @@
-<template name="4c9ac67b">
+<template name="576527af">
   <view class="_div data-v-378baaca index">
     <view class="_div data-v-378baaca search"><label class="_span data-v-378baaca dingwei"></label>
       <view bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_div data-v-378baaca">{{cityName}}</view>

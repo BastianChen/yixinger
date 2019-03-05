@@ -546,53 +546,54 @@ if (false) {(function () {
                   longitudeList: _this.longitudeList,
                   type: 1
                 }
-              }).then(function (res) {});
-            },
-
-            fail: function fail() {
-              // fail
-            },
-            complete: function complete() {
-              // complete
-            }
-          });
-          // 获取周边餐馆信息
-          wx.request({
-            url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' + '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' + '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
-            data: {},
-            header: {
-              'Content-Type': 'application/json'
-            },
-            success: function success(res) {
-              var results = res.data.results;
-              _this.uidListForType2 == '';
-              _this.latitudeList = '';
-              _this.longitudeList = '';
-              for (var i = 0; i < results.length; i++) {
-                if (_this.uidListForType2 == '') {
-                  _this.uidListForType2 = results[i].uid;
-                  _this.latitudeList = results[i].location.lat;
-                  _this.longitudeList = results[i].location.lng;
-                  _this.uids = _this.uids + ';' + results[i].uid;
-                } else {
-                  _this.uidListForType2 = _this.uidListForType2 + ';' + results[i].uid;
-                  _this.latitudeList = _this.latitudeList + ';' + results[i].location.lat;
-                  _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
-                  _this.uids = _this.uids + ';' + results[i].uid;
-                }
-              }
-              _this.$httpWX.post({
-                url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].addPlace,
-                data: {
-                  uidList: _this.uidListForType2,
-                  latitudeList: _this.latitudeList,
-                  longitudeList: _this.longitudeList,
-                  type: 2
-                }
               }).then(function (res) {
-                _this.getBannerData();
-                _this.getSceneryData();
-                _this.getRestaurantData();
+                // 获取周边餐馆信息
+                wx.request({
+                  url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' + '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' + '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+                  data: {},
+                  header: {
+                    'Content-Type': 'application/json'
+                  },
+                  success: function success(res) {
+                    var results = res.data.results;
+                    _this.uidListForType2 == '';
+                    _this.latitudeList = '';
+                    _this.longitudeList = '';
+                    for (var _i = 0; _i < results.length; _i++) {
+                      if (_this.uidListForType2 == '') {
+                        _this.uidListForType2 = results[_i].uid;
+                        _this.latitudeList = results[_i].location.lat;
+                        _this.longitudeList = results[_i].location.lng;
+                        _this.uids = _this.uids + ';' + results[_i].uid;
+                      } else {
+                        _this.uidListForType2 = _this.uidListForType2 + ';' + results[_i].uid;
+                        _this.latitudeList = _this.latitudeList + ';' + results[_i].location.lat;
+                        _this.longitudeList = _this.longitudeList + ';' + results[_i].location.lng;
+                        _this.uids = _this.uids + ';' + results[_i].uid;
+                      }
+                    }
+                    _this.$httpWX.post({
+                      url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].addPlace,
+                      data: {
+                        uidList: _this.uidListForType2,
+                        latitudeList: _this.latitudeList,
+                        longitudeList: _this.longitudeList,
+                        type: 2
+                      }
+                    }).then(function (res) {
+                      _this.getBannerData();
+                      _this.getSceneryData();
+                      _this.getRestaurantData();
+                    });
+                  },
+
+                  fail: function fail() {
+                    // fail
+                  },
+                  complete: function complete() {
+                    // complete
+                  }
+                });
               });
             },
 
@@ -635,8 +636,8 @@ if (false) {(function () {
             _this5.sceneryData.push(res.data[i]);
           }
         } else {
-          for (var _i = 0; _i < 6; _i++) {
-            _this5.sceneryData.push(res.data[_i]);
+          for (var _i2 = 0; _i2 < 6; _i2++) {
+            _this5.sceneryData.push(res.data[_i2]);
           }
         }
       });
@@ -656,8 +657,8 @@ if (false) {(function () {
             _this6.restaurantData.push(res.data[i]);
           }
         } else {
-          for (var _i2 = 0; _i2 < 6; _i2++) {
-            _this6.restaurantData.push(res.data[_i2]);
+          for (var _i3 = 0; _i3 < 6; _i3++) {
+            _this6.restaurantData.push(res.data[_i3]);
           }
         }
       });
