@@ -184,8 +184,8 @@ public class PlaceServiceImpl implements PlaceService {
                     JSONArray list = new JSONArray();
                     JSONObject photoList = new JSONObject();
                     avocado = cards.optJSONObject(1);
-                    if (avocado!=null){
-                        setPhotoList(dataInfo,avocado,list,photoList,place);
+                    if (avocado != null) {
+                        setPhotoList(dataInfo, avocado, list, photoList, place);
 //                        dataInfo = avocado.optJSONObject("data");
 //                        if (dataInfo != null) {
 //                            dataInfo = dataInfo.optJSONObject("list");
@@ -205,8 +205,8 @@ public class PlaceServiceImpl implements PlaceService {
 //                        }
                     }
                     avocado = cards.optJSONObject(2);
-                    if (avocado!=null){
-                        setPhotoList(dataInfo,avocado,list,photoList,place);
+                    if (avocado != null) {
+                        setPhotoList(dataInfo, avocado, list, photoList, place);
 //                        dataInfo = avocado.optJSONObject("data");
 //                        if (dataInfo != null) {
 //                            dataInfo = dataInfo.optJSONObject("list");
@@ -228,7 +228,7 @@ public class PlaceServiceImpl implements PlaceService {
                     // 景点介绍
                     avocado = cards.optJSONObject(3);
                     if (avocado != null) {
-                        setPhotoList(dataInfo,avocado,list,photoList,place);
+                        setPhotoList(dataInfo, avocado, list, photoList, place);
 //                        dataInfo = avocado.optJSONObject("data");
 //                        if (dataInfo != null) {
 //                            dataInfo = dataInfo.optJSONObject("list");
@@ -291,12 +291,14 @@ public class PlaceServiceImpl implements PlaceService {
                         avocado = avocado.optJSONObject("data");
                         if (avocado != null) {
                             avocado = avocado.optJSONObject("list");
-                            place.setCommentList(avocado.optJSONArray("comment_list").toString());
-                            // 景点评论数  avocado.getInt("totalNum")
-                            if (avocado.optJSONArray("comment_list").size() == 0) {
-                                place.setCommentNumber(0);
-                            } else {
-                                place.setCommentNumber(avocado.optJSONArray("comment_list").size());
+                            if (avocado != null) {
+                                place.setCommentList(avocado.optJSONArray("comment_list").toString());
+                                // 景点评论数  avocado.getInt("totalNum")
+                                if (avocado.optJSONArray("comment_list").size() == 0) {
+                                    place.setCommentNumber(0);
+                                } else {
+                                    place.setCommentNumber(avocado.optJSONArray("comment_list").size());
+                                }
                             }
                         }
                     }
@@ -358,11 +360,12 @@ public class PlaceServiceImpl implements PlaceService {
         }
         return placeList;
     }
-    public void setPhotoList(JSONObject dataInfo,JSONObject avocado,JSONArray list,JSONObject photoList,Place place){
+
+    public void setPhotoList(JSONObject dataInfo, JSONObject avocado, JSONArray list, JSONObject photoList, Place place) {
         dataInfo = avocado.optJSONObject("data");
         if (dataInfo != null) {
             dataInfo = dataInfo.optJSONObject("list");
-            if (dataInfo !=null){
+            if (dataInfo != null) {
                 list = dataInfo.optJSONArray("photo_list");
                 if (list != null && list.size() > 0) {
                     for (int i = 0; i < list.size(); i++) {

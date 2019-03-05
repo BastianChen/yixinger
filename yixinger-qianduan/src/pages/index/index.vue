@@ -455,54 +455,54 @@ export default {
                   type: 1
                 },
               }).then(res => {
-              })
-            },
-            fail: function () {
-              // fail
-            },
-            complete: function () {
-              // complete
-            }
-          })
-          // 获取周边餐馆信息
-          wx.request({
-            url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' +
-            '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
-            '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
-            data: {},
-            header: {
-              'Content-Type': 'application/json'
-            },
-            success(res) {
-              let results = res.data.results;
-              _this.uidListForType2 == '';
-              _this.latitudeList = '';
-              _this.longitudeList = '';
-              for (let i = 0; i < results.length; i++) {
-                if (_this.uidListForType2 == '') {
-                  _this.uidListForType2 = results[i].uid;
-                  _this.latitudeList = results[i].location.lat;
-                  _this.longitudeList = results[i].location.lng;
-                  _this.uids = _this.uids + ';' + results[i].uid;
-                } else {
-                  _this.uidListForType2 = _this.uidListForType2 + ';' + results[i].uid;
-                  _this.latitudeList = _this.latitudeList + ';' + results[i].location.lat;
-                  _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
-                  _this.uids = _this.uids + ';' + results[i].uid;
-                }
-              }
-              _this.$httpWX.post({
-                url: apiurl.addPlace,
-                data: {
-                  uidList: _this.uidListForType2,
-                  latitudeList: _this.latitudeList,
-                  longitudeList: _this.longitudeList,
-                  type: 2
-                },
-              }).then(res => {
-                _this.getBannerData();
-                _this.getSceneryData();
-                _this.getRestaurantData();
+                // 获取周边餐馆信息
+                wx.request({
+                  url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' +
+                  '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
+                  '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+                  data: {},
+                  header: {
+                    'Content-Type': 'application/json'
+                  },
+                  success(res) {
+                    let results = res.data.results;
+                    _this.uidListForType2 == '';
+                    _this.latitudeList = '';
+                    _this.longitudeList = '';
+                    for (let i = 0; i < results.length; i++) {
+                      if (_this.uidListForType2 == '') {
+                        _this.uidListForType2 = results[i].uid;
+                        _this.latitudeList = results[i].location.lat;
+                        _this.longitudeList = results[i].location.lng;
+                        _this.uids = _this.uids + ';' + results[i].uid;
+                      } else {
+                        _this.uidListForType2 = _this.uidListForType2 + ';' + results[i].uid;
+                        _this.latitudeList = _this.latitudeList + ';' + results[i].location.lat;
+                        _this.longitudeList = _this.longitudeList + ';' + results[i].location.lng;
+                        _this.uids = _this.uids + ';' + results[i].uid;
+                      }
+                    }
+                    _this.$httpWX.post({
+                      url: apiurl.addPlace,
+                      data: {
+                        uidList: _this.uidListForType2,
+                        latitudeList: _this.latitudeList,
+                        longitudeList: _this.longitudeList,
+                        type: 2
+                      },
+                    }).then(res => {
+                      _this.getBannerData();
+                      _this.getSceneryData();
+                      _this.getRestaurantData();
+                    })
+                  },
+                  fail: function () {
+                    // fail
+                  },
+                  complete: function () {
+                    // complete
+                  }
+                })
               })
             },
             fail: function () {
