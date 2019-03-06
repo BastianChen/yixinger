@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-row": "/static/vant-weapp/dist/row/index",
+    "van-col": "/static/vant-weapp/dist/col/index"
+  },
+  "navigationBarTitleText": "图像识别"
+}

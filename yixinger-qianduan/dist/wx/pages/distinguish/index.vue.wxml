@@ -1,0 +1,34 @@
+<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="326fd37c">
+  <view class="_div data-v-064d55ee index">
+    <view class="_div data-v-064d55ee firstDiv">
+      <view class="_div data-v-064d55ee firstRow">
+        <van-row class="_van-row data-v-064d55ee">
+          <van-col span="6" offset="3" class="_van-col data-v-064d55ee"><label class="_span data-v-064d55ee"> 识别图片： </label></van-col>
+        </van-row>
+      </view>
+      <view class="_div data-v-064d55ee secondRow">
+        <van-row class="_van-row data-v-064d55ee">
+          <image src="https://wzcb97.top/images/index/photo.jpg" class="_img data-v-064d55ee"></image>
+        </van-row>
+      </view>
+      <view class="_div data-v-064d55ee thirdRow">
+        <van-row class="_van-row data-v-064d55ee">
+          <van-col span="6" offset="3" class="_van-col data-v-064d55ee"><label class="_span data-v-064d55ee"> 识别结果： </label></van-col>
+        </van-row>
+      </view>
+      <view class="_div data-v-064d55ee forthRow">
+        <van-row class="_van-row data-v-064d55ee">
+          <van-col span="6" offset="4" class="_van-col data-v-064d55ee"><template bindpreview="handleProxy" bindnavigate="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'5'], $root}}" is="ed185ca6"></template></van-col>
+        </van-row>
+      </view>
+      <view class="_div data-v-064d55ee">
+        <van-row class="_van-row data-v-064d55ee">
+          {{userInfo.province}}
+        </van-row>
+      </view>
+    </view>
+    <view class="_div data-v-064d55ee secondDiv">
+      {{userInfo.province}}
+    </view>
+  </view>
+</template>

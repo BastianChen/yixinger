@@ -19,6 +19,7 @@
   "dependencies": {
     "mpvue": "^1.0.11",
     "mpvue-router-patch": "^0.2.1",
+    "mpvue-wxparse": "^0.6.5",
     "node-sass": "^4.11.0",
     "vant": "^1.4.3",
     "vant-weapp": "^0.4.6",

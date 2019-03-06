@@ -20,7 +20,8 @@
         </view>
       </view>
     </view>
-    <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="primary" style="background-color: #1989FA;border-color: #1989FA;color: #ffffff;width: 90%;margin-top: 20px" class="_button data-v-1babaa8f"> 图像识别 </button></view>
+    <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="handleProxy" style="background-color: #1989FA;border-color: #1989FA;color: #ffffff;width: 90%;margin-top: 20px" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_button data-v-1babaa8f"> 图像识别 </button></view>
     <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="primary" style="width: 90%;margin-top: 20px" class="_button data-v-1babaa8f"> 文字识别 </button></view>
+    <van-action-sheet show="{{show}}" actions="{{actions}}" cancel-text="取消" bindcancel="handleProxy" bindselect="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_van-action-sheet data-v-1babaa8f"></van-action-sheet>
   </view>
 </template>

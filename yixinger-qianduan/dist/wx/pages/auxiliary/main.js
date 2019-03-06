@@ -1,15 +1,96 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([4],{
+global.webpackJsonp([5],{
 
-/***/ 93:
+/***/ 100:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "index"
+  }, [_c('div', {
+    staticClass: "auxiliary"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('div', [_c('div', [_c('p', [_vm._v("图像识别")])], 1), _vm._v(" "), _c('img', {
+    attrs: {
+      "src": "https://wzcb97.top/images/index/photo.jpg"
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "auxiliary"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('div', [_c('div', [_c('p', [_vm._v("文字识别")])], 1), _vm._v(" "), _c('img', {
+    attrs: {
+      "src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551787214368&di=1603f11da101544e417a131ff1bb9ba5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201406%2F18%2F20140618110551_vL3iQ.jpeg"
+    }
+  })])])]), _vm._v(" "), _c('div', [_c('button', {
+    staticStyle: {
+      "background-color": "#1989FA",
+      "border-color": "#1989FA",
+      "color": "#ffffff",
+      "width": "90%",
+      "margin-top": "20px"
+    },
+    attrs: {
+      "type": "primary",
+      "size": "default",
+      "plain": "false",
+      "bindtap": "primary",
+      "eventid": '0'
+    },
+    on: {
+      "click": function($event) {
+        _vm.photoDistinguish()
+      }
+    }
+  }, [_vm._v("\n      图像识别\n    ")])], 1), _vm._v(" "), _c('div', [_c('button', {
+    staticStyle: {
+      "width": "90%",
+      "margin-top": "20px"
+    },
+    attrs: {
+      "type": "primary",
+      "size": "default",
+      "plain": "false",
+      "bindtap": "primary"
+    }
+  }, [_vm._v("\n      文字识别\n    ")])], 1), _vm._v(" "), _c('van-action-sheet', {
+    attrs: {
+      "show": _vm.show,
+      "actions": _vm.actions,
+      "cancel-text": "取消",
+      "eventid": '1',
+      "mpcomid": '0'
+    },
+    on: {
+      "cancel": _vm.onCancel,
+      "select": _vm.onSelect
+    }
+  })], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1babaa8f", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 96:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(97);
 
 
 
@@ -18,18 +99,18 @@ app.$mount();
 
 /***/ }),
 
-/***/ 94:
+/***/ 97:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_1babaa8f_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_1babaa8f_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(100);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(95)
+  __webpack_require__(98)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(0)
 /* script */
 
 /* template */
@@ -72,17 +153,25 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 95:
+/***/ 98:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 96:
+/***/ 99:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -134,73 +223,63 @@ if (false) {(function () {
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    name: "index.vue"
-});
+  data: function data() {
+    return {
+      show: false,
+      message: '请选择图像识别类型',
+      actions: [{
+        name: '通用图像识别'
+      }, {
+        name: '植物识别'
+      }, {
+        name: '动物识别'
+      }, {
+        name: '菜品识别'
+      }],
+      type: '', // 图像识别的类型
+      typeName: '' // 图像识别的类型的名字
+    };
+  },
 
-/***/ }),
-
-/***/ 97:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "index"
-  }, [_c('div', {
-    staticClass: "auxiliary"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('div', [_c('div', [_c('p', [_vm._v("图像识别")])], 1), _vm._v(" "), _c('img', {
-    attrs: {
-      "src": "https://wzcb97.top/images/index/photo.jpg"
-    }
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "auxiliary"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('div', [_c('div', [_c('p', [_vm._v("文字识别")])], 1), _vm._v(" "), _c('img', {
-    attrs: {
-      "src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551787214368&di=1603f11da101544e417a131ff1bb9ba5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201406%2F18%2F20140618110551_vL3iQ.jpeg"
-    }
-  })])])]), _vm._v(" "), _c('div', [_c('button', {
-    staticStyle: {
-      "background-color": "#1989FA",
-      "border-color": "#1989FA",
-      "color": "#ffffff",
-      "width": "90%",
-      "margin-top": "20px"
+  methods: {
+    photoDistinguish: function photoDistinguish() {
+      this.show = true;
     },
-    attrs: {
-      "type": "primary",
-      "size": "default",
-      "plain": "false",
-      "bindtap": "primary"
-    }
-  }, [_vm._v("\n      图像识别\n    ")])], 1), _vm._v(" "), _c('div', [_c('button', {
-    staticStyle: {
-      "width": "90%",
-      "margin-top": "20px"
+    onCancel: function onCancel() {
+      this.show = false;
     },
-    attrs: {
-      "type": "primary",
-      "size": "default",
-      "plain": "false",
-      "bindtap": "primary"
+    onSelect: function onSelect(index) {
+      this.typeName = index.target.name;
+      switch (this.typeName) {
+        case '通用图像识别':
+          this.type = 1;
+          this.show = false;
+          break;
+        case '植物识别':
+          this.type = 2;
+          this.show = false;
+          break;
+        case '动物识别':
+          this.type = 3;
+          this.show = false;
+          break;
+        case '菜品识别':
+          this.type = 4;
+          this.show = false;
+          break;
+        default:
+          break;
+      }
+      this.$router.push({
+        path: '../distinguish/main',
+        query: { type: this.type }
+      });
+      console.log(this.type);
     }
-  }, [_vm._v("\n      文字识别\n    ")])], 1)])
-}
-var staticRenderFns = []
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-1babaa8f", esExports)
   }
-}
+});
 
 /***/ })
 
-},[93]);
+},[96]);
 //# sourceMappingURL=main.js.map

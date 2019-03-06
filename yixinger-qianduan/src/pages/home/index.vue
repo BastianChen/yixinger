@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapMutations} from 'vuex';
 import {apiurl} from "@/service/api.js";
 
 export default {
@@ -114,6 +114,9 @@ export default {
   },
   components: {},
   methods: {
+    ...mapMutations({
+      setDisc: 'set_disc'
+    }),
     getUserInfo() {
       // this.userInfo = this.$store.getters.disc;
       // console.log(this.$store.getters.disc)
@@ -137,6 +140,7 @@ export default {
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo;
+              this.setDisc(this.userInfo);
               // console.log("userInfo++++" + JSON.stringify(this.userInfo))
               this.isLogin = true;
               this.$httpWX.post({
