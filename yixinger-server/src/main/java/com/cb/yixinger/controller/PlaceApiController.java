@@ -77,9 +77,17 @@ public class PlaceApiController {
                 place.setLatitude(Double.valueOf(latitude.get(i)));
                 place.setLongitude(Double.valueOf(longitude.get(i)));
                 place = placeService.addPlace(place, uid.get(i), type);
-                placeCommentService.addPlaceCommentByReptile(place.getCommentList(), uid.get(i));
-                placePhotoService.addPlacePhotoByReptile(place.getPhotoList(), uid.get(i));
-                logger.info("添加游玩地点 {} 成功", place.getName());
+                if (place != null) {
+                    placeCommentService.addPlaceCommentByReptile(place.getCommentList(), uid.get(i));
+                    placePhotoService.addPlacePhotoByReptile(place.getPhotoList(), uid.get(i));
+                    logger.info("添加游玩地点 {} 成功", place.getName());
+                } else {
+                    if (baseMessage.getExtra() != null) {
+                        baseMessage.setExtra(baseMessage.getExtra() + uid.get(i) + ";");
+                    } else {
+                        baseMessage.setExtra("uid为以下的地点既不为景点也不为餐馆：" + uid.get(i) + ";");
+                    }
+                }
             }
         }
         return baseMessage.response();
