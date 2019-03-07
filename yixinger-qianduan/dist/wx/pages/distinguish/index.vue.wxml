@@ -26,21 +26,21 @@
           <van-col span="10" offset="2" class="_van-col data-v-064d55ee"><button type="default" size="mini" plain="false" bindtap="handleProxy" style="width: 180px" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_button data-v-064d55ee">
               {{language}}
             </button></van-col>
-          <van-col span="4" offset="5" class="_van-col data-v-064d55ee"><button type="primary" size="mini" plain="false" bindtap="primary" style="width: 80px;border-color: #1989FA;color: #1989FA" class="_button data-v-064d55ee"> 翻译 </button></van-col>
+          <van-col span="4" offset="5" class="_van-col data-v-064d55ee"><button type="primary" size="mini" plain="false" bindtap="handleProxy" style="width: 80px;border-color: #1989FA;color: #1989FA" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-064d55ee"> 翻译 </button></van-col>
         </van-row>
       </view>
     </view>
-    <view class="_div data-v-064d55ee secondDiv">
+    <view class="_div data-v-064d55ee secondDiv" hidden="{{!(isTranslated)}}">
       <view class="_div data-v-064d55ee firstRow"><label class="_span data-v-064d55ee"> 一 翻译结果 一 </label></view>
       <view class="_div data-v-064d55ee secondRow">
-        <view class="_div data-v-064d55ee"><label class="_span data-v-064d55ee"> Fuji </label>
-          <image src="/static/images/broadcast.png" class="_img data-v-064d55ee"></image>
+        <view class="_div data-v-064d55ee"><template data="{{...$root[$kk+'11'], $root}}" is="ed185ca6"></template>
+          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee"></image>
         </view>
       </view>
     </view>
     <view class="_div data-v-064d55ee">
       <van-popup show="{{pickerShow}}" position="bottom" overlay="false" close-on-click-overlay class="_van-popup data-v-064d55ee">
-        <van-picker show-toolbar title="翻译语种" columns="{{columns}}" bindcancel="handleProxy" bindconfirm="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_van-picker data-v-064d55ee"></van-picker>
+        <van-picker show-toolbar title="翻译语种" columns="{{columns}}" bindcancel="handleProxy" bindconfirm="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_van-picker data-v-064d55ee"></van-picker>
       </van-popup>
     </view>
   </view>

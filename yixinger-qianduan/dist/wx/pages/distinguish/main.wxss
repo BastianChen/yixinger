@@ -68,7 +68,7 @@
   position: relative;
   height: 40rpx;
   width: 40rpx;
-  top: 70rpx;
+  bottom: 50rpx;
   float: right;
   right: 14rpx;
 }
