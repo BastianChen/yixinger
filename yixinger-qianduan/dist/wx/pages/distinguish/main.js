@@ -278,7 +278,7 @@ app.$mount();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_064d55ee_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_064d55ee_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(177);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
@@ -336,11 +336,74 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mpvue_wxparse__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mpvue_wxparse__ = __webpack_require__(111);
 
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -393,31 +456,35 @@ if (false) {(function () {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   components: {
-    wxParse: __WEBPACK_IMPORTED_MODULE_2_mpvue_wxparse__["a" /* default */]
+    wxParse: __WEBPACK_IMPORTED_MODULE_3_mpvue_wxparse__["a" /* default */]
   },
   data: function data() {
     return {
       userInfo: {},
-      result: '<span>富士山<br/>富士山</span>'
+      result: '<span>富士山<br/>富士山</span>',
+      columns: ['自动检测', '中文', '英语', '粤语', '文言文', '日语', '韩语', '法语', '西班牙语', '泰语', '阿拉伯语', '俄语', '葡萄牙语', '德语', '意大利语', '希腊语', '荷兰语', '波兰语', '保加利亚语', '爱沙尼亚语', '丹麦语', '芬兰语', '捷克语', '罗马尼亚语', '斯洛文尼亚语', '瑞典语', '匈牙利语', '繁体中文', '越南语'],
+      pickerShow: false,
+      language: '自动检测 -> 中文'
     };
   },
 
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['disc'])),
-  created: function created() {
-    this.userInfo = this.$store.getters.disc;
-    console.log("userInfo.province" + this.userInfo.province);
-  },
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])(['disc'])),
+  onLoad: function onLoad() {},
+  created: function created() {},
   mounted: function mounted() {
     this.userInfo = this.$store.getters.disc;
-    console.log("userInfo.province" + this.userInfo.province);
   },
 
   methods: {
-    preview: function preview(src, e) {
-      // do something
+    onConfirm: function onConfirm(index) {
+      console.log("index" + __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(index));
+      console.log(index.target.value);
     },
-    navigate: function navigate(href, e) {
-      // do something
+    onCancel: function onCancel() {
+      this.pickerShow = false;
+    },
+    selectLanguage: function selectLanguage() {
+      this.pickerShow = true;
     }
   }
 });
@@ -3879,7 +3946,9 @@ if (false) {
 }
 
 /***/ }),
-/* 175 */
+/* 175 */,
+/* 176 */,
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3937,22 +4006,87 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('wxParse', {
     attrs: {
       "content": _vm.result,
-      "eventid": '0',
       "mpcomid": '5'
-    },
-    on: {
-      "preview": _vm.preview,
-      "navigate": _vm.navigate
     }
-  })], 1)], 1)], 1), _vm._v(" "), _c('div', [_c('van-row', {
+  })], 1)], 1)], 1), _vm._v(" "), _c('div', {
+    staticClass: "fifthRow"
+  }, [_c('van-row', {
     attrs: {
+      "mpcomid": '10'
+    }
+  }, [_c('van-col', {
+    attrs: {
+      "span": "10",
+      "offset": "2",
       "mpcomid": '8'
     }
-  }, [_vm._v("\n        " + _vm._s(_vm.userInfo.province) + "\n      ")])], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "secondDiv"
-  }, [_vm._v("\n    " + _vm._s(_vm.userInfo.province) + "\n  ")])])
+  }, [_c('button', {
+    staticStyle: {
+      "width": "180px"
+    },
+    attrs: {
+      "type": "default",
+      "size": "mini",
+      "plain": "false",
+      "bindtap": "primary",
+      "eventid": '0'
+    },
+    on: {
+      "click": _vm.selectLanguage
+    }
+  }, [_vm._v("\n            " + _vm._s(_vm.language) + "\n          ")])], 1), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "4",
+      "offset": "5",
+      "mpcomid": '9'
+    }
+  }, [_c('button', {
+    staticStyle: {
+      "width": "80px",
+      "border-color": "#1989FA",
+      "color": "#1989FA"
+    },
+    attrs: {
+      "type": "primary",
+      "size": "mini",
+      "plain": "false",
+      "bindtap": "primary"
+    }
+  }, [_vm._v("\n            翻译\n          ")])], 1)], 1)], 1)]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', [_c('van-popup', {
+    attrs: {
+      "show": _vm.pickerShow,
+      "position": "bottom",
+      "overlay": "false",
+      "close-on-click-overlay": "",
+      "mpcomid": '12'
+    }
+  }, [_c('van-picker', {
+    attrs: {
+      "show-toolbar": "",
+      "title": "翻译语种",
+      "columns": _vm.columns,
+      "eventid": '1',
+      "mpcomid": '11'
+    },
+    on: {
+      "cancel": _vm.onCancel,
+      "confirm": _vm.onConfirm
+    }
+  })], 1)], 1)])
 }
-var staticRenderFns = []
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "secondDiv"
+  }, [_c('div', {
+    staticClass: "firstRow"
+  }, [_c('span', [_vm._v("\n          一 翻译结果 一\n        ")])]), _vm._v(" "), _c('div', {
+    staticClass: "secondRow"
+  }, [_c('div', [_c('span', [_vm._v("\n          Fuji\n        ")]), _vm._v(" "), _c('img', {
+    attrs: {
+      "src": "../../../static/images/broadcast.png"
+    }
+  })])])])
+}]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);

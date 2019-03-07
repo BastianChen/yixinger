@@ -3,6 +3,7 @@
   width: 100%;
   overflow: hidden;
   position: relative;
+  background: #F4F4F4;
 }
 .index .search.data-v-378baaca {
   width: 100%;

@@ -1,7 +1,10 @@
 {
   "usingComponents": {
     "van-row": "/static/vant-weapp/dist/row/index",
-    "van-col": "/static/vant-weapp/dist/col/index"
+    "van-col": "/static/vant-weapp/dist/col/index",
+    "van-picker": "/static/vant-weapp/dist/picker/index",
+    "van-button": "/static/vant-weapp/dist/button/index",
+    "van-popup": "/static/vant-weapp/dist/popup/index"
   },
   "navigationBarTitleText": "图像识别"
 }

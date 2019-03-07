@@ -1,7 +1,11 @@
 
+.index.data-v-064d55ee {
+  background: #F4F4F4;
+}
 .index .firstDiv.data-v-064d55ee {
   width: 100%;
   height: 70%;
+  background: #ffffff;
 }
 .index .firstDiv .firstRow.data-v-064d55ee {
   margin-top: 40rpx;
@@ -30,9 +34,41 @@
   font-size: 30rpx;
   margin-top: 40rpx;
 }
+.index .firstDiv .fifthRow.data-v-064d55ee {
+  margin: 20rpx 0;
+}
 .index .secondDiv.data-v-064d55ee {
+  margin-top: 40rpx;
   width: 100%;
-  display: flex;
-  align-items: center;
-  background: #00BFFF;
+  background: #ffffff;
+}
+.index .secondDiv .firstRow.data-v-064d55ee {
+  text-align: center;
+  height: 120rpx;
+  border-bottom: solid 2rpx #F4F4F4;
+}
+.index .secondDiv .firstRow ._span.data-v-064d55ee {
+  line-height: 120rpx;
+  font-size: 30rpx;
+}
+.index .secondDiv .secondRow.data-v-064d55ee {
+  width: 100%;
+}
+.index .secondDiv .secondRow ._div.data-v-064d55ee {
+  margin: 40rpx;
+  border-radius: 20rpx;
+  background: #EFEFF1;
+}
+.index .secondDiv .secondRow ._div ._span.data-v-064d55ee {
+  font-size: 30rpx;
+  line-height: 120rpx;
+  padding: 30rpx;
+}
+.index .secondDiv .secondRow ._div ._img.data-v-064d55ee {
+  position: relative;
+  height: 40rpx;
+  width: 40rpx;
+  top: 70rpx;
+  float: right;
+  right: 14rpx;
 }
