@@ -51,7 +51,7 @@ public class AIOperateController {
     @ApiOperation(value = "图像识别", notes = "图像识别 ", response = BaseMessage.class)
     @RequestMapping(value = "/imageClassify", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> imageClassify(
-            @ApiParam(value = "图片", required = true) @RequestParam(value = "imgFile") MultipartFile imageFile,
+            @ApiParam(value = "图片", required = true) @RequestParam(value = "imageFile") MultipartFile imageFile,
             @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）", required = true) @RequestParam(value = "type") String type,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
@@ -116,7 +116,7 @@ public class AIOperateController {
     @ApiOperation(value = "文字识别", notes = "文字识别 ", response = BaseMessage.class)
     @RequestMapping(value = "/aipOcr", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> aipOcr(
-            @ApiParam(value = "图片", required = true) @RequestParam(value = "imgFile") MultipartFile imageFile,
+            @ApiParam(value = "图片", required = true) @RequestParam(value = "imageFile") MultipartFile imageFile,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
         String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/text/";
