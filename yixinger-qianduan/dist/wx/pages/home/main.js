@@ -83,10 +83,10 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_api_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_api_js__ = __webpack_require__(29);
 
 //
 //
@@ -227,7 +227,6 @@ if (false) {(function () {
           wx.getUserInfo({
             success: function success(res) {
               _this.userInfo = res.userInfo;
-              _this.setDisc(_this.userInfo);
               // console.log("userInfo++++" + JSON.stringify(this.userInfo))
               _this.isLogin = true;
               _this.$httpWX.post({
@@ -238,6 +237,8 @@ if (false) {(function () {
                 }
               }).then(function (res) {
                 _this.openid = res.data;
+                _this.userInfo.openid = _this.openid;
+                _this.setDisc(_this.userInfo);
                 _this.$httpWX.get({
                   url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].getUser,
                   data: {

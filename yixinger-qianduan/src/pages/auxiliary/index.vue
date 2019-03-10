@@ -56,78 +56,106 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      show: false,
-      message: '请选择图像识别类型',
-      actions: [
-        {
-          name: '通用图像识别'
-        },
-        {
-          name: '植物识别'
-        },
-        {
-          name: '动物识别'
-        },
-        {
-          name: '菜品识别'
-        }
-      ],
-      type: '',// 图像识别的类型
-      typeName: ''// 图像识别的类型的名字
-    }
-  },
-  methods: {
-    photoDistinguish() {
-      this.show = true;
-    },
-    onCancel() {
-      this.show = false;
-    },
-    onSelect(index) {
-      this.typeName = index.target.name;
-      switch (this.typeName) {
-        case '通用图像识别':
-          this.type = 1;
-          this.show = false;
-          break;
-        case '植物识别':
-          this.type = 2;
-          this.show = false;
-          break;
-        case '动物识别':
-          this.type = 3;
-          this.show = false;
-          break;
-        case '菜品识别':
-          this.type = 4;
-          this.show = false;
-          break;
-        default:
-          break;
+  import {apiurl} from "@/service/api.js";
+
+  export default {
+    data() {
+      return {
+        show: false,
+        message: '请选择图像识别类型',
+        actions: [
+          {
+            name: '通用图像识别'
+          },
+          {
+            name: '植物识别'
+          },
+          {
+            name: '动物识别'
+          },
+          {
+            name: '菜品识别'
+          }
+        ],
+        type: '',// 图像识别的类型
+        typeName: '',// 图像识别的类型的名字
+        userInfo: {}
       }
-      var _this = this;
-      wx.chooseImage({
-        count: 1, // 默认9
-        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-        success: function (res) {
-          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-          // _this.setData({
-          //   tempFilePaths: res.tempFilePaths
-          // })
-          _this.$router.push({
-            path: `../distinguish/main`,
-            query: {type: _this.type}
-          });
-          console.log(_this.type);
+    },
+    mounted() {
+      this.userInfo = this.$store.getters.disc;
+    },
+    methods: {
+      photoDistinguish() {
+        this.show = true;
+      },
+      onCancel() {
+        this.show = false;
+      },
+      onSelect(index) {
+        this.typeName = index.target.name;
+        switch (this.typeName) {
+          case '通用图像识别':
+            this.type = 1;
+            this.show = false;
+            break;
+          case '植物识别':
+            this.type = 2;
+            this.show = false;
+            break;
+          case '动物识别':
+            this.type = 3;
+            this.show = false;
+            break;
+          case '菜品识别':
+            this.type = 4;
+            this.show = false;
+            break;
+          default:
+            break;
         }
-      })
+        var _this = this;
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+            // _this.setData({
+            //   tempFilePaths: res.tempFilePaths
+            // })
+
+            //上传图片到服务器api
+            var tempFilePaths = res.tempFilePaths
+            console.log("res" + JSON.stringify(res))
+            console.log("apiurl" + apiurl.imageClassify + "ss" + apiurl.getUser)
+            wx.uploadFile({
+              url: 'https://wzcb97.top/' + apiurl.imageClassify, //仅为示例，非真实的接口地址
+              filePath: tempFilePaths[0],
+              name: 'imageFile',
+              header: {
+                "Content-Type": "multipart/form-data"
+              },
+              formData: {
+                type: _this.type,
+                userId: _this.userInfo.openid,
+              },
+              success: function (res) {
+                var data = res.data;
+                _this.$router.push({
+                  path: `../distinguish/main`,
+                  query: {type: _this.type, data: data}
+                });
+                //do something
+              }
+            })
+            // console.log(_this.type);
+
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style lang='scss' scoped>

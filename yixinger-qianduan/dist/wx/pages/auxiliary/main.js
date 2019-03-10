@@ -6,6 +6,170 @@ global.webpackJsonp([5],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(29);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  data: function data() {
+    return {
+      show: false,
+      message: '请选择图像识别类型',
+      actions: [{
+        name: '通用图像识别'
+      }, {
+        name: '植物识别'
+      }, {
+        name: '动物识别'
+      }, {
+        name: '菜品识别'
+      }],
+      type: '', // 图像识别的类型
+      typeName: '', // 图像识别的类型的名字
+      userInfo: {}
+    };
+  },
+  mounted: function mounted() {
+    this.userInfo = this.$store.getters.disc;
+  },
+
+  methods: {
+    photoDistinguish: function photoDistinguish() {
+      this.show = true;
+    },
+    onCancel: function onCancel() {
+      this.show = false;
+    },
+    onSelect: function onSelect(index) {
+      this.typeName = index.target.name;
+      switch (this.typeName) {
+        case '通用图像识别':
+          this.type = 1;
+          this.show = false;
+          break;
+        case '植物识别':
+          this.type = 2;
+          this.show = false;
+          break;
+        case '动物识别':
+          this.type = 3;
+          this.show = false;
+          break;
+        case '菜品识别':
+          this.type = 4;
+          this.show = false;
+          break;
+        default:
+          break;
+      }
+      var _this = this;
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function success(res) {
+          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+          // _this.setData({
+          //   tempFilePaths: res.tempFilePaths
+          // })
+
+          //上传图片到服务器api
+          var tempFilePaths = res.tempFilePaths;
+          console.log("res" + __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(res));
+          console.log("apiurl" + __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].imageClassify + "ss" + __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getUser);
+          wx.uploadFile({
+            url: 'https://wzcb97.top/' + __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].imageClassify, //仅为示例，非真实的接口地址
+            filePath: tempFilePaths[0],
+            name: 'imageFile',
+            header: {
+              "Content-Type": "multipart/form-data"
+            },
+            formData: {
+              type: _this.type,
+              userId: _this.userInfo.openid
+            },
+            success: function success(res) {
+              var data = res.data;
+              _this.$router.push({
+                path: '../distinguish/main',
+                query: { type: _this.type, data: data }
+              });
+              //do something
+            }
+          });
+          // console.log(_this.type);
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ 102:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "index"
@@ -83,14 +247,14 @@ if (false) {
 
 /***/ }),
 
-/***/ 96:
+/***/ 97:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(98);
 
 
 
@@ -99,16 +263,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 97:
+/***/ 98:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_1babaa8f_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_1babaa8f_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(102);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(98)
+  __webpack_require__(99)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -153,145 +317,12 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 98:
+/***/ 99:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  data: function data() {
-    return {
-      show: false,
-      message: '请选择图像识别类型',
-      actions: [{
-        name: '通用图像识别'
-      }, {
-        name: '植物识别'
-      }, {
-        name: '动物识别'
-      }, {
-        name: '菜品识别'
-      }],
-      type: '', // 图像识别的类型
-      typeName: '' // 图像识别的类型的名字
-    };
-  },
-
-  methods: {
-    photoDistinguish: function photoDistinguish() {
-      this.show = true;
-    },
-    onCancel: function onCancel() {
-      this.show = false;
-    },
-    onSelect: function onSelect(index) {
-      this.typeName = index.target.name;
-      switch (this.typeName) {
-        case '通用图像识别':
-          this.type = 1;
-          this.show = false;
-          break;
-        case '植物识别':
-          this.type = 2;
-          this.show = false;
-          break;
-        case '动物识别':
-          this.type = 3;
-          this.show = false;
-          break;
-        case '菜品识别':
-          this.type = 4;
-          this.show = false;
-          break;
-        default:
-          break;
-      }
-      var _this = this;
-      wx.chooseImage({
-        count: 1, // 默认9
-        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-        success: function success(res) {
-          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-          // _this.setData({
-          //   tempFilePaths: res.tempFilePaths
-          // })
-          _this.$router.push({
-            path: '../distinguish/main',
-            query: { type: _this.type }
-          });
-          console.log(_this.type);
-        }
-      });
-    }
-  }
-});
-
 /***/ })
 
-},[96]);
+},[97]);
 //# sourceMappingURL=main.js.map
