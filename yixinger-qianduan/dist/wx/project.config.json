@@ -8,8 +8,7 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true,
-		"autoAudits": false
+		"newFeature": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.4.0",

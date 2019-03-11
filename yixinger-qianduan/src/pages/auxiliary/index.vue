@@ -127,8 +127,8 @@
 
             //上传图片到服务器api
             var tempFilePaths = res.tempFilePaths
-            console.log("res" + JSON.stringify(res))
-            console.log("apiurl" + apiurl.imageClassify + "ss" + apiurl.getUser)
+            // console.log("res" + JSON.stringify(res))
+            // console.log("apiurl" + apiurl.imageClassify + "ss" + apiurl.getUser)
             wx.uploadFile({
               url: 'https://wzcb97.top/' + apiurl.imageClassify, //仅为示例，非真实的接口地址
               filePath: tempFilePaths[0],

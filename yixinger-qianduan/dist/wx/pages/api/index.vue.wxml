@@ -1,4 +1,4 @@
-<template name="55540883">
+<template name="21ed26b7">
   <view class="_div data-v-3169f563">
     <view wx:key="index" key="{{index}}" wx:for="{{newsList}}" wx:for-index="index" wx:for-item="item" class="_div data-v-3169f563">
       <news news="{{item}}" class="_news data-v-3169f563"></news>

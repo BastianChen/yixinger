@@ -6,10 +6,7 @@ global.webpackJsonp([5],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(29);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_api_js__ = __webpack_require__(29);
 //
 //
 //
@@ -135,10 +132,10 @@ global.webpackJsonp([5],{
 
           //上传图片到服务器api
           var tempFilePaths = res.tempFilePaths;
-          console.log("res" + __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(res));
-          console.log("apiurl" + __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].imageClassify + "ss" + __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getUser);
+          // console.log("res" + JSON.stringify(res))
+          // console.log("apiurl" + apiurl.imageClassify + "ss" + apiurl.getUser)
           wx.uploadFile({
-            url: 'https://wzcb97.top/' + __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].imageClassify, //仅为示例，非真实的接口地址
+            url: 'https://wzcb97.top/' + __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].imageClassify, //仅为示例，非真实的接口地址
             filePath: tempFilePaths[0],
             name: 'imageFile',
             header: {
