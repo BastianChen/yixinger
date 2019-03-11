@@ -55,7 +55,7 @@ public class AIOperateController {
             @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）", required = true) @RequestParam(value = "type") String type,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
-        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/photo/";
+        String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/photo/";
         String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
         if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
             logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
