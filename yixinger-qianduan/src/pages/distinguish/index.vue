@@ -151,6 +151,9 @@
       console.log("type" + this.type + JSON.parse(this.data.data.result))
       this.results = JSON.parse(this.data.data.result).result;
       console.log("this.results      " + this.results);
+      for(let i=0;i<this.results.length;i++){
+        console.log("score"+this.results[i].baike_info.image_url);
+      }
     },
     methods: {
       onConfirm(index) {
