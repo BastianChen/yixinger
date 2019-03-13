@@ -1,3 +1,4 @@
+@import "../../common/vendor.wxss";
 
 .my .login.data-v-40d83a4c {
   width: 100%;

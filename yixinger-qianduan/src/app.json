@@ -8,7 +8,8 @@
     "pages/weather/weather",
     "pages/photo/photo",
     "pages/auxiliary/main",
-    "pages/distinguish/main"
+    "pages/distinguish/main",
+    "pages/textdistinguish/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

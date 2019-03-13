@@ -1,3 +1,4 @@
+@import "../../common/vendor.wxss";
 
 .index.data-v-064d55ee {
   background: #F4F4F4;
@@ -29,13 +30,11 @@
 }
 .index .firstDiv .forthRow.data-v-064d55ee {
   margin-top: 20rpx;
+  margin-bottom: 40rpx;
 }
 .index .firstDiv .forthRow ._span.data-v-064d55ee {
   font-size: 30rpx;
-  margin-top: 40rpx;
-}
-.index .firstDiv .fifthRow.data-v-064d55ee {
-  margin: 20rpx 0;
+  float: right;
 }
 .index .secondDiv.data-v-064d55ee {
   margin-top: 40rpx;

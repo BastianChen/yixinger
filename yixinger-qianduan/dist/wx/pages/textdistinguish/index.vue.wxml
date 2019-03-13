@@ -1,0 +1,47 @@
+<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="0301dfb5">
+  <view class="_div data-v-1c5af7e1 index">
+    <view class="_div data-v-1c5af7e1 firstDiv">
+      <view class="_div data-v-1c5af7e1 firstRow">
+        <van-row class="_van-row data-v-1c5af7e1">
+          <van-col span="6" offset="3" class="_van-col data-v-1c5af7e1"><label class="_span data-v-1c5af7e1"> 识别图片： </label></van-col>
+        </van-row>
+      </view>
+      <view class="_div data-v-1c5af7e1 secondRow">
+        <van-row class="_van-row data-v-1c5af7e1">
+          <image src="https://wzcb97.top/images/photo/15523727225176481725_src.jpg" class="_img data-v-1c5af7e1"></image>
+        </van-row>
+      </view>
+      <view class="_div data-v-1c5af7e1 thirdRow">
+        <van-row class="_van-row data-v-1c5af7e1">
+          <van-col span="6" offset="3" class="_van-col data-v-1c5af7e1"><label class="_span data-v-1c5af7e1"> 识别结果： </label></van-col>
+        </van-row>
+      </view>
+      <view class="_div data-v-1c5af7e1 forthRow">
+        <van-row class="_van-row data-v-1c5af7e1">
+          <van-col span="6" offset="4" class="_van-col data-v-1c5af7e1"><template data="{{...$root[$kk+'5'], $root}}" is="ed185ca6"></template></van-col>
+        </van-row>
+      </view>
+      <view class="_div data-v-1c5af7e1 fifthRow">
+        <van-row class="_van-row data-v-1c5af7e1">
+          <van-col span="10" offset="2" class="_van-col data-v-1c5af7e1"><button type="default" size="mini" plain="false" bindtap="handleProxy" style="width: 180px" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_button data-v-1c5af7e1">
+              {{language}}
+            </button></van-col>
+          <van-col span="4" offset="5" class="_van-col data-v-1c5af7e1"><button type="primary" size="mini" plain="false" bindtap="handleProxy" style="width: 80px;border-color: #1989FA;color: #1989FA" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-1c5af7e1"> 翻译 </button></van-col>
+        </van-row>
+      </view>
+    </view>
+    <view class="_div data-v-1c5af7e1 secondDiv" hidden="{{!(isTranslated)}}">
+      <view class="_div data-v-1c5af7e1 firstRow"><label class="_span data-v-1c5af7e1"> -- 翻译结果 -- </label></view>
+      <view class="_div data-v-1c5af7e1 secondRow">
+        <view class="_div data-v-1c5af7e1"><template data="{{...$root[$kk+'11'], $root}}" is="ed185ca6"></template>
+          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_img data-v-1c5af7e1"></image>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-1c5af7e1">
+      <van-popup show="{{pickerShow}}" position="bottom" overlay="false" close-on-click-overlay class="_van-popup data-v-1c5af7e1">
+        <van-picker show-toolbar title="翻译语种" columns="{{columns}}" bindcancel="handleProxy" bindconfirm="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_van-picker data-v-1c5af7e1"></van-picker>
+      </van-popup>
+    </view>
+  </view>
+</template>

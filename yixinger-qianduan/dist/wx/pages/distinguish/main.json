@@ -4,7 +4,8 @@
     "van-col": "/static/vant-weapp/dist/col/index",
     "van-picker": "/static/vant-weapp/dist/picker/index",
     "van-button": "/static/vant-weapp/dist/button/index",
-    "van-popup": "/static/vant-weapp/dist/popup/index"
+    "van-popup": "/static/vant-weapp/dist/popup/index",
+    "van-progress": "/static/vant-weapp/dist/progress/index"
   },
   "navigationBarTitleText": "图像识别"
 }

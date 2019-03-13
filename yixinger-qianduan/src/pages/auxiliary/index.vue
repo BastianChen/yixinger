@@ -1,26 +1,26 @@
 <template>
   <div class="index">
-    <div class="auxiliary">
-      <div class="content">
-        <div>
-          <div>
-            <p>图像识别</p>
-          </div>
-          <img src="https://wzcb97.top/images/index/photo.jpg">
-        </div>
-      </div>
-    </div>
-    <div class="auxiliary">
-      <div class="content">
-        <div>
-          <div>
-            <p>文字识别</p>
-          </div>
-          <img
-            src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551787214368&di=1603f11da101544e417a131ff1bb9ba5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201406%2F18%2F20140618110551_vL3iQ.jpeg">
-        </div>
-      </div>
-    </div>
+    <!--<div class="auxiliary">-->
+      <!--<div class="content">-->
+        <!--<div>-->
+          <!--<div>-->
+            <!--<p>图像识别</p>-->
+          <!--</div>-->
+          <!--<img src="https://wzcb97.top/images/index/photo.jpg">-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="auxiliary">-->
+      <!--<div class="content">-->
+        <!--<div>-->
+          <!--<div>-->
+            <!--<p>文字识别</p>-->
+          <!--</div>-->
+          <!--<img-->
+            <!--src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551787214368&di=1603f11da101544e417a131ff1bb9ba5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201406%2F18%2F20140618110551_vL3iQ.jpeg">-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
     <div>
       <button
         type="primary"
@@ -39,6 +39,7 @@
         size="default"
         plain="false"
         bindtap="primary"
+        @click="textDistinguish()"
         style="width: 90%;margin-top: 20px"
       >
         文字识别
@@ -91,6 +92,11 @@ export default {
     photoDistinguish() {
       this.show = true;
     },
+    textDistinguish(){
+      this.$router.push({
+        path: `../textdistinguish/main`
+      });
+    },
     onCancel() {
       this.show = false;
     },
@@ -125,29 +131,29 @@ export default {
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
           var tempFilePaths = res.tempFilePaths
           //上传图片到服务器api
-          // wx.uploadFile({
-          //   url: 'https://wzcb97.top/' + apiurl.imageClassify, //仅为示例，非真实的接口地址
-          //   filePath: tempFilePaths[0],
-          //   name: 'imageFile',
-          //   formData: {
-          //     type: _this.type,
-          //     userId: _this.userInfo.openid,
-          //   },
-          //   success: function (res) {
-          //     var data = JSON.parse(res.data);
-          //     //console.log("data"+data)
-          //     _this.$router.push({
-          //       path: `../distinguish/main`,
-          //       query: {type: _this.type, data: encodeURIComponent(JSON.stringify(data))}
-          //     });
-          //     //do something
-          //   }
-          // })
-          _this.data = JSON.parse(_this.jsona);
-          _this.$router.push({
-            path: `../distinguish/main`,
-            query: {type: _this.type, data: encodeURIComponent(JSON.stringify(_this.data))}
-          });
+          wx.uploadFile({
+            url: 'https://wzcb97.top/' + apiurl.imageClassify, //仅为示例，非真实的接口地址
+            filePath: tempFilePaths[0],
+            name: 'imageFile',
+            formData: {
+              type: _this.type,
+              userId: _this.userInfo.openid,
+            },
+            success: function (res) {
+              var data = JSON.parse(res.data);
+              //console.log("data"+data)
+              _this.$router.push({
+                path: `../distinguish/main`,
+                query: {type: _this.type, data: encodeURIComponent(JSON.stringify(data))}
+              });
+              //do something
+            }
+          })
+          // _this.data = JSON.parse(_this.jsona);
+          // _this.$router.push({
+          //   path: `../distinguish/main`,
+          //   query: {type: _this.type, data: encodeURIComponent(JSON.stringify(_this.data))}
+          // });
           // console.log(_this.type);
 
         }

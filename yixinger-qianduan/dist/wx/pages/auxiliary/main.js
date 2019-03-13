@@ -1,6 +1,6 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([5],{
+global.webpackJsonp([6],{
 
 /***/ 102:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -9,23 +9,7 @@ global.webpackJsonp([5],{
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "index"
-  }, [_c('div', {
-    staticClass: "auxiliary"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('div', [_c('div', [_c('p', [_vm._v("图像识别")])], 1), _vm._v(" "), _c('img', {
-    attrs: {
-      "src": "https://wzcb97.top/images/index/photo.jpg"
-    }
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "auxiliary"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('div', [_c('div', [_c('p', [_vm._v("文字识别")])], 1), _vm._v(" "), _c('img', {
-    attrs: {
-      "src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551787214368&di=1603f11da101544e417a131ff1bb9ba5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201406%2F18%2F20140618110551_vL3iQ.jpeg"
-    }
-  })])])]), _vm._v(" "), _c('div', [_c('button', {
+  }, [_c('div', [_c('button', {
     staticStyle: {
       "background-color": "#1989FA",
       "border-color": "#1989FA",
@@ -54,14 +38,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "type": "primary",
       "size": "default",
       "plain": "false",
-      "bindtap": "primary"
+      "bindtap": "primary",
+      "eventid": '1'
+    },
+    on: {
+      "click": function($event) {
+        _vm.textDistinguish()
+      }
     }
   }, [_vm._v("\n      文字识别\n    ")])], 1), _vm._v(" "), _c('van-action-sheet', {
     attrs: {
       "show": _vm.show,
       "actions": _vm.actions,
       "cancel-text": "取消",
-      "eventid": '1',
+      "eventid": '2',
       "mpcomid": '0'
     },
     on: {
@@ -166,8 +156,9 @@ if (false) {(function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(30);
 
+//
 //
 //
 //
@@ -257,6 +248,11 @@ if (false) {(function () {
     photoDistinguish: function photoDistinguish() {
       this.show = true;
     },
+    textDistinguish: function textDistinguish() {
+      this.$router.push({
+        path: '../textdistinguish/main'
+      });
+    },
     onCancel: function onCancel() {
       this.show = false;
     },
@@ -291,29 +287,29 @@ if (false) {(function () {
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
           var tempFilePaths = res.tempFilePaths;
           //上传图片到服务器api
-          // wx.uploadFile({
-          //   url: 'https://wzcb97.top/' + apiurl.imageClassify, //仅为示例，非真实的接口地址
-          //   filePath: tempFilePaths[0],
-          //   name: 'imageFile',
-          //   formData: {
-          //     type: _this.type,
-          //     userId: _this.userInfo.openid,
-          //   },
-          //   success: function (res) {
-          //     var data = JSON.parse(res.data);
-          //     //console.log("data"+data)
-          //     _this.$router.push({
-          //       path: `../distinguish/main`,
-          //       query: {type: _this.type, data: encodeURIComponent(JSON.stringify(data))}
-          //     });
-          //     //do something
-          //   }
-          // })
-          _this.data = JSON.parse(_this.jsona);
-          _this.$router.push({
-            path: '../distinguish/main',
-            query: { type: _this.type, data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(_this.data)) }
+          wx.uploadFile({
+            url: 'https://wzcb97.top/' + __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].imageClassify, //仅为示例，非真实的接口地址
+            filePath: tempFilePaths[0],
+            name: 'imageFile',
+            formData: {
+              type: _this.type,
+              userId: _this.userInfo.openid
+            },
+            success: function success(res) {
+              var data = JSON.parse(res.data);
+              //console.log("data"+data)
+              _this.$router.push({
+                path: '../distinguish/main',
+                query: { type: _this.type, data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(data)) }
+              });
+              //do something
+            }
           });
+          // _this.data = JSON.parse(_this.jsona);
+          // _this.$router.push({
+          //   path: `../distinguish/main`,
+          //   query: {type: _this.type, data: encodeURIComponent(JSON.stringify(_this.data))}
+          // });
           // console.log(_this.type);
         }
       });

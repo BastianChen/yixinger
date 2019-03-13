@@ -1,3 +1,4 @@
+@import "../../common/vendor.wxss";
 
 .index .auxiliary.data-v-1babaa8f {
   width: 100%;

@@ -1,4 +1,4 @@
-<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="bf7327e4">
+<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="326fd37c">
   <view class="_div data-v-064d55ee index">
     <view class="_div data-v-064d55ee firstDiv">
       <view class="_div data-v-064d55ee firstRow">
@@ -17,31 +17,27 @@
         </van-row>
       </view>
       <view class="_div data-v-064d55ee forthRow">
-        <van-row class="_van-row data-v-064d55ee">
-          <van-col span="6" offset="4" class="_van-col data-v-064d55ee"><template data="{{...$root[$kk+'5'], $root}}" is="9aa3b73e"></template></van-col>
-        </van-row>
-      </view>
-      <view class="_div data-v-064d55ee fifthRow">
-        <van-row class="_van-row data-v-064d55ee">
-          <van-col span="10" offset="2" class="_van-col data-v-064d55ee"><button type="default" size="mini" plain="false" bindtap="handleProxy" style="width: 180px" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_button data-v-064d55ee">
-              {{language}}
-            </button></van-col>
-          <van-col span="4" offset="5" class="_van-col data-v-064d55ee"><button type="primary" size="mini" plain="false" bindtap="handleProxy" style="width: 80px;border-color: #1989FA;color: #1989FA" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-064d55ee"> 翻译 </button></van-col>
+        <van-row wx:key="domain.key" key="{{domain.key}}" wx:for="{{results}}" wx:for-index="index" wx:for-item="domain" class="_van-row data-v-064d55ee">
+          <view style="margin-top: 20px" class="_div data-v-064d55ee">
+            <view class="_div data-v-064d55ee">
+              <van-col span="6" offset="1" class="_van-col data-v-064d55ee"><label wx:if="{{type==1}}" class="_span data-v-064d55ee">{{domain.keyword}}</label> <label wx:if="{{type!=1}}" class="_span data-v-064d55ee">{{domain.name}}</label></van-col>
+            </view>
+            <view style="padding-top: 8px" class="_div data-v-064d55ee">
+              <van-col span="11" offset="2" class="_van-col data-v-064d55ee">
+                <van-progress percentage="{{domain.score}}" color="linear-gradient(to right, #87CEFF, #00BFFF)" class="_van-progress data-v-064d55ee"></van-progress>
+              </van-col>
+            </view>
+          </view>
         </van-row>
       </view>
     </view>
     <view class="_div data-v-064d55ee secondDiv" hidden="{{!(isTranslated)}}">
       <view class="_div data-v-064d55ee firstRow"><label class="_span data-v-064d55ee"> -- 翻译结果 -- </label></view>
       <view class="_div data-v-064d55ee secondRow">
-        <view class="_div data-v-064d55ee"><template data="{{...$root[$kk+'11'], $root}}" is="9aa3b73e"></template>
-          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee"></image>
+        <view class="_div data-v-064d55ee"><template data="{{...$root[$kk+'9'], $root}}" is="ed185ca6"></template>
+          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee"></image>
         </view>
       </view>
-    </view>
-    <view class="_div data-v-064d55ee">
-      <van-popup show="{{pickerShow}}" position="bottom" overlay="false" close-on-click-overlay class="_van-popup data-v-064d55ee">
-        <van-picker show-toolbar title="翻译语种" columns="{{columns}}" bindcancel="handleProxy" bindconfirm="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_van-picker data-v-064d55ee"></van-picker>
-      </van-popup>
     </view>
   </view>
 </template>
