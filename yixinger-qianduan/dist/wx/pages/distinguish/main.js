@@ -83,14 +83,17 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mpvue_wxparse__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mpvue_wxparse__ = __webpack_require__(47);
 
 
+//
+//
+//
 //
 //
 //
@@ -287,8 +290,12 @@ if (false) {(function () {
     this.results = JSON.parse(this.data.data.result).result;
     console.log("this.results      " + __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(this.results));
     for (var i = 0; i < this.results.length; i++) {
-      this.results[i].score = (this.results[i].score * 100).toFixed(2);
-      console.log("score" + this.results[i].baike_info.image_url);
+      if (this.type == '4') {
+        this.results[i].probability = (this.results[i].probability * 100).toFixed(2);
+      } else {
+        this.results[i].score = (this.results[i].score * 100).toFixed(2);
+      }
+      //console.log("score" + this.results[i].baike_info.image_url);
     }
   },
 
@@ -484,7 +491,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     return _c('van-row', {
       key: domain.key,
       attrs: {
-        "mpcomid": '8-' + index
+        "mpcomid": '9-' + index
       }
     }, [_c('div', {
       staticStyle: {
@@ -504,15 +511,21 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "span": "11",
         "offset": "2",
-        "mpcomid": '7-' + index
+        "mpcomid": '8-' + index
       }
-    }, [_c('van-progress', {
+    }, [(_vm.type != 4) ? _c('van-progress', {
       attrs: {
         "percentage": domain.score,
         "color": "linear-gradient(to right, #87CEFF, #00BFFF)",
         "mpcomid": '6-' + index
       }
-    })], 1)], 1)])])
+    }) : _vm._e(), _vm._v(" "), (_vm.type == 4) ? _c('van-progress', {
+      attrs: {
+        "percentage": domain.probability,
+        "color": "linear-gradient(to right, #87CEFF, #00BFFF)",
+        "mpcomid": '7-' + index
+      }
+    }) : _vm._e()], 1)], 1)])])
   }))]), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
@@ -526,7 +539,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', [_c('wxParse', {
     attrs: {
       "content": _vm.translateResult,
-      "mpcomid": '9'
+      "mpcomid": '10'
     }
   }), _vm._v(" "), _c('img', {
     attrs: {

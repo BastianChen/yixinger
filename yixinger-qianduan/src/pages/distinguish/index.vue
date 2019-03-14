@@ -38,7 +38,10 @@
               <van-col span="11" offset="2">
                 <!--<wxParse :content="result"/>-->
                 <!--<progress :percent="domain.score" show-info />-->
-                <van-progress :percentage="domain.score" color="linear-gradient(to right, #87CEFF, #00BFFF)"/>
+                <van-progress v-if="type!=4" :percentage="domain.score"
+                              color="linear-gradient(to right, #87CEFF, #00BFFF)"/>
+                <van-progress v-if="type==4" :percentage="domain.probability"
+                              color="linear-gradient(to right, #87CEFF, #00BFFF)"/>
               </van-col>
             </div>
           </div>
@@ -200,8 +203,12 @@ export default {
     this.results = JSON.parse(this.data.data.result).result;
     console.log("this.results      " + JSON.stringify(this.results));
     for (let i = 0; i < this.results.length; i++) {
-      this.results[i].score = (this.results[i].score * 100).toFixed(2)
-      console.log("score" + this.results[i].baike_info.image_url);
+      if (this.type == '4') {
+        this.results[i].probability = (this.results[i].probability * 100).toFixed(2)
+      } else {
+        this.results[i].score = (this.results[i].score * 100).toFixed(2)
+      }
+      //console.log("score" + this.results[i].baike_info.image_url);
     }
   },
   methods: {
