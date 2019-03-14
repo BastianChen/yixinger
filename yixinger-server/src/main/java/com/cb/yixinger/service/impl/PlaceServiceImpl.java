@@ -170,8 +170,10 @@ public class PlaceServiceImpl implements PlaceService {
                             // 餐馆部分评论
                             avocado = avocado.optJSONObject("data");
                             if (avocado != null) {
-                                list = avocado.optJSONObject("list").optJSONArray("comment_list");
-                                place.setCommentList(list.toString());
+                                if (avocado.optJSONObject("list")!=null){
+                                    list = avocado.optJSONObject("list").optJSONArray("comment_list");
+                                    place.setCommentList(list.toString());
+                                }
                             }
                         }
                         if (list != null && list.size() > 0) {
