@@ -119,7 +119,7 @@ public class AIOperateController {
             @ApiParam(value = "图片", required = true) @RequestParam(value = "imageFile") MultipartFile imageFile,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
-        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/text/";
+        String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/text/";
         String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
         if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
             logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
