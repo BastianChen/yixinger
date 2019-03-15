@@ -1,4 +1,4 @@
-<template name="15166f23">
+<template name="2587c7ef">
   <view class="_div data-v-1babaa8f index">
     <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="handleProxy" style="background-color: #1989FA;border-color: #1989FA;color: #ffffff;width: 90%;margin-top: 20px" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_button data-v-1babaa8f"> 图像识别 </button></view>
     <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="handleProxy" style="width: 90%;margin-top: 20px" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-1babaa8f"> 文字识别 </button></view>

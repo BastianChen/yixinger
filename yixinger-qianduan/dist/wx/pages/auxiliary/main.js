@@ -101,8 +101,52 @@ global.webpackJsonp([6],{
       this.show = true;
     },
     textDistinguish: function textDistinguish() {
-      this.$router.push({
-        path: '../textdistinguish/main'
+      var _this = this;
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function success(res) {
+          // wx.showLoading({
+          //   title: '识别中...',
+          // })
+          wx.showToast({
+            title: '识别中...',
+            icon: 'loading'
+          });
+          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+          var tempFilePaths = res.tempFilePaths;
+          //上传图片到服务器api
+          wx.uploadFile({
+            url: 'https://wzcb97.top/' + __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].aipOcr, //仅为示例，非真实的接口地址
+            filePath: tempFilePaths[0],
+            name: 'imageFile',
+            formData: {
+              userId: _this.userInfo.openid
+            },
+            success: function success(res) {
+              if (JSON.parse(res.data).state == 0) {
+                var data = JSON.parse(res.data);
+                _this.$router.push({
+                  path: '../textdistinguish/main',
+                  query: { data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(data)) }
+                });
+              } else {
+                wx.showToast({
+                  title: JSON.parse(res.data).message,
+                  icon: 'none',
+                  duration: 3000
+                });
+              }
+            }
+          });
+          // _this.data = JSON.parse(_this.jsona);
+          // _this.$router.push({
+          //   path: `../distinguish/main`,
+          //   query: {type: _this.type, data: encodeURIComponent(JSON.stringify(_this.data))}
+          // });
+          // console.log(_this.type);
+        }
       });
     },
     onCancel: function onCancel() {
@@ -136,8 +180,12 @@ global.webpackJsonp([6],{
         sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function success(res) {
-          wx.showLoading({
-            title: '识别中...'
+          // wx.showLoading({
+          //   title: '识别中...',
+          // })
+          wx.showToast({
+            title: '识别中...',
+            icon: 'loading'
           });
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
           var tempFilePaths = res.tempFilePaths;
@@ -151,13 +199,20 @@ global.webpackJsonp([6],{
               userId: _this.userInfo.openid
             },
             success: function success(res) {
-              var data = JSON.parse(res.data);
-              //console.log("data"+data)
-              _this.$router.push({
-                path: '../distinguish/main',
-                query: { type: _this.type, data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(data)) }
-              });
-              wx.hideLoading();
+              if (JSON.parse(res.data).state == 0) {
+                var data = JSON.parse(res.data);
+                //console.log("data"+data)
+                _this.$router.push({
+                  path: '../distinguish/main',
+                  query: { type: _this.type, data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(data)) }
+                });
+              } else {
+                wx.showToast({
+                  title: JSON.parse(res.data).message,
+                  icon: 'none',
+                  duration: 3000
+                });
+              }
             }
           });
           // _this.data = JSON.parse(_this.jsona);

@@ -227,12 +227,10 @@ if (false) {(function () {
     this.userInfo = this.$store.getters.disc;
     // this.type = this.$route.query.type;
     // console.log("type" + this.type)
-    // console.log("dddddd"+this.$route.query.data)
-    // this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
-    // console.log("ccccccc"+this.data)
-    // this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
-    // console.log("type" + this.type + JSON.parse(this.data.data.result))
-    // this.results = JSON.parse(this.data.data.result).result;
+    this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
+    this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
+    console.log(JSON.parse(this.data.data.words));
+    //this.results = JSON.parse(this.data.data.words).result;
     // console.log("this.results      " + this.results);
     // for(let i=0;i<this.results.length;i++){
     //   console.log("score"+this.results[i].baike_info.image_url);
@@ -411,7 +409,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('img', {
     attrs: {
-      "src": "https://wzcb97.top/images/photo/15523727225176481725_src.jpg"
+      "src": _vm.imageUrl
     }
   })])], 1), _vm._v(" "), _c('div', {
     staticClass: "thirdRow"
