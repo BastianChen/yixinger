@@ -273,7 +273,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.textDistinguish()
       }
     }
-  }, [_vm._v("\n      文字识别\n    ")])], 1), _vm._v(" "), _c('van-action-sheet', {
+  }, [_vm._v("\n      通用文字识别\n    ")])], 1), _vm._v(" "), _c('van-action-sheet', {
     attrs: {
       "show": _vm.show,
       "actions": _vm.actions,

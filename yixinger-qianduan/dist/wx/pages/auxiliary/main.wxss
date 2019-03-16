@@ -1,5 +1,8 @@
 @import "../../common/vendor.wxss";
 
+.index.data-v-1babaa8f {
+  margin-top: 500rpx;
+}
 .index .auxiliary.data-v-1babaa8f {
   width: 100%;
   margin-top: 20rpx;

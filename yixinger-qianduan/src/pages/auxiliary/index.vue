@@ -42,7 +42,7 @@
         @click="textDistinguish()"
         style="width: 90%;margin-top: 20px"
       >
-        文字识别
+        通用文字识别
       </button>
     </div>
     <!--:title="message"-->

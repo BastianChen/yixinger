@@ -18,7 +18,7 @@
       </view>
       <view class="_div data-v-1c5af7e1 forthRow">
         <van-row class="_van-row data-v-1c5af7e1">
-          <van-col span="6" offset="4" class="_van-col data-v-1c5af7e1"><template data="{{...$root[$kk+'5'], $root}}" is="9aa3b73e"></template></van-col>
+          <van-col span="18" offset="4" class="_van-col data-v-1c5af7e1"><template data="{{...$root[$kk+'5'], $root}}" is="9aa3b73e"></template></van-col>
         </van-row>
       </view>
       <view class="_div data-v-1c5af7e1 fifthRow">
