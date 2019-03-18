@@ -136,9 +136,9 @@ if (false) {(function () {
 //const host = 'http://localhost:8080'
 var host = 'https://wzcb97.top';
 
-function request(url, method, data, header) {
+function request(url, method, data, header, title) {
   wx.showLoading({
-    title: '加载中' // 数据请求前loading
+    title: title == null ? '加载中...' : title // 数据请求前loading
   });
   if (header != null) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
@@ -188,11 +188,11 @@ function request(url, method, data, header) {
 }
 
 function get(obj) {
-  return request(obj.url, 'GET', obj.data, obj.header);
+  return request(obj.url, 'GET', obj.data, obj.header, obj.title);
 }
 
 function post(obj) {
-  return request(obj.url, 'POST', obj.data, obj.header);
+  return request(obj.url, 'POST', obj.data, obj.header, obj.title);
 }
 
 /* harmony default export */ __webpack_exports__["a"] = ({
