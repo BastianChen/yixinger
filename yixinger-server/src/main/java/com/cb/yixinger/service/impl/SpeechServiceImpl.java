@@ -62,7 +62,7 @@ public class SpeechServiceImpl implements SpeechService {
     public String speechSynthesis(String text, String userId) throws IOException, DemoException, JSONException {
         TokenHolder holder = new TokenHolder(Constants.APP_KEY, Constants.SECRET_KEY, TokenHolder.ASR_SCOPE);
         holder.refresh();
-        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/audio/";
+        String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/audio/";
         String speechText = "";
         String token;
         List<String> textList = Arrays.asList(text.split(";"));
