@@ -67,6 +67,7 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
         }
         textDistinguishMapper.insertSelective(textDistinguish);
         logger.info("新增文字识别记录成功");
+        textDistinguish = textDistinguishMapper.selectOne(textDistinguish);
         return textDistinguish;
     }
 
