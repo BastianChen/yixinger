@@ -245,7 +245,7 @@ public class AIOperateController {
     @ApiOperation(value = "语音合成", notes = "语音合成 ", response = BaseMessage.class)
     @RequestMapping(value = "/speechSynthesis", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> speechSynthesis(
-            @ApiParam(value = "文本List", required = true) @RequestParam(value = "textList") String text,
+            @ApiParam(value = "文本List", required = true) @RequestParam(value = "text") String text,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws JSONException, DemoException, IOException {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(text)) {
