@@ -8,7 +8,7 @@
       </view>
       <view class="_div data-v-064d55ee secondRow">
         <van-row class="_van-row data-v-064d55ee">
-          <image src="{{imageUrl}}" class="_img data-v-064d55ee"></image>
+          <image src="{{imageUrl}}" hidden="{{!(isShow)}}" class="_img data-v-064d55ee" style=" {{('width:' + imgWidth + ';' + 'height:' + imgHeight + ';')}}"></image>
         </van-row>
       </view>
       <view class="_div data-v-064d55ee thirdRow">

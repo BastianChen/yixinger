@@ -7,9 +7,7 @@
         </van-row>
       </view>
       <view class="_div data-v-1c5af7e1 secondRow">
-        <van-row class="_van-row data-v-1c5af7e1">
-          <image src="{{imageUrl}}" class="_img data-v-1c5af7e1"></image>
-        </van-row>
+        <image src="{{imageUrl}}" hidden="{{!(isShow)}}" class="_img data-v-1c5af7e1" style=" {{('width:' + imgWidth + ';' + 'height:' + imgHeight + ';')}}"></image>
       </view>
       <view class="_div data-v-1c5af7e1 thirdRow">
         <van-row class="_van-row data-v-1c5af7e1">
@@ -18,7 +16,7 @@
       </view>
       <view class="_div data-v-1c5af7e1 forthRow">
         <van-row class="_van-row data-v-1c5af7e1">
-          <van-col span="18" offset="3" class="_van-col data-v-1c5af7e1"><template data="{{...$root[$kk+'5'], $root}}" is="ed185ca6"></template></van-col>
+          <van-col span="18" offset="3" class="_van-col data-v-1c5af7e1"><template data="{{...$root[$kk+'4'], $root}}" is="ed185ca6"></template></van-col>
         </van-row>
       </view>
       <view class="_div data-v-1c5af7e1 fifthRow">
@@ -30,11 +28,11 @@
         </van-row>
       </view>
     </view>
-    <view class="_div data-v-1c5af7e1 secondDiv" hidden="{{!(isTranslated)}}">
+    <view class="_div data-v-1c5af7e1 secondDiv">
       <view class="_div data-v-1c5af7e1 firstRow"><label class="_span data-v-1c5af7e1"> -- 翻译结果 -- </label></view>
       <view class="_div data-v-1c5af7e1 secondRow">
-        <view style="padding: 15px" class="_div data-v-1c5af7e1"><template data="{{...$root[$kk+'11'], $root}}" is="ed185ca6"></template>
-          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_img data-v-1c5af7e1"></image>
+        <view class="_div data-v-1c5af7e1"><template data="{{...$root[$kk+'10'], $root}}" is="ed185ca6"></template>
+          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" hidden="{{!(isTranslated)}}" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_img data-v-1c5af7e1"></image>
         </view>
       </view>
     </view>

@@ -59,17 +59,17 @@
   margin: 40rpx;
   border-radius: 20rpx;
   background: #EFEFF1;
+  padding: 30rpx;
 }
 .index .secondDiv .secondRow ._div ._span.data-v-1c5af7e1 {
   font-size: 30rpx;
   line-height: 120rpx;
-  padding: 30rpx;
 }
 .index .secondDiv .secondRow ._div ._img.data-v-1c5af7e1 {
   position: relative;
   height: 40rpx;
   width: 40rpx;
-  bottom: 50rpx;
+  bottom: 42rpx;
   float: right;
   right: 14rpx;
 }

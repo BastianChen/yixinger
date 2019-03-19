@@ -206,8 +206,8 @@ if (false) {(function () {
       isTranslated: false,
       broadcastImgUrl: '/static/images/broadcast.png',
       userInfo: {},
-      result: '', // '<span>富士山<br/>富士山</span>',
-      translateResult: '', //'<span style="font-size: 15px;line-height: 20px;padding: 15px">Fuji<br/>Fuji</span>',
+      result: ' ', // '<span>富士山<br/>富士山</span>',
+      translateResult: '                                                               ', //'<span style="font-size: 15px;line-height: 20px;padding: 15px">Fuji<br/>Fuji</span>',
       columns: ['自动检测', '中文', '英语', '粤语', '文言文', '日语', '韩语', '法语', '西班牙语', '泰语', '阿拉伯语', '俄语', '葡萄牙语', '德语', '意大利语', '希腊语', '荷兰语', '波兰语', '保加利亚语', '爱沙尼亚语', '丹麦语', '芬兰语', '捷克语', '罗马尼亚语', '斯洛文尼亚语', '瑞典语', '匈牙利语', '繁体中文', '越南语'],
       pickerShow: false,
       language: '自动检测 -> 中文',
@@ -224,18 +224,53 @@ if (false) {(function () {
       speechPath: '', // 语音路径
       isFirst: false,
       timer: null,
-      isPlay: false // 判断是否正在播放，如在播放则暂停，反之则从头播放。
+      isPlay: false, // 判断是否正在播放，如在播放则暂停，反之则从头播放。
+      img: null,
+      imgHeight: '',
+      imgWidth: '',
+      isShow: false,
+      flag: false, // 用于辨别是否显示了该页面
+      scrollTop: 0,
+      windowHeight: ''
     };
   },
 
   computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])(['disc'])),
   onLoad: function onLoad() {},
   created: function created() {
+    var _this2 = this;
+
     this.innerAudioContext = wx.createInnerAudioContext();
     this.innerAudioContext.autoplay = true;
+    this.innerAudioContext.onEnded(function () {
+      clearInterval(_this2.timer);
+      _this2.timer = null;
+      _this2.broadcastImgUrl = '/static/images/broadcast.png';
+    });
+    this.innerAudioContext.onStop(function () {
+      clearInterval(_this2.timer);
+      _this2.timer = null;
+      _this2.broadcastImgUrl = '/static/images/broadcast.png';
+    });
     // 每次进入界面时，先清除之前的所有定时器，然后启动新的定时器
     clearInterval(this.timer);
     this.timer = null;
+    this.windowHeight = wx.getSystemInfoSync().windowHeight + 'px';
+  },
+  onShow: function onShow() {
+    this.flag = true;
+    console.log(this.flag);
+  },
+  onUnload: function onUnload() {
+    this.flag = false;
+    this.innerAudioContext.stop();
+    this.isPlay = false;
+    this.isTranslated = false;
+    this.translateResult = '';
+    this.text = '';
+    this.fromType = 'auto';
+    this.language = '自动检测 -> 中文';
+    console.log(this.flag);
   },
   mounted: function mounted() {
     if (!this.isFirst) {
@@ -248,6 +283,25 @@ if (false) {(function () {
     this.userInfo = this.$store.getters.disc;
     this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
     this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
+    // 调整图片为自适应
+    var _this = this;
+    wx.getImageInfo({
+      src: this.imageUrl,
+      success: function success(res) {
+        //console.log("图片" + JSON.stringify(res))
+        var winWidth = wx.getSystemInfoSync().windowWidth;
+        if (res.width > winWidth) {
+          _this.imgWidth = winWidth * 0.9 + 'px';
+          var rate = winWidth * 0.9 / res.width;
+          _this.imgHeight = res.height * rate + 'px';
+        } else {
+          _this.imgWidth = res.width + 'px';
+          _this.imgHeight = res.height + 'px';
+        }
+        _this.isShow = true;
+        //console.log("屏幕宽度" + winWidth);
+      }
+    });
     console.log(JSON.parse(this.data.data.words));
     this.words_result = JSON.parse(this.data.data.words).words_result;
     this.words_result_num = JSON.parse(this.data.data.words).words_result_num;
@@ -398,7 +452,7 @@ if (false) {(function () {
       this.pickerShow = true;
     },
     speechSynthesis: function speechSynthesis() {
-      var _this = this;
+      var _this3 = this;
 
       this.$httpWX.post({
         url: __WEBPACK_IMPORTED_MODULE_4__service_api_js__["a" /* apiurl */].speechSynthesis,
@@ -407,21 +461,21 @@ if (false) {(function () {
           userId: this.userInfo.openid
         }
       }).then(function (res) {
-        _this.speechPath = 'https://www.wzcb97.top/' + res.data;
-        _this.innerAudioContext.src = _this.speechPath;
-        _this.innerAudioContext.play();
+        _this3.speechPath = 'https://www.wzcb97.top/' + res.data;
+        _this3.innerAudioContext.src = _this3.speechPath;
+        _this3.innerAudioContext.play();
       });
     },
     play: function play() {
-      var _this2 = this;
+      var _this4 = this;
 
       if (this.isPlay == false) {
         if (this.timer == null) {
           this.timer = setInterval(function () {
-            if (_this2.broadcastImgUrl == '/static/images/broadcast.png') {
-              _this2.broadcastImgUrl = '/static/images/broadcast2.png';
+            if (_this4.broadcastImgUrl == '/static/images/broadcast.png') {
+              _this4.broadcastImgUrl = '/static/images/broadcast2.png';
             } else {
-              _this2.broadcastImgUrl = '/static/images/broadcast.png';
+              _this4.broadcastImgUrl = '/static/images/broadcast.png';
             }
           }, 800);
         }
@@ -430,30 +484,16 @@ if (false) {(function () {
         } else {
           this.innerAudioContext.play();
         }
-        this.innerAudioContext.onEnded(function () {
-          clearInterval(_this2.timer);
-          _this2.timer = null;
-          _this2.broadcastImgUrl = '/static/images/broadcast.png';
-        });
-        this.innerAudioContext.onStop(function () {
-          clearInterval(_this2.timer);
-          _this2.timer = null;
-          _this2.broadcastImgUrl = '/static/images/broadcast.png';
-        });
         this.isPlay = true;
       } else {
         this.innerAudioContext.stop();
         this.isPlay = false;
       }
-      // innerAudioContext.onPlay(() => {
-      //   this.setData({
-      //     status: "正在播放"
-      //   })
-      // })
     },
     translate: function translate() {
-      var _this3 = this;
+      var _this5 = this;
 
+      this.innerAudioContext.stop();
       this.$httpWX.post({
         url: __WEBPACK_IMPORTED_MODULE_4__service_api_js__["a" /* apiurl */].translateText,
         data: {
@@ -466,29 +506,27 @@ if (false) {(function () {
         },
         title: '正在翻译...'
       }).then(function (res) {
-        _this3.translateText = res.data;
-        _this3.translateResult = '';
-        for (var i = 0; i < _this3.words_result_num; i++) {
-          _this3.text = _this3.text + _this3.translateText[i].word;
+        _this5.translateText = res.data;
+        _this5.translateResult = '';
+        _this5.text = '';
+        _this5.isPlay = false;
+        _this5.speechPath = '';
+        for (var i = 0; i < _this5.words_result_num; i++) {
+          _this5.text = _this5.text + _this5.translateText[i].word;
+          var textWord = _this5.translateText[i].word;
           if (i == 0) {
-            _this3.translateResult = '<span>' + (i + 1) + '. ' + _this3.translateText[i].word + '<br/>';
-          } else if (i + 1 == _this3.words_result_num) {
-            _this3.translateResult = _this3.result + (i + 1) + '. ' + _this3.translateText[i].word + '</span>';
+            _this5.translateResult = '<span>' + (i + 1) + '. ' + textWord + '<br/>';
+          } else if (i + 1 == _this5.words_result_num) {
+            _this5.translateResult = _this5.translateResult + (i + 1) + '. ' + textWord + '</span>';
           } else {
-            _this3.translateResult = _this3.result + (i + 1) + '. ' + _this3.translateText[i].word + '<br/>';
+            _this5.translateResult = _this5.translateResult + (i + 1) + '. ' + textWord + '<br/>';
           }
         }
-        var translateResult = _this3.translateResult.split('</span>');
-        _this3.isTranslated = true;
-        _this3.translateResult = translateResult[0] + '</span>';
+        _this5.broadcastImgUrl = '/static/images/broadcast.png';
+        _this5.isTranslated = true;
+        //this.scrollTop =  wx.getSystemInfoSync().windowHeight+1000
       });
     }
-  },
-  destroyed: function destroyed() {
-    // 每次离开当前界面时，清除定时器
-    clearInterval(this.timer);
-    this.timer = null;
-    this.broadcastImgUrl = '/static/images/broadcast.png';
   }
 });
 
@@ -517,54 +555,60 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('span', [_vm._v("\n          识别图片：\n        ")])])], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "secondRow"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '2'
-    }
   }, [_c('img', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.isShow),
+      expression: "isShow"
+    }],
+    style: ({
+      width: _vm.imgWidth,
+      height: _vm.imgHeight
+    }),
     attrs: {
       "src": _vm.imageUrl
     }
-  })])], 1), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
     staticClass: "thirdRow"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '4'
+      "mpcomid": '3'
     }
   }, [_c('van-col', {
     attrs: {
       "span": "6",
       "offset": "3",
-      "mpcomid": '3'
+      "mpcomid": '2'
     }
   }, [_c('span', [_vm._v("\n            识别结果：\n          ")])])], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "forthRow"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '7'
+      "mpcomid": '6'
     }
   }, [_c('van-col', {
     attrs: {
       "span": "18",
       "offset": "3",
-      "mpcomid": '6'
+      "mpcomid": '5'
     }
   }, [_c('wxParse', {
     attrs: {
       "content": _vm.result,
-      "mpcomid": '5'
+      "mpcomid": '4'
     }
   })], 1)], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "fifthRow"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '10'
+      "mpcomid": '9'
     }
   }, [_c('van-col', {
     attrs: {
       "span": "10",
       "offset": "2",
-      "mpcomid": '8'
+      "mpcomid": '7'
     }
   }, [_c('button', {
     staticStyle: {
@@ -580,11 +624,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.selectLanguage
     }
-  }, [_vm._v("\n            " + _vm._s(_vm.language) + "\n          ")])], 1), _vm._v(" "), _c('van-col', {
+  }, [_vm._v("\n              " + _vm._s(_vm.language) + "\n            ")])], 1), _vm._v(" "), _c('van-col', {
     attrs: {
       "span": "4",
       "offset": "5",
-      "mpcomid": '9'
+      "mpcomid": '8'
     }
   }, [_c('button', {
     staticStyle: {
@@ -602,26 +646,22 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.translate
     }
-  }, [_vm._v("\n            翻译\n          ")])], 1)], 1)], 1)]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n              翻译\n            ")])], 1)], 1)], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "secondDiv"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "secondRow"
+  }, [_c('div', [_c('wxParse', {
+    attrs: {
+      "content": _vm.translateResult,
+      "mpcomid": '10'
+    }
+  }), _vm._v(" "), _c('img', {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: (_vm.isTranslated),
       expression: "isTranslated"
     }],
-    staticClass: "secondDiv"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "secondRow"
-  }, [_c('div', {
-    staticStyle: {
-      "padding": "15px"
-    }
-  }, [_c('wxParse', {
-    attrs: {
-      "content": _vm.translateResult,
-      "mpcomid": '11'
-    }
-  }), _vm._v(" "), _c('img', {
     attrs: {
       "src": _vm.broadcastImgUrl,
       "eventid": '2'
@@ -635,7 +675,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "position": "bottom",
       "overlay": "false",
       "close-on-click-overlay": "",
-      "mpcomid": '13'
+      "mpcomid": '12'
     }
   }, [_c('van-picker', {
     attrs: {
@@ -643,7 +683,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "title": "翻译语种",
       "columns": _vm.columns,
       "eventid": '3',
-      "mpcomid": '12'
+      "mpcomid": '11'
     },
     on: {
       "cancel": _vm.onCancel,

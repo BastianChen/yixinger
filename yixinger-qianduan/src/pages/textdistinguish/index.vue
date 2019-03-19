@@ -1,98 +1,98 @@
 <template>
   <div class="index">
-    <div class="firstDiv">
-      <div class="firstRow">
-        <van-row>
-          <van-col span="6" offset="3">
+    <!--<scroll-view scroll-y :style="{height: windowHeight}" scroll-with-animation="true" :scroll-top="scrollTop">-->
+      <div class="firstDiv">
+        <div class="firstRow">
+          <van-row>
+            <van-col span="6" offset="3">
           <span>
             识别图片：
           </span>
-          </van-col>
-        </van-row>
-      </div>
-      <div class="secondRow">
-        <van-row>
-          <img :src="imageUrl"/>
-        </van-row>
-      </div>
-      <div class="thirdRow">
-        <van-row>
-          <van-col span="6" offset="3">
+            </van-col>
+          </van-row>
+        </div>
+        <div class="secondRow">
+          <img :src="imageUrl" :style="{width:imgWidth,height:imgHeight}" v-show="isShow"/>
+        </div>
+        <div class="thirdRow">
+          <van-row>
+            <van-col span="6" offset="3">
             <span>
               识别结果：
             </span>
-          </van-col>
-        </van-row>
+            </van-col>
+          </van-row>
+        </div>
+        <div class="forthRow">
+          <van-row>
+            <van-col span="18" offset="3">
+              <wxParse :content="result"/>
+            </van-col>
+          </van-row>
+        </div>
+        <div class="fifthRow">
+          <van-row>
+            <van-col span="10" offset="2">
+              <!--<div style="border-width: 1px;border-color: #333333;">-->
+              <!--<span @click="selectLanguage">-->
+              <!--{{language}}-->
+              <!--</span>-->
+              <!--</div>-->
+              <!--<van-button type="default" @click="selectLanguage">{{language}}</van-button>-->
+              <button
+                type="default"
+                size="mini"
+                plain="false"
+                bindtap="primary"
+                style="width: 180px"
+                @click="selectLanguage"
+              >
+                {{language}}
+              </button>
+            </van-col>
+            <van-col span="4" offset="5">
+              <button
+                type="primary"
+                size="mini"
+                plain="false"
+                bindtap="primary"
+                style="width: 80px;border-color: #1989FA;color: #1989FA"
+                @click="translate"
+              >
+                翻译
+              </button>
+              <!--<van-button plain type="primary">翻译</van-button>-->
+            </van-col>
+          </van-row>
+        </div>
       </div>
-      <div class="forthRow">
-        <van-row>
-          <van-col span="18" offset="3">
-            <wxParse :content="result"/>
-          </van-col>
-        </van-row>
-      </div>
-      <div class="fifthRow">
-        <van-row>
-          <van-col span="10" offset="2">
-            <!--<div style="border-width: 1px;border-color: #333333;">-->
-            <!--<span @click="selectLanguage">-->
-            <!--{{language}}-->
-            <!--</span>-->
-            <!--</div>-->
-            <!--<van-button type="default" @click="selectLanguage">{{language}}</van-button>-->
-            <button
-              type="default"
-              size="mini"
-              plain="false"
-              bindtap="primary"
-              style="width: 180px"
-              @click="selectLanguage"
-            >
-              {{language}}
-            </button>
-          </van-col>
-          <van-col span="4" offset="5">
-            <button
-              type="primary"
-              size="mini"
-              plain="false"
-              bindtap="primary"
-              style="width: 80px;border-color: #1989FA;color: #1989FA"
-              @click="translate"
-            >
-              翻译
-            </button>
-            <!--<van-button plain type="primary">翻译</van-button>-->
-          </van-col>
-        </van-row>
-      </div>
-    </div>
-    <div class="secondDiv" v-show="isTranslated">
-      <div class="firstRow">
+      <div class="secondDiv">
+        <div class="firstRow">
           <span>
             -- 翻译结果 --
           </span>
-      </div>
-      <div class="secondRow">
-        <div style="padding: 15px">
-          <wxParse :content="translateResult"/>
-          <img :src="broadcastImgUrl" @click="play"/>
+        </div>
+        <div class="secondRow">
+          <div>
+            <wxParse :content="translateResult"/>
+            <img :src="broadcastImgUrl" @click="play" v-show="isTranslated"/>
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-      <!--<audio :src="speechPath" id="Audio"></audio>-->
-      <van-popup :show="pickerShow" position="bottom"
-                 overlay="false" close-on-click-overlay>
-        <van-picker
-          show-toolbar
-          title="翻译语种"
-          :columns="columns"
-          @cancel="onCancel"
-          @confirm="onConfirm"
-        />
-      </van-popup>
-    </div>
+    <!--</scroll-view>-->
+      <div>
+        <!--<audio :src="speechPath" id="Audio"></audio>-->
+        <van-popup :show="pickerShow" position="bottom"
+                   overlay="false" close-on-click-overlay>
+          <van-picker
+            show-toolbar
+            title="翻译语种"
+            :columns="columns"
+            @cancel="onCancel"
+            @confirm="onConfirm"
+          />
+        </van-popup>
+      </div>
   </div>
 </template>
 
@@ -112,8 +112,8 @@ export default {
       isTranslated: false,
       broadcastImgUrl: '/static/images/broadcast.png',
       userInfo: {},
-      result: '',// '<span>富士山<br/>富士山</span>',
-      translateResult: '',//'<span style="font-size: 15px;line-height: 20px;padding: 15px">Fuji<br/>Fuji</span>',
+      result: ' ',// '<span>富士山<br/>富士山</span>',
+      translateResult: '                                                               ',//'<span style="font-size: 15px;line-height: 20px;padding: 15px">Fuji<br/>Fuji</span>',
       columns: ['自动检测', '中文', '英语', '粤语', '文言文', '日语', '韩语', '法语', '西班牙语', '泰语', '阿拉伯语',
         '俄语', '葡萄牙语', '德语', '意大利语', '希腊语', '荷兰语', '波兰语', '保加利亚语', '爱沙尼亚语', '丹麦语',
         '芬兰语', '捷克语', '罗马尼亚语', '斯洛文尼亚语', '瑞典语', '匈牙利语', '繁体中文', '越南语'],
@@ -132,7 +132,14 @@ export default {
       speechPath: '',// 语音路径
       isFirst: false,
       timer: null,
-      isPlay: false// 判断是否正在播放，如在播放则暂停，反之则从头播放。
+      isPlay: false,// 判断是否正在播放，如在播放则暂停，反之则从头播放。
+      img: null,
+      imgHeight: '',
+      imgWidth: '',
+      isShow: false,
+      flag: false,// 用于辨别是否显示了该页面
+      scrollTop: 0,
+      windowHeight: ''
     }
   },
   computed: {
@@ -145,9 +152,35 @@ export default {
   created() {
     this.innerAudioContext = wx.createInnerAudioContext();
     this.innerAudioContext.autoplay = true;
+    this.innerAudioContext.onEnded(() => {
+      clearInterval(this.timer);
+      this.timer = null;
+      this.broadcastImgUrl = '/static/images/broadcast.png';
+    })
+    this.innerAudioContext.onStop(() => {
+      clearInterval(this.timer);
+      this.timer = null;
+      this.broadcastImgUrl = '/static/images/broadcast.png';
+    })
     // 每次进入界面时，先清除之前的所有定时器，然后启动新的定时器
     clearInterval(this.timer);
     this.timer = null;
+    this.windowHeight = wx.getSystemInfoSync().windowHeight + 'px';
+  },
+  onShow() {
+    this.flag = true;
+    console.log(this.flag);
+  },
+  onUnload() {
+    this.flag = false;
+    this.innerAudioContext.stop();
+    this.isPlay = false;
+    this.isTranslated = false;
+    this.translateResult = '';
+    this.text = '';
+    this.fromType = 'auto';
+    this.language = '自动检测 -> 中文';
+    console.log(this.flag);
   },
   mounted() {
     if (!this.isFirst) {
@@ -160,7 +193,26 @@ export default {
     this.userInfo = this.$store.getters.disc;
     this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
     this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
-    console.log(JSON.parse(this.data.data.words))
+    // 调整图片为自适应
+    var _this = this;
+    wx.getImageInfo({
+      src: this.imageUrl,
+      success: function (res) {
+        //console.log("图片" + JSON.stringify(res))
+        let winWidth = wx.getSystemInfoSync().windowWidth;
+        if (res.width > winWidth) {
+          _this.imgWidth = winWidth * 0.9 + 'px';
+          let rate = (winWidth * 0.9) / res.width;
+          _this.imgHeight = res.height * rate + 'px';
+        } else {
+          _this.imgWidth = res.width + 'px';
+          _this.imgHeight = res.height + 'px';
+        }
+        _this.isShow = true;
+        //console.log("屏幕宽度" + winWidth);
+      }
+    })
+    console.log(JSON.parse(this.data.data.words));
     this.words_result = JSON.parse(this.data.data.words).words_result;
     this.words_result_num = JSON.parse(this.data.data.words).words_result_num;
     this.result = '';
@@ -337,28 +389,14 @@ export default {
         } else {
           this.innerAudioContext.play();
         }
-        this.innerAudioContext.onEnded(() => {
-          clearInterval(this.timer);
-          this.timer = null;
-          this.broadcastImgUrl = '/static/images/broadcast.png';
-        })
-        this.innerAudioContext.onStop(() => {
-          clearInterval(this.timer);
-          this.timer = null;
-          this.broadcastImgUrl = '/static/images/broadcast.png';
-        })
         this.isPlay = true;
       } else {
         this.innerAudioContext.stop();
         this.isPlay = false;
       }
-      // innerAudioContext.onPlay(() => {
-      //   this.setData({
-      //     status: "正在播放"
-      //   })
-      // })
     },
     translate() {
+      this.innerAudioContext.stop();
       this.$httpWX.post({
         url: apiurl.translateText,
         data: {
@@ -373,27 +411,25 @@ export default {
       }).then(res => {
         this.translateText = res.data;
         this.translateResult = '';
+        this.text = '';
+        this.isPlay = false;
+        this.speechPath = '';
         for (let i = 0; i < this.words_result_num; i++) {
           this.text = this.text + this.translateText[i].word;
+          let textWord = this.translateText[i].word;
           if (i == 0) {
-            this.translateResult = '<span>' + (i + 1) + '. ' + this.translateText[i].word + '<br/>'
+            this.translateResult = '<span>' + (i + 1) + '. ' + textWord + '<br/>'
           } else if ((i + 1) == this.words_result_num) {
-            this.translateResult = this.result + (i + 1) + '. ' + this.translateText[i].word + '</span>'
+            this.translateResult = this.translateResult + (i + 1) + '. ' + textWord + '</span>'
           } else {
-            this.translateResult = this.result + (i + 1) + '. ' + this.translateText[i].word + '<br/>'
+            this.translateResult = this.translateResult + (i + 1) + '. ' + textWord + '<br/>'
           }
         }
-        let translateResult = this.translateResult.split('</span>');
+        this.broadcastImgUrl = '/static/images/broadcast.png';
         this.isTranslated = true;
-        this.translateResult = translateResult[0] + '</span>';
+        //this.scrollTop =  wx.getSystemInfoSync().windowHeight+1000
       })
     }
-  },
-  destroyed() {
-    // 每次离开当前界面时，清除定时器
-    clearInterval(this.timer);
-    this.timer = null;
-    this.broadcastImgUrl = '/static/images/broadcast.png';
   }
 }
 </script>
