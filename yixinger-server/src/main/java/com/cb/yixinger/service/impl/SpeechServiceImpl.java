@@ -4,6 +4,7 @@ import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.service.SpeechService;
 import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.FileUploadUtil;
+import com.cb.yixinger.utils.MD5;
 import com.cb.yixinger.utils.ai.speech.ConnUtil;
 import com.cb.yixinger.utils.ai.speech.DemoException;
 import com.cb.yixinger.utils.ai.speech.TokenHolder;
@@ -22,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -103,12 +105,12 @@ public class SpeechServiceImpl implements SpeechService {
         if (contentType.contains("audio/")) {
             byte[] bytes = ConnUtil.getResponseBytes(conn);
             String format = getFormat(aue);
-            String fileName = FileUploadUtil.rename(userId);
             File dir = new File(resourcePath);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
             // 打开mp3文件即可播放
+            String fileName = MD5.md5(userId+System.currentTimeMillis() + "" + new Random().nextInt(99999999));
             File file = new File(dir, fileName + "-result." + format);
             FileOutputStream os = new FileOutputStream(file);
             os.write(bytes);
