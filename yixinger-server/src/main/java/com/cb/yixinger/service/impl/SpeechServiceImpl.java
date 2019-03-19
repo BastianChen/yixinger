@@ -3,6 +3,7 @@ package com.cb.yixinger.service.impl;
 import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.service.SpeechService;
 import com.cb.yixinger.utils.CommonUtil;
+import com.cb.yixinger.utils.FileUploadUtil;
 import com.cb.yixinger.utils.ai.speech.ConnUtil;
 import com.cb.yixinger.utils.ai.speech.DemoException;
 import com.cb.yixinger.utils.ai.speech.TokenHolder;
@@ -102,12 +103,13 @@ public class SpeechServiceImpl implements SpeechService {
         if (contentType.contains("audio/")) {
             byte[] bytes = ConnUtil.getResponseBytes(conn);
             String format = getFormat(aue);
+            String fileName = FileUploadUtil.rename(userId);
             File dir = new File(resourcePath);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
             // 打开mp3文件即可播放
-            File file = new File(dir, userId + "-result." + format);
+            File file = new File(dir, fileName + "-result." + format);
             FileOutputStream os = new FileOutputStream(file);
             os.write(bytes);
             os.close();
