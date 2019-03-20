@@ -23,4 +23,6 @@ public class TextDistinguish implements Serializable {
     private String imageUrl;
     @ApiModelProperty(value="文字识别结果")
     private String words;
+    @ApiModelProperty(value="进行AI操作的地点用于操作记录展示")
+    private String cityName;
 }

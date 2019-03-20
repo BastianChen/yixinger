@@ -44,7 +44,7 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
      * @Date: 2019/1/18
      */
     @Override
-    public PhotoDistinguish photoDistinguishBytype(String imagePath, String type, String userId, String imageSavePath) {
+    public PhotoDistinguish photoDistinguishBytype(String imagePath, String type, String userId, String cityName, String imageSavePath) {
         AipImageClassify aipImageClassify = new AipImageClassify(Constants.AI_APP_ID, Constants.AI_API_KEY, Constants.AI_SECRET_KEY);
         HashMap<String, String> options = new HashMap<>(16);
         options.put("baike_num", "5");
@@ -78,6 +78,7 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
             }
             photoDistinguish.setUserId(userId);
             photoDistinguish.setImageUrl(imageSavePath);
+            photoDistinguish.setCityName(cityName);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String date = sdf.format(System.currentTimeMillis());
             photoDistinguish.setDate(date);

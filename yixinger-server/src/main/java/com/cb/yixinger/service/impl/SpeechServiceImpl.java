@@ -110,7 +110,7 @@ public class SpeechServiceImpl implements SpeechService {
                 dir.mkdirs();
             }
             // 打开mp3文件即可播放
-            String fileName = MD5.md5(userId+System.currentTimeMillis() + "" + new Random().nextInt(99999999));
+            String fileName = MD5.md5(userId + System.currentTimeMillis() + "" + new Random().nextInt(99999999));
             File file = new File(dir, fileName + "-result." + format);
             FileOutputStream os = new FileOutputStream(file);
             os.write(bytes);

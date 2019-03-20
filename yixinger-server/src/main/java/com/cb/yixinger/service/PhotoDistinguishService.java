@@ -10,7 +10,7 @@ import java.util.List;
  * @create: 2019-01-17 14:50
  **/
 public interface PhotoDistinguishService {
-    PhotoDistinguish photoDistinguishBytype(String imagePath, String type, String userId, String imageSavePath);
+    PhotoDistinguish photoDistinguishBytype(String imagePath, String type, String userId, String cityName, String imageSavePath);
 
     List<PhotoDistinguish> getPhotoDistinguishList(String userId, String type);
 

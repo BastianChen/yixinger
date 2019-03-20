@@ -25,4 +25,6 @@ public class PhotoDistinguish implements Serializable {
     private String type;
     @ApiModelProperty(value="结果")
     private String result;
+    @ApiModelProperty(value="进行AI操作的地点用于操作记录展示")
+    private String cityName;
 }

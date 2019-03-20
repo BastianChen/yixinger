@@ -10,7 +10,7 @@ import java.util.List;
  * @create: 2019-01-17 14:52
  **/
 public interface TextDistinguishService {
-    TextDistinguish textDistinguish(String imagePath, String userId, String imageSavePath);
+    TextDistinguish textDistinguish(String imagePath, String userId, String cityName, String imageSavePath);
 
     List<TextDistinguish> getTextDistinguishList(String userId);
 

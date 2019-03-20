@@ -41,7 +41,7 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
      * @Date: 2019/1/19
      */
     @Override
-    public TextDistinguish textDistinguish(String imagePath, String userId, String imageSavePath) {
+    public TextDistinguish textDistinguish(String imagePath, String userId, String cityName, String imageSavePath) {
         AipOcr aipOcr = new AipOcr(Constants.AI_APP_ID, Constants.AI_API_KEY, Constants.AI_SECRET_KEY);
         TextDistinguish textDistinguish = new TextDistinguish();
         HashMap<String, String> options = new HashMap<>();
@@ -57,6 +57,7 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
         try {
             JSONObject jsonObject = aipOcr.basicAccurateGeneral(imagePath, options);
             textDistinguish.setUserId(userId);
+            textDistinguish.setCityName(cityName);
             textDistinguish.setImageUrl(imageSavePath);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String date = sdf.format(System.currentTimeMillis());

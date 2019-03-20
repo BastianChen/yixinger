@@ -53,14 +53,15 @@ public class AIOperateController {
     public ResponseEntity<BaseMessage> imageClassify(
             @ApiParam(value = "图片", required = true) @RequestParam(value = "imageFile") MultipartFile imageFile,
             @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）", required = true) @RequestParam(value = "type") String type,
-            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
+            @ApiParam(value = "进行AI操作的地点用于操作记录展示", required = true) @RequestParam(value = "cityName") String cityName) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
         String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/photo/";
         String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
         if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
             logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
             logger.info("----------------图像识别开始----------------");
-            PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(resourcePath + imageName + "_src.jpg", type, userId,
+            PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(resourcePath + imageName + "_src.jpg", type, userId, cityName,
                     "/images/photo/" + imageName + "_src.jpg");
             logger.info("----------------图像识别结束----------------");
             if (photoDistinguish != null) {
@@ -117,7 +118,8 @@ public class AIOperateController {
     @RequestMapping(value = "/aipOcr", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> aipOcr(
             @ApiParam(value = "图片", required = true) @RequestParam(value = "imageFile") MultipartFile imageFile,
-            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws IOException {
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
+            @ApiParam(value = "进行AI操作的地点用于操作记录展示", required = true) @RequestParam(value = "cityName") String cityName) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
         String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/text/";
         String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
@@ -125,7 +127,7 @@ public class AIOperateController {
             logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
             logger.info("----------------文字识别开始----------------");
             TextDistinguish textDistinguish = textDistinguishService.textDistinguish(resourcePath + imageName + "_src.jpg",
-                    userId, "/images/text/" + imageName + "_src.jpg");
+                    userId, cityName, "/images/text/" + imageName + "_src.jpg");
             logger.info("----------------文字识别结束----------------");
             if (textDistinguish != null) {
                 baseMessage.setData(textDistinguish);
