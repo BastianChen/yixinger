@@ -19,4 +19,6 @@ public interface TranslatorService {
     List<Translator> getTranslatorListByType(String userId, String type);
 
     void deleteTranslatorById(String idList);
+
+    Translator getTranslator(String userId, Integer textId, String from, String to, String type);
 }

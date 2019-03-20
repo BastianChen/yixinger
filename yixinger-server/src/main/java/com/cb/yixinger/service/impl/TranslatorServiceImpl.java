@@ -43,9 +43,9 @@ public class TranslatorServiceImpl implements TranslatorService {
         jsonObject = JSONObject.fromObject(api.getTransResult(user.getCountry(), "auto", language));
         jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
         user.setCountry(jsonArray.getJSONObject(0).getString("dst"));
-        if ("1".equals(user.getGender())){
+        if ("1".equals(user.getGender())) {
             user.setGender("男");
-        }else if ("2".equals(user.getGender())){
+        } else if ("2".equals(user.getGender())) {
             user.setGender("女");
         }
         return user;
@@ -78,22 +78,22 @@ public class TranslatorServiceImpl implements TranslatorService {
             translatedText.add(jsonObject);
         }
         logger.info("----------------翻译结束----------------");
-        translator.setUserId(userId);
-        translator.setTextId(textId);
-        translator.setOriginalLanguage(from);
-        translator.setTranslatedLanguage(to);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = sdf.format(System.currentTimeMillis());
-        translator.setDate(date);
-        translator.setType(type);
-        translator.setOriginalText(originalText.toString());
-        translator.setTranslatedText(translatedText.toString());
-        Boolean isSuccess = translatorMapper.insertSelective(translator) > 0;
-        if (isSuccess) {
-            logger.info("添加翻译记录成功");
-        } else {
-            logger.error("添加翻译记录失败");
-        }
+//        translator.setUserId(userId);
+//        translator.setTextId(textId);
+//        translator.setOriginalLanguage(from);
+//        translator.setTranslatedLanguage(to);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String date = sdf.format(System.currentTimeMillis());
+//        translator.setDate(date);
+//        translator.setType(type);
+//        translator.setOriginalText(originalText.toString());
+//        translator.setTranslatedText(translatedText.toString());
+//        Boolean isSuccess = translatorMapper.insertSelective(translator) > 0;
+//        if (isSuccess) {
+//            logger.info("添加翻译记录成功");
+//        } else {
+//            logger.error("添加翻译记录失败");
+//        }
         return translatedText;
     }
 
@@ -108,5 +108,10 @@ public class TranslatorServiceImpl implements TranslatorService {
         for (String id : integerList) {
             translatorMapper.deleteByPrimaryKey(Integer.valueOf(id));
         }
+    }
+
+    @Override
+    public Translator getTranslator(String userId, Integer textId, String from, String to, String type) {
+        return translatorDao.getTranslator(userId, textId, from, to, type);
     }
 }

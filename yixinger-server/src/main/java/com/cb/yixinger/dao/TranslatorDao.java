@@ -28,4 +28,16 @@ public class TranslatorDao {
         List<Translator> translatorList = translatorMapper.selectByExample(example);
         return translatorList;
     }
+
+    public Translator getTranslator(String userId, Integer textId, String from, String to, String type) {
+        Example example = new Example(Translator.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId", userId);
+        criteria.andEqualTo("textId", textId);
+        criteria.andEqualTo("from", from);
+        criteria.andEqualTo("to", to);
+        criteria.andEqualTo("type", type);
+        Translator translator = translatorMapper.selectOneByExample(example);
+        return translator;
+    }
 }
