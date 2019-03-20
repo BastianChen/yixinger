@@ -1,0 +1,50 @@
+<template name="37e30f6c">
+  <view class="_div data-v-f610f38c index">
+    <van-tabs active="{{active}}" bindchange="handleProxy" sticky animated swipeable color="#00BFFF" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_van-tabs data-v-f610f38c">
+      <van-tab title="图像识别" class="_van-tab data-v-f610f38c">
+        <view style="margin: 10px 5px;width: 100%;font-weight: bold;font-size: 28px;font-family: KaiTi" class="_div data-v-f610f38c">
+          <van-row class="_van-row data-v-f610f38c">
+            <van-col span="8" offset="1" class="_van-col data-v-f610f38c"> 2019年 </van-col>
+          </van-row>
+          <van-row class="_van-row data-v-f610f38c">
+            <van-col span="4" offset="1" class="_van-col data-v-f610f38c"> 今天 </van-col>
+            <van-col span="18" bindlongpress="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_van-col data-v-f610f38c">
+              <van-card desc="通用图像识别" title="香奈儿" thumb="{{imageUrl}}" centered lazy-load class="_van-card data-v-f610f38c"></van-card>
+            </van-col>
+          </van-row>
+        </view>
+        <view style="margin: 10px 5px;width: 100%;font-weight: bold;font-size: 28px;font-family: KaiTi" class="_div data-v-f610f38c">
+          <van-row class="_van-row data-v-f610f38c">
+            <van-col span="8" offset="1" class="_van-col data-v-f610f38c"> 2018年 </van-col>
+          </van-row>
+          <van-row class="_van-row data-v-f610f38c">
+            <van-col span="4" offset="1" class="_van-col data-v-f610f38c"><label class="_span data-v-f610f38c"> 11 </label> <label style="font-size: 14px;margin-left:-7px;" class="_span data-v-f610f38c"> 3月 </label></van-col>
+            <van-col span="18" class="_van-col data-v-f610f38c">
+              <van-card desc="通用图像识别" title="香奈儿" thumb="{{imageUrl}}" centered lazy-load class="_van-card data-v-f610f38c"></van-card>
+            </van-col>
+          </van-row>
+        </view>
+        <view style="margin: 10px 5px;width: 100%;font-weight: bold;font-size: 28px;font-family: KaiTi" class="_div data-v-f610f38c">
+          <van-row wx:if="{{false}}" class="_van-row data-v-f610f38c">
+            <van-col span="8" offset="1" class="_van-col data-v-f610f38c"> 2018年 </van-col>
+          </van-row>
+          <van-row class="_van-row data-v-f610f38c">
+            <van-col span="4" offset="1" class="_van-col data-v-f610f38c"><label class="_span data-v-f610f38c"> 09 </label> <label style="font-size: 14px;margin-left:-7px;" class="_span data-v-f610f38c"> 3月 </label></van-col>
+            <van-col span="18" class="_van-col data-v-f610f38c">
+              <van-card desc="通用图像识别" title="香奈儿" thumb="{{imageUrl}}" centered lazy-load class="_van-card data-v-f610f38c"></van-card>
+            </van-col>
+          </van-row>
+        </view>
+      </van-tab>
+      <van-tab title="文字识别" class="_van-tab data-v-f610f38c">
+        <view style="text-align:center;margin-top: 200px" class="_div data-v-f610f38c">
+          <view class="_div data-v-f610f38c">
+            <image src="/static/images/noContent.png" style="width: 80px;height: 80px" class="_img data-v-f610f38c"></image>
+          </view>
+          <view class="_div data-v-f610f38c"><label class="_span data-v-f610f38c"> 暂无记录 </label></view>
+        </view>
+      </van-tab>
+    </van-tabs>
+    <van-dialog id="van-dialog" style="text-align: center" class="_van-dialog data-v-f610f38c"></van-dialog>
+  </view>
+</template>

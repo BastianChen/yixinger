@@ -1,44 +1,6 @@
 <template>
-  <!--<div class="container" @click="clickHandle('test click', $event)">-->
-  <!--<div class="userinfo" @click="bindViewTap">-->
-  <!--<img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover"/>-->
-  <!--<div class="userinfo-nickname">-->
-  <!--<card :text="userInfo.nickName"></card>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--&lt;!&ndash;<div>&ndash;&gt;-->
-  <!--&lt;!&ndash;<radio-group class="radio-group" @change="radioChange">&ndash;&gt;-->
-  <!--&lt;!&ndash;<label class="radio" v-for="(item, index) in items" :key="item.name">&ndash;&gt;-->
-  <!--&lt;!&ndash;<radio :value="item.name" :checked="item.checked"/>&ndash;&gt;-->
-  <!--&lt;!&ndash;{{item.value}}&ndash;&gt;-->
-  <!--&lt;!&ndash;</label>&ndash;&gt;-->
-  <!--&lt;!&ndash;</radio-group>&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-  <!--<div class="usermotto">-->
-  <!--<div class="user-motto">-->
-  <!--<card :text="motto"></card>-->
-  <!--</div>-->
-  <!--</div>-->
-
-  <!--&lt;!&ndash;<form class="form-container">&ndash;&gt;-->
-  <!--&lt;!&ndash;<input type="text" class="form-control" v-model="motto" placeholder="v-model"/>&ndash;&gt;-->
-  <!--&lt;!&ndash;<input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy"/>&ndash;&gt;-->
-  <!--&lt;!&ndash;</form>&ndash;&gt;-->
-  <!--&lt;!&ndash;<a @click="vuexPage" class="counter" open-type="getUserInfo">去往Vuex示例页面</a>&ndash;&gt;-->
-  <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
-  <!--<van-button type="primary" size="normal" round @click="photoPage">打开相机</van-button>-->
-  <!--<van-tabbar active="0">-->
-  <!--<van-tabbar-item icon="shop" @click="apiPage">POI</van-tabbar-item>-->
-  <!--<van-tabbar-item icon="search" dot @click="suggestionPage">搜索</van-tabbar-item>-->
-  <!--<van-tabbar-item icon="records" info="5" @click="regeocodingPage">逆地址</van-tabbar-item>-->
-  <!--<van-tabbar-item icon="gold-coin" info="20" @click="weatherPage">天气</van-tabbar-item>-->
-  <!--</van-tabbar>-->
-  <!--</div>-->
-
   <div class="index">
     <div class="search">
-      <!--<van-button type="primary" size="normal" round open-type="getUserInfo" @click="getUserInfo">获取个人信息</van-button>-->
       <span class="dingwei"></span>
       <div @click="toMappage">{{cityName}}</div>
       <div @click="toMappage">{{temperature}}

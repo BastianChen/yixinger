@@ -1,13 +1,13 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([5],{
+global.webpackJsonp([6],{
 
 /***/ 103:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(104);
 
@@ -241,9 +241,9 @@ if (false) {(function () {
     }
     this.isFirst = true;
     this.userInfo = this.$store.getters.disc;
-    console.log("dddddd" + this.$route.query.data);
+    // console.log("dddddd" + this.$route.query.data)
     this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
-    console.log("ccccccc" + this.data);
+    // console.log("ccccccc" + this.data)
     this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
     // 调整图片为自适应
     var _this = this;

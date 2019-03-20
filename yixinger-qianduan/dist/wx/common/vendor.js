@@ -285,14 +285,6 @@ $exports.store = store;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-var core = module.exports = { version: '2.5.7' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// fix env
@@ -5916,6 +5908,14 @@ return Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+var core = module.exports = { version: '2.5.7' };
+if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+
+
+/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5945,7 +5945,7 @@ module.exports = __webpack_require__(12) ? function (object, key, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
-var core = __webpack_require__(6);
+var core = __webpack_require__(7);
 var ctx = __webpack_require__(15);
 var hide = __webpack_require__(9);
 var has = __webpack_require__(18);
@@ -7382,7 +7382,7 @@ module.exports = function (it) {
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var core = __webpack_require__(6);
+var core = __webpack_require__(7);
 var global = __webpack_require__(1);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
@@ -7879,7 +7879,7 @@ __webpack_require__(70);
 __webpack_require__(74);
 __webpack_require__(86);
 __webpack_require__(87);
-module.exports = __webpack_require__(6).Promise;
+module.exports = __webpack_require__(7).Promise;
 
 
 /***/ }),
@@ -8450,7 +8450,7 @@ if (!USE_NATIVE) {
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
 __webpack_require__(29)($Promise, PROMISE);
 __webpack_require__(84)(PROMISE);
-Wrapper = __webpack_require__(6)[PROMISE];
+Wrapper = __webpack_require__(7)[PROMISE];
 
 // statics
 $export($export.S + $export.F * !USE_NATIVE, PROMISE, {
@@ -8595,7 +8595,7 @@ module.exports = function (it) {
 var classof = __webpack_require__(42);
 var ITERATOR = __webpack_require__(5)('iterator');
 var Iterators = __webpack_require__(13);
-module.exports = __webpack_require__(6).getIteratorMethod = function (it) {
+module.exports = __webpack_require__(7).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
     || Iterators[classof(it)];
@@ -8729,7 +8729,7 @@ module.exports = function (target, src, safe) {
 "use strict";
 
 var global = __webpack_require__(1);
-var core = __webpack_require__(6);
+var core = __webpack_require__(7);
 var dP = __webpack_require__(17);
 var DESCRIPTORS = __webpack_require__(12);
 var SPECIES = __webpack_require__(5)('species');
@@ -8779,7 +8779,7 @@ module.exports = function (exec, skipClosing) {
 // https://github.com/tc39/proposal-promise-finally
 
 var $export = __webpack_require__(10);
-var core = __webpack_require__(6);
+var core = __webpack_require__(7);
 var global = __webpack_require__(1);
 var speciesConstructor = __webpack_require__(43);
 var promiseResolve = __webpack_require__(46);
@@ -8834,7 +8834,7 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var core = __webpack_require__(6);
+var core = __webpack_require__(7);
 var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
 module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
   return $JSON.stringify.apply($JSON, arguments);
@@ -8857,7 +8857,7 @@ module.exports = { "default": __webpack_require__(108), __esModule: true };
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(109);
-module.exports = __webpack_require__(6).Object.assign;
+module.exports = __webpack_require__(7).Object.assign;
 
 
 /***/ }),
@@ -12964,7 +12964,88 @@ if (false) {
 /* 183 */,
 /* 184 */,
 /* 185 */,
-/* 186 */,
+/* 186 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+var queue = [];
+
+function getContext() {
+  var pages = getCurrentPages();
+  return pages[pages.length - 1];
+}
+
+var Dialog = function Dialog(options) {
+  options = _extends({}, Dialog.currentOptions, options);
+  return new Promise(function (resolve, reject) {
+    var context = options.context || getContext();
+    var dialog = context.selectComponent(options.selector);
+    delete options.selector;
+
+    if (dialog) {
+      dialog.set(_extends({
+        onCancel: reject,
+        onConfirm: resolve
+      }, options));
+      queue.push(dialog);
+    } else {
+      console.warn('未找到 van-dialog 节点，请确认 selector 及 context 是否正确');
+    }
+  });
+};
+
+Dialog.defaultOptions = {
+  show: true,
+  title: '',
+  message: '',
+  zIndex: 100,
+  overlay: true,
+  asyncClose: false,
+  messageAlign: '',
+  transition: 'scale',
+  selector: '#van-dialog',
+  confirmButtonText: '确认',
+  cancelButtonText: '取消',
+  showConfirmButton: true,
+  showCancelButton: false,
+  closeOnClickOverlay: false,
+  confirmButtonOpenType: ''
+};
+Dialog.alert = Dialog;
+
+Dialog.confirm = function (options) {
+  return Dialog(_extends({
+    showCancelButton: true
+  }, options));
+};
+
+Dialog.close = function () {
+  queue.forEach(function (dialog) {
+    dialog.close();
+  });
+  queue = [];
+};
+
+Dialog.stopLoading = function () {
+  queue.forEach(function (dialog) {
+    dialog.stopLoading();
+  });
+};
+
+Dialog.setDefaultOptions = function (options) {
+  Object.assign(Dialog.currentOptions, options);
+};
+
+Dialog.resetDefaultOptions = function () {
+  Dialog.currentOptions = _extends({}, Dialog.defaultOptions);
+};
+
+Dialog.resetDefaultOptions();
+/* harmony default export */ __webpack_exports__["a"] = (Dialog);
+
+/***/ }),
 /* 187 */,
 /* 188 */,
 /* 189 */,
@@ -12973,7 +13054,12 @@ if (false) {
 /* 192 */,
 /* 193 */,
 /* 194 */,
-/* 195 */
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */
 /***/ (function(module, exports) {
 
 /*
@@ -13055,13 +13141,13 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 196 */
+/* 201 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["default"] = addStylesClient;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__listToStyles__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__listToStyles__ = __webpack_require__(202);
 /*
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
@@ -13287,7 +13373,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 197 */
+/* 202 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

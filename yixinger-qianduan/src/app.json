@@ -9,7 +9,8 @@
     "pages/photo/photo",
     "pages/auxiliary/main",
     "pages/distinguish/main",
-    "pages/textdistinguish/main"
+    "pages/textdistinguish/main",
+    "pages/operationhistory/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

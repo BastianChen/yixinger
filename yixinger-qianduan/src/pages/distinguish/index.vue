@@ -152,9 +152,9 @@ export default {
     }
     this.isFirst = true;
     this.userInfo = this.$store.getters.disc;
-    console.log("dddddd" + this.$route.query.data)
+    // console.log("dddddd" + this.$route.query.data)
     this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
-    console.log("ccccccc" + this.data)
+    // console.log("ccccccc" + this.data)
     this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
     // 调整图片为自适应
     var _this = this;

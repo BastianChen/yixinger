@@ -1,13 +1,13 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([4],{
+global.webpackJsonp([5],{
 
 /***/ 177:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(178);
 
@@ -143,34 +143,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -189,11 +161,6 @@ if (false) {(function () {
       isLogin: false,
       code: '',
       openid: '',
-
-      avator: "http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png",
-      allcheck: false,
-      listData: [],
-      Listids: [],
       userInfo: {}
     };
   },
@@ -205,20 +172,6 @@ if (false) {(function () {
     getUserInfo: function getUserInfo() {
       var _this = this;
 
-      // this.userInfo = this.$store.getters.disc;
-      // console.log(this.$store.getters.disc)
-      // 调用登录接口
-      // wx.login({
-      //   success: () => {
-      //     wx.getUserInfo({
-      //       success: (res) => {
-      //         this.userInfo = res.userInfo
-      //         console.log(res)
-      //         console.log(this.userInfo)
-      //       }
-      //     })
-      //   }
-      // }),
       wx.login({
         //获取code
         success: function success(res) {
@@ -249,64 +202,10 @@ if (false) {(function () {
                   _this.userInfo = res.data;
                 });
               });
-              // wx.request({
-              //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
-              //   data: {},
-              //   header: {
-              //     'content-type': 'application/json'
-              //   },
-              //   success: (res) => {
-              //     console.log("openid"+res)
-              //     openid = res.data.openid //返回openid
-              //   }
-              //})
             }
           });
-          // wx.getLocation({
-          //   type: 'wgs84',
-          //   success(res) {
-          //     console.log(res)
-          //     const latitude = res.latitude
-          //     const longitude = res.longitude
-          //     const speed = res.speed
-          //     const accuracy = res.accuracy
-          //     wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-          //       url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
-          //       data: {},
-          //       header: {
-          //         'Content-Type': 'application/json'
-          //       },
-          //       success(res) {
-          //         console.log(res.data.result);
-          //         console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-          //         this.cityName = '杭州市';
-          //       },
-          //       fail: function () {
-          //         // fail
-          //         this.cityName = '杭州市';
-          //       },
-          //       complete: function () {
-          //         // complete
-          //       }
-          //     })
-          //   }
-          // })
         }
       });
-    },
-    goTo: function goTo(url) {
-      if (toLogin()) {
-        wx.navigateTo({
-          url: url
-        });
-      }
-    },
-    toLogin: function toLogin() {
-      if (!this.userInfo.avatarUrl) {
-        wx.navigateTo({
-          url: "/pages/login/main"
-        });
-      }
     }
   })
 });
@@ -363,6 +262,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "title": "操作记录",
       "is-link": "",
+      "url": "/pages/operationhistory/main",
       "mpcomid": '3'
     }
   })], 1)]) : _vm._e(), _vm._v(" "), (!_vm.isLogin) ? _c('div', {

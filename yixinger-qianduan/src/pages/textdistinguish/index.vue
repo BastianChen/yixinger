@@ -113,7 +113,7 @@ export default {
       broadcastImgUrl: '/static/images/broadcast.png',
       userInfo: {},
       result: ' ',// '<span>富士山<br/>富士山</span>',
-      translateResult: '                                                               ',//'<span style="font-size: 15px;line-height: 20px;padding: 15px">Fuji<br/>Fuji</span>',
+      translateResult: ' ',//'<span style="font-size: 15px;line-height: 20px;padding: 15px">Fuji<br/>Fuji</span>',
       columns: ['自动检测', '中文', '英语', '粤语', '文言文', '日语', '韩语', '法语', '西班牙语', '泰语', '阿拉伯语',
         '俄语', '葡萄牙语', '德语', '意大利语', '希腊语', '荷兰语', '波兰语', '保加利亚语', '爱沙尼亚语', '丹麦语',
         '芬兰语', '捷克语', '罗马尼亚语', '斯洛文尼亚语', '瑞典语', '匈牙利语', '繁体中文', '越南语'],
@@ -176,7 +176,7 @@ export default {
     this.innerAudioContext.stop();
     this.isPlay = false;
     this.isTranslated = false;
-    this.translateResult = '';
+    this.translateResult = ' ';
     this.text = '';
     this.fromType = 'auto';
     this.language = '自动检测 -> 中文';
@@ -215,7 +215,7 @@ export default {
     console.log(JSON.parse(this.data.data.words));
     this.words_result = JSON.parse(this.data.data.words).words_result;
     this.words_result_num = JSON.parse(this.data.data.words).words_result_num;
-    this.result = '';
+    this.result = ' ';
     for (let i = 0; i < this.words_result_num; i++) {
       let words = {};
       words.word = this.words_result[i].words;
@@ -410,7 +410,7 @@ export default {
         title: '正在翻译...'
       }).then(res => {
         this.translateText = res.data;
-        this.translateResult = '';
+        this.translateResult = ' ';
         this.text = '';
         this.isPlay = false;
         this.speechPath = '';

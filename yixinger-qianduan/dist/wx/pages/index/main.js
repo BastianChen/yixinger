@@ -7,7 +7,7 @@ global.webpackJsonp([2],{
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(183);
 
@@ -89,44 +89,6 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(186);
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -684,89 +646,6 @@ if (false) {(function () {
     }
   })
 });
-
-/***/ }),
-
-/***/ 186:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-var queue = [];
-
-function getContext() {
-  var pages = getCurrentPages();
-  return pages[pages.length - 1];
-}
-
-var Dialog = function Dialog(options) {
-  options = _extends({}, Dialog.currentOptions, options);
-  return new Promise(function (resolve, reject) {
-    var context = options.context || getContext();
-    var dialog = context.selectComponent(options.selector);
-    delete options.selector;
-
-    if (dialog) {
-      dialog.set(_extends({
-        onCancel: reject,
-        onConfirm: resolve
-      }, options));
-      queue.push(dialog);
-    } else {
-      console.warn('未找到 van-dialog 节点，请确认 selector 及 context 是否正确');
-    }
-  });
-};
-
-Dialog.defaultOptions = {
-  show: true,
-  title: '',
-  message: '',
-  zIndex: 100,
-  overlay: true,
-  asyncClose: false,
-  messageAlign: '',
-  transition: 'scale',
-  selector: '#van-dialog',
-  confirmButtonText: '确认',
-  cancelButtonText: '取消',
-  showConfirmButton: true,
-  showCancelButton: false,
-  closeOnClickOverlay: false,
-  confirmButtonOpenType: ''
-};
-Dialog.alert = Dialog;
-
-Dialog.confirm = function (options) {
-  return Dialog(_extends({
-    showCancelButton: true
-  }, options));
-};
-
-Dialog.close = function () {
-  queue.forEach(function (dialog) {
-    dialog.close();
-  });
-  queue = [];
-};
-
-Dialog.stopLoading = function () {
-  queue.forEach(function (dialog) {
-    dialog.stopLoading();
-  });
-};
-
-Dialog.setDefaultOptions = function (options) {
-  Object.assign(Dialog.currentOptions, options);
-};
-
-Dialog.resetDefaultOptions = function () {
-  Dialog.currentOptions = _extends({}, Dialog.defaultOptions);
-};
-
-Dialog.resetDefaultOptions();
-/* harmony default export */ __webpack_exports__["a"] = (Dialog);
 
 /***/ }),
 

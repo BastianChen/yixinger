@@ -2,14 +2,14 @@ require("../../common/manifest.js");
 require("../../common/vendor.js");
 global.webpackJsonp([3],{
 
-/***/ 188:
+/***/ 193:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(194);
 
 
 
@@ -18,16 +18,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 189:
+/***/ 194:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(191);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_1c5af7e1_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_1c5af7e1_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(197);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(190)
+  __webpack_require__(195)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -72,14 +72,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 190:
+/***/ 195:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 191:
+/***/ 196:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -207,7 +207,7 @@ if (false) {(function () {
       broadcastImgUrl: '/static/images/broadcast.png',
       userInfo: {},
       result: ' ', // '<span>富士山<br/>富士山</span>',
-      translateResult: '                                                               ', //'<span style="font-size: 15px;line-height: 20px;padding: 15px">Fuji<br/>Fuji</span>',
+      translateResult: ' ', //'<span style="font-size: 15px;line-height: 20px;padding: 15px">Fuji<br/>Fuji</span>',
       columns: ['自动检测', '中文', '英语', '粤语', '文言文', '日语', '韩语', '法语', '西班牙语', '泰语', '阿拉伯语', '俄语', '葡萄牙语', '德语', '意大利语', '希腊语', '荷兰语', '波兰语', '保加利亚语', '爱沙尼亚语', '丹麦语', '芬兰语', '捷克语', '罗马尼亚语', '斯洛文尼亚语', '瑞典语', '匈牙利语', '繁体中文', '越南语'],
       pickerShow: false,
       language: '自动检测 -> 中文',
@@ -266,7 +266,7 @@ if (false) {(function () {
     this.innerAudioContext.stop();
     this.isPlay = false;
     this.isTranslated = false;
-    this.translateResult = '';
+    this.translateResult = ' ';
     this.text = '';
     this.fromType = 'auto';
     this.language = '自动检测 -> 中文';
@@ -305,7 +305,7 @@ if (false) {(function () {
     console.log(JSON.parse(this.data.data.words));
     this.words_result = JSON.parse(this.data.data.words).words_result;
     this.words_result_num = JSON.parse(this.data.data.words).words_result_num;
-    this.result = '';
+    this.result = ' ';
     for (var i = 0; i < this.words_result_num; i++) {
       var words = {};
       words.word = this.words_result[i].words;
@@ -507,7 +507,7 @@ if (false) {(function () {
         title: '正在翻译...'
       }).then(function (res) {
         _this5.translateText = res.data;
-        _this5.translateResult = '';
+        _this5.translateResult = ' ';
         _this5.text = '';
         _this5.isPlay = false;
         _this5.speechPath = '';
@@ -532,7 +532,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 192:
+/***/ 197:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -708,5 +708,5 @@ if (false) {
 
 /***/ })
 
-},[188]);
+},[193]);
 //# sourceMappingURL=main.js.map
