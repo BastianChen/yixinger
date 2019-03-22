@@ -1,6 +1,6 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([4],{
+global.webpackJsonp([3],{
 
 /***/ 188:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -83,7 +83,8 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(20);
 //
 //
 //
@@ -179,6 +180,48 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -186,17 +229,52 @@ if (false) {(function () {
   data: function data() {
     return {
       active: 0,
-      imageUrl: 'https://www.wzcb97.top/images/photo/155306006312929788825_src.jpg'
+      imageUrl: 'https://www.wzcb97.top/images/photo/155306006312929788825_src.jpg',
+      userInfo: {},
+      photoDistinguishData: [],
+      textDistinguishData: [],
+      yearsInphotoDistinguish: [],
+      yearsIntextDistinguish: [],
+      district: '', // 直辖市
+      city: '', // 城市名
+      isphotoDistinguishDataEmpty: false,
+      istextDistinguishDataEmpty: false
     };
+  },
+  mounted: function mounted() {
+    this.userInfo = this.$store.getters.disc;
+    this.getOperationHistoryData(1);
+    this.getOperationHistoryData(2);
   },
 
   methods: {
-    clickLong: function clickLong(index) {
+    clickLong: function clickLong(id, type) {
+      var _this = this;
+
       __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__["a" /* default */].confirm({
         title: '温馨提示',
         message: '您确定要删除该条记录？'
       }).then(function () {
-        console.log("确定");
+        _this.$httpWX.post({
+          url: type == 1 ? __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].deletePhotoDistinguishById : __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].deleteTextDistinguishById,
+          data: {
+            idList: id
+          }
+        }).then(function (res) {
+          _this.getOperationHistoryData(type);
+          wx.showToast({
+            title: res.message,
+            icon: 'none'
+          });
+          if (type == 1) {
+            _this.active = 0;
+          } else {
+            _this.active = 1;
+          }
+          // setTimeout(() => {
+          //   wx.hideToast();
+          // }, 2000);
+        });
       }).catch(function () {
         console.log("取消");
       });
@@ -206,6 +284,191 @@ if (false) {(function () {
       //   title: `切换到标签 ${index.target.title}`,
       //   icon: 'none'
       // });
+      // if (index.target.index == 0) {
+      //   this.getOperationHistoryData(1);
+      // } else if (index.target.index == 1) {
+      //   this.getOperationHistoryData(2);
+      // }
+    },
+    getOperationHistoryData: function getOperationHistoryData(type) {
+      var _this2 = this;
+
+      var myDate = new Date();
+      // 获取图像识别的记录
+      if (type == 1) {
+        this.$httpWX.get({
+          url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPhotoDistinguishList,
+          data: {
+            userId: this.userInfo.openid
+          }
+        }).then(function (res) {
+          _this2.photoDistinguishData = res.data;
+          if (_this2.photoDistinguishData == null) {
+            _this2.isphotoDistinguishDataEmpty = true;
+          } else {
+            _this2.isphotoDistinguishDataEmpty = false;
+            var isTodayFirst = false;
+            var isYesterdayFirst = false;
+            for (var i = 0; i < _this2.photoDistinguishData.length; i++) {
+              _this2.photoDistinguishData[i].imageUrl = 'https://www.wzcb97.top/' + _this2.photoDistinguishData[i].imageUrl;
+              var desc = void 0;
+              var result = JSON.parse(_this2.photoDistinguishData[i].result).result;
+              var keyword = void 0;
+              var dateArray = _this2.photoDistinguishData[i].date.split('-');
+              var cityNameArray = _this2.photoDistinguishData[i].cityName.split('·');
+              var isRepeated = false;
+              switch (_this2.photoDistinguishData[i].type) {
+                case '1':
+                  desc = '通用图像识别';
+                  keyword = result[0].keyword;
+                  break;
+                case '2':
+                  desc = '植物识别';
+                  keyword = result[0].name;
+                  break;
+                case '3':
+                  desc = '动物识别';
+                  keyword = result[0].name;
+                  break;
+                case '4':
+                  desc = '菜品识别';
+                  keyword = result[0].name;
+                  break;
+                default:
+                  break;
+              }
+              _this2.$set(_this2.photoDistinguishData[i], 'keyword', keyword);
+              _this2.$set(_this2.photoDistinguishData[i], 'desc', desc);
+              _this2.$set(_this2.photoDistinguishData[i], 'year', dateArray[0]);
+              _this2.$set(_this2.photoDistinguishData[i], 'month', dateArray[1].substring(1, 2) + '月');
+              _this2.$set(_this2.photoDistinguishData[i], 'day', dateArray[2].split(' ')[0]);
+              _this2.$set(_this2.photoDistinguishData[i], 'city', cityNameArray[0]);
+              _this2.$set(_this2.photoDistinguishData[i], 'district', cityNameArray[1]);
+              if (myDate.getFullYear() == dateArray[0] && myDate.getMonth() + 1 == dateArray[1].substring(1, 2) && myDate.getDate() == dateArray[2].split(' ')[0]) {
+                if (!isTodayFirst) {
+                  _this2.$set(_this2.photoDistinguishData[i], 'dateType', 1); // 时间为今天
+                  isTodayFirst = true;
+                } else {
+                  _this2.$set(_this2.photoDistinguishData[i], 'dateType', 4); // 时间为今天,但不是第一条
+                }
+              } else if (myDate.getFullYear() == dateArray[0] && myDate.getMonth() + 1 == dateArray[1].substring(1, 2) && myDate.getDate() - 1 == dateArray[2].split(' ')[0]) {
+                if (!isYesterdayFirst) {
+                  _this2.$set(_this2.photoDistinguishData[i], 'dateType', 2); // 时间为昨天
+                  isYesterdayFirst = true;
+                } else {
+                  _this2.$set(_this2.photoDistinguishData[i], 'dateType', 5); // 时间为昨天,但不是第一条
+                }
+              } else {
+                _this2.$set(_this2.photoDistinguishData[i], 'dateType', 3); // 正常时间
+              }
+              if (_this2.yearsInphotoDistinguish.length == 0) {
+                _this2.yearsInphotoDistinguish.push(dateArray[0]);
+                isRepeated = false;
+              } else {
+                for (var j = 0; j < _this2.yearsInphotoDistinguish.length; j++) {
+                  if (_this2.yearsInphotoDistinguish[j] == dateArray[0]) {
+                    isRepeated = true;
+                    break;
+                  }
+                }
+                if (!isRepeated) {
+                  _this2.yearsInphotoDistinguish.push(dateArray[0]);
+                }
+              }
+            }
+            _this2.setYearsOrder(_this2.yearsInphotoDistinguish);
+            console.log(_this2.photoDistinguishData);
+            console.log(_this2.yearsInphotoDistinguish);
+          }
+        });
+      } else if (type == 2) {
+        // 获取文字识别的记录
+        this.$httpWX.get({
+          url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getTextDistinguishList,
+          data: {
+            userId: this.userInfo.openid
+          }
+        }).then(function (res) {
+          _this2.textDistinguishData = res.data;
+          if (_this2.textDistinguishData == null) {
+            _this2.istextDistinguishDataEmpty = true;
+          } else {
+            var isTodayFirst = false;
+            var isYesterdayFirst = false;
+            for (var i = 0; i < _this2.textDistinguishData.length; i++) {
+              _this2.textDistinguishData[i].imageUrl = 'https://www.wzcb97.top/' + _this2.textDistinguishData[i].imageUrl;
+              var desc = '文字识别';
+              var result = JSON.parse(_this2.textDistinguishData[i].words).words_result;
+              var keyword = result[0].words + '...';
+              var dateArray = _this2.textDistinguishData[i].date.split('-');
+              var cityNameArray = _this2.textDistinguishData[i].cityName.split('·');
+              var isRepeated = false;
+              _this2.$set(_this2.textDistinguishData[i], 'keyword', keyword);
+              _this2.$set(_this2.textDistinguishData[i], 'desc', desc);
+              _this2.$set(_this2.textDistinguishData[i], 'year', dateArray[0]);
+              _this2.$set(_this2.textDistinguishData[i], 'month', dateArray[1].substring(1, 2) + '月');
+              _this2.$set(_this2.textDistinguishData[i], 'day', dateArray[2].split(' ')[0]);
+              _this2.$set(_this2.textDistinguishData[i], 'city', cityNameArray[0]);
+              _this2.$set(_this2.textDistinguishData[i], 'district', cityNameArray[1]);
+              if (myDate.getFullYear() == dateArray[0] && myDate.getMonth() + 1 == dateArray[1].substring(1, 2) && myDate.getDate() == dateArray[2].split(' ')[0]) {
+                if (!isTodayFirst) {
+                  _this2.$set(_this2.textDistinguishData[i], 'dateType', 1); // 时间为今天
+                  isTodayFirst = true;
+                } else {
+                  _this2.$set(_this2.textDistinguishData[i], 'dateType', 4); // 时间为今天,但不是第一条
+                }
+              } else if (myDate.getFullYear() == dateArray[0] && myDate.getMonth() + 1 == dateArray[1].substring(1, 2) && myDate.getDate() - 1 == dateArray[2].split(' ')[0]) {
+                if (!isYesterdayFirst) {
+                  _this2.$set(_this2.textDistinguishData[i], 'dateType', 2); // 时间为昨天
+                  isYesterdayFirst = true;
+                } else {
+                  _this2.$set(_this2.textDistinguishData[i], 'dateType', 5); // 时间为昨天,但不是第一条
+                }
+              } else {
+                _this2.$set(_this2.textDistinguishData[i], 'dateType', 3); // 正常时间
+              }
+              if (_this2.yearsIntextDistinguish.length == 0) {
+                _this2.yearsIntextDistinguish.push(dateArray[0]);
+                isRepeated = false;
+              } else {
+                for (var j = 0; j < _this2.yearsIntextDistinguish.length; j++) {
+                  if (_this2.yearsIntextDistinguish[j] == dateArray[0]) {
+                    isRepeated = true;
+                    break;
+                  }
+                }
+                if (!isRepeated) {
+                  _this2.yearsIntextDistinguish.push(dateArray[0]);
+                }
+              }
+            }
+            _this2.setYearsOrder(_this2.yearsIntextDistinguish);
+            console.log(_this2.textDistinguishData);
+            console.log(_this2.yearsIntextDistinguish);
+          }
+        });
+      }
+    },
+    setYearsOrder: function setYearsOrder(years) {
+      // 对年份时间进行排序,如果flag>0则排序结束
+      var flag = years.length;
+      var len = flag;
+      var year;
+      while (flag > 0) {
+        flag = 0;
+        for (var m = 1; m < len; m++) {
+          // 比较评分，若前面小于后面则交换数据
+          if (years[m] < years[m + 1]) {
+            year = years[m];
+            years[m] = years[m + 1];
+            years[m + 1] = year;
+            // 设置最新边界
+            flag = m;
+          }
+        }
+        // 记录遍历的边界
+        len = flag;
+      }
     }
   }
 });
@@ -226,8 +489,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "animated": "",
       "swipeable": "",
       "color": "#00BFFF",
-      "eventid": '1',
-      "mpcomid": '20'
+      "eventid": '2',
+      "mpcomid": '14'
     },
     on: {
       "change": _vm.onChange
@@ -235,154 +498,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('van-tab', {
     attrs: {
       "title": "图像识别",
-      "mpcomid": '18'
-    }
-  }, [_c('div', {
-    staticStyle: {
-      "margin": "10px 5px",
-      "width": "100%",
-      "font-weight": "bold",
-      "font-size": "28px",
-      "font-family": "KaiTi"
-    }
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '1'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "8",
-      "offset": "1",
-      "mpcomid": '0'
-    }
-  }, [_vm._v("\n            2019年\n          ")])], 1), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '5'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "4",
-      "offset": "1",
-      "mpcomid": '2'
-    }
-  }, [_vm._v("\n            今天\n          ")]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "18",
-      "eventid": '0',
-      "mpcomid": '4'
-    },
-    on: {
-      "longpress": _vm.clickLong
-    }
-  }, [_c('van-card', {
-    attrs: {
-      "desc": "通用图像识别",
-      "title": "香奈儿",
-      "thumb": _vm.imageUrl,
-      "centered": "",
-      "lazy-load": "",
-      "mpcomid": '3'
-    }
-  })], 1)], 1)], 1), _vm._v(" "), _c('div', {
-    staticStyle: {
-      "margin": "10px 5px",
-      "width": "100%",
-      "font-weight": "bold",
-      "font-size": "28px",
-      "font-family": "KaiTi"
-    }
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '7'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "8",
-      "offset": "1",
       "mpcomid": '6'
     }
-  }, [_vm._v("\n            2018年\n          ")])], 1), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '11'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "4",
-      "offset": "1",
-      "mpcomid": '8'
-    }
-  }, [_c('span', [_vm._v("\n              11\n            ")]), _vm._v(" "), _c('span', {
-    staticStyle: {
-      "font-size": "14px",
-      "margin-left": "-7px"
-    }
-  }, [_vm._v("\n              3月\n            ")])]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "18",
-      "mpcomid": '10'
-    }
-  }, [_c('van-card', {
-    attrs: {
-      "desc": "通用图像识别",
-      "title": "香奈儿",
-      "thumb": _vm.imageUrl,
-      "centered": "",
-      "lazy-load": "",
-      "mpcomid": '9'
-    }
-  })], 1)], 1)], 1), _vm._v(" "), _c('div', {
-    staticStyle: {
-      "margin": "10px 5px",
-      "width": "100%",
-      "font-weight": "bold",
-      "font-size": "28px",
-      "font-family": "KaiTi"
-    }
-  }, [(false) ? _c('van-row', {
-    attrs: {
-      "mpcomid": '13'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "8",
-      "offset": "1",
-      "mpcomid": '12'
-    }
-  }, [_vm._v("\n            2018年\n          ")])], 1) : _vm._e(), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '17'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "4",
-      "offset": "1",
-      "mpcomid": '14'
-    }
-  }, [_c('span', [_vm._v("\n              09\n            ")]), _vm._v(" "), _c('span', {
-    staticStyle: {
-      "font-size": "14px",
-      "margin-left": "-7px"
-    }
-  }, [_vm._v("\n              3月\n            ")])]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "18",
-      "mpcomid": '16'
-    }
-  }, [_c('van-card', {
-    attrs: {
-      "desc": "通用图像识别",
-      "title": "香奈儿",
-      "thumb": _vm.imageUrl,
-      "centered": "",
-      "lazy-load": "",
-      "mpcomid": '15'
-    }
-  })], 1)], 1)], 1)]), _vm._v(" "), _c('van-tab', {
-    attrs: {
-      "title": "文字识别",
-      "mpcomid": '19'
-    }
-  }, [_c('div', {
+  }, [(_vm.isphotoDistinguishDataEmpty) ? _c('div', {
     staticStyle: {
       "text-align": "center",
       "margin-top": "200px"
@@ -395,13 +513,189 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "src": "../../../static/images/noContent.png"
     }
-  })]), _vm._v(" "), _c('div', [_c('span', [_vm._v("\n            暂无记录\n          ")])])])])], 1), _vm._v(" "), _c('van-dialog', {
+  })]), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "font-size": "14px",
+      "font-family": "KaiTi"
+    }
+  }, [_c('span', [_vm._v("\n            暂无记录\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.yearsInphotoDistinguish), function(year, key) {
+    return (!_vm.isphotoDistinguishDataEmpty) ? _c('div', {
+      key: key,
+      staticStyle: {
+        "margin": "10px 5px",
+        "width": "100%",
+        "font-weight": "bold",
+        "font-size": "28px",
+        "font-family": "KaiTi"
+      }
+    }, [_c('van-row', {
+      attrs: {
+        "mpcomid": '1-' + key
+      }
+    }, [_c('van-col', {
+      attrs: {
+        "span": "8",
+        "offset": "1",
+        "mpcomid": '0-' + key
+      }
+    }, [_vm._v("\n            " + _vm._s(year) + "年\n          ")])], 1), _vm._v(" "), _vm._l((_vm.photoDistinguishData), function(item, index) {
+      return _c('div', {
+        key: index,
+        staticStyle: {
+          "margin": "10px 5px"
+        }
+      }, [(item.year == year) ? _c('div', [_c('van-row', {
+        attrs: {
+          "mpcomid": '5-' + key + '-' + index
+        }
+      }, [_c('van-col', {
+        attrs: {
+          "span": "4",
+          "offset": "1",
+          "mpcomid": '2-' + key + '-' + index
+        }
+      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
+        staticStyle: {
+          "font-size": "14px",
+          "margin-left": "-7px"
+        }
+      }, [_vm._v("\n                  " + _vm._s(item.month) + "\n                ")]) : _vm._e()]), _vm._v(" "), _c('div', {
+        staticStyle: {
+          "color": "#7d7e80",
+          "font-size": "10px",
+          "margin-top": "10px"
+        }
+      }, [_c('span', [_vm._v("\n                    " + _vm._s(item.city) + "\n                  ")])]), _vm._v(" "), _c('div', {
+        staticStyle: {
+          "color": "#7d7e80",
+          "font-size": "10px"
+        }
+      }, [_c('span', [_vm._v("\n                    " + _vm._s(item.district) + "\n                  ")])])]), _vm._v(" "), _c('van-col', {
+        attrs: {
+          "span": "18",
+          "eventid": '0-' + key + '-' + index,
+          "mpcomid": '4-' + key + '-' + index
+        },
+        on: {
+          "longpress": function($event) {
+            _vm.clickLong(item.id, 1)
+          }
+        }
+      }, [_c('van-card', {
+        attrs: {
+          "desc": item.desc,
+          "title": item.keyword,
+          "thumb": item.imageUrl,
+          "centered": "",
+          "lazy-load": "",
+          "mpcomid": '3-' + key + '-' + index
+        }
+      })], 1)], 1)], 1) : _vm._e()])
+    })], 2) : _vm._e()
+  })], 2), _vm._v(" "), _c('van-tab', {
+    attrs: {
+      "title": "文字识别",
+      "mpcomid": '13'
+    }
+  }, [(_vm.istextDistinguishDataEmpty) ? _c('div', {
+    staticStyle: {
+      "text-align": "center",
+      "margin-top": "200px"
+    }
+  }, [_c('div', [_c('img', {
+    staticStyle: {
+      "width": "80px",
+      "height": "80px"
+    },
+    attrs: {
+      "src": "../../../static/images/noContent.png"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "font-size": "14px",
+      "font-family": "KaiTi"
+    }
+  }, [_c('span', [_vm._v("\n            暂无记录\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.yearsIntextDistinguish), function(year, key) {
+    return (!_vm.istextDistinguishDataEmpty) ? _c('div', {
+      key: key,
+      staticStyle: {
+        "margin": "10px 5px",
+        "width": "100%",
+        "font-weight": "bold",
+        "font-size": "28px",
+        "font-family": "KaiTi"
+      }
+    }, [_c('van-row', {
+      attrs: {
+        "mpcomid": '8-' + key
+      }
+    }, [_c('van-col', {
+      attrs: {
+        "span": "8",
+        "offset": "1",
+        "mpcomid": '7-' + key
+      }
+    }, [_vm._v("\n            " + _vm._s(year) + "年\n          ")])], 1), _vm._v(" "), _vm._l((_vm.textDistinguishData), function(item, index) {
+      return _c('div', {
+        key: index,
+        staticStyle: {
+          "margin": "10px 5px"
+        }
+      }, [(item.year == year) ? _c('div', [_c('van-row', {
+        attrs: {
+          "mpcomid": '12-' + key + '-' + index
+        }
+      }, [_c('van-col', {
+        attrs: {
+          "span": "4",
+          "offset": "1",
+          "mpcomid": '9-' + key + '-' + index
+        }
+      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
+        staticStyle: {
+          "font-size": "14px",
+          "margin-left": "-7px"
+        }
+      }, [_vm._v("\n                  " + _vm._s(item.month) + "\n                ")]) : _vm._e()]), _vm._v(" "), _c('div', {
+        staticStyle: {
+          "color": "#7d7e80",
+          "font-size": "10px",
+          "margin-top": "10px"
+        }
+      }, [_c('span', [_vm._v("\n                    " + _vm._s(item.city) + "\n                  ")])]), _vm._v(" "), _c('div', {
+        staticStyle: {
+          "color": "#7d7e80",
+          "font-size": "10px"
+        }
+      }, [_c('span', [_vm._v("\n                    " + _vm._s(item.district) + "\n                  ")])])]), _vm._v(" "), _c('van-col', {
+        attrs: {
+          "span": "18",
+          "eventid": '1-' + key + '-' + index,
+          "mpcomid": '11-' + key + '-' + index
+        },
+        on: {
+          "longpress": function($event) {
+            _vm.clickLong(item.id, 2)
+          }
+        }
+      }, [_c('van-card', {
+        attrs: {
+          "desc": item.desc,
+          "title": item.keyword,
+          "thumb": item.imageUrl,
+          "centered": "",
+          "lazy-load": "",
+          "mpcomid": '10-' + key + '-' + index
+        }
+      })], 1)], 1)], 1) : _vm._e()])
+    })], 2) : _vm._e()
+  })], 2)], 1), _vm._v(" "), _c('van-dialog', {
     staticStyle: {
       "text-align": "center"
     },
     attrs: {
       "id": "van-dialog",
-      "mpcomid": '21'
+      "mpcomid": '15'
     }
   })], 1)
 }
