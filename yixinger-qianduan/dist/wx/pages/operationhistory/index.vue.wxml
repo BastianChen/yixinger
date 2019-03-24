@@ -1,4 +1,4 @@
-<template name="252e7920">
+<template name="37e30f6c">
   <view class="_div data-v-f610f38c index">
     <van-tabs active="{{active}}" bindchange="handleProxy" sticky animated swipeable color="#00BFFF" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_van-tabs data-v-f610f38c">
       <van-tab title="图像识别" class="_van-tab data-v-f610f38c">
@@ -29,7 +29,7 @@
                       {{item.district}}
                     </label></view>
                 </van-col>
-                <van-col span="18" bindlongpress="handleProxy" data-eventid="{{'0-'+key+'-'+index}}" data-comkey="{{$k}}" class="_van-col data-v-f610f38c">
+                <van-col span="18" bindlongpress="handleProxy" bindtap="handleProxy" data-eventid="{{'0-'+key+'-'+index}}" data-comkey="{{$k}}" class="_van-col data-v-f610f38c">
                   <van-card desc="{{item.desc}}" title="{{item.keyword}}" thumb="{{item.imageUrl}}" centered lazy-load class="_van-card data-v-f610f38c"></van-card>
                 </van-col>
               </van-row>
@@ -65,7 +65,7 @@
                       {{item.district}}
                     </label></view>
                 </van-col>
-                <van-col span="18" bindlongpress="handleProxy" data-eventid="{{'1-'+key+'-'+index}}" data-comkey="{{$k}}" class="_van-col data-v-f610f38c">
+                <van-col span="18" bindlongpress="handleProxy" bindtap="handleProxy" data-eventid="{{'1-'+key+'-'+index}}" data-comkey="{{$k}}" class="_van-col data-v-f610f38c">
                   <van-card desc="{{item.desc}}" title="{{item.keyword}}" thumb="{{item.imageUrl}}" centered lazy-load class="_van-card data-v-f610f38c"></van-card>
                 </van-col>
               </van-row>

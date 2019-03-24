@@ -89,7 +89,7 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mpvue_wxparse__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__service_api_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__service_api_js__ = __webpack_require__(15);
 
 
 //
@@ -270,10 +270,11 @@ if (false) {(function () {
     this.text = '';
     this.fromType = 'auto';
     this.language = '自动检测 -> 中文';
+    this.imageUrl = '';
     console.log(this.flag);
   },
   mounted: function mounted() {
-    if (!this.isFirst) {
+    if (!this.isFirst && !this.$route.query.isHistory) {
       wx.showToast({
         title: '识别成功',
         icon: 'success'
@@ -282,7 +283,12 @@ if (false) {(function () {
     this.isFirst = true;
     this.userInfo = this.$store.getters.disc;
     this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
-    this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
+    if (this.data.data.imageUrl.indexOf("https://www.wzcb97.top") == -1) {
+      this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
+    } else {
+      var imageUrlArray = this.data.data.imageUrl.split("//");
+      this.imageUrl = 'https://wzcb97.top/' + imageUrlArray[2];
+    }
     // 调整图片为自适应
     var _this = this;
     wx.getImageInfo({
@@ -624,7 +630,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.selectLanguage
     }
-  }, [_vm._v("\n              " + _vm._s(_vm.language) + "\n            ")])], 1), _vm._v(" "), _c('van-col', {
+  }, [_vm._v("\n            " + _vm._s(_vm.language) + "\n          ")])], 1), _vm._v(" "), _c('van-col', {
     attrs: {
       "span": "4",
       "offset": "5",
@@ -646,7 +652,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.translate
     }
-  }, [_vm._v("\n              翻译\n            ")])], 1)], 1)], 1)]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n            翻译\n          ")])], 1)], 1)], 1)]), _vm._v(" "), _c('div', {
     staticClass: "secondDiv"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "secondRow"

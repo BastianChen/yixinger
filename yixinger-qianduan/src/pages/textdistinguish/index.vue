@@ -1,98 +1,98 @@
 <template>
   <div class="index">
     <!--<scroll-view scroll-y :style="{height: windowHeight}" scroll-with-animation="true" :scroll-top="scrollTop">-->
-      <div class="firstDiv">
-        <div class="firstRow">
-          <van-row>
-            <van-col span="6" offset="3">
+    <div class="firstDiv">
+      <div class="firstRow">
+        <van-row>
+          <van-col span="6" offset="3">
           <span>
             识别图片：
           </span>
-            </van-col>
-          </van-row>
-        </div>
-        <div class="secondRow">
-          <img :src="imageUrl" :style="{width:imgWidth,height:imgHeight}" v-show="isShow"/>
-        </div>
-        <div class="thirdRow">
-          <van-row>
-            <van-col span="6" offset="3">
+          </van-col>
+        </van-row>
+      </div>
+      <div class="secondRow">
+        <img :src="imageUrl" :style="{width:imgWidth,height:imgHeight}" v-show="isShow"/>
+      </div>
+      <div class="thirdRow">
+        <van-row>
+          <van-col span="6" offset="3">
             <span>
               识别结果：
             </span>
-            </van-col>
-          </van-row>
-        </div>
-        <div class="forthRow">
-          <van-row>
-            <van-col span="18" offset="3">
-              <wxParse :content="result"/>
-            </van-col>
-          </van-row>
-        </div>
-        <div class="fifthRow">
-          <van-row>
-            <van-col span="10" offset="2">
-              <!--<div style="border-width: 1px;border-color: #333333;">-->
-              <!--<span @click="selectLanguage">-->
-              <!--{{language}}-->
-              <!--</span>-->
-              <!--</div>-->
-              <!--<van-button type="default" @click="selectLanguage">{{language}}</van-button>-->
-              <button
-                type="default"
-                size="mini"
-                plain="false"
-                bindtap="primary"
-                style="width: 180px"
-                @click="selectLanguage"
-              >
-                {{language}}
-              </button>
-            </van-col>
-            <van-col span="4" offset="5">
-              <button
-                type="primary"
-                size="mini"
-                plain="false"
-                bindtap="primary"
-                style="width: 80px;border-color: #1989FA;color: #1989FA"
-                @click="translate"
-              >
-                翻译
-              </button>
-              <!--<van-button plain type="primary">翻译</van-button>-->
-            </van-col>
-          </van-row>
-        </div>
+          </van-col>
+        </van-row>
       </div>
-      <div class="secondDiv">
-        <div class="firstRow">
+      <div class="forthRow">
+        <van-row>
+          <van-col span="18" offset="3">
+            <wxParse :content="result"/>
+          </van-col>
+        </van-row>
+      </div>
+      <div class="fifthRow">
+        <van-row>
+          <van-col span="10" offset="2">
+            <!--<div style="border-width: 1px;border-color: #333333;">-->
+            <!--<span @click="selectLanguage">-->
+            <!--{{language}}-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--<van-button type="default" @click="selectLanguage">{{language}}</van-button>-->
+            <button
+              type="default"
+              size="mini"
+              plain="false"
+              bindtap="primary"
+              style="width: 180px"
+              @click="selectLanguage"
+            >
+              {{language}}
+            </button>
+          </van-col>
+          <van-col span="4" offset="5">
+            <button
+              type="primary"
+              size="mini"
+              plain="false"
+              bindtap="primary"
+              style="width: 80px;border-color: #1989FA;color: #1989FA"
+              @click="translate"
+            >
+              翻译
+            </button>
+            <!--<van-button plain type="primary">翻译</van-button>-->
+          </van-col>
+        </van-row>
+      </div>
+    </div>
+    <div class="secondDiv">
+      <div class="firstRow">
           <span>
             -- 翻译结果 --
           </span>
-        </div>
-        <div class="secondRow">
-          <div>
-            <wxParse :content="translateResult"/>
-            <img :src="broadcastImgUrl" @click="play" v-show="isTranslated"/>
-          </div>
+      </div>
+      <div class="secondRow">
+        <div>
+          <wxParse :content="translateResult"/>
+          <img :src="broadcastImgUrl" @click="play" v-show="isTranslated"/>
         </div>
       </div>
+    </div>
     <!--</scroll-view>-->
-      <div>
-        <!--<audio :src="speechPath" id="Audio"></audio>-->
-        <van-popup :show="pickerShow" position="bottom"
-                   overlay="false" close-on-click-overlay>
-          <van-picker
-            show-toolbar
-            title="翻译语种"
-            :columns="columns"
-            @cancel="onCancel"
-            @confirm="onConfirm"
-          />
-        </van-popup>
-      </div>
+    <div>
+      <!--<audio :src="speechPath" id="Audio"></audio>-->
+      <van-popup :show="pickerShow" position="bottom"
+                 overlay="false" close-on-click-overlay>
+        <van-picker
+          show-toolbar
+          title="翻译语种"
+          :columns="columns"
+          @cancel="onCancel"
+          @confirm="onConfirm"
+        />
+      </van-popup>
+    </div>
   </div>
 </template>
 
@@ -180,10 +180,11 @@ export default {
     this.text = '';
     this.fromType = 'auto';
     this.language = '自动检测 -> 中文';
+    this.imageUrl = '';
     console.log(this.flag);
   },
   mounted() {
-    if (!this.isFirst) {
+    if (!this.isFirst && !this.$route.query.isHistory) {
       wx.showToast({
         title: '识别成功',
         icon: 'success'
@@ -192,7 +193,12 @@ export default {
     this.isFirst = true;
     this.userInfo = this.$store.getters.disc;
     this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
-    this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
+    if (this.data.data.imageUrl.indexOf("https://www.wzcb97.top") == -1) {
+      this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
+    } else {
+      let imageUrlArray = this.data.data.imageUrl.split("//");
+      this.imageUrl = 'https://wzcb97.top/' + imageUrlArray[2];
+    }
     // 调整图片为自适应
     var _this = this;
     wx.getImageInfo({

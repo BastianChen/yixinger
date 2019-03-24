@@ -83,8 +83,11 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_api_js__ = __webpack_require__(15);
+
 //
 //
 //
@@ -251,12 +254,12 @@ if (false) {(function () {
     clickLong: function clickLong(id, type) {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__["a" /* default */].confirm({
+      __WEBPACK_IMPORTED_MODULE_1__static_vant_weapp_dist_dialog_dialog_js__["a" /* default */].confirm({
         title: '温馨提示',
         message: '您确定要删除该条记录？'
       }).then(function () {
         _this.$httpWX.post({
-          url: type == 1 ? __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].deletePhotoDistinguishById : __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].deleteTextDistinguishById,
+          url: type == 1 ? __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].deletePhotoDistinguishById : __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].deleteTextDistinguishById,
           data: {
             idList: id
           }
@@ -284,11 +287,11 @@ if (false) {(function () {
       //   title: `切换到标签 ${index.target.title}`,
       //   icon: 'none'
       // });
-      // if (index.target.index == 0) {
-      //   this.getOperationHistoryData(1);
-      // } else if (index.target.index == 1) {
-      //   this.getOperationHistoryData(2);
-      // }
+      if (index.target.index == 0) {
+        this.active = 0;
+      } else if (index.target.index == 1) {
+        this.active = 1;
+      }
     },
     getOperationHistoryData: function getOperationHistoryData(type) {
       var _this2 = this;
@@ -297,7 +300,7 @@ if (false) {(function () {
       // 获取图像识别的记录
       if (type == 1) {
         this.$httpWX.get({
-          url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPhotoDistinguishList,
+          url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].getPhotoDistinguishList,
           data: {
             userId: this.userInfo.openid
           }
@@ -384,7 +387,7 @@ if (false) {(function () {
       } else if (type == 2) {
         // 获取文字识别的记录
         this.$httpWX.get({
-          url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getTextDistinguishList,
+          url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].getTextDistinguishList,
           data: {
             userId: this.userInfo.openid
           }
@@ -468,6 +471,21 @@ if (false) {(function () {
         }
         // 记录遍历的边界
         len = flag;
+      }
+    },
+    seeDetails: function seeDetails(data, dataType) {
+      var datum = {};
+      datum.data = data;
+      if (dataType == 1) {
+        this.$router.push({
+          path: '../distinguish/main',
+          query: { type: data.type, data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(datum)), isHistory: true }
+        });
+      } else if (dataType == 2) {
+        this.$router.push({
+          path: '../textdistinguish/main',
+          query: { data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(datum)), isHistory: true }
+        });
       }
     }
   }
@@ -579,6 +597,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         on: {
           "longpress": function($event) {
             _vm.clickLong(item.id, 1)
+          },
+          "click": function($event) {
+            _vm.seeDetails(item, 1)
           }
         }
       }, [_c('van-card', {
@@ -676,6 +697,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         on: {
           "longpress": function($event) {
             _vm.clickLong(item.id, 2)
+          },
+          "click": function($event) {
+            _vm.seeDetails(item, 2)
           }
         }
       }, [_c('van-card', {

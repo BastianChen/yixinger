@@ -40,10 +40,10 @@
 <import src="/modules/mpvue-wxparse/src/components/wxParseVideo.vue.wxml" />
 <import src="/modules/mpvue-wxparse/src/components/wxParseAudio.vue.wxml" />
 <import src="/modules/mpvue-wxparse/src/components/wxParseImg.vue.wxml" />
-<import src="/modules/mpvue-wxparse/src/components/wxParseTemplate11.vue.wxml" />
 <import src="/modules/mpvue-wxparse/src/components/wxParseVideo.vue.wxml" />
 <import src="/modules/mpvue-wxparse/src/components/wxParseAudio.vue.wxml" />
 <import src="/modules/mpvue-wxparse/src/components/wxParseImg.vue.wxml" />
+<import src="/modules/mpvue-wxparse/src/components/wxParseTemplate11.vue.wxml" />
 <import src="/modules/mpvue-wxparse/src/components/wxParseVideo.vue.wxml" />
 <import src="/modules/mpvue-wxparse/src/components/wxParseAudio.vue.wxml" />
 <import src="/modules/mpvue-wxparse/src/components/wxParseImg.vue.wxml" />

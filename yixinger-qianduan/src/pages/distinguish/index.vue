@@ -144,7 +144,7 @@ export default {
   created() {
   },
   mounted() {
-    if (!this.isFirst) {
+    if (!this.isFirst && !this.$route.query.isHistory) {
       wx.showToast({
         title: '识别成功',
         icon: 'success'
@@ -152,10 +152,15 @@ export default {
     }
     this.isFirst = true;
     this.userInfo = this.$store.getters.disc;
-    // console.log("dddddd" + this.$route.query.data)
+    //console.log("dddddd" + this.$route.query.data)
     this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
-    // console.log("ccccccc" + this.data)
-    this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
+    //console.log("ccccccc" + this.data)
+    if (this.data.data.imageUrl.indexOf("https://www.wzcb97.top") == -1) {
+      this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
+    } else {
+      let imageUrlArray = this.data.data.imageUrl.split("//");
+      this.imageUrl = 'https://wzcb97.top/' + imageUrlArray[2];
+    }
     // 调整图片为自适应
     var _this = this;
     wx.getImageInfo({
