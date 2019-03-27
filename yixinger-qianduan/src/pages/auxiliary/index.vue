@@ -161,7 +161,7 @@ export default {
                 console.log(res.data.toString())
                 _this.$router.push({
                   path: `../textdistinguish/main`,
-                  query: {data: encodeURIComponent(JSON.stringify(data))}
+                  query: {data: encodeURIComponent(JSON.stringify(data)), isHistory: false}
                 });
               } else {
                 wx.showToast({
@@ -238,7 +238,7 @@ export default {
                 //console.log("data"+data)
                 _this.$router.push({
                   path: `../distinguish/main`,
-                  query: {type: _this.type, data: encodeURIComponent(JSON.stringify(data))}
+                  query: {type: _this.type, data: encodeURIComponent(JSON.stringify(data)), isHistory: false}
                 });
               } else {
                 wx.showToast({

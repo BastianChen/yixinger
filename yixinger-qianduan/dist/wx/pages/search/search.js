@@ -2,8 +2,8 @@ var bmap = require('../../libs/bmap-wx.min.js');
 var config = require('../../libs/config.js');
 var wxMarkerData = [];
 var city = '';
-//var queryType = '景点';
-var queryType = '美食';
+var queryType = '景点';
+//var queryType = '美食';
 
 Page({
   data: {
@@ -28,7 +28,6 @@ Page({
       console.log(data)
     };
     var success = function(data) {
-      console.log(data)
       wxMarkerData = data.wxMarkerData;
       city = data.originalData.results[0].city
       that.setData({
@@ -100,5 +99,52 @@ Page({
       name,
       address: desc
     });
+  },
+  selectType: function(e) {
+    wx.showActionSheet({
+      itemList: ['美食', '景点'],
+      success: function(res) {
+        console.log(res.tapIndex)
+        if (res.tapIndex == 0) {
+          queryType = '美食';
+        } else if (res.tapIndex == 1) {
+          queryType = '景点';
+        }
+        console.log(queryType)
+        var that = this;
+        var BMap = new bmap.BMapWX({
+          ak: config.Config.ak
+        });
+        console.log(BMap)
+        // var fail = function(data) {
+        //   console.log(data)
+        // };
+        // var success = function(data) {
+        //   wxMarkerData = data.wxMarkerData;
+        //   city = data.originalData.results[0].city
+        //   that.setData({
+        //     markers: wxMarkerData,
+        //     latitude: wxMarkerData[0].latitude,
+        //     longitude: wxMarkerData[0].longitude
+        //   });
+        //   // that.setData({
+        //   //   latitude: wxMarkerData[0].latitude
+        //   // });
+        //   // that.setData({
+        //   //   longitude: wxMarkerData[0].longitude
+        //   // });
+        // }
+        // BMap.search({
+        //   "query": queryType,
+        //   fail: fail,
+        //   success: success,
+        //   iconPath: '../../img/marker_checked.png',
+        //   iconTapPath: '../../img/marker_checked.png'
+        // });
+      },
+      fail: function(res) {
+        console.log(res.errMsg)
+      }
+    })
   }
 })

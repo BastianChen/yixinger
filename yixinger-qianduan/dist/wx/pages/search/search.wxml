@@ -1,8 +1,11 @@
-<view class="section">
-  <input placeholder="输入关键字"  type="text" bindtouchstart="bindKeyInput"/>
+<view>
+  <van-button type="primary" size="large" round class="_van-button data-v-548e5345" bindtouchstart="selectType">类型</van-button>
 </view>
 <view class="map_container">
   <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" bindmarkertap="makertap"></map>
+</view>
+<view class="map_container">
+  <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" bindmarkertap="makertap2"></map>
 </view>
 <view class="place_info">
   <text class="h1">{{placeData.title}}</text>

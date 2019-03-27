@@ -13,7 +13,7 @@ global.webpackJsonp([7],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(15);
 
@@ -175,7 +175,7 @@ global.webpackJsonp([7],{
                 console.log(res.data.toString());
                 _this.$router.push({
                   path: '../textdistinguish/main',
-                  query: { data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(data)) }
+                  query: { data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(data)), isHistory: false }
                 });
               } else {
                 wx.showToast({
@@ -252,7 +252,7 @@ global.webpackJsonp([7],{
                 //console.log("data"+data)
                 _this.$router.push({
                   path: '../distinguish/main',
-                  query: { type: _this.type, data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(data)) }
+                  query: { type: _this.type, data: encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(data)), isHistory: false }
                 });
               } else {
                 wx.showToast({
