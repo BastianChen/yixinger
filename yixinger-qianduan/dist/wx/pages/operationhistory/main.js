@@ -232,7 +232,7 @@ if (false) {(function () {
   data: function data() {
     return {
       active: 0,
-      imageUrl: 'https://www.wzcb97.top/images/photo/155306006312929788825_src.jpg',
+      imageUrl: '',
       userInfo: {},
       photoDistinguishData: [],
       textDistinguishData: [],
