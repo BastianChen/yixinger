@@ -2,6 +2,10 @@ var bmap = require('../../libs/bmap-wx.min.js');
 var config = require('../../libs/config.js');
 var wxMarkerData = [];
 var city = '';
+var name = '';
+var desc = '';
+var latitude = 0;
+var longitude = 0;
 var queryType = '景点&美食';
 //var queryType = '美食';
 
@@ -10,38 +14,40 @@ Page({
     markers: [],
     latitude: '',
     longitude: '',
-    placeData: {}
+    placeData: {},
+    showOrHidden: false
   },
-  makertap: function (e) {
+  makertap: function(e) {
     var that = this;
     var id = e.markerId;
     that.showSearchInfo(wxMarkerData, id);
     that.changeMarkerColor(wxMarkerData, id);
     that.nav(wxMarkerData, id);
   },
-  onLoad: function () {
+  onLoad: function() {
     var that = this;
     var BMap = new bmap.BMapWX({
       ak: config.Config.ak
     });
     //console.log(BMap)
-    var fail = function (data) {
+    var fail = function(data) {
       console.log(data)
     };
-    var success = function (data) {
+    var success = function(data) {
       wxMarkerData = data.wxMarkerData;
       city = data.originalData.results.city
     }
-    var success2 = function (data) {
+    var success2 = function(data) {
       //console.log("first" + JSON.stringify(data.wxMarkerData));
       var len = wxMarkerData.length;
       for (let i = 0; i < data.wxMarkerData.length; i++) {
         data.wxMarkerData[i].id = len + data.wxMarkerData[i].id;
         wxMarkerData.push(data.wxMarkerData[i]);
       }
-      console.log("second" + JSON.stringify(wxMarkerData));
+      //console.log("second" + JSON.stringify(wxMarkerData));
       city = data.originalData.results.city
       that.setData({
+        showOrHidden: false,
         markers: wxMarkerData,
         latitude: wxMarkerData[0].latitude,
         longitude: wxMarkerData[0].longitude
@@ -64,17 +70,17 @@ Page({
     });
 
   },
-  showSearchInfo: function (data, i) {
+  showSearchInfo: function(data, i) {
     var that = this;
     that.setData({
       placeData: {
-        title: '名称：' + data[i].title + '\n',
-        address: '地址：' + data[i].address + '\n',
+        title: data[i].title,
+        address: data[i].address,
         // telephone: '电话：' + data[i].telephone
       }
     });
   },
-  changeMarkerColor: function (data, id) {
+  changeMarkerColor: function(data, id) {
     var that = this;
     var markersTemp = [];
     for (var i = 0; i < data.length; i++) {
@@ -89,7 +95,7 @@ Page({
       markers: markersTemp
     });
   },
-  bindKeyInput: function (e) {
+  bindKeyInput: function(e) {
     var that = this;
     var url = '../suggestion/suggestion';
     wx.navigateTo({
@@ -103,15 +109,21 @@ Page({
     //   url: url
     // })
   },
-  nav: function (data, i) {
-    //let { latitude2, longitude2, name, desc } = this.data;
-    console.log("sssssssssss"+JSON.stringify(data))
-    var name = data[i].title;
-    var desc = data[i].address;
+  nav: function(data, i) {
+    var that = this;
+    name = data[i].title;
+    desc = data[i].address;
+    latitude = data[i].latitude;
+    longitude = data[i].longitude;
+    that.setData({
+      showOrHidden: true
+    });
+  },
+  navigation() {
     wx.openLocation({
-      latitude: +data[i].latitude,
-      longitude: +data[i].longitude,
-      name,
+      latitude: +latitude,
+      longitude: +longitude,
+      name: name,
       address: desc
     });
   }

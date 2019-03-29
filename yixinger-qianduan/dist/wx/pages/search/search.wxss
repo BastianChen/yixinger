@@ -1,4 +1,4 @@
-.section{
+/* .section{
   height: 30px;
   width: 100%;
 }
@@ -9,18 +9,24 @@
   height:30px;
   border-radius: 3px;
   padding: 0 5px;
-}
+} */
+
 .map_container {
   position: absolute;
   top: 0;
-  bottom: 80px;
+  bottom: 0;
   left: 0;
   right: 0;
+  z-index: 1;
 }
 
 .map {
   height: 100%;
   width: 100%;
+}
+
+.viewCenter {
+  margin: 0 auto;
 }
 
 .place_info {
@@ -29,19 +35,48 @@
   right: 0;
   bottom: 0px;
   height: 80px;
+  width: 100%;
   background: #fff;
   padding: 0 15px;
 }
 
-text{
+.img {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 50px;
+  bottom: 20px;
+  float: right;
+}
+
+text {
   margin: 5px 0;
   display: block;
-  font-size:12px;
+  font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
-.h1{
+
+.h1 {
   margin: 15px 0;
-  font-size:15px;
+  font-size: 20px;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 80%;
+  z-index: 9999;
+}
+
+.h2 {
+  margin: 5px 0;
+  display: block;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 80%;
+  z-index: 9999;
+  color: gray
 }
