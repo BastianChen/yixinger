@@ -2,7 +2,7 @@
   <div class="index">
     <van-tabs :active="active" @change="onChange" sticky animated swipeable color="#00BFFF">
       <van-tab title="景点">
-        <div class="firstDiv" v-if="!isSceneryDataEmpty">
+        <div class="firstDiv" v-if="isSceneryDataEmpty">
           <div>
             <img src="../../../static/images/noContent.png"/>
           </div>
@@ -12,26 +12,27 @@
             </span>
           </div>
         </div>
-        <div class="secondDiv" v-if="isSceneryDataEmpty">
+        <div v-for="(item, index) in sceneryData" :key="index" class="secondDiv" v-if="!isSceneryDataEmpty">
           <div>
             <div class="rowBottom">
               <van-row>
                 <van-col span="4" offset="1">
-                  <img src="http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg"/>
+                  <!--<img src="http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg"/>-->
+                  <img :src="item.image"/>
                 </van-col>
                 <van-col span="15" offset="4">
                   <div class="secondCol">
                     <div class="nameDiv">
-                      {{name}}
+                      {{item.name}}
                     </div>
                     <div class="distanceAndAddressDiv">
-                      {{distance}}|{{address}}
+                      {{distance}}|{{item.newAddress}}
                     </div>
                     <div class="overallratingAndShowTagDiv">
                       <van-row>
                         <van-col span="12">
                           <van-rate
-                            :value="overallrating"
+                            :value="item.overallRating"
                             size="15"
                             count="5"
                             disabled-color="#00BFFF"
@@ -39,38 +40,38 @@
                           />
                         </van-col>
                         <van-col span="3">
-                          {{overallrating}}
+                          {{item.overallRating}}
                         </van-col>
                       </van-row>
-                      <van-tag color="#f2826a" plain size="large">{{showTag}}</van-tag>
+                      <van-tag color="#f2826a" plain size="large">{{item.showtag}}</van-tag>
                     </div>
                   </div>
                 </van-col>
               </van-row>
             </div>
-            <div class="rowBottom">
-              <van-row>
-                <van-col span="4" offset="1">
-                  <img src="http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg"/>
-                </van-col>
-                <van-col span="15" offset="4">
-                  <div class="secondCol">
-                    <div class="nameDiv">
-                      {{name}}
-                    </div>
-                    <div class="distanceAndAddressDiv">
-                      {{distance}}|{{address}}
-                    </div>
-                    <div class="overallratingAndShowTagDiv">
-                      {{overallrating}}
-                      <span>
-                    {{showTag}}
-                  </span>
-                    </div>
-                  </div>
-                </van-col>
-              </van-row>
-            </div>
+            <!--<div class="rowBottom">-->
+              <!--<van-row>-->
+                <!--<van-col span="4" offset="1">-->
+                  <!--<img src="http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg"/>-->
+                <!--</van-col>-->
+                <!--<van-col span="15" offset="4">-->
+                  <!--<div class="secondCol">-->
+                    <!--<div class="nameDiv">-->
+                      <!--{{name}}-->
+                    <!--</div>-->
+                    <!--<div class="distanceAndAddressDiv">-->
+                      <!--{{distance}}|{{address}}-->
+                    <!--</div>-->
+                    <!--<div class="overallratingAndShowTagDiv">-->
+                      <!--{{overallrating}}-->
+                      <!--<span>-->
+                    <!--{{showTag}}-->
+                  <!--</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</van-col>-->
+              <!--</van-row>-->
+            <!--</div>-->
           </div>
         </div>
       </van-tab>
@@ -136,28 +137,61 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      active: 0,
-      isRestaurantDataEmpty: true,
-      isSceneryDataEmpty: true,
-      restaurantData: {},
-      sceneryData: {},
-      name: '汇合城购物中心',
-      distance: '756m',
-      address: '江干区-新风路619号',
-      overallrating: 4.3,
-      showTag: '购物中心'
+  import {apiurl} from "@/service/api.js";
+
+  export default {
+    data() {
+      return {
+        active: 0,
+        isRestaurantDataEmpty: true,
+        isSceneryDataEmpty: false,
+        restaurantData: {},
+        sceneryData: {},
+        name: '汇合城购物中心',
+        distance: '756m',
+        address: '江干区-新风路619号',
+        overallrating: 4.3,
+        showTag: '购物中心',
+        uidListForType1: '',// 景点uidList
+        uidListForType2: '',// 餐馆uidList
+      }
+    },
+    mounted() {
+      // if (this.address.length > 9) {
+      //   this.address = this.address.substring(0, 9) + '...';
+      // }
+      this.getData();
+    },
+    methods: {
+      getData() {
+        this.uidListForType1 = this.$route.query.uidListForType1;
+        this.uidListForType2 = this.$route.query.uidListForType2;
+        this.$httpWX.get({
+          url: apiurl.getPlaceListByUids,
+          data: {
+            uidList: this.uidListForType1
+          }
+        }).then(res => {
+          this.sceneryData = res.data;
+          for (let i=0;i<this.sceneryData.length;i++){
+            if (this.sceneryData[i].address.length > 7) {
+              this.$set(this.sceneryData[i], 'newAddress', this.sceneryData[i].address.substring(0, 7) + '...');
+            }else {
+              this.$set(this.sceneryData[i], 'newAddress', this.sceneryData[i].address);
+            }
+          }
+        });
+        this.$httpWX.get({
+          url: apiurl.getPlaceListByUids,
+          data: {
+            uidList: this.uidListForType2
+          }
+        }).then(res => {
+          this.restaurantData = res.data;
+        })
+      }
     }
-  },
-  mounted() {
-    if (this.address.length > 9) {
-      this.address = this.address.substring(0, 9) + '...';
-    }
-  },
-  methods: {}
-}
+  }
 </script>
 
 <style lang='scss' scoped>

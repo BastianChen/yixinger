@@ -1,61 +1,39 @@
-<template name="1f21f144">
+<template name="bc257bdc">
   <view class="_div data-v-3984eb6c index">
     <van-tabs active="{{active}}" bindchange="handleProxy" sticky animated swipeable color="#00BFFF" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_van-tabs data-v-3984eb6c">
       <van-tab title="景点" class="_van-tab data-v-3984eb6c">
-        <view class="_div data-v-3984eb6c firstDiv" wx:if="{{!isSceneryDataEmpty}}">
+        <view class="_div data-v-3984eb6c firstDiv" wx:if="{{isSceneryDataEmpty}}">
           <view class="_div data-v-3984eb6c">
             <image src="/static/images/noContent.png" class="_img data-v-3984eb6c"></image>
           </view>
           <view class="_div data-v-3984eb6c title"><label class="_span data-v-3984eb6c"> 暂无推荐景点 </label></view>
         </view>
-        <view class="_div data-v-3984eb6c secondDiv" wx:if="{{isSceneryDataEmpty}}">
+        <view wx:key="index" key="{{index}}" class="_div data-v-3984eb6c secondDiv" wx:if="{{!isSceneryDataEmpty}}" wx:for="{{sceneryData}}" wx:for-index="index" wx:for-item="item">
           <view class="_div data-v-3984eb6c">
             <view class="_div data-v-3984eb6c rowBottom">
               <van-row class="_van-row data-v-3984eb6c">
                 <van-col span="4" offset="1" class="_van-col data-v-3984eb6c">
-                  <image src="http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg" class="_img data-v-3984eb6c"></image>
+                  <image src="{{item.image}}" class="_img data-v-3984eb6c"></image>
                 </van-col>
                 <van-col span="15" offset="4" class="_van-col data-v-3984eb6c">
                   <view class="_div data-v-3984eb6c secondCol">
                     <view class="_div data-v-3984eb6c nameDiv">
-                      {{name}}
+                      {{item.name}}
                     </view>
                     <view class="_div data-v-3984eb6c distanceAndAddressDiv">
-                      {{distance}}|{{address}}
+                      {{distance}}|{{item.newAddress}}
                     </view>
                     <view class="_div data-v-3984eb6c overallratingAndShowTagDiv">
                       <van-row class="_van-row data-v-3984eb6c">
                         <van-col span="12" class="_van-col data-v-3984eb6c">
-                          <van-rate value="{{overallrating}}" size="15" count="5" disabled-color="#00BFFF" disabled class="_van-rate data-v-3984eb6c"></van-rate>
+                          <van-rate value="{{item.overallRating}}" size="15" count="5" disabled-color="#00BFFF" disabled class="_van-rate data-v-3984eb6c"></van-rate>
                         </van-col>
                         <van-col span="3" class="_van-col data-v-3984eb6c">
-                          {{overallrating}}
+                          {{item.overallRating}}
                         </van-col>
                       </van-row>
-                      <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-3984eb6c">{{showTag}}</van-tag>
+                      <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-3984eb6c">{{item.showtag}}</van-tag>
                     </view>
-                  </view>
-                </van-col>
-              </van-row>
-            </view>
-            <view class="_div data-v-3984eb6c rowBottom">
-              <van-row class="_van-row data-v-3984eb6c">
-                <van-col span="4" offset="1" class="_van-col data-v-3984eb6c">
-                  <image src="http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg" class="_img data-v-3984eb6c"></image>
-                </van-col>
-                <van-col span="15" offset="4" class="_van-col data-v-3984eb6c">
-                  <view class="_div data-v-3984eb6c secondCol">
-                    <view class="_div data-v-3984eb6c nameDiv">
-                      {{name}}
-                    </view>
-                    <view class="_div data-v-3984eb6c distanceAndAddressDiv">
-                      {{distance}}|{{address}}
-                    </view>
-                    <view class="_div data-v-3984eb6c overallratingAndShowTagDiv">
-                      {{overallrating}}
-                      <label class="_span data-v-3984eb6c">
-                        {{showTag}}
-                      </label></view>
                   </view>
                 </van-col>
               </van-row>

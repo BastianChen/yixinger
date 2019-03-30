@@ -27,7 +27,7 @@ app.$mount();
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(235)
+  __webpack_require__(190)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -72,10 +72,18 @@ if (false) {(function () {
 
 /***/ }),
 
+/***/ 190:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 191:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_api_js__ = __webpack_require__(15);
 //
 //
 //
@@ -213,29 +221,65 @@ if (false) {(function () {
 //
 //
 //
+//
+
+
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   data: function data() {
     return {
       active: 0,
       isRestaurantDataEmpty: true,
-      isSceneryDataEmpty: true,
+      isSceneryDataEmpty: false,
       restaurantData: {},
       sceneryData: {},
       name: '汇合城购物中心',
       distance: '756m',
       address: '江干区-新风路619号',
       overallrating: 4.3,
-      showTag: '购物中心'
+      showTag: '购物中心',
+      uidListForType1: '', // 景点uidList
+      uidListForType2: '' // 餐馆uidList
     };
   },
   mounted: function mounted() {
-    if (this.address.length > 9) {
-      this.address = this.address.substring(0, 9) + '...';
-    }
+    // if (this.address.length > 9) {
+    //   this.address = this.address.substring(0, 9) + '...';
+    // }
+    this.getData();
   },
 
-  methods: {}
+  methods: {
+    getData: function getData() {
+      var _this = this;
+
+      this.uidListForType1 = this.$route.query.uidListForType1;
+      this.uidListForType2 = this.$route.query.uidListForType2;
+      this.$httpWX.get({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
+        data: {
+          uidList: this.uidListForType1
+        }
+      }).then(function (res) {
+        _this.sceneryData = res.data;
+        for (var i = 0; i < _this.sceneryData.length; i++) {
+          if (_this.sceneryData[i].address.length > 7) {
+            _this.$set(_this.sceneryData[i], 'newAddress', _this.sceneryData[i].address.substring(0, 7) + '...');
+          } else {
+            _this.$set(_this.sceneryData[i], 'newAddress', _this.sceneryData[i].address);
+          }
+        }
+      });
+      this.$httpWX.get({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
+        data: {
+          uidList: this.uidListForType2
+        }
+      }).then(function (res) {
+        _this.restaurantData = res.data;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -255,7 +299,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "swipeable": "",
       "color": "#00BFFF",
       "eventid": '1',
-      "mpcomid": '17'
+      "mpcomid": '14'
     },
     on: {
       "change": _vm.onChange
@@ -263,9 +307,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('van-tab', {
     attrs: {
       "title": "景点",
-      "mpcomid": '11'
+      "mpcomid": '8'
     }
-  }, [(!_vm.isSceneryDataEmpty) ? _c('div', {
+  }, [(_vm.isSceneryDataEmpty) ? _c('div', {
     staticClass: "firstDiv"
   }, [_c('div', [_c('img', {
     attrs: {
@@ -273,102 +317,75 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "title"
-  }, [_c('span', [_vm._v("\n            暂无推荐景点\n          ")])])]) : _vm._e(), _vm._v(" "), (_vm.isSceneryDataEmpty) ? _c('div', {
-    staticClass: "secondDiv"
-  }, [_c('div', [_c('div', {
-    staticClass: "rowBottom"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '7'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "4",
-      "offset": "1",
-      "mpcomid": '0'
-    }
-  }, [_c('img', {
-    attrs: {
-      "src": "http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg"
-    }
-  })]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "15",
-      "offset": "4",
-      "mpcomid": '6'
-    }
-  }, [_c('div', {
-    staticClass: "secondCol"
-  }, [_c('div', {
-    staticClass: "nameDiv"
-  }, [_vm._v("\n                    " + _vm._s(_vm.name) + "\n                  ")]), _vm._v(" "), _c('div', {
-    staticClass: "distanceAndAddressDiv"
-  }, [_vm._v("\n                    " + _vm._s(_vm.distance) + "|" + _vm._s(_vm.address) + "\n                  ")]), _vm._v(" "), _c('div', {
-    staticClass: "overallratingAndShowTagDiv"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '4'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "12",
-      "mpcomid": '2'
-    }
-  }, [_c('van-rate', {
-    attrs: {
-      "value": _vm.overallrating,
-      "size": "15",
-      "count": "5",
-      "disabled-color": "#00BFFF",
-      "disabled": "",
-      "mpcomid": '1'
-    }
-  })], 1), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "3",
-      "mpcomid": '3'
-    }
-  }, [_vm._v("\n                        " + _vm._s(_vm.overallrating) + "\n                      ")])], 1), _vm._v(" "), _c('van-tag', {
-    attrs: {
-      "color": "#f2826a",
-      "plain": "",
-      "size": "large",
-      "mpcomid": '5'
-    }
-  }, [_vm._v(_vm._s(_vm.showTag))])], 1)])])], 1)], 1), _vm._v(" "), _c('div', {
-    staticClass: "rowBottom"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '10'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "4",
-      "offset": "1",
-      "mpcomid": '8'
-    }
-  }, [_c('img', {
-    attrs: {
-      "src": "http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg"
-    }
-  })]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "15",
-      "offset": "4",
-      "mpcomid": '9'
-    }
-  }, [_c('div', {
-    staticClass: "secondCol"
-  }, [_c('div', {
-    staticClass: "nameDiv"
-  }, [_vm._v("\n                    " + _vm._s(_vm.name) + "\n                  ")]), _vm._v(" "), _c('div', {
-    staticClass: "distanceAndAddressDiv"
-  }, [_vm._v("\n                    " + _vm._s(_vm.distance) + "|" + _vm._s(_vm.address) + "\n                  ")]), _vm._v(" "), _c('div', {
-    staticClass: "overallratingAndShowTagDiv"
-  }, [_vm._v("\n                    " + _vm._s(_vm.overallrating) + "\n                    "), _c('span', [_vm._v("\n                  " + _vm._s(_vm.showTag) + "\n                ")])])])])], 1)], 1)])]) : _vm._e()]), _vm._v(" "), _c('van-tab', {
+  }, [_c('span', [_vm._v("\n            暂无推荐景点\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.sceneryData), function(item, index) {
+    return (!_vm.isSceneryDataEmpty) ? _c('div', {
+      key: index,
+      staticClass: "secondDiv"
+    }, [_c('div', [_c('div', {
+      staticClass: "rowBottom"
+    }, [_c('van-row', {
+      attrs: {
+        "mpcomid": '7-' + index
+      }
+    }, [_c('van-col', {
+      attrs: {
+        "span": "4",
+        "offset": "1",
+        "mpcomid": '0-' + index
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": item.image
+      }
+    })]), _vm._v(" "), _c('van-col', {
+      attrs: {
+        "span": "15",
+        "offset": "4",
+        "mpcomid": '6-' + index
+      }
+    }, [_c('div', {
+      staticClass: "secondCol"
+    }, [_c('div', {
+      staticClass: "nameDiv"
+    }, [_vm._v("\n                    " + _vm._s(item.name) + "\n                  ")]), _vm._v(" "), _c('div', {
+      staticClass: "distanceAndAddressDiv"
+    }, [_vm._v("\n                    " + _vm._s(_vm.distance) + "|" + _vm._s(item.newAddress) + "\n                  ")]), _vm._v(" "), _c('div', {
+      staticClass: "overallratingAndShowTagDiv"
+    }, [_c('van-row', {
+      attrs: {
+        "mpcomid": '4-' + index
+      }
+    }, [_c('van-col', {
+      attrs: {
+        "span": "12",
+        "mpcomid": '2-' + index
+      }
+    }, [_c('van-rate', {
+      attrs: {
+        "value": item.overallRating,
+        "size": "15",
+        "count": "5",
+        "disabled-color": "#00BFFF",
+        "disabled": "",
+        "mpcomid": '1-' + index
+      }
+    })], 1), _vm._v(" "), _c('van-col', {
+      attrs: {
+        "span": "3",
+        "mpcomid": '3-' + index
+      }
+    }, [_vm._v("\n                        " + _vm._s(item.overallRating) + "\n                      ")])], 1), _vm._v(" "), _c('van-tag', {
+      attrs: {
+        "color": "#f2826a",
+        "plain": "",
+        "size": "large",
+        "mpcomid": '5-' + index
+      }
+    }, [_vm._v(_vm._s(item.showtag))])], 1)])])], 1)], 1)])]) : _vm._e()
+  })], 2), _vm._v(" "), _c('van-tab', {
     attrs: {
       "title": "餐馆",
-      "mpcomid": '16'
+      "mpcomid": '13'
     }
   }, [(!_vm.isRestaurantDataEmpty) ? _c('div', {
     staticStyle: {
@@ -396,13 +413,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [(item.year == _vm.year) ? _c('div', [_c('van-row', {
       attrs: {
-        "mpcomid": '15-' + index
+        "mpcomid": '12-' + index
       }
     }, [_c('van-col', {
       attrs: {
         "span": "4",
         "offset": "1",
-        "mpcomid": '12-' + index
+        "mpcomid": '9-' + index
       }
     }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
       staticStyle: {
@@ -424,7 +441,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "span": "18",
         "eventid": '0-' + index,
-        "mpcomid": '14-' + index
+        "mpcomid": '11-' + index
       },
       on: {
         "longpress": function($event) {
@@ -441,7 +458,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "thumb": item.imageUrl,
         "centered": "",
         "lazy-load": "",
-        "mpcomid": '13-' + index
+        "mpcomid": '10-' + index
       }
     })], 1)], 1)], 1) : _vm._e()]) : _vm._e()
   })], 2)], 1)], 1)
@@ -456,13 +473,6 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-3984eb6c", esExports)
   }
 }
-
-/***/ }),
-
-/***/ 235:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 

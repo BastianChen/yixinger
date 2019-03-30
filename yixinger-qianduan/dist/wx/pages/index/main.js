@@ -646,7 +646,8 @@ if (false) {(function () {
     },
     totopic: function totopic() {
       this.$router.push({
-        path: '../nearby/main'
+        path: '../nearby/main',
+        query: { uidListForType1: this.uidListForType1, uidListForType2: this.uidListForType2 }
       });
     }
   })
