@@ -23,9 +23,6 @@
   height: 212rpx;
   padding: 20rpx 0;
 }
-.index .secondDiv .rowBottom .secondCol.data-v-3984eb6c {
-  padding: 20rpx;
-}
 .index .secondDiv .rowBottom .secondCol .nameDiv.data-v-3984eb6c {
   font-weight: bold;
   font-size: 40rpx;
@@ -42,4 +39,7 @@
   font-size: 32rpx;
   font-family: KaiTi;
   color: #6C6C6C;
+}
+.index .secondDiv .rowBottom .secondCol .overallratingAndShowTagDiv .tagPaddingTop.data-v-3984eb6c {
+  padding-top: 20rpx;
 }

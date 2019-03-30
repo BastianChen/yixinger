@@ -222,6 +222,8 @@ if (false) {(function () {
 //
 //
 //
+//
+//
 
 
 
@@ -357,7 +359,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('van-col', {
       attrs: {
-        "span": "12",
+        "span": "11",
         "mpcomid": '2-' + index
       }
     }, [_c('van-rate', {
@@ -374,14 +376,16 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "span": "3",
         "mpcomid": '3-' + index
       }
-    }, [_vm._v("\n                        " + _vm._s(item.overallRating) + "\n                      ")])], 1), _vm._v(" "), _c('van-tag', {
+    }, [_vm._v("\n                        " + _vm._s(item.overallRating) + "\n                      ")])], 1), _vm._v(" "), _c('div', {
+      staticClass: "tagPaddingTop"
+    }, [_c('van-tag', {
       attrs: {
         "color": "#f2826a",
         "plain": "",
         "size": "large",
         "mpcomid": '5-' + index
       }
-    }, [_vm._v(_vm._s(item.showtag))])], 1)])])], 1)], 1)])]) : _vm._e()
+    }, [_vm._v(_vm._s(item.showtag))])], 1)], 1)])])], 1)], 1)])]) : _vm._e()
   })], 2), _vm._v(" "), _c('van-tab', {
     attrs: {
       "title": "餐馆",

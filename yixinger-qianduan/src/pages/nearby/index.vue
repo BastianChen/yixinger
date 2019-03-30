@@ -30,7 +30,7 @@
                     </div>
                     <div class="overallratingAndShowTagDiv">
                       <van-row>
-                        <van-col span="12">
+                        <van-col span="11">
                           <van-rate
                             :value="item.overallRating"
                             size="15"
@@ -43,7 +43,9 @@
                           {{item.overallRating}}
                         </van-col>
                       </van-row>
-                      <van-tag color="#f2826a" plain size="large">{{item.showtag}}</van-tag>
+                      <div class="tagPaddingTop">
+                        <van-tag color="#f2826a" plain size="large">{{item.showtag}}</van-tag>
+                      </div>
                     </div>
                   </div>
                 </van-col>
