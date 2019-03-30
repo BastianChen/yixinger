@@ -22,24 +22,24 @@
       </swiper>
     </div>
     <!--<div class="channel">-->
-      <!--<div @click="categoryList(item.id)" v-for="(item, index) in banner" :key="index">-->
-        <!--<img :src="item.image" alt="">-->
-        <!--<p>{{item.name}}</p>-->
-      <!--</div>-->
+    <!--<div @click="categoryList(item.id)" v-for="(item, index) in banner" :key="index">-->
+    <!--<img :src="item.image" alt="">-->
+    <!--<p>{{item.name}}</p>-->
+    <!--</div>-->
     <!--</div>-->
     <!--<div class="brand">-->
-      <!--<div @click="tobrandList" class="head">-->
-        <!--附近景点-->
-      <!--</div>-->
-      <!--<div class="content">-->
-        <!--<div @click="branddetail(item.id)" v-for="(item, index) in banner" :key="index">-->
-          <!--<div>-->
-            <!--<p>{{item.name}}</p>-->
-            <!--<p>{{item.address}}</p>-->
-          <!--</div>-->
-          <!--<img :src="item.image" alt="">-->
-        <!--</div>-->
-      <!--</div>-->
+    <!--<div @click="tobrandList" class="head">-->
+    <!--附近景点-->
+    <!--</div>-->
+    <!--<div class="content">-->
+    <!--<div @click="branddetail(item.id)" v-for="(item, index) in banner" :key="index">-->
+    <!--<div>-->
+    <!--<p>{{item.name}}</p>-->
+    <!--<p>{{item.address}}</p>-->
+    <!--</div>-->
+    <!--<img :src="item.image" alt="">-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
     <!--<div class="newgoods">-->
     <!--<div @click="goodsList('new')" class="newgoods-top">-->
@@ -188,7 +188,7 @@ export default {
       type: '',// 游玩地点类型
       uids: '',// 用于轮播
       isLogin: false,// 判断是否已经授权登录
-      vuexInfo:{
+      vuexInfo: {
         location: ''// 现在所在地
       }
     }
@@ -545,6 +545,11 @@ export default {
     swipclick(uid) {
       console.log("uid" + uid);
       /**此处对接getPlaceByUid接口*/
+    },
+    totopic() {
+      this.$router.push({
+        path: `../nearby/main`
+      });
     }
   }
 }

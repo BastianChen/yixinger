@@ -1,6 +1,6 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([4],{
+global.webpackJsonp([5],{
 
 /***/ 183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -643,6 +643,11 @@ if (false) {(function () {
     swipclick: function swipclick(uid) {
       console.log("uid" + uid);
       /**此处对接getPlaceByUid接口*/
+    },
+    totopic: function totopic() {
+      this.$router.push({
+        path: '../nearby/main'
+      });
     }
   })
 });

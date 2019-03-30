@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-row": "/static/vant-weapp/dist/row/index",
+    "van-col": "/static/vant-weapp/dist/col/index",
+    "van-tab": "/static/vant-weapp/dist/tab/index",
+    "van-tabs": "/static/vant-weapp/dist/tabs/index",
+    "van-rate": "/static/vant-weapp/dist/rate/index",
+    "van-tag": "/static/vant-weapp/dist/tag/index"
+  },
+  "navigationBarTitleText": "推荐"
+}

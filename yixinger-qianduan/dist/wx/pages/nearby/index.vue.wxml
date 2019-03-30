@@ -1,0 +1,98 @@
+<template name="1f21f144">
+  <view class="_div data-v-3984eb6c index">
+    <van-tabs active="{{active}}" bindchange="handleProxy" sticky animated swipeable color="#00BFFF" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_van-tabs data-v-3984eb6c">
+      <van-tab title="景点" class="_van-tab data-v-3984eb6c">
+        <view class="_div data-v-3984eb6c firstDiv" wx:if="{{!isSceneryDataEmpty}}">
+          <view class="_div data-v-3984eb6c">
+            <image src="/static/images/noContent.png" class="_img data-v-3984eb6c"></image>
+          </view>
+          <view class="_div data-v-3984eb6c title"><label class="_span data-v-3984eb6c"> 暂无推荐景点 </label></view>
+        </view>
+        <view class="_div data-v-3984eb6c secondDiv" wx:if="{{isSceneryDataEmpty}}">
+          <view class="_div data-v-3984eb6c">
+            <view class="_div data-v-3984eb6c rowBottom">
+              <van-row class="_van-row data-v-3984eb6c">
+                <van-col span="4" offset="1" class="_van-col data-v-3984eb6c">
+                  <image src="http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg" class="_img data-v-3984eb6c"></image>
+                </van-col>
+                <van-col span="15" offset="4" class="_van-col data-v-3984eb6c">
+                  <view class="_div data-v-3984eb6c secondCol">
+                    <view class="_div data-v-3984eb6c nameDiv">
+                      {{name}}
+                    </view>
+                    <view class="_div data-v-3984eb6c distanceAndAddressDiv">
+                      {{distance}}|{{address}}
+                    </view>
+                    <view class="_div data-v-3984eb6c overallratingAndShowTagDiv">
+                      <van-row class="_van-row data-v-3984eb6c">
+                        <van-col span="12" class="_van-col data-v-3984eb6c">
+                          <van-rate value="{{overallrating}}" size="15" count="5" disabled-color="#00BFFF" disabled class="_van-rate data-v-3984eb6c"></van-rate>
+                        </van-col>
+                        <van-col span="3" class="_van-col data-v-3984eb6c">
+                          {{overallrating}}
+                        </van-col>
+                      </van-row>
+                      <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-3984eb6c">{{showTag}}</van-tag>
+                    </view>
+                  </view>
+                </van-col>
+              </van-row>
+            </view>
+            <view class="_div data-v-3984eb6c rowBottom">
+              <van-row class="_van-row data-v-3984eb6c">
+                <van-col span="4" offset="1" class="_van-col data-v-3984eb6c">
+                  <image src="http://a.hiphotos.baidu.com/lbsugc/pic/item/a9d3fd1f4134970a109dadf898cad1c8a6865d7e.jpg" class="_img data-v-3984eb6c"></image>
+                </van-col>
+                <van-col span="15" offset="4" class="_van-col data-v-3984eb6c">
+                  <view class="_div data-v-3984eb6c secondCol">
+                    <view class="_div data-v-3984eb6c nameDiv">
+                      {{name}}
+                    </view>
+                    <view class="_div data-v-3984eb6c distanceAndAddressDiv">
+                      {{distance}}|{{address}}
+                    </view>
+                    <view class="_div data-v-3984eb6c overallratingAndShowTagDiv">
+                      {{overallrating}}
+                      <label class="_span data-v-3984eb6c">
+                        {{showTag}}
+                      </label></view>
+                  </view>
+                </van-col>
+              </van-row>
+            </view>
+          </view>
+        </view>
+      </van-tab>
+      <van-tab title="餐馆" class="_van-tab data-v-3984eb6c">
+        <view style="text-align:center;margin-top: 200px" wx:if="{{!isRestaurantDataEmpty}}" class="_div data-v-3984eb6c">
+          <view class="_div data-v-3984eb6c">
+            <image src="/static/images/noContent.png" style="width: 80px;height: 80px" class="_img data-v-3984eb6c"></image>
+          </view>
+          <view style="font-size: 14px;font-family: KaiTi" class="_div data-v-3984eb6c"><label class="_span data-v-3984eb6c"> 暂无推荐餐馆 </label></view>
+        </view>
+        <view wx:key="index" key="{{index}}" style="margin: 10px 5px" wx:if="{{isRestaurantDataEmpty}}" wx:for="{{restaurantData}}" wx:for-index="index" wx:for-item="item" class="_div data-v-3984eb6c">
+          <view wx:if="{{item.year==year}}" class="_div data-v-3984eb6c">
+            <van-row class="_van-row data-v-3984eb6c">
+              <van-col span="4" offset="1" class="_van-col data-v-3984eb6c">
+                <view class="_div data-v-3984eb6c"><label wx:if="{{item.dateType==1}}" class="_span data-v-3984eb6c"> 今天 </label> <label wx:if="{{item.dateType==2}}" class="_span data-v-3984eb6c"> 昨天 </label> <label wx:if="{{item.dateType==3}}" class="_span data-v-3984eb6c">
+                    {{item.day}}
+                  </label> <label wx:if="{{item.dateType==4||item.dateType==5}}" class="_span data-v-3984eb6c">   </label> <label style="font-size: 14px;margin-left:-7px;" wx:if="{{item.dateType==3}}" class="_span data-v-3984eb6c">
+                    {{item.month}}
+                  </label></view>
+                <view style="color:#7d7e80;font-size:10px;margin-top: 10px" class="_div data-v-3984eb6c"><label class="_span data-v-3984eb6c">
+                    {{item.city}}
+                  </label></view>
+                <view style="color:#7d7e80;font-size:10px" class="_div data-v-3984eb6c"><label class="_span data-v-3984eb6c">
+                    {{item.district}}
+                  </label></view>
+              </van-col>
+              <van-col span="18" bindlongpress="handleProxy" bindtap="handleProxy" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}" class="_van-col data-v-3984eb6c">
+                <van-card desc="{{item.desc}}" title="{{item.keyword}}" thumb="{{item.imageUrl}}" centered lazy-load class="_van-card data-v-3984eb6c"></van-card>
+              </van-col>
+            </van-row>
+          </view>
+        </view>
+      </van-tab>
+    </van-tabs>
+  </view>
+</template>

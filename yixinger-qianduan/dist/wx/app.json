@@ -10,7 +10,8 @@
     "pages/auxiliary/main",
     "pages/distinguish/main",
     "pages/textdistinguish/main",
-    "pages/operationhistory/main"
+    "pages/operationhistory/main",
+    "pages/nearby/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
