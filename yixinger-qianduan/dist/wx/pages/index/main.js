@@ -85,8 +85,8 @@ if (false) {(function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(48);
 
 //
@@ -279,6 +279,8 @@ if (false) {(function () {
       type: '', // 游玩地点类型
       uids: '', // 用于轮播
       isLogin: false, // 判断是否已经授权登录
+      longitude: '', //所在地经度
+      latitude: '', // 所在地维度
       vuexInfo: {
         location: '' // 现在所在地
       }
@@ -414,13 +416,13 @@ if (false) {(function () {
         type: 'wgs84',
         success: function success(res) {
           console.log(res);
-          var latitude = res.latitude;
-          var longitude = res.longitude;
+          _this.latitude = res.latitude;
+          _this.longitude = res.longitude;
           var speed = res.speed;
           var accuracy = res.accuracy;
           // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
           wx.request({
-            url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' + '&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+            url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' + '&location=' + _this.latitude + ',' + _this.longitude + '&output=json&coordtype=wgs84ll',
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -644,10 +646,16 @@ if (false) {(function () {
       console.log("uid" + uid);
       /**此处对接getPlaceByUid接口*/
     },
-    totopic: function totopic() {
+    totopic: function totopic(type) {
       this.$router.push({
         path: '../nearby/main',
-        query: { uidListForType1: this.uidListForType1, uidListForType2: this.uidListForType2 }
+        query: {
+          uidListForType1: this.uidListForType1,
+          uidListForType2: this.uidListForType2,
+          longitude: this.longitude,
+          latitude: this.latitude,
+          type: type
+        }
       });
     }
   })
@@ -741,7 +749,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "eventid": '4'
     },
     on: {
-      "click": _vm.totopic
+      "click": function($event) {
+        _vm.totopic(0)
+      }
     }
   }, [_vm._v("\n      附近景点\n      "), _c('span', {
     staticClass: "icon"
@@ -779,7 +789,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "eventid": '6'
     },
     on: {
-      "click": _vm.totopic
+      "click": function($event) {
+        _vm.totopic(1)
+      }
     }
   }, [_vm._v("\n      附近餐馆\n      "), _c('span', {
     staticClass: "icon"

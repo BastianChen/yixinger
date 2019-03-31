@@ -27,7 +27,7 @@
   font-weight: bold;
   font-size: 40rpx;
   font-family: KaiTi;
-  padding-top: 20rpx;
+  padding-top: 10rpx;
 }
 .index .secondDiv .rowBottom .secondCol .distanceAndAddressDiv.data-v-3984eb6c {
   font-size: 36rpx;

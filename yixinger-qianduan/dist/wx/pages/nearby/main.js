@@ -83,33 +83,7 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_api_js__ = __webpack_require__(15);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_api_js__ = __webpack_require__(10);
 //
 //
 //
@@ -231,7 +205,7 @@ if (false) {(function () {
   data: function data() {
     return {
       active: 0,
-      isRestaurantDataEmpty: true,
+      isRestaurantDataEmpty: false,
       isSceneryDataEmpty: false,
       restaurantData: {},
       sceneryData: {},
@@ -241,13 +215,13 @@ if (false) {(function () {
       overallrating: 4.3,
       showTag: '购物中心',
       uidListForType1: '', // 景点uidList
-      uidListForType2: '' // 餐馆uidList
+      uidListForType2: '', // 餐馆uidList
+      longitude: '', //所在地经度
+      latitude: '' // 所在地维度
     };
   },
   mounted: function mounted() {
-    // if (this.address.length > 9) {
-    //   this.address = this.address.substring(0, 9) + '...';
-    // }
+    this.active = this.$route.query.type;
     this.getData();
   },
 
@@ -257,29 +231,51 @@ if (false) {(function () {
 
       this.uidListForType1 = this.$route.query.uidListForType1;
       this.uidListForType2 = this.$route.query.uidListForType2;
+      this.longitude = this.$route.query.longitude;
+      this.latitude = this.$route.query.latitude;
       this.$httpWX.get({
         url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
         data: {
-          uidList: this.uidListForType1
+          uidList: this.uidListForType1,
+          longitude: this.longitude,
+          latitude: this.latitude
         }
       }).then(function (res) {
         _this.sceneryData = res.data;
-        for (var i = 0; i < _this.sceneryData.length; i++) {
-          if (_this.sceneryData[i].address.length > 7) {
-            _this.$set(_this.sceneryData[i], 'newAddress', _this.sceneryData[i].address.substring(0, 7) + '...');
-          } else {
-            _this.$set(_this.sceneryData[i], 'newAddress', _this.sceneryData[i].address);
-          }
-        }
+        _this.initData(_this.sceneryData);
       });
       this.$httpWX.get({
         url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
         data: {
-          uidList: this.uidListForType2
+          uidList: this.uidListForType2,
+          longitude: this.longitude,
+          latitude: this.latitude
         }
       }).then(function (res) {
         _this.restaurantData = res.data;
+        _this.initData(_this.restaurantData);
       });
+    },
+    initData: function initData(data) {
+      if (data == null) {
+        this.isRestaurantDataEmpty = true;
+      } else {
+        this.isRestaurantDataEmpty = false;
+        for (var i = 0; i < data.length; i++) {
+          data[i].overallRating = data[i].overallRating.toFixed(1);
+          if (data[i].name.length > 9) {
+            this.$set(data[i], 'newName', data[i].name.substring(0, 9) + '...');
+          } else {
+            this.$set(data[i], 'newName', data[i].name);
+          }
+          if (data[i].address.length > 8) {
+            this.$set(data[i], 'newAddress', data[i].address.substring(0, 8) + '...');
+          } else {
+            this.$set(data[i], 'newAddress', data[i].address);
+          }
+          data[i].distance = data[i].distance ? data[i].distance >= 1000 ? (data[i].distance / 1000).toFixed(1) + 'km' : parseInt(data[i].distance) + 'm' : 0 + 'm';
+        }
+      }
     }
   }
 });
@@ -300,8 +296,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "animated": "",
       "swipeable": "",
       "color": "#00BFFF",
-      "eventid": '1',
-      "mpcomid": '14'
+      "eventid": '0',
+      "mpcomid": '18'
     },
     on: {
       "change": _vm.onChange
@@ -349,9 +345,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "secondCol"
     }, [_c('div', {
       staticClass: "nameDiv"
-    }, [_vm._v("\n                    " + _vm._s(item.name) + "\n                  ")]), _vm._v(" "), _c('div', {
+    }, [_vm._v("\n                    " + _vm._s(item.newName) + "\n                  ")]), _vm._v(" "), _c('div', {
       staticClass: "distanceAndAddressDiv"
-    }, [_vm._v("\n                    " + _vm._s(_vm.distance) + "|" + _vm._s(item.newAddress) + "\n                  ")]), _vm._v(" "), _c('div', {
+    }, [_vm._v("\n                    " + _vm._s(item.distance) + "|" + _vm._s(item.newAddress) + "\n                  ")]), _vm._v(" "), _c('div', {
       staticClass: "overallratingAndShowTagDiv"
     }, [_c('van-row', {
       attrs: {
@@ -389,35 +385,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   })], 2), _vm._v(" "), _c('van-tab', {
     attrs: {
       "title": "餐馆",
-      "mpcomid": '13'
+      "mpcomid": '17'
     }
-  }, [(!_vm.isRestaurantDataEmpty) ? _c('div', {
-    staticStyle: {
-      "text-align": "center",
-      "margin-top": "200px"
-    }
+  }, [(_vm.isRestaurantDataEmpty) ? _c('div', {
+    staticClass: "firstDiv"
   }, [_c('div', [_c('img', {
-    staticStyle: {
-      "width": "80px",
-      "height": "80px"
-    },
     attrs: {
       "src": "../../../static/images/noContent.png"
     }
   })]), _vm._v(" "), _c('div', {
-    staticStyle: {
-      "font-size": "14px",
-      "font-family": "KaiTi"
-    }
+    staticClass: "title"
   }, [_c('span', [_vm._v("\n            暂无推荐餐馆\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.restaurantData), function(item, index) {
-    return (_vm.isRestaurantDataEmpty) ? _c('div', {
+    return (!_vm.isRestaurantDataEmpty) ? _c('div', {
       key: index,
-      staticStyle: {
-        "margin": "10px 5px"
-      }
-    }, [(item.year == _vm.year) ? _c('div', [_c('van-row', {
+      staticClass: "secondDiv"
+    }, [_c('div', [_c('div', {
+      staticClass: "rowBottom"
+    }, [_c('van-row', {
       attrs: {
-        "mpcomid": '12-' + index
+        "mpcomid": '16-' + index
       }
     }, [_c('van-col', {
       attrs: {
@@ -425,46 +411,57 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "offset": "1",
         "mpcomid": '9-' + index
       }
-    }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
-      staticStyle: {
-        "font-size": "14px",
-        "margin-left": "-7px"
-      }
-    }, [_vm._v("\n                  " + _vm._s(item.month) + "\n                ")]) : _vm._e()]), _vm._v(" "), _c('div', {
-      staticStyle: {
-        "color": "#7d7e80",
-        "font-size": "10px",
-        "margin-top": "10px"
-      }
-    }, [_c('span', [_vm._v("\n                    " + _vm._s(item.city) + "\n                  ")])]), _vm._v(" "), _c('div', {
-      staticStyle: {
-        "color": "#7d7e80",
-        "font-size": "10px"
-      }
-    }, [_c('span', [_vm._v("\n                    " + _vm._s(item.district) + "\n                  ")])])]), _vm._v(" "), _c('van-col', {
+    }, [_c('img', {
       attrs: {
-        "span": "18",
-        "eventid": '0-' + index,
+        "src": item.image
+      }
+    })]), _vm._v(" "), _c('van-col', {
+      attrs: {
+        "span": "15",
+        "offset": "4",
+        "mpcomid": '15-' + index
+      }
+    }, [_c('div', {
+      staticClass: "secondCol"
+    }, [_c('div', {
+      staticClass: "nameDiv"
+    }, [_vm._v("\n                    " + _vm._s(item.newName) + "\n                  ")]), _vm._v(" "), _c('div', {
+      staticClass: "distanceAndAddressDiv"
+    }, [_vm._v("\n                    " + _vm._s(item.distance) + "|" + _vm._s(item.newAddress) + "\n                  ")]), _vm._v(" "), _c('div', {
+      staticClass: "overallratingAndShowTagDiv"
+    }, [_c('van-row', {
+      attrs: {
+        "mpcomid": '13-' + index
+      }
+    }, [_c('van-col', {
+      attrs: {
+        "span": "11",
         "mpcomid": '11-' + index
-      },
-      on: {
-        "longpress": function($event) {
-          _vm.clickLong(item.id, 1)
-        },
-        "click": function($event) {
-          _vm.seeDetails(item, 1)
-        }
       }
-    }, [_c('van-card', {
+    }, [_c('van-rate', {
       attrs: {
-        "desc": item.desc,
-        "title": item.keyword,
-        "thumb": item.imageUrl,
-        "centered": "",
-        "lazy-load": "",
+        "value": item.overallRating,
+        "size": "15",
+        "count": "5",
+        "disabled-color": "#00BFFF",
+        "disabled": "",
         "mpcomid": '10-' + index
       }
-    })], 1)], 1)], 1) : _vm._e()]) : _vm._e()
+    })], 1), _vm._v(" "), _c('van-col', {
+      attrs: {
+        "span": "3",
+        "mpcomid": '12-' + index
+      }
+    }, [_vm._v("\n                        " + _vm._s(item.overallRating) + "\n                      ")])], 1), _vm._v(" "), _c('div', {
+      staticClass: "tagPaddingTop"
+    }, [_c('van-tag', {
+      attrs: {
+        "color": "#f2826a",
+        "plain": "",
+        "size": "large",
+        "mpcomid": '14-' + index
+      }
+    }, [_vm._v(_vm._s(item.showtag))])], 1)], 1)])])], 1)], 1)])]) : _vm._e()
   })], 2)], 1)], 1)
 }
 var staticRenderFns = []

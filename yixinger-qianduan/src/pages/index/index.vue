@@ -90,7 +90,7 @@
     <!--</div>-->
     <van-dialog id="van-dialog" style="text-align: center"/>
     <div class="topicList">
-      <div @click="totopic" class="topicList-top">
+      <div @click="totopic(0)" class="topicList-top">
         附近景点
         <span class="icon"></span>
       </div>
@@ -111,7 +111,7 @@
       </div>
     </div>
     <div class="topicList">
-      <div @click="totopic" class="topicList-top">
+      <div @click="totopic(1)" class="topicList-top">
         附近餐馆
         <span class="icon"></span>
       </div>
@@ -188,6 +188,8 @@ export default {
       type: '',// 游玩地点类型
       uids: '',// 用于轮播
       isLogin: false,// 判断是否已经授权登录
+      longitude: '',//所在地经度
+      latitude: '',// 所在地维度
       vuexInfo: {
         location: ''// 现在所在地
       }
@@ -320,14 +322,14 @@ export default {
         type: 'wgs84',
         success(res) {
           console.log(res)
-          const latitude = res.latitude
-          const longitude = res.longitude
+          _this.latitude = res.latitude
+          _this.longitude = res.longitude
           const speed = res.speed
           const accuracy = res.accuracy
           // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
           wx.request({
             url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' +
-            '&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
+            '&location=' + _this.latitude + ',' + _this.longitude + '&output=json&coordtype=wgs84ll',
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -546,10 +548,16 @@ export default {
       console.log("uid" + uid);
       /**此处对接getPlaceByUid接口*/
     },
-    totopic() {
+    totopic(type) {
       this.$router.push({
         path: `../nearby/main`,
-        query: {uidListForType1: this.uidListForType1, uidListForType2: this.uidListForType2}
+        query: {
+          uidListForType1: this.uidListForType1,
+          uidListForType2: this.uidListForType2,
+          longitude: this.longitude,
+          latitude: this.latitude,
+          type: type
+        }
       });
     }
   }
