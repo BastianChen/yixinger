@@ -221,7 +221,6 @@ if (false) {(function () {
     };
   },
   mounted: function mounted() {
-    this.active = this.$route.query.type;
     this.getData();
   },
 
@@ -276,6 +275,7 @@ if (false) {(function () {
           data[i].distance = data[i].distance ? data[i].distance >= 1000 ? (data[i].distance / 1000).toFixed(1) + 'km' : parseInt(data[i].distance) + 'm' : 0 + 'm';
         }
       }
+      this.active = this.$route.query.type;
     }
   }
 });

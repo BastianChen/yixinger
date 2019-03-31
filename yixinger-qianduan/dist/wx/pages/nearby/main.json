@@ -7,5 +7,5 @@
     "van-rate": "/static/vant-weapp/dist/rate/index",
     "van-tag": "/static/vant-weapp/dist/tag/index"
   },
-  "navigationBarTitleText": "推荐"
+  "navigationBarTitleText": "附近推荐"
 }

@@ -135,7 +135,6 @@ export default {
     }
   },
   mounted() {
-    this.active = this.$route.query.type;
     this.getData();
   },
   methods: {
@@ -188,6 +187,7 @@ export default {
             + 'km' : parseInt(data[i].distance) + 'm' : 0 + 'm';
         }
       }
+      this.active = this.$route.query.type;
     }
   }
 }
