@@ -8,6 +8,7 @@ import com.cb.yixinger.dto.UserHistoryDTO;
 import com.cb.yixinger.entity.*;
 import com.cb.yixinger.service.*;
 import com.cb.yixinger.utils.CommonUtil;
+import com.cb.yixinger.utils.DistanceUtil;
 import com.cb.yixinger.utils.FileUploadUtil;
 import io.swagger.annotations.*;
 import net.sf.json.JSONObject;
@@ -153,9 +154,11 @@ public class PlaceApiController {
     @ApiOperation(value = "获取游玩地点信息以用于轮播", notes = "获取游玩地点信息以用于轮播 ", response = BaseMessage.class)
     @RequestMapping(value = "/getPlaceListByUids", produces = {"application/json"}, method = RequestMethod.GET)
     public ResponseEntity<BaseMessage> getPlaceListByUids(
-            @ApiParam(value = "前端传回的uid", required = true) @RequestParam(value = "uidList") String uidList) {
+            @ApiParam(value = "前端传回的uid", required = true) @RequestParam(value = "uidList") String uidList,
+            @ApiParam(value = "经度") @RequestParam(value = "longitude", required = false) Double longitude,
+            @ApiParam(value = "纬度") @RequestParam(value = "latitude", required = false) Double latitude) {
         BaseMessage baseMessage = new BaseMessage();
-        List<Place> placeList = placeService.getPlaceList(uidList);
+        List<Place> placeList = placeService.getPlaceList(uidList, longitude, latitude);
         if (placeList != null && placeList.size() > 0) {
             baseMessage.setData(placeList);
         } else {
@@ -456,6 +459,20 @@ public class PlaceApiController {
             baseMessage.setMessageDetail("不存在浏览记录");
             baseMessage.initStateAndMessage(1001, "获取用户浏览记录失败");
         }
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "获取距离，单位为米")
+    @ApiOperation(value = "获取距离，单位为米", notes = "获取距离，单位为米 ", response = BaseMessage.class)
+    @RequestMapping(value = "/getDistance", produces = {"application/json"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> getDistance(
+            @ApiParam(value = "经度1（杭州是120左右）", required = true) @RequestParam double longitude1,
+            @ApiParam(value = "纬度1（杭州是30左右）", required = true) @RequestParam double latitude1,
+            @ApiParam(value = "经度2", required = true) @RequestParam double longitude2,
+            @ApiParam(value = "纬度2", required = true) @RequestParam double latitude2) {
+        BaseMessage baseMessage = new BaseMessage();
+        Double distance = DistanceUtil.GetShortDistance(longitude1, latitude1, longitude2, latitude2);
+        baseMessage.setData(distance);
         return baseMessage.response();
     }
 }

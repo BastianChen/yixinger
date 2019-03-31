@@ -6,6 +6,7 @@ import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.Place;
 import com.cb.yixinger.service.PlaceService;
 import com.cb.yixinger.utils.CommonUtil;
+import com.cb.yixinger.utils.DistanceUtil;
 import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
@@ -98,7 +99,7 @@ public class PlaceServiceImpl implements PlaceService {
         }
 
         JSONObject avocado = jsonObject.optJSONObject("avocado");
-        if(avocado==null){
+        if (avocado == null) {
             return null;
         }
         JSONArray cards = avocado.optJSONArray("cards");
@@ -170,7 +171,7 @@ public class PlaceServiceImpl implements PlaceService {
                             // 餐馆部分评论
                             avocado = avocado.optJSONObject("data");
                             if (avocado != null) {
-                                if (avocado.optJSONObject("list")!=null){
+                                if (avocado.optJSONObject("list") != null) {
                                     list = avocado.optJSONObject("list").optJSONArray("comment_list");
                                     place.setCommentList(list.toString());
                                 }
@@ -283,15 +284,28 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public List<Place> getPlaceList(String uidList) {
+    public List<Place> getPlaceList(String uidList, Double longitude, Double latitude) {
         List<String> uid = Arrays.asList(uidList.split(";"));
         List<Place> placeList = new ArrayList<>();
-        for (String id : uid) {
-            Place place = new Place();
-            place.setUid(id);
-            place = placeMapper.selectOne(place);
-            placeList.add(place);
+        if (longitude != null && latitude != null) {
+            Double distance;
+            for (String id : uid) {
+                Place place = new Place();
+                place.setUid(id);
+                place = placeMapper.selectOne(place);
+                distance = DistanceUtil.GetShortDistance(longitude, latitude, place.getLongitude(), place.getLatitude());
+                place.setDistance(distance);
+                placeList.add(place);
+            }
+        } else {
+            for (String id : uid) {
+                Place place = new Place();
+                place.setUid(id);
+                place = placeMapper.selectOne(place);
+                placeList.add(place);
+            }
         }
+
         logger.info("对用于轮播的数据进行设置边界的冒泡排序");
         // 设置边界的冒泡排序
         int len = placeList.size();
