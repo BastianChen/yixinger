@@ -228,17 +228,19 @@ public class PlaceServiceImpl implements PlaceService {
                         //place.setWeather(avocado.optJSONObject("weather").toString());
                     }
                     // 景点印象标签
-                    avocado = cards.optJSONObject(6).optJSONObject("data");
-                    if (avocado != null) {
-                        list = avocado.optJSONArray("content");
-                        JSONArray placeContent = new JSONArray();
-                        if (list != null && list.size() > 0) {
-                            for (int i = 0; i < list.size(); i++) {
-                                dataInfo = (JSONObject) list.get(i);
-                                placeContent.add(dataInfo.optJSONArray("labels"));
+                    if (cards.optJSONObject(6) != null) {
+                        avocado = cards.optJSONObject(6).optJSONObject("data");
+                        if (avocado != null) {
+                            list = avocado.optJSONArray("content");
+                            JSONArray placeContent = new JSONArray();
+                            if (list != null && list.size() > 0) {
+                                for (int i = 0; i < list.size(); i++) {
+                                    dataInfo = (JSONObject) list.get(i);
+                                    placeContent.add(dataInfo.optJSONArray("labels"));
+                                }
                             }
+                            place.setContent(placeContent.toString());
                         }
-                        place.setContent(placeContent.toString());
                     }
                     // 景点部分评论
                     avocado = cards.optJSONObject(7);
