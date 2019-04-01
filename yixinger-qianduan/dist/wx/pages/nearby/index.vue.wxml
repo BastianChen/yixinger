@@ -24,7 +24,7 @@
                       {{item.distance}}|{{item.newAddress}}
                     </view>
                     <view class="_div data-v-3984eb6c overallratingAndShowTagDiv">
-                      <van-row class="_van-row data-v-3984eb6c">
+                      <van-row hidden="{{!(item.overallRating)}}" class="_van-row data-v-3984eb6c">
                         <van-col span="11" class="_van-col data-v-3984eb6c">
                           <van-rate value="{{item.overallRating}}" size="15" count="5" disabled-color="#00BFFF" disabled class="_van-rate data-v-3984eb6c"></van-rate>
                         </van-col>
@@ -32,7 +32,7 @@
                           {{item.overallRating}}
                         </van-col>
                       </van-row>
-                      <view class="_div data-v-3984eb6c tagPaddingTop">
+                      <view class="_div data-v-3984eb6c tagPaddingTop" hidden="{{!(item.showtag)}}">
                         <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-3984eb6c">{{item.showtag}}</van-tag>
                       </view>
                     </view>

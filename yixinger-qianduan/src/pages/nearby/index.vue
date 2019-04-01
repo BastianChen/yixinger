@@ -29,7 +29,7 @@
                       {{item.distance}}|{{item.newAddress}}
                     </div>
                     <div class="overallratingAndShowTagDiv">
-                      <van-row>
+                      <van-row v-show="item.overallRating">
                         <van-col span="11">
                           <van-rate
                             :value="item.overallRating"
@@ -43,7 +43,7 @@
                           {{item.overallRating}}
                         </van-col>
                       </van-row>
-                      <div class="tagPaddingTop">
+                      <div class="tagPaddingTop" v-show="item.showtag">
                         <van-tag color="#f2826a" plain size="large">{{item.showtag}}</van-tag>
                       </div>
                     </div>
@@ -152,7 +152,7 @@ export default {
         }
       }).then(res => {
         this.sceneryData = res.data;
-        this.initData(this.sceneryData);
+        this.initData(this.sceneryData, 1);
       });
       this.$httpWX.get({
         url: apiurl.getPlaceListByUids,
@@ -163,14 +163,20 @@ export default {
         }
       }).then(res => {
         this.restaurantData = res.data;
-        this.initData(this.restaurantData);
+        this.initData(this.restaurantData, 2);
       })
     },
-    initData(data) {
-      if (data == null) {
+    initData(data, type) {
+      if (data == null && type == 1) {
+        this.isSceneryDataEmpty = true;
+      } else if (data == null && type == 2) {
         this.isRestaurantDataEmpty = true;
       } else {
-        this.isRestaurantDataEmpty = false;
+        if (type == 1) {
+          this.isSceneryDataEmpty = false;
+        } else {
+          this.isRestaurantDataEmpty = false;
+        }
         for (let i = 0; i < data.length; i++) {
           data[i].overallRating = data[i].overallRating.toFixed(1);
           if (data[i].name.length > 9) {

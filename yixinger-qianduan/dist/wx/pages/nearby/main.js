@@ -241,7 +241,7 @@ if (false) {(function () {
         }
       }).then(function (res) {
         _this.sceneryData = res.data;
-        _this.initData(_this.sceneryData);
+        _this.initData(_this.sceneryData, 1);
       });
       this.$httpWX.get({
         url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
@@ -252,14 +252,20 @@ if (false) {(function () {
         }
       }).then(function (res) {
         _this.restaurantData = res.data;
-        _this.initData(_this.restaurantData);
+        _this.initData(_this.restaurantData, 2);
       });
     },
-    initData: function initData(data) {
-      if (data == null) {
+    initData: function initData(data, type) {
+      if (data == null && type == 1) {
+        this.isSceneryDataEmpty = true;
+      } else if (data == null && type == 2) {
         this.isRestaurantDataEmpty = true;
       } else {
-        this.isRestaurantDataEmpty = false;
+        if (type == 1) {
+          this.isSceneryDataEmpty = false;
+        } else {
+          this.isRestaurantDataEmpty = false;
+        }
         for (var i = 0; i < data.length; i++) {
           data[i].overallRating = data[i].overallRating.toFixed(1);
           if (data[i].name.length > 9) {
@@ -350,6 +356,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_vm._v("\n                    " + _vm._s(item.distance) + "|" + _vm._s(item.newAddress) + "\n                  ")]), _vm._v(" "), _c('div', {
       staticClass: "overallratingAndShowTagDiv"
     }, [_c('van-row', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (item.overallRating),
+        expression: "item.overallRating"
+      }],
       attrs: {
         "mpcomid": '4-' + index
       }
@@ -373,6 +385,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "mpcomid": '3-' + index
       }
     }, [_vm._v("\n                        " + _vm._s(item.overallRating) + "\n                      ")])], 1), _vm._v(" "), _c('div', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (item.showtag),
+        expression: "item.showtag"
+      }],
       staticClass: "tagPaddingTop"
     }, [_c('van-tag', {
       attrs: {
