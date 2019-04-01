@@ -201,31 +201,36 @@ public class PlaceServiceImpl implements PlaceService {
                     avocado = cards.optJSONObject(3);
                     if (avocado != null) {
                         setPhotoList(dataInfo, avocado, list, photoList, place);
-                        if (avocado.optJSONObject("introduce") != null) {
-                            place.setIntroduce(avocado.optJSONObject("introduce").optString("abstract", "暂无"));
-                        } else {
-                            place.setIntroduce("暂无");
+                        if (avocado.optJSONObject("data") != null) {
+                            avocado = avocado.optJSONObject("data");
+                            if (avocado.optJSONObject("introduce") != null) {
+                                place.setIntroduce(avocado.optJSONObject("introduce").optString("abstract", "暂无"));
+                            } else {
+                                place.setIntroduce("暂无");
+                            }
+                            // 景点建议游玩时间
+                            place.setSugTime(avocado.optString("sug_time", "暂无"));
+                            // 景点最佳季节
+                            place.setBestTime(avocado.optString("best_time", "暂无"));
+                        }else {
+                            avocado = cards.optJSONObject(4);
+                            if (avocado != null) {
+                                if (avocado.optJSONObject("data") != null) {
+                                    avocado = avocado.optJSONObject("data");
+                                    if (avocado.optJSONObject("introduce") != null) {
+                                        place.setIntroduce(avocado.optJSONObject("introduce").optString("abstract", "暂无"));
+                                    } else {
+                                        place.setIntroduce("暂无");
+                                    }
+                                    // 景点建议游玩时间
+                                    place.setSugTime(avocado.optString("sug_time", "暂无"));
+                                    // 景点最佳季节
+                                    place.setBestTime(avocado.optString("best_time", "暂无"));
+                                    // 景点天气
+                                    //place.setWeather(avocado.optJSONObject("weather").toString());
+                                }
+                            }
                         }
-                        // 景点建议游玩时间
-                        place.setSugTime(avocado.optString("sug_time", "暂无"));
-                        // 景点最佳季节
-                        place.setBestTime(avocado.optString("best_time", "暂无"));
-                        // 景点天气
-                        //place.setWeather(avocado.optJSONObject("weather").toString());
-                    }
-                    avocado = cards.optJSONObject(4).optJSONObject("data");
-                    if (avocado != null) {
-                        if (avocado.optJSONObject("introduce") != null) {
-                            place.setIntroduce(avocado.optJSONObject("introduce").optString("abstract", "暂无"));
-                        } else {
-                            place.setIntroduce("暂无");
-                        }
-                        // 景点建议游玩时间
-                        place.setSugTime(avocado.optString("sug_time", "暂无"));
-                        // 景点最佳季节
-                        place.setBestTime(avocado.optString("best_time", "暂无"));
-                        // 景点天气
-                        //place.setWeather(avocado.optJSONObject("weather").toString());
                     }
                     // 景点印象标签
                     if (cards.optJSONObject(6) != null) {

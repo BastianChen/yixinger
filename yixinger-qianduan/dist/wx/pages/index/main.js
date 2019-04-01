@@ -1,13 +1,13 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([5],{
+global.webpackJsonp([6],{
 
 /***/ 183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(184);
 
@@ -644,6 +644,12 @@ if (false) {(function () {
     },
     swipclick: function swipclick(uid) {
       console.log("uid" + uid);
+      this.$router.push({
+        path: '../placedetail/main',
+        query: {
+          uid: uid
+        }
+      });
       /**此处对接getPlaceByUid接口*/
     },
     totopic: function totopic(type) {
@@ -674,23 +680,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "search"
   }, [_c('span', {
     staticClass: "dingwei"
-  }), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.cityName))]), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.temperature) + "\n    ")]), _vm._v(" "), _c('div', {
     attrs: {
       "eventid": '0'
-    },
-    on: {
-      "click": _vm.toMappage
-    }
-  }, [_vm._v(_vm._s(_vm.cityName))]), _vm._v(" "), _c('div', {
-    attrs: {
-      "eventid": '1'
-    },
-    on: {
-      "click": _vm.toMappage
-    }
-  }, [_vm._v(_vm._s(_vm.temperature) + "\n    ")]), _vm._v(" "), _c('div', {
-    attrs: {
-      "eventid": '2'
     },
     on: {
       "click": _vm.toSearch
@@ -725,7 +717,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "slide-image",
       attrs: {
         "src": item.image,
-        "eventid": '3-' + index
+        "eventid": '1-' + index
       },
       on: {
         "click": function($event) {
@@ -746,7 +738,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "topicList-top",
     attrs: {
-      "eventid": '4'
+      "eventid": '2'
     },
     on: {
       "click": function($event) {
@@ -766,7 +758,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     return _c('li', {
       key: index,
       attrs: {
-        "eventid": '5-' + index
+        "eventid": '3-' + index
       },
       on: {
         "click": function($event) {
@@ -786,7 +778,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "topicList-top",
     attrs: {
-      "eventid": '6'
+      "eventid": '4'
     },
     on: {
       "click": function($event) {
@@ -806,7 +798,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     return _c('li', {
       key: index,
       attrs: {
-        "eventid": '7-' + index
+        "eventid": '5-' + index
       },
       on: {
         "click": function($event) {

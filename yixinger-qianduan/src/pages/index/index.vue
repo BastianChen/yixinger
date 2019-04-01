@@ -2,8 +2,8 @@
   <div class="index">
     <div class="search">
       <span class="dingwei"></span>
-      <div @click="toMappage">{{cityName}}</div>
-      <div @click="toMappage">{{temperature}}
+      <div>{{cityName}}</div>
+      <div>{{temperature}}
       </div>
       <div @click="toSearch">
         <input type="text" placeholder="搜索">
@@ -546,6 +546,12 @@ export default {
     },
     swipclick(uid) {
       console.log("uid" + uid);
+      this.$router.push({
+        path: `../placedetail/main`,
+        query: {
+          uid: uid
+        }
+      });
       /**此处对接getPlaceByUid接口*/
     },
     totopic(type) {

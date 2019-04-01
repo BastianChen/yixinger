@@ -11,7 +11,8 @@
     "pages/distinguish/main",
     "pages/textdistinguish/main",
     "pages/operationhistory/main",
-    "pages/nearby/main"
+    "pages/nearby/main",
+    "pages/placedetail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
