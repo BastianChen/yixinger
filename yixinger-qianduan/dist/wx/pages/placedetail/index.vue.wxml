@@ -1,3 +1,10 @@
 <template name="c86ccf96">
-  <view class="_div data-v-8962503e"> dd </view>
+  <view class="_div data-v-8962503e">
+    <view class="_div data-v-8962503e"> 1 </view>
+    <view class="_div data-v-8962503e"> 2 </view>
+    <view class="_div data-v-8962503e"> 3 </view>
+    <view class="_div data-v-8962503e"> 4 </view>
+    <view class="_div data-v-8962503e"> 5 </view>
+    <view class="_div data-v-8962503e"> 6 </view>
+  </view>
 </template>

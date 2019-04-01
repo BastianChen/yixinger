@@ -89,9 +89,32 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    name: "index.vue"
+  data: function data() {
+    return {};
+  },
+  created: function created() {},
+  mounted: function mounted() {},
+
+  methods: {}
 });
 
 /***/ }),
@@ -101,9 +124,11 @@ if (false) {(function () {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._v("\n  dd\n")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', [_vm._v("\n    1\n  ")]), _vm._v(" "), _c('div', [_vm._v("\n    2\n  ")]), _vm._v(" "), _c('div', [_vm._v("\n    3\n  ")]), _vm._v(" "), _c('div', [_vm._v("\n    4\n  ")]), _vm._v(" "), _c('div', [_vm._v("\n    5\n  ")]), _vm._v(" "), _c('div', [_vm._v("\n    6\n  ")])])
+}]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
