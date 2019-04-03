@@ -67,37 +67,41 @@ public class PlaceServiceImpl implements PlaceService {
         place.setUid(content.optString("uid", "暂无"));
         place.setShowtag(content.optString("showtag", "暂无"));
         content = content.optJSONObject("ext");
-        content = content.optJSONObject("detail_info");
-        place.setImage(content.optString("image", "暂无"));
-        place.setShopHours(content.optString("shop_hours", "暂无"));
-        place.setPrice(content.optString("price", "暂无"));
-        if (CommonUtil.isNotEmpty(content.optString("overall_rating"))) {
-            place.setOverallRating(Double.valueOf(content.optString("overall_rating")));
-        } else {
-            place.setOverallRating(0.0);
-        }
-        if (content.optJSONObject("vs_content") != null) {
-            content = content.optJSONObject("vs_content");
-            if (content.optJSONObject("invisible") != null) {
-                content = content.optJSONObject("bigdata");
-                if (content != null) {
-                    JSONArray jsonArray = content.optJSONArray("tags1");
-                    JSONArray tags1Array;
-                    if (jsonArray != null && jsonArray.size() > 0) {
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            tags1Array = (JSONArray) jsonArray.get(i);
-                            tags1Array = (JSONArray) tags1Array.get(0);
-                            if (place.getTags1() == null) {
-                                place.setTags1((String) tags1Array.get(0));
-                            } else {
-                                place.setTags1(place.getTags1() + ";" + tags1Array.get(0));
+        if (content != null) {
+            content = content.optJSONObject("detail_info");
+            place.setImage(content.optString("image", "暂无"));
+            place.setShopHours(content.optString("shop_hours", "暂无"));
+            place.setPrice(content.optString("price", "暂无"));
+            if (CommonUtil.isNotEmpty(content.optString("overall_rating"))) {
+                place.setOverallRating(Double.valueOf(content.optString("overall_rating")));
+            } else {
+                place.setOverallRating(0.0);
+            }
+            if (content.optJSONObject("vs_content") != null) {
+                content = content.optJSONObject("vs_content");
+                if (content.optJSONObject("invisible") != null) {
+                    content = content.optJSONObject("invisible");
+                    if (content.optJSONObject("bigdata") != null) {
+                        content = content.optJSONObject("bigdata");
+                        if (content != null) {
+                            JSONArray jsonArray = content.optJSONArray("tags1");
+                            JSONArray tags1Array;
+                            if (jsonArray != null && jsonArray.size() > 0) {
+                                for (int i = 0; i < jsonArray.size(); i++) {
+                                    tags1Array = (JSONArray) jsonArray.get(i);
+                                    tags1Array = (JSONArray) tags1Array.get(0);
+                                    if (place.getTags1() == null) {
+                                        place.setTags1((String) tags1Array.get(0));
+                                    } else {
+                                        place.setTags1(place.getTags1() + ";" + tags1Array.get(0));
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
-
         JSONObject avocado = jsonObject.optJSONObject("avocado");
         if (avocado == null) {
             return null;
@@ -212,7 +216,7 @@ public class PlaceServiceImpl implements PlaceService {
                             place.setSugTime(avocado.optString("sug_time", "暂无"));
                             // 景点最佳季节
                             place.setBestTime(avocado.optString("best_time", "暂无"));
-                        }else {
+                        } else {
                             avocado = cards.optJSONObject(4);
                             if (avocado != null) {
                                 if (avocado.optJSONObject("data") != null) {
