@@ -1,10 +1,86 @@
 <template name="c86ccf96">
-  <view class="_div data-v-8962503e">
-    <view class="_div data-v-8962503e"> 1 </view>
-    <view class="_div data-v-8962503e"> 2 </view>
-    <view class="_div data-v-8962503e"> 3 </view>
-    <view class="_div data-v-8962503e"> 4 </view>
-    <view class="_div data-v-8962503e"> 5 </view>
-    <view class="_div data-v-8962503e"> 6 </view>
+  <view class="_div data-v-8962503e index">
+    <view class="_div data-v-8962503e swiper">
+      <swiper class="_swiper data-v-8962503e swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true" duration="500">
+        <block wx:key="index" key="{{index}}" wx:for="{{banner}}" wx:for-index="index" wx:for-item="item">
+          <swiper-item class="_swiper-item data-v-8962503e swiper-item">
+            <image src="{{item.image}}" class="_image data-v-8962503e slide-image"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class="_div data-v-8962503e info">
+      <van-row class="_van-row data-v-8962503e"><label class="_span data-v-8962503e name">
+          {{name}}
+        </label></van-row>
+      <van-row class="_van-row data-v-8962503e distanceAndAddress">
+        <van-col span="4" class="_van-col data-v-8962503e">
+          {{distance}}| </van-col>
+        <van-col span="19" offset="1" class="_van-col data-v-8962503e">
+          {{address}}
+        </van-col>
+      </van-row>
+      <van-row class="_van-row data-v-8962503e">
+        <van-col span="6" class="_van-col data-v-8962503e">
+          <van-rate value="{{overallRating}}" size="13" count="5" disabled-color="#00BFFF" disabled class="_van-rate data-v-8962503e"></van-rate>
+        </van-col>
+        <van-col span="5" class="_van-col data-v-8962503e">
+          <view class="_div data-v-8962503e showTag">
+            {{showtag}}
+          </view>
+        </van-col>
+        <van-col span="12" class="_van-col data-v-8962503e">
+          <van-tag wx:key="index" key="{{index}}" color="#FFF6EF" text-color="#C7A98B" class="_van-tag data-v-8962503e tags1" wx:for="{{tags1}}" wx:for-index="index" wx:for-item="item">
+            {{item}}
+          </van-tag>
+        </van-col>
+      </van-row>
+    </view>
+    <view class="_div data-v-8962503e introduce">
+      <van-row class="_van-row data-v-8962503e">
+        <view class="_div data-v-8962503e title"> 景区概况 </view>
+        <view class="_div data-v-8962503e content">
+          {{introduce}}
+        </view>
+        <view class="_div data-v-8962503e sugTime"><label class="_span data-v-8962503e firstSpan">建议游玩</label><label class="_span data-v-8962503e secondSpan">{{sugTime}}</label></view>
+        <view class="_div data-v-8962503e sugTime"><label class="_span data-v-8962503e firstSpan">最佳季节</label><label class="_span data-v-8962503e secondSpan">{{bestTime}}</label></view>
+      </van-row>
+    </view>
+    <view class="_div data-v-8962503e telephone">
+      <van-row class="_van-row data-v-8962503e">
+        <view class="_div data-v-8962503e title"> 电话 </view>
+        <view class="_div data-v-8962503e one">
+          {{telephone1}}
+        </view>
+        <view class="_div data-v-8962503e two"><label class="_span data-v-8962503e otherSpan">{{telephone1}}</label> <label class="_span data-v-8962503e centerSpan">|</label> <label class="_span data-v-8962503e otherSpan">{{telephone2}}</label></view>
+      </van-row>
+    </view>
+    <view class="_div data-v-8962503e">
+      <view class="_div data-v-8962503e shopHours">
+        <van-row class="_van-row data-v-8962503e">
+          <view class="_div data-v-8962503e title"> 营业时间 </view>
+          <view class="_div data-v-8962503e hour">
+            {{hour}}
+          </view>
+        </van-row>
+      </view>
+    </view>
+    <view class="_div data-v-8962503e">
+      <view class="_div data-v-8962503e content">
+        <van-row class="_van-row data-v-8962503e">
+          <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">印象标签</label><label class="_span data-v-8962503e more">发现更多></label></view>
+          <view class="_div data-v-8962503e tag">
+            <view class="_div data-v-8962503e">
+              <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-8962503e vanTag" wx:key="index" key="{{index}}" wx:for="{{tag1OfContent}}" wx:for-index="index" wx:for-item="item">{{item}}</van-tag>
+            </view>
+            <view style="margin-top: 10px" class="_div data-v-8962503e">
+              <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-8962503e vanTag" wx:key="index" key="{{index}}" wx:for="{{tag2OfContent}}" wx:for-index="index" wx:for-item="item">{{item}}</van-tag>
+            </view>
+          </view>
+        </van-row>
+      </view>
+    </view>
+    <view class="_div data-v-8962503e"> 7 </view>
+    <view class="_div data-v-8962503e"> 8 </view>
   </view>
 </template>

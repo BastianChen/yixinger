@@ -1,1 +1,137 @@
 @import "../../common/vendor.wxss";
+
+.index.data-v-8962503e {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #F4F4F4;
+}
+.index .swiper.data-v-8962503e {
+  width: 100%;
+  height: 200 rpx;
+}
+.index .swiper .swiper-container.data-v-8962503e {
+  width: 100%;
+}
+.index .swiper .swiper-container .swiper-item.data-v-8962503e {
+  width: 100%;
+  height: 100%;
+}
+.index .swiper .swiper-container .swiper-item .slide-image.data-v-8962503e {
+  width: 100%;
+  height: 100%;
+}
+.index .info.data-v-8962503e {
+  background: #ffffff;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+}
+.index .info .name.data-v-8962503e {
+  font-weight: bold;
+  font-size: 40rpx;
+  font-family: KaiTi;
+  padding-top: 10rpx;
+}
+.index .info .distanceAndAddress.data-v-8962503e {
+  font-size: 36rpx;
+  font-family: KaiTi;
+}
+.index .info .showTag.data-v-8962503e {
+  font-size: 36rpx;
+  font-family: KaiTi;
+  color: #676767;
+  text-align: center;
+  padding-top: 10rpx;
+}
+.index .info .tags1.data-v-8962503e {
+  padding: 0 5rpx;
+}
+.index .introduce.data-v-8962503e {
+  background: #ffffff;
+  margin-bottom: 20rpx;
+  padding: 0 20rpx;
+}
+.index .introduce .title.data-v-8962503e {
+  font-size: 36rpx;
+  padding: 30rpx 0;
+}
+.index .introduce .content.data-v-8962503e {
+  border-top: 2rpx solid #E8E8E8;
+  padding: 30rpx 0;
+  width: 100%;
+  font-size: 28rpx;
+}
+.index .introduce .sugTime.data-v-8962503e {
+  border-top: 2rpx solid #E8E8E8;
+  padding: 30rpx 0;
+  width: 100%;
+}
+.index .introduce .sugTime .firstSpan.data-v-8962503e {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+.index .introduce .sugTime .secondSpan.data-v-8962503e {
+  font-size: 28rpx;
+  margin-left: 40rpx;
+}
+.index .telephone.data-v-8962503e {
+  background: #ffffff;
+  margin-bottom: 20rpx;
+  padding: 0 20rpx;
+}
+.index .telephone .title.data-v-8962503e {
+  font-size: 36rpx;
+  padding: 30rpx 0;
+}
+.index .telephone .one.data-v-8962503e {
+  border-top: 2rpx solid #E8E8E8;
+  font-size: 28rpx;
+  text-align: left;
+  padding: 20rpx 0;
+}
+.index .telephone .two.data-v-8962503e {
+  border-top: 2rpx solid #E8E8E8;
+  font-size: 28rpx;
+  padding: 20rpx;
+}
+.index .telephone .two .otherSpan.data-v-8962503e {
+  text-align: center;
+  padding: 0 80rpx;
+}
+.index .telephone .two .centerSpan.data-v-8962503e {
+  color: #E8E8E8;
+}
+.index .shopHours.data-v-8962503e {
+  background: #ffffff;
+  margin-bottom: 20rpx;
+  padding: 0 20rpx;
+}
+.index .shopHours .title.data-v-8962503e {
+  font-size: 36rpx;
+  padding: 30rpx 0;
+}
+.index .shopHours .hour.data-v-8962503e {
+  border-top: 2rpx solid #E8E8E8;
+  font-size: 28rpx;
+  text-align: left;
+  padding: 20rpx 0;
+}
+.index .content.data-v-8962503e {
+  background: #ffffff;
+  margin-bottom: 20rpx;
+  padding: 0 20rpx;
+}
+.index .content .title.data-v-8962503e {
+  font-size: 36rpx;
+  padding: 30rpx 0;
+}
+.index .content .title .more.data-v-8962503e {
+  float: right;
+}
+.index .content .tag.data-v-8962503e {
+  border-top: 2rpx solid #E8E8E8;
+  padding: 20rpx 0;
+}
+.index .content .tag .vanTag.data-v-8962503e {
+  margin-right: 20rpx;
+}

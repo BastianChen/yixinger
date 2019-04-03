@@ -1,2 +1,136 @@
 .index {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #F4F4F4;
+  .swiper {
+    width: 100%;
+    height: 200 rpx;
+    .swiper-container {
+      width: 100%;
+      .swiper-item {
+        width: 100%;
+        height: 100%;
+        .slide-image {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+  .info {
+    background: #ffffff;
+    margin-bottom: 10px;
+    padding: 10px;
+    .name {
+      font-weight: bold;
+      font-size: 20px;
+      font-family: KaiTi;
+      padding-top: 5px;
+    }
+    .distanceAndAddress {
+      font-size: 18px;
+      font-family: KaiTi;
+    }
+    .showTag {
+      font-size: 18px;
+      font-family: KaiTi;
+      color: #676767;
+      text-align: center;
+      padding-top: 5px;
+    }
+    .tags1{
+      padding: 0 5rpx;
+    }
+  }
+  .introduce {
+    background: #ffffff;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    .title {
+      font-size: 18px;
+      padding: 15px 0;
+    }
+    .content {
+      border-top: 1px solid #E8E8E8;
+      padding: 15px 0;
+      width: 100%;
+      font-size: 14px;
+    }
+    .sugTime {
+      border-top: 1px solid #E8E8E8;
+      padding: 15px 0;
+      width: 100%;
+      .firstSpan {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .secondSpan {
+        font-size: 14px;
+        margin-left: 20px;
+      }
+    }
+  }
+  .telephone {
+    background: #ffffff;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    .title {
+      font-size: 18px;
+      padding: 15px 0;
+    }
+    .one {
+      border-top: 1px solid #E8E8E8;
+      font-size: 14px;
+      text-align: left;
+      padding: 10px 0;
+    }
+    .two {
+      border-top: 1px solid #E8E8E8;
+      font-size: 14px;
+      padding: 10px;
+      .otherSpan {
+        text-align: center;
+        padding: 0 40px;
+      }
+      .centerSpan {
+        color: #E8E8E8;
+      }
+    }
+  }
+  .shopHours {
+    background: #ffffff;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    .title {
+      font-size: 18px;
+      padding: 15px 0;
+    }
+    .hour {
+      border-top: 1px solid #E8E8E8;
+      font-size: 14px;
+      text-align: left;
+      padding: 10px 0;
+    }
+  }
+  // 印象标签
+  .content{
+    background: #ffffff;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    .title {
+      font-size: 18px;
+      padding: 15px 0;
+      .more{
+        float: right;
+      }
+    }
+    .tag{
+      border-top: 1px solid #E8E8E8;
+      padding: 10px 0;
+      .vanTag{
+        margin-right: 10px;
+      }
+    }
+  }
 }
