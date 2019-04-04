@@ -41,7 +41,6 @@
   font-family: KaiTi;
   color: #676767;
   text-align: center;
-  padding-top: 10rpx;
 }
 .index .info .tags1.data-v-8962503e {
   padding: 0 5 rpx;
