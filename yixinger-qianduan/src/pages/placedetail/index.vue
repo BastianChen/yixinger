@@ -52,7 +52,16 @@
           景区概况
         </div>
         <div class="content">
-          {{introduce}}
+          <van-row>
+            <van-col span="22">
+            <span>
+            {{introduce}}
+            </span>
+            </van-col>
+            <van-col span="2">
+              <div class="right"><van-icon name="arrow"/></div>
+            </van-col>
+          </van-row>
         </div>
         <div class="sugTime">
           <span class="firstSpan">建议游玩</span><span class="secondSpan">{{sugTime}}</span>
@@ -93,24 +102,172 @@
       <div class="content">
         <van-row>
           <div class="title">
-            <span>印象标签</span><span class="more">发现更多></span>
+            <span>印象标签</span><span class="more">发现更多<van-icon name="arrow"/></span>
           </div>
           <div class="tag">
             <div>
-              <van-tag color="#f2826a" plain size="large" class="vanTag" v-for="(item, index) in tag1OfContent " :key="index">{{item}}</van-tag>
+              <van-tag color="#f2826a" plain size="large" class="vanTag" v-for="(item, index) in tag1OfContent "
+                       :key="index">{{item}}
+              </van-tag>
             </div>
             <div style="margin-top: 10px">
-              <van-tag color="#f2826a" plain size="large" class="vanTag" v-for="(item, index) in tag2OfContent " :key="index">{{item}}</van-tag>
+              <van-tag color="#f2826a" plain size="large" class="vanTag" v-for="(item, index) in tag2OfContent "
+                       :key="index">{{item}}
+              </van-tag>
             </div>
           </div>
         </van-row>
       </div>
     </div>
     <div>
-      7
+      <div class="comment">
+        <van-row>
+          <div class="title">
+            <span>评论</span><span class="commentNumber">({{commentNumber}}条评论)</span>
+            <button
+              type="primary"
+              size="mini"
+              plain="false"
+              bindtap="primary"
+              class="addComment"
+            >
+              <van-icon name="edit" size="15px" style="padding-top: 5px"/>
+              写评论
+            </button>
+          </div>
+          <div class="commentDetails">
+            <div class="commentDetail">
+              <van-row>
+                <van-col span="3">
+                  <img class="portrait"
+                       src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                </van-col>
+                <van-col span="19" offset="1">
+                  <van-row>
+                    <span class="userName">158****3385</span>
+                  </van-row>
+                  <van-row>
+                    <van-col span="8">
+                      <van-rate
+                        :value="overallRating"
+                        size="13"
+                        count="5"
+                        disabled-color="#00BFFF"
+                        disabled
+                      />
+                    </van-col>
+                    <van-col span="3">
+                      <span class="rate">{{overallRating}}</span>
+                    </van-col>
+                    <van-col span="8" offset="5">
+                      <div class="time"><span>2019-04-04</span></div>
+                    </van-col>
+                  </van-row>
+                  <van-row>
+                    <div class="detail">
+                    <span>
+                      位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...
+                    </span>
+                    </div>
+                  </van-row>
+                  <van-row>
+                    <div>
+                      <img style="height: 70px;width: 70px;margin-right: 15px"
+                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                      <img style="height: 70px;width: 70px;margin-right: 15px"
+                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                      <img style="height: 70px;width: 70px;margin-right: 15px"
+                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                      <span
+                        style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">9张</span>
+                    </div>
+                  </van-row>
+                  <van-row>
+                    <div class="bottom">
+                      <span class="resource">来自百度地图</span>
+                      <img class="likeImg" src="../../../static/images/like.png"/>
+                      <span class="likes">5</span>
+                    </div>
+                  </van-row>
+                </van-col>
+              </van-row>
+            </div>
+            <div class="commentDetail">
+              <van-row>
+                <van-col span="3">
+                  <img class="portrait"
+                       src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                </van-col>
+                <van-col span="19" offset="1">
+                  <van-row>
+                    <span class="userName">158****3385</span>
+                  </van-row>
+                  <van-row>
+                    <van-col span="8">
+                      <van-rate
+                        :value="overallRating"
+                        size="13"
+                        count="5"
+                        disabled-color="#00BFFF"
+                        disabled
+                      />
+                    </van-col>
+                    <van-col span="3">
+                      <span class="rate">{{overallRating}}</span>
+                    </van-col>
+                    <van-col span="8" offset="5">
+                      <div class="time"><span>2019-04-04</span></div>
+                    </van-col>
+                  </van-row>
+                  <van-row>
+                    <div class="detail">
+                    <span>
+                      位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...
+                    </span>
+                    </div>
+                  </van-row>
+                  <van-row>
+                    <div>
+                      <img style="height: 70px;width: 70px;margin-right: 15px"
+                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                      <img style="height: 70px;width: 70px;margin-right: 15px"
+                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                      <img style="height: 70px;width: 70px;margin-right: 15px"
+                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                      <span
+                        style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">9张</span>
+                    </div>
+                  </van-row>
+                  <van-row>
+                    <div class="bottom">
+                      <span class="resource">来自百度地图</span>
+                      <img class="likeImg" src="../../../static/images/like.png"/>
+                      <span class="likes">5</span>
+                    </div>
+                  </van-row>
+                </van-col>
+              </van-row>
+            </div>
+          </div>
+          <div class="seeAll">
+            <span>查看全部</span>
+            <van-icon name="arrow"/>
+          </div>
+        </van-row>
+      </div>
     </div>
     <div>
-      8
+      <div class="photograph">
+        <van-row>
+          <div class="title">
+            <span>相册</span><span class="more"><van-icon name="arrow"/></span>
+          </div>
+          <div class="photos">
+            <img v-for="(item, index) in imgList "
+                 :key="index" :src="item" :data-src="item" v-if="index<=3" @click="seePhoto(item)"/>
+          </div>
+        </van-row>
+      </div>
     </div>
   </div>
 </template>
@@ -130,10 +287,12 @@ export default {
       telephone2: '13575419350',
       isOneTelephone: true,// 判断是否有两个电话
       tags1: ['世界文化遗产', '适合散步', '夜景赞'],
-      tag1OfContent:['人气旺(323)','景色优美(299)','免费项目(94)'],
-      tag2OfContent:['环境很好(79)','收费合理(59)','水很清澈(35)'],
+      tag1OfContent: ['人气旺(323)', '景色优美(299)', '免费项目(94)'],
+      tag2OfContent: ['环境很好(79)', '收费合理(59)', '水很清澈(35)'],
+      commentNumber: 900,
+      imgList: ['http://hiphotos.baidu.com/map/pic/item/b3fb43166d224f4a23eb6f7404f790529822d162.jpg', 'http://hiphotos.baidu.com/map/pic/item/738b4710b912c8fc4a42f05af1039245d78821f7.jpg', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132'],
       hour: '周五至周日11:00-13:30;16:30-20:30周一至周四11:00-13:00;16:30-20:30非营;周五至周日11:00-13:30',
-      introduce: '西湖古称“钱塘湖”，又名“西子湖”，古代诗人苏轼就对它评价道：“欲把西湖比西子，淡妆浓抹总相...',
+      introduce: '西湖古称“钱塘湖”，又名“西子湖”，古代诗人苏轼就对它评价道：“欲把西湖比西子，淡妆西湖古称“钱塘湖”，又名“名名名名名子，淡妆浓抹总...',
       banner: [{
         "id": 381,
         "name": "海底捞火锅(天虹商场店)",
@@ -305,7 +464,17 @@ export default {
   mounted() {
 
   },
-  methods: {}
+  methods: {
+    /**
+     * 预览图片
+     */
+    seePhoto(index) {
+      wx.previewImage({
+        current: index, // 当前显示图片的http链接
+        urls: this.imgList // 需要预览的图片http链接列表
+      })
+    }
+  }
 }
 </script>
 

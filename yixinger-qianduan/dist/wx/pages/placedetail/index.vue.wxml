@@ -40,7 +40,16 @@
       <van-row class="_van-row data-v-8962503e">
         <view class="_div data-v-8962503e title"> 景区概况 </view>
         <view class="_div data-v-8962503e content">
-          {{introduce}}
+          <van-row class="_van-row data-v-8962503e">
+            <van-col span="22" class="_van-col data-v-8962503e"><label class="_span data-v-8962503e">
+                {{introduce}}
+              </label></van-col>
+            <van-col span="2" class="_van-col data-v-8962503e">
+              <view class="_div data-v-8962503e right">
+                <van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon>
+              </view>
+            </van-col>
+          </van-row>
         </view>
         <view class="_div data-v-8962503e sugTime"><label class="_span data-v-8962503e firstSpan">建议游玩</label><label class="_span data-v-8962503e secondSpan">{{sugTime}}</label></view>
         <view class="_div data-v-8962503e sugTime"><label class="_span data-v-8962503e firstSpan">最佳季节</label><label class="_span data-v-8962503e secondSpan">{{bestTime}}</label></view>
@@ -68,19 +77,113 @@
     <view class="_div data-v-8962503e">
       <view class="_div data-v-8962503e content">
         <van-row class="_van-row data-v-8962503e">
-          <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">印象标签</label><label class="_span data-v-8962503e more">发现更多></label></view>
+          <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">印象标签</label><label class="_span data-v-8962503e more">发现更多<van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon></label></view>
           <view class="_div data-v-8962503e tag">
             <view class="_div data-v-8962503e">
-              <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-8962503e vanTag" wx:key="index" key="{{index}}" wx:for="{{tag1OfContent}}" wx:for-index="index" wx:for-item="item">{{item}}</van-tag>
+              <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-8962503e vanTag" wx:key="index" key="{{index}}" wx:for="{{tag1OfContent}}" wx:for-index="index" wx:for-item="item">{{item}}
+              </van-tag>
             </view>
             <view style="margin-top: 10px" class="_div data-v-8962503e">
-              <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-8962503e vanTag" wx:key="index" key="{{index}}" wx:for="{{tag2OfContent}}" wx:for-index="index" wx:for-item="item">{{item}}</van-tag>
+              <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-8962503e vanTag" wx:key="index" key="{{index}}" wx:for="{{tag2OfContent}}" wx:for-index="index" wx:for-item="item">{{item}}
+              </van-tag>
             </view>
           </view>
         </van-row>
       </view>
     </view>
-    <view class="_div data-v-8962503e"> 7 </view>
-    <view class="_div data-v-8962503e"> 8 </view>
+    <view class="_div data-v-8962503e">
+      <view class="_div data-v-8962503e comment">
+        <van-row class="_van-row data-v-8962503e">
+          <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">评论</label><label class="_span data-v-8962503e commentNumber">({{commentNumber}}条评论)</label> <button type="primary" size="mini" plain="false" bindtap="primary" class="_button data-v-8962503e addComment">
+              <van-icon name="edit" size="15px" style="padding-top: 5px" class="_van-icon data-v-8962503e"></van-icon> 写评论
+            </button></view>
+          <view class="_div data-v-8962503e commentDetails">
+            <view class="_div data-v-8962503e commentDetail">
+              <van-row class="_van-row data-v-8962503e">
+                <van-col span="3" class="_van-col data-v-8962503e">
+                  <image class="_img data-v-8962503e portrait" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"></image>
+                </van-col>
+                <van-col span="19" offset="1" class="_van-col data-v-8962503e">
+                  <van-row class="_van-row data-v-8962503e"><label class="_span data-v-8962503e userName">158****3385</label></van-row>
+                  <van-row class="_van-row data-v-8962503e">
+                    <van-col span="8" class="_van-col data-v-8962503e">
+                      <van-rate value="{{overallRating}}" size="13" count="5" disabled-color="#00BFFF" disabled class="_van-rate data-v-8962503e"></van-rate>
+                    </van-col>
+                    <van-col span="3" class="_van-col data-v-8962503e"><label class="_span data-v-8962503e rate">{{overallRating}}</label></van-col>
+                    <van-col span="8" offset="5" class="_van-col data-v-8962503e">
+                      <view class="_div data-v-8962503e time"><label class="_span data-v-8962503e">2019-04-04</label></view>
+                    </van-col>
+                  </van-row>
+                  <van-row class="_van-row data-v-8962503e">
+                    <view class="_div data-v-8962503e detail"><label class="_span data-v-8962503e"> 位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时... </label></view>
+                  </van-row>
+                  <van-row class="_van-row data-v-8962503e">
+                    <view class="_div data-v-8962503e">
+                      <image style="height: 70px;width: 70px;margin-right: 15px" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132" class="_img data-v-8962503e"></image>
+                      <image style="height: 70px;width: 70px;margin-right: 15px" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132" class="_img data-v-8962503e"></image>
+                      <image style="height: 70px;width: 70px;margin-right: 15px" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132" class="_img data-v-8962503e"></image> <label style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;" class="_span data-v-8962503e">9张</label>
+                    </view>
+                  </van-row>
+                  <van-row class="_van-row data-v-8962503e">
+                    <view class="_div data-v-8962503e bottom"><label class="_span data-v-8962503e resource">来自百度地图</label>
+                      <image class="_img data-v-8962503e likeImg" src="/static/images/like.png"></image> <label class="_span data-v-8962503e likes">5</label>
+                    </view>
+                  </van-row>
+                </van-col>
+              </van-row>
+            </view>
+            <view class="_div data-v-8962503e commentDetail">
+              <van-row class="_van-row data-v-8962503e">
+                <van-col span="3" class="_van-col data-v-8962503e">
+                  <image class="_img data-v-8962503e portrait" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"></image>
+                </van-col>
+                <van-col span="19" offset="1" class="_van-col data-v-8962503e">
+                  <van-row class="_van-row data-v-8962503e"><label class="_span data-v-8962503e userName">158****3385</label></van-row>
+                  <van-row class="_van-row data-v-8962503e">
+                    <van-col span="8" class="_van-col data-v-8962503e">
+                      <van-rate value="{{overallRating}}" size="13" count="5" disabled-color="#00BFFF" disabled class="_van-rate data-v-8962503e"></van-rate>
+                    </van-col>
+                    <van-col span="3" class="_van-col data-v-8962503e"><label class="_span data-v-8962503e rate">{{overallRating}}</label></van-col>
+                    <van-col span="8" offset="5" class="_van-col data-v-8962503e">
+                      <view class="_div data-v-8962503e time"><label class="_span data-v-8962503e">2019-04-04</label></view>
+                    </van-col>
+                  </van-row>
+                  <van-row class="_van-row data-v-8962503e">
+                    <view class="_div data-v-8962503e detail"><label class="_span data-v-8962503e"> 位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时... </label></view>
+                  </van-row>
+                  <van-row class="_van-row data-v-8962503e">
+                    <view class="_div data-v-8962503e">
+                      <image style="height: 70px;width: 70px;margin-right: 15px" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132" class="_img data-v-8962503e"></image>
+                      <image style="height: 70px;width: 70px;margin-right: 15px" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132" class="_img data-v-8962503e"></image>
+                      <image style="height: 70px;width: 70px;margin-right: 15px" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132" class="_img data-v-8962503e"></image> <label style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;" class="_span data-v-8962503e">9张</label>
+                    </view>
+                  </van-row>
+                  <van-row class="_van-row data-v-8962503e">
+                    <view class="_div data-v-8962503e bottom"><label class="_span data-v-8962503e resource">来自百度地图</label>
+                      <image class="_img data-v-8962503e likeImg" src="/static/images/like.png"></image> <label class="_span data-v-8962503e likes">5</label>
+                    </view>
+                  </van-row>
+                </van-col>
+              </van-row>
+            </view>
+          </view>
+          <view class="_div data-v-8962503e seeAll"><label class="_span data-v-8962503e">查看全部</label>
+            <van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon>
+          </view>
+        </van-row>
+      </view>
+    </view>
+    <view class="_div data-v-8962503e">
+      <view class="_div data-v-8962503e photograph">
+        <van-row class="_van-row data-v-8962503e">
+          <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">相册</label><label class="_span data-v-8962503e more">
+              <van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon>
+            </label></view>
+          <view class="_div data-v-8962503e photos">
+            <image wx:key="index" key="{{index}}" src="{{item}}" data-src="{{item}}" wx:if="{{index<=3}}" bindtap="handleProxy" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="index" wx:for-item="item" class="_img data-v-8962503e"></image>
+          </view>
+        </van-row>
+      </view>
+    </view>
   </view>
 </template>

@@ -39,8 +39,8 @@
       text-align: center;
       padding-top: 5px;
     }
-    .tags1{
-      padding: 0 5rpx;
+    .tags1 {
+      padding: 0 5 rpx;
     }
   }
   .introduce {
@@ -56,6 +56,10 @@
       padding: 15px 0;
       width: 100%;
       font-size: 14px;
+      .right{
+        text-align: right;
+        margin-top: 25px;
+      }
     }
     .sugTime {
       border-top: 1px solid #E8E8E8;
@@ -114,22 +118,127 @@
     }
   }
   // 印象标签
-  .content{
+  .content {
     background: #ffffff;
     margin-bottom: 10px;
     padding: 0 10px;
     .title {
       font-size: 18px;
       padding: 15px 0;
+      .more {
+        font-size: 17px;
+        color: #A7A7A7;
+        float: right;
+        padding-top:12rpx;
+      }
+    }
+    .tag {
+      border-top: 1px solid #E8E8E8;
+      padding: 10px 0;
+      .vanTag {
+        margin-right: 10px;
+      }
+    }
+  }
+  .comment {
+    background: #ffffff;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    .title {
+      font-size: 18px;
+      padding: 15px 0;
+      .commentNumber {
+        font-size: 17px;
+        margin-left: 8px;
+        color: #A7A7A7;
+      }
+      .addComment {
+        float: right;
+        background-color: #1989FA;
+        border-color: #1989FA;
+        color: #ffffff;
+        width: 100px;
+        border-radius: 20px;
+      }
+    }
+    .commentDetails{
+      border-top: 1px solid #E8E8E8;
+      padding: 10px 0 0 0;
+      .commentDetail{
+        border-bottom: 1px solid #E8E8E8;
+        margin-top: 10px;
+        .portrait{
+          height: 100rpx;
+          width: 100rpx;
+          border-radius: 50%
+        }
+        .userName{
+          font-size: 15px;
+          font-weight: bold;
+        }
+        .rate{
+          font-size: 13px;
+          color: #A7A7A7;
+        }
+        .time{
+          font-size: 13px;
+          color: #A7A7A7;
+          text-align: right;
+          padding-top:12rpx;
+        }
+        .detail{
+          font-size: 13px;
+          height: 50px;
+          letter-spacing: 1px;
+          overflow:hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 10px;
+        }
+        .bottom{
+          padding: 0 0 10px 0;
+          .resource{
+            font-size: 13px;
+            color: #A7A7A7;
+          }
+          .likes{
+            font-size: 13px;
+            color: #A7A7A7;
+            float: right;
+            padding-top:13rpx;
+          }
+          .likeImg{
+            width: 15px;
+            height: 15px;
+            float: right;
+            padding-top:13rpx;
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+    .seeAll{
+      padding: 10px 0;
+      text-align: center;
+    }
+  }
+  .photograph{
+    background: #ffffff;
+    margin-bottom: 10px;
+    .title {
+      font-size: 18px;
+      padding: 15px 0px;
+      margin: 0px 10px;
+      border-bottom: 1px solid #E8E8E8;
       .more{
         float: right;
       }
     }
-    .tag{
-      border-top: 1px solid #E8E8E8;
+    .photos{
       padding: 10px 0;
-      .vanTag{
-        margin-right: 10px;
+      img{
+        padding: 0 8.5px;
+        width: 76px;
+        height: 65px;
       }
     }
   }

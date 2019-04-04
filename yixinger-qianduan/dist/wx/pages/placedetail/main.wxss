@@ -44,7 +44,7 @@
   padding-top: 10rpx;
 }
 .index .info .tags1.data-v-8962503e {
-  padding: 0 5rpx;
+  padding: 0 5 rpx;
 }
 .index .introduce.data-v-8962503e {
   background: #ffffff;
@@ -60,6 +60,10 @@
   padding: 30rpx 0;
   width: 100%;
   font-size: 28rpx;
+}
+.index .introduce .content .right.data-v-8962503e {
+  text-align: right;
+  margin-top: 50rpx;
 }
 .index .introduce .sugTime.data-v-8962503e {
   border-top: 2rpx solid #E8E8E8;
@@ -126,7 +130,10 @@
   padding: 30rpx 0;
 }
 .index .content .title .more.data-v-8962503e {
+  font-size: 34rpx;
+  color: #A7A7A7;
   float: right;
+  padding-top: 12rpx;
 }
 .index .content .tag.data-v-8962503e {
   border-top: 2rpx solid #E8E8E8;
@@ -134,4 +141,106 @@
 }
 .index .content .tag .vanTag.data-v-8962503e {
   margin-right: 20rpx;
+}
+.index .comment.data-v-8962503e {
+  background: #ffffff;
+  margin-bottom: 20rpx;
+  padding: 0 20rpx;
+}
+.index .comment .title.data-v-8962503e {
+  font-size: 36rpx;
+  padding: 30rpx 0;
+}
+.index .comment .title .commentNumber.data-v-8962503e {
+  font-size: 34rpx;
+  margin-left: 16rpx;
+  color: #A7A7A7;
+}
+.index .comment .title .addComment.data-v-8962503e {
+  float: right;
+  background-color: #1989FA;
+  border-color: #1989FA;
+  color: #ffffff;
+  width: 200rpx;
+  border-radius: 40rpx;
+}
+.index .comment .commentDetails.data-v-8962503e {
+  border-top: 2rpx solid #E8E8E8;
+  padding: 20rpx 0 0 0;
+}
+.index .comment .commentDetails .commentDetail.data-v-8962503e {
+  border-bottom: 2rpx solid #E8E8E8;
+  margin-top: 20rpx;
+}
+.index .comment .commentDetails .commentDetail .portrait.data-v-8962503e {
+  height: 100rpx;
+  width: 100rpx;
+  border-radius: 50%;
+}
+.index .comment .commentDetails .commentDetail .userName.data-v-8962503e {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.index .comment .commentDetails .commentDetail .rate.data-v-8962503e {
+  font-size: 26rpx;
+  color: #A7A7A7;
+}
+.index .comment .commentDetails .commentDetail .time.data-v-8962503e {
+  font-size: 26rpx;
+  color: #A7A7A7;
+  text-align: right;
+  padding-top: 12rpx;
+}
+.index .comment .commentDetails .commentDetail .detail.data-v-8962503e {
+  font-size: 26rpx;
+  height: 100rpx;
+  letter-spacing: 2rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 20rpx;
+}
+.index .comment .commentDetails .commentDetail .bottom.data-v-8962503e {
+  padding: 0 0 20rpx 0;
+}
+.index .comment .commentDetails .commentDetail .bottom .resource.data-v-8962503e {
+  font-size: 26rpx;
+  color: #A7A7A7;
+}
+.index .comment .commentDetails .commentDetail .bottom .likes.data-v-8962503e {
+  font-size: 26rpx;
+  color: #A7A7A7;
+  float: right;
+  padding-top: 13rpx;
+}
+.index .comment .commentDetails .commentDetail .bottom .likeImg.data-v-8962503e {
+  width: 30rpx;
+  height: 30rpx;
+  float: right;
+  padding-top: 13rpx;
+  margin-left: 10rpx;
+}
+.index .comment .seeAll.data-v-8962503e {
+  padding: 20rpx 0;
+  text-align: center;
+}
+.index .photograph.data-v-8962503e {
+  background: #ffffff;
+  margin-bottom: 20rpx;
+}
+.index .photograph .title.data-v-8962503e {
+  font-size: 36rpx;
+  padding: 30rpx 0;
+  margin: 0 20rpx;
+  border-bottom: 2rpx solid #E8E8E8;
+}
+.index .photograph .title .more.data-v-8962503e {
+  float: right;
+}
+.index .photograph .photos.data-v-8962503e {
+  padding: 20rpx 0;
+}
+.index .photograph .photos ._img.data-v-8962503e {
+  padding: 0 17rpx;
+  width: 152rpx;
+  height: 130rpx;
 }

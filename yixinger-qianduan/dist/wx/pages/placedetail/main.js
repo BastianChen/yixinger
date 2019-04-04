@@ -200,6 +200,163 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   data: function data() {
@@ -217,8 +374,10 @@ if (false) {(function () {
       tags1: ['世界文化遗产', '适合散步', '夜景赞'],
       tag1OfContent: ['人气旺(323)', '景色优美(299)', '免费项目(94)'],
       tag2OfContent: ['环境很好(79)', '收费合理(59)', '水很清澈(35)'],
+      commentNumber: 900,
+      imgList: ['http://hiphotos.baidu.com/map/pic/item/b3fb43166d224f4a23eb6f7404f790529822d162.jpg', 'http://hiphotos.baidu.com/map/pic/item/738b4710b912c8fc4a42f05af1039245d78821f7.jpg', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132'],
       hour: '周五至周日11:00-13:30;16:30-20:30周一至周四11:00-13:00;16:30-20:30非营;周五至周日11:00-13:30',
-      introduce: '西湖古称“钱塘湖”，又名“西子湖”，古代诗人苏轼就对它评价道：“欲把西湖比西子，淡妆浓抹总相...',
+      introduce: '西湖古称“钱塘湖”，又名“西子湖”，古代诗人苏轼就对它评价道：“欲把西湖比西子，淡妆西湖古称“钱塘湖”，又名“名名名名名子，淡妆浓抹总...',
       banner: [{
         "id": 381,
         "name": "海底捞火锅(天虹商场店)",
@@ -387,7 +546,17 @@ if (false) {(function () {
   created: function created() {},
   mounted: function mounted() {},
 
-  methods: {}
+  methods: {
+    /**
+     * 预览图片
+     */
+    seePhoto: function seePhoto(index) {
+      wx.previewImage({
+        current: index, // 当前显示图片的http链接
+        urls: this.imgList // 需要预览的图片http链接列表
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -492,13 +661,34 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "introduce"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '11'
+      "mpcomid": '15'
     }
   }, [_c('div', {
     staticClass: "title"
   }, [_vm._v("\n        景区概况\n      ")]), _vm._v(" "), _c('div', {
     staticClass: "content"
-  }, [_vm._v("\n        " + _vm._s(_vm.introduce) + "\n      ")]), _vm._v(" "), _c('div', {
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '14'
+    }
+  }, [_c('van-col', {
+    attrs: {
+      "span": "22",
+      "mpcomid": '11'
+    }
+  }, [_c('span', [_vm._v("\n          " + _vm._s(_vm.introduce) + "\n          ")])]), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "2",
+      "mpcomid": '13'
+    }
+  }, [_c('div', {
+    staticClass: "right"
+  }, [_c('van-icon', {
+    attrs: {
+      "name": "arrow",
+      "mpcomid": '12'
+    }
+  })], 1)])], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "sugTime"
   }, [_c('span', {
     staticClass: "firstSpan"
@@ -514,7 +704,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "telephone"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '12'
+      "mpcomid": '16'
     }
   }, [_c('div', {
     staticClass: "title"
@@ -532,7 +722,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "shopHours"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '13'
+      "mpcomid": '17'
     }
   }, [_c('div', {
     staticClass: "title"
@@ -542,13 +732,18 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "content"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '16'
+      "mpcomid": '21'
     }
   }, [_c('div', {
     staticClass: "title"
   }, [_c('span', [_vm._v("印象标签")]), _c('span', {
     staticClass: "more"
-  }, [_vm._v("发现更多>")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("发现更多"), _c('van-icon', {
+    attrs: {
+      "name": "arrow",
+      "mpcomid": '18'
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "tag"
   }, [_c('div', _vm._l((_vm.tag1OfContent), function(item, index) {
     return _c('van-tag', {
@@ -558,9 +753,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "color": "#f2826a",
         "plain": "",
         "size": "large",
-        "mpcomid": '14-' + index
+        "mpcomid": '19-' + index
       }
-    }, [_vm._v(_vm._s(item))])
+    }, [_vm._v(_vm._s(item) + "\n            ")])
   })), _vm._v(" "), _c('div', {
     staticStyle: {
       "margin-top": "10px"
@@ -573,10 +768,329 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "color": "#f2826a",
         "plain": "",
         "size": "large",
-        "mpcomid": '15-' + index
+        "mpcomid": '20-' + index
       }
-    }, [_vm._v(_vm._s(item))])
-  }))])])], 1)]), _vm._v(" "), _c('div', [_vm._v("\n    7\n  ")]), _vm._v(" "), _c('div', [_vm._v("\n    8\n  ")])])
+    }, [_vm._v(_vm._s(item) + "\n            ")])
+  }))])])], 1)]), _vm._v(" "), _c('div', [_c('div', {
+    staticClass: "comment"
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '48'
+    }
+  }, [_c('div', {
+    staticClass: "title"
+  }, [_c('span', [_vm._v("评论")]), _c('span', {
+    staticClass: "commentNumber"
+  }, [_vm._v("(" + _vm._s(_vm.commentNumber) + "条评论)")]), _vm._v(" "), _c('button', {
+    staticClass: "addComment",
+    attrs: {
+      "type": "primary",
+      "size": "mini",
+      "plain": "false",
+      "bindtap": "primary"
+    }
+  }, [_c('van-icon', {
+    staticStyle: {
+      "padding-top": "5px"
+    },
+    attrs: {
+      "name": "edit",
+      "size": "15px",
+      "mpcomid": '22'
+    }
+  }), _vm._v("\n            写评论\n          ")], 1)], 1), _vm._v(" "), _c('div', {
+    staticClass: "commentDetails"
+  }, [_c('div', {
+    staticClass: "commentDetail"
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '34'
+    }
+  }, [_c('van-col', {
+    attrs: {
+      "span": "3",
+      "mpcomid": '23'
+    }
+  }, [_c('img', {
+    staticClass: "portrait",
+    attrs: {
+      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
+    }
+  })]), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "19",
+      "offset": "1",
+      "mpcomid": '33'
+    }
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '24'
+    }
+  }, [_c('span', {
+    staticClass: "userName"
+  }, [_vm._v("158****3385")])]), _vm._v(" "), _c('van-row', {
+    attrs: {
+      "mpcomid": '29'
+    }
+  }, [_c('van-col', {
+    attrs: {
+      "span": "8",
+      "mpcomid": '26'
+    }
+  }, [_c('van-rate', {
+    attrs: {
+      "value": _vm.overallRating,
+      "size": "13",
+      "count": "5",
+      "disabled-color": "#00BFFF",
+      "disabled": "",
+      "mpcomid": '25'
+    }
+  })], 1), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "3",
+      "mpcomid": '27'
+    }
+  }, [_c('span', {
+    staticClass: "rate"
+  }, [_vm._v(_vm._s(_vm.overallRating))])]), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "8",
+      "offset": "5",
+      "mpcomid": '28'
+    }
+  }, [_c('div', {
+    staticClass: "time"
+  }, [_c('span', [_vm._v("2019-04-04")])])])], 1), _vm._v(" "), _c('van-row', {
+    attrs: {
+      "mpcomid": '30'
+    }
+  }, [_c('div', {
+    staticClass: "detail"
+  }, [_c('span', [_vm._v("\n                    位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...\n                  ")])])]), _vm._v(" "), _c('van-row', {
+    attrs: {
+      "mpcomid": '31'
+    }
+  }, [_c('div', [_c('img', {
+    staticStyle: {
+      "height": "70px",
+      "width": "70px",
+      "margin-right": "15px"
+    },
+    attrs: {
+      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
+    }
+  }), _vm._v(" "), _c('img', {
+    staticStyle: {
+      "height": "70px",
+      "width": "70px",
+      "margin-right": "15px"
+    },
+    attrs: {
+      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
+    }
+  }), _vm._v(" "), _c('img', {
+    staticStyle: {
+      "height": "70px",
+      "width": "70px",
+      "margin-right": "15px"
+    },
+    attrs: {
+      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
+    }
+  }), _vm._v(" "), _c('span', {
+    staticStyle: {
+      "width": "25px",
+      "height": "15px",
+      "background": "#000000",
+      "opacity": "0.6",
+      "color": "#ffffff",
+      "position": "absolute",
+      "font-size": "12px",
+      "text-align": "center",
+      "right": "66px",
+      "margin-top": "55px"
+    }
+  }, [_vm._v("9张")])])]), _vm._v(" "), _c('van-row', {
+    attrs: {
+      "mpcomid": '32'
+    }
+  }, [_c('div', {
+    staticClass: "bottom"
+  }, [_c('span', {
+    staticClass: "resource"
+  }, [_vm._v("来自百度地图")]), _vm._v(" "), _c('img', {
+    staticClass: "likeImg",
+    attrs: {
+      "src": "../../../static/images/like.png"
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "likes"
+  }, [_vm._v("5")])])])], 1)], 1)], 1), _vm._v(" "), _c('div', {
+    staticClass: "commentDetail"
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '46'
+    }
+  }, [_c('van-col', {
+    attrs: {
+      "span": "3",
+      "mpcomid": '35'
+    }
+  }, [_c('img', {
+    staticClass: "portrait",
+    attrs: {
+      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
+    }
+  })]), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "19",
+      "offset": "1",
+      "mpcomid": '45'
+    }
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '36'
+    }
+  }, [_c('span', {
+    staticClass: "userName"
+  }, [_vm._v("158****3385")])]), _vm._v(" "), _c('van-row', {
+    attrs: {
+      "mpcomid": '41'
+    }
+  }, [_c('van-col', {
+    attrs: {
+      "span": "8",
+      "mpcomid": '38'
+    }
+  }, [_c('van-rate', {
+    attrs: {
+      "value": _vm.overallRating,
+      "size": "13",
+      "count": "5",
+      "disabled-color": "#00BFFF",
+      "disabled": "",
+      "mpcomid": '37'
+    }
+  })], 1), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "3",
+      "mpcomid": '39'
+    }
+  }, [_c('span', {
+    staticClass: "rate"
+  }, [_vm._v(_vm._s(_vm.overallRating))])]), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "8",
+      "offset": "5",
+      "mpcomid": '40'
+    }
+  }, [_c('div', {
+    staticClass: "time"
+  }, [_c('span', [_vm._v("2019-04-04")])])])], 1), _vm._v(" "), _c('van-row', {
+    attrs: {
+      "mpcomid": '42'
+    }
+  }, [_c('div', {
+    staticClass: "detail"
+  }, [_c('span', [_vm._v("\n                    位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...\n                  ")])])]), _vm._v(" "), _c('van-row', {
+    attrs: {
+      "mpcomid": '43'
+    }
+  }, [_c('div', [_c('img', {
+    staticStyle: {
+      "height": "70px",
+      "width": "70px",
+      "margin-right": "15px"
+    },
+    attrs: {
+      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
+    }
+  }), _vm._v(" "), _c('img', {
+    staticStyle: {
+      "height": "70px",
+      "width": "70px",
+      "margin-right": "15px"
+    },
+    attrs: {
+      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
+    }
+  }), _vm._v(" "), _c('img', {
+    staticStyle: {
+      "height": "70px",
+      "width": "70px",
+      "margin-right": "15px"
+    },
+    attrs: {
+      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
+    }
+  }), _vm._v(" "), _c('span', {
+    staticStyle: {
+      "width": "25px",
+      "height": "15px",
+      "background": "#000000",
+      "opacity": "0.6",
+      "color": "#ffffff",
+      "position": "absolute",
+      "font-size": "12px",
+      "text-align": "center",
+      "right": "66px",
+      "margin-top": "55px"
+    }
+  }, [_vm._v("9张")])])]), _vm._v(" "), _c('van-row', {
+    attrs: {
+      "mpcomid": '44'
+    }
+  }, [_c('div', {
+    staticClass: "bottom"
+  }, [_c('span', {
+    staticClass: "resource"
+  }, [_vm._v("来自百度地图")]), _vm._v(" "), _c('img', {
+    staticClass: "likeImg",
+    attrs: {
+      "src": "../../../static/images/like.png"
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "likes"
+  }, [_vm._v("5")])])])], 1)], 1)], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "seeAll"
+  }, [_c('span', [_vm._v("查看全部")]), _vm._v(" "), _c('van-icon', {
+    attrs: {
+      "name": "arrow",
+      "mpcomid": '47'
+    }
+  })], 1)])], 1)]), _vm._v(" "), _c('div', [_c('div', {
+    staticClass: "photograph"
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '50'
+    }
+  }, [_c('div', {
+    staticClass: "title"
+  }, [_c('span', [_vm._v("相册")]), _c('span', {
+    staticClass: "more"
+  }, [_c('van-icon', {
+    attrs: {
+      "name": "arrow",
+      "mpcomid": '49'
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "photos"
+  }, _vm._l((_vm.imgList), function(item, index) {
+    return (index <= 3) ? _c('img', {
+      key: index,
+      attrs: {
+        "src": item,
+        "data-src": item,
+        "eventid": '0-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.seePhoto(item)
+        }
+      }
+    }) : _vm._e()
+  }))])], 1)])])
 }
 var staticRenderFns = []
 render._withStripped = true
