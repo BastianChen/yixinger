@@ -643,14 +643,12 @@ if (false) {(function () {
       console.log('radio发生change事件，携带value值为：', e.target.value);
     },
     swipclick: function swipclick(uid) {
-      console.log("uid" + uid);
       this.$router.push({
         path: '../placedetail/main',
         query: {
           uid: uid
         }
       });
-      /**此处对接getPlaceByUid接口*/
     },
     totopic: function totopic(type) {
       this.$router.push({
@@ -762,7 +760,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       },
       on: {
         "click": function($event) {
-          _vm.topicdetail(item.id)
+          _vm.swipclick(item.uid)
         }
       }
     }, [_c('img', {
@@ -802,7 +800,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       },
       on: {
         "click": function($event) {
-          _vm.topicdetail(item.id)
+          _vm.swipclick(item.uid)
         }
       }
     }, [_c('img', {

@@ -97,7 +97,7 @@
       <div class="list">
         <ul>
           <scroll-view class="scroll-view" :scroll-x="true">
-            <li @click="topicdetail(item.id)" v-for="(item, index) in sceneryData" :key="index">
+            <li @click="swipclick(item.uid)" v-for="(item, index) in sceneryData" :key="index">
               <img :src="item.image" alt="">
               <div class="btom">
                 <div>
@@ -118,7 +118,7 @@
       <div class="list">
         <ul>
           <scroll-view class="scroll-view" :scroll-x="true">
-            <li @click="topicdetail(item.id)" v-for="(item, index) in restaurantData" :key="index">
+            <li @click="swipclick(item.uid)" v-for="(item, index) in restaurantData" :key="index">
               <img :src="item.image" alt="">
               <div class="btom">
                 <div>
@@ -545,14 +545,12 @@ export default {
       console.log('radio发生change事件，携带value值为：', e.target.value)
     },
     swipclick(uid) {
-      console.log("uid" + uid);
       this.$router.push({
         path: `../placedetail/main`,
         query: {
           uid: uid
         }
       });
-      /**此处对接getPlaceByUid接口*/
     },
     totopic(type) {
       this.$router.push({
