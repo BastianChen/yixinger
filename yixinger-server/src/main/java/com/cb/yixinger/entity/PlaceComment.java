@@ -35,4 +35,6 @@ public class PlaceComment implements Serializable {
     private String imageList;
     @ApiModelProperty(value="评论类型（1.爬虫数据2.用户评论）")
     private Integer commentType;
+    @ApiModelProperty(value="评论来源")
+    private String resource;
 }

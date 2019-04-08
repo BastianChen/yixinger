@@ -66,18 +66,18 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addPlaceCommentByReptile(String commentList, String placeId) {
-        if (!CommonUtil.isNullOrWhiteSpace(commentList)){
+        if (!CommonUtil.isNullOrWhiteSpace(commentList)) {
             JSONArray jsonArray = JSONArray.fromObject(commentList);
             logger.info("对爬取下来的部分评论进行解析");
             for (int i = 0; i < jsonArray.size(); i++) {
                 PlaceComment placeComment = new PlaceComment();
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 placeComment.setComment(jsonObject.optString("content"));
-                if (CommonUtil.isNullOrWhiteSpace(placeComment.getComment())){
+                if (CommonUtil.isNullOrWhiteSpace(placeComment.getComment())) {
                     continue;
                 }
                 placeComment.setPlaceId(placeId);
-                placeComment.setLikes(0);
+                placeComment.setLikes(jsonObject.optInt("mark_total", 0));
                 placeComment.setDate(jsonObject.optString("date"));
                 placeComment.setUserName(jsonObject.optString("user_name"));
                 placeComment.setUserImage(jsonObject.optString("user_logo"));
@@ -85,8 +85,9 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
                 placeComment.setImageList(jsonObject.optString("pics"));
                 placeComment.setCommentType(1);
                 if (CommonUtil.isNullOrWhiteSpace(placeComment.getUserImage())) {
-                    placeComment.setUserImage("/images/default.jpg");
+                    placeComment.setUserImage("https://wzcb97.top/images/default.jpg");
                 }
+                placeComment.setResource(jsonObject.optString("cn_name","百度地图"));
                 placeCommentMapper.insertSelective(placeComment);
             }
         }
