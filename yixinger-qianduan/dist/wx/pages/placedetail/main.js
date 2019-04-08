@@ -83,7 +83,14 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_api_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_api_js__ = __webpack_require__(9);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -368,20 +375,24 @@ if (false) {(function () {
     return {
       uid: '',
       placeDetailData: {},
-      name: '西湖风景区',
-      overallRating: 4.3,
+      name: '',
+      overallRating: 0,
       distance: '11.4km',
-      address: '杭州市西湖区龙井路1号',
-      showtag: '5A景区',
-      sugTime: '0.5-1天',
-      bestTime: '3月-5月;9月-11月',
-      telephone1: '15868143385',
-      telephone2: '13575419350',
+      address: '',
+      showtag: '',
+      sugTime: '',
+      bestTime: '',
+      telephone1: '',
+      telephone2: '',
       isOneTelephone: true, // 判断是否有两个电话
-      tags1: ['世界文化遗产', '适合散步', '夜景赞'],
-      tag1OfContent: ['人气旺(323)', '景色优美(299)', '免费项目(94)'],
-      tag2OfContent: ['环境很好(79)', '收费合理(59)', '水很清澈(35)'],
-      commentNumber: 900,
+      tags1: [],
+      // tag1OfContent: ['人气旺(323)', '景色优美(299)', '免费项目(94)'],
+      // tag2OfContent: ['环境很好(79)', '收费合理(59)', '水很清澈(35)'],
+      tag1OfContent: [],
+      tag2OfContent: [],
+      isTagShow: true,
+      commentNumber: 0,
+      commentListInfo: [],
       imgList: ['http://hiphotos.baidu.com/map/pic/item/b3fb43166d224f4a23eb6f7404f790529822d162.jpg', 'http://hiphotos.baidu.com/map/pic/item/738b4710b912c8fc4a42f05af1039245d78821f7.jpg', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132'],
       hour: '周五至周日11:00-13:30;16:30-20:30周一至周四11:00-13:00;16:30-20:30非营;周五至周日11:00-13:30',
       introduce: '西湖古称“钱塘湖”，又名“西子湖”，古代诗人苏轼就对它评价道：“欲把西湖比西子，淡妆西湖古称“钱塘湖”，又名“名名名名名子，淡妆浓抹总...',
@@ -557,6 +568,10 @@ if (false) {(function () {
   },
   onUnload: function onUnload() {
     this.banner = [];
+    this.tag1OfContent = [];
+    this.tag2OfContent = [];
+    this.commentListInfo = [];
+    this.tags1 = [];
   },
 
   methods: {
@@ -593,8 +608,14 @@ if (false) {(function () {
         _this.showtag = _this.placeDetailData.place.showtag;
         if (_this.placeDetailData.place.tags1) {
           var tags1Array = _this.placeDetailData.place.tags1.split(';');
-          for (var j = 0; j < tags1Array.length; j++) {
-            _this.tags1.push(tags1Array[j]);
+          if (tags1Array.length < 3) {
+            for (var j = 0; j < tags1Array.length; j++) {
+              _this.tags1.push(tags1Array[j]);
+            }
+          } else {
+            for (var _j = 0; _j < 3; _j++) {
+              _this.tags1.push(tags1Array[_j]);
+            }
           }
         } else {
           _this.tags1 = [];
@@ -612,6 +633,79 @@ if (false) {(function () {
           _this.telephone1 = '暂无';
         }
         _this.hour = _this.placeDetailData.place.shopHours;
+        if (_this.placeDetailData.place.content != '暂无') {
+          _this.isTagShow = true;
+          var contentArray = _this.placeDetailData.place.content.split(';');
+          if (contentArray.length <= 3) {
+            for (var _i = 0; _i < contentArray.length; _i++) {
+              _this.tag1OfContent.push(contentArray[_i]);
+            }
+          } else if (contentArray.length > 3 && contentArray.length <= 6) {
+            for (var _i2 = 0; _i2 < contentArray.length; _i2++) {
+              if (_i2 < 3) {
+                _this.tag1OfContent.push(contentArray[_i2]);
+              } else {
+                _this.tag2OfContent.push(contentArray[_i2]);
+              }
+            }
+          } else {
+            for (var _i3 = 3; _i3 < 6; _i3++) {
+              if (_i3 < 3) {
+                _this.tag1OfContent.push(contentArray[_i3]);
+              } else {
+                _this.tag2OfContent.push(contentArray[_i3]);
+              }
+            }
+          }
+        } else {
+          _this.isTagShow = false;
+        }
+        _this.commentNumber = _this.placeDetailData.place.commentNumber;
+        _this.handleCommentList();
+        //this.handleCommentList(JSON.parse(this.placeDetailData.place.commentList));
+      });
+    },
+    handleCommentList: function handleCommentList() {
+      var _this2 = this;
+
+      // let commentDetail = {};
+      // for (let i = 0; i < commentList.length; i++) {
+      //   //this.$set(commentDetail, 'userName', commentList[i].user_name);
+      //   let pictures = commentList[i].pics;
+      //   commentDetail.userLogo = commentList[i].user_logo;
+      //   commentDetail.userName = commentList[i].user_name;
+      //   commentDetail.overallRating = commentList[i].overall_rating;
+      //   commentDetail.date = commentList[i].date;
+      //   commentDetail.content = commentList[i].content.substring(0, 55) + '...';
+      //   for (let j = 0; j < pictures.length; j++) {
+      //     commentList.imgUrl.push(pictures[j].pic_url);
+      //   }
+      //   commentDetail.resource = commentList[i].cn_name;
+      //   this.commentListInfo.push(commentDetail);
+      // }
+      this.$httpWX.get({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceCommentByUid,
+        data: {
+          uid: this.placeDetailData.place.uid,
+          pageNo: 1,
+          pageSize: 3
+        }
+      }).then(function (res) {
+        _this2.commentListInfo = res.data.items;
+        var userImgArray = [];
+        for (var i = 0; i < _this2.commentListInfo.length; i++) {
+          if (_this2.commentListInfo[i].imageList) {
+            var userImg = JSON.parse(_this2.commentListInfo[i].imageList);
+            userImgArray = [];
+            for (var j = 0; j < userImg.length; j++) {
+              userImgArray.push(userImg[j].pic_url);
+            }
+            _this2.$set(_this2.commentListInfo[i], 'userImg', userImgArray);
+          } else {
+            _this2.$set(_this2.commentListInfo[i], 'userImg', null);
+          }
+          _this2.$set(_this2.commentListInfo[i], 'date', _this2.commentListInfo[i].date.split(" ")[0]);
+        }
       });
     }
   }
@@ -705,16 +799,16 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "span": "12",
       "mpcomid": '9'
     }
-  }, _vm._l((_vm.tags1), function(item, index) {
-    return _c('van-tag', {
-      key: index,
+  }, _vm._l((_vm.tags1), function(item, tags1Index) {
+    return (tags1Index < 3) ? _c('van-tag', {
+      key: tags1Index,
       staticClass: "tags1",
       attrs: {
         "color": "#FFF6EF",
         "text-color": "#C7A98B",
-        "mpcomid": '8-' + index
+        "mpcomid": '8-' + tags1Index
       }
-    }, [_vm._v("\n          " + _vm._s(item) + "\n        ")])
+    }, [_vm._v("\n          " + _vm._s(item) + "\n        ")]) : _vm._e()
   }))], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "introduce"
   }, [_c('van-row', {
@@ -786,54 +880,47 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "title"
   }, [_vm._v("\n          营业时间\n        ")]), _vm._v(" "), _c('div', {
     staticClass: "hour"
-  }, [_vm._v("\n          " + _vm._s(_vm.hour) + "\n        ")])])], 1)]), _vm._v(" "), _c('div', [_c('div', {
+  }, [_vm._v("\n          " + _vm._s(_vm.hour) + "\n        ")])])], 1)]), _vm._v(" "), (_vm.isTagShow) ? _c('div', [_c('div', {
     staticClass: "content"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '21'
+      "mpcomid": '20'
     }
   }, [_c('div', {
     staticClass: "title"
-  }, [_c('span', [_vm._v("印象标签")]), _c('span', {
-    staticClass: "more"
-  }, [_vm._v("发现更多"), _c('van-icon', {
-    attrs: {
-      "name": "arrow",
-      "mpcomid": '18'
-    }
-  })], 1)]), _vm._v(" "), _c('div', {
+  }, [_c('span', [_vm._v("印象标签")])]), _vm._v(" "), _c('div', {
     staticClass: "tag"
-  }, [_c('div', _vm._l((_vm.tag1OfContent), function(item, index) {
+  }, [_c('div', _vm._l((_vm.tag1OfContent), function(tag1, tag1OfContentIndex) {
     return _c('van-tag', {
-      key: index,
+      key: tag1OfContentIndex,
       staticClass: "vanTag",
       attrs: {
         "color": "#f2826a",
         "plain": "",
         "size": "large",
-        "mpcomid": '19-' + index
+        "mpcomid": '18-' + tag1OfContentIndex
       }
-    }, [_vm._v(_vm._s(item) + "\n            ")])
+    }, [_vm._v(_vm._s(tag1) + "\n            ")])
   })), _vm._v(" "), _c('div', {
     staticStyle: {
       "margin-top": "10px"
     }
-  }, _vm._l((_vm.tag2OfContent), function(item, index) {
+  }, _vm._l((_vm.tag2OfContent), function(tag2, tag2OfContentIndex) {
     return _c('van-tag', {
-      key: index,
+      key: tag2OfContentIndex,
       staticClass: "vanTag",
       attrs: {
         "color": "#f2826a",
         "plain": "",
         "size": "large",
-        "mpcomid": '20-' + index
+        "mpcomid": '19-' + tag2OfContentIndex
       }
-    }, [_vm._v(_vm._s(item) + "\n            ")])
-  }))])])], 1)]), _vm._v(" "), _c('div', [_c('div', {
+    }, [_vm._v(_vm._s(tag2) + "\n            ")])
+  }))])])], 1)]) : _vm._e(), _vm._v(" "), _c('div', [_c('div', {
     staticClass: "comment"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '48'
+      "mpcomid": '35'
     }
   }, [_c('div', {
     staticClass: "title"
@@ -854,274 +941,139 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "name": "edit",
       "size": "15px",
-      "mpcomid": '22'
+      "mpcomid": '21'
     }
   }), _vm._v("\n            写评论\n          ")], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "commentDetails"
-  }, [_c('div', {
-    staticClass: "commentDetail"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '34'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "3",
-      "mpcomid": '23'
-    }
-  }, [_c('img', {
-    staticClass: "portrait",
-    attrs: {
-      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
-    }
-  })]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "19",
-      "offset": "1",
-      "mpcomid": '33'
-    }
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '24'
-    }
-  }, [_c('span', {
-    staticClass: "userName"
-  }, [_vm._v("158****3385")])]), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '29'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "8",
-      "mpcomid": '26'
-    }
-  }, [_c('van-rate', {
-    attrs: {
-      "value": _vm.overallRating,
-      "size": "13",
-      "count": "5",
-      "disabled-color": "#00BFFF",
-      "disabled": "",
-      "mpcomid": '25'
-    }
-  })], 1), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "3",
-      "mpcomid": '27'
-    }
-  }, [_c('span', {
-    staticClass: "rate"
-  }, [_vm._v(_vm._s(_vm.overallRating))])]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "8",
-      "offset": "5",
-      "mpcomid": '28'
-    }
-  }, [_c('div', {
-    staticClass: "time"
-  }, [_c('span', [_vm._v("2019-04-04")])])])], 1), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '30'
-    }
-  }, [_c('div', {
-    staticClass: "detail"
-  }, [_c('span', [_vm._v("\n                    位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...\n                  ")])])]), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '31'
-    }
-  }, [_c('div', [_c('img', {
-    staticStyle: {
-      "height": "70px",
-      "width": "70px",
-      "margin-right": "15px"
-    },
-    attrs: {
-      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
-    }
-  }), _vm._v(" "), _c('img', {
-    staticStyle: {
-      "height": "70px",
-      "width": "70px",
-      "margin-right": "15px"
-    },
-    attrs: {
-      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
-    }
-  }), _vm._v(" "), _c('img', {
-    staticStyle: {
-      "height": "70px",
-      "width": "70px",
-      "margin-right": "15px"
-    },
-    attrs: {
-      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
-    }
-  }), _vm._v(" "), _c('span', {
-    staticStyle: {
-      "width": "25px",
-      "height": "15px",
-      "background": "#000000",
-      "opacity": "0.6",
-      "color": "#ffffff",
-      "position": "absolute",
-      "font-size": "12px",
-      "text-align": "center",
-      "right": "66px",
-      "margin-top": "55px"
-    }
-  }, [_vm._v("9张")])])]), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '32'
-    }
-  }, [_c('div', {
-    staticClass: "bottom"
-  }, [_c('span', {
-    staticClass: "resource"
-  }, [_vm._v("来自百度地图")]), _vm._v(" "), _c('img', {
-    staticClass: "likeImg",
-    attrs: {
-      "src": "../../../static/images/like.png"
-    }
-  }), _vm._v(" "), _c('span', {
-    staticClass: "likes"
-  }, [_vm._v("5")])])])], 1)], 1)], 1), _vm._v(" "), _c('div', {
-    staticClass: "commentDetail"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '46'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "3",
-      "mpcomid": '35'
-    }
-  }, [_c('img', {
-    staticClass: "portrait",
-    attrs: {
-      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
-    }
-  })]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "19",
-      "offset": "1",
-      "mpcomid": '45'
-    }
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '36'
-    }
-  }, [_c('span', {
-    staticClass: "userName"
-  }, [_vm._v("158****3385")])]), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '41'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "8",
-      "mpcomid": '38'
-    }
-  }, [_c('van-rate', {
-    attrs: {
-      "value": _vm.overallRating,
-      "size": "13",
-      "count": "5",
-      "disabled-color": "#00BFFF",
-      "disabled": "",
-      "mpcomid": '37'
-    }
-  })], 1), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "3",
-      "mpcomid": '39'
-    }
-  }, [_c('span', {
-    staticClass: "rate"
-  }, [_vm._v(_vm._s(_vm.overallRating))])]), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "8",
-      "offset": "5",
-      "mpcomid": '40'
-    }
-  }, [_c('div', {
-    staticClass: "time"
-  }, [_c('span', [_vm._v("2019-04-04")])])])], 1), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '42'
-    }
-  }, [_c('div', {
-    staticClass: "detail"
-  }, [_c('span', [_vm._v("\n                    位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...\n                  ")])])]), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '43'
-    }
-  }, [_c('div', [_c('img', {
-    staticStyle: {
-      "height": "70px",
-      "width": "70px",
-      "margin-right": "15px"
-    },
-    attrs: {
-      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
-    }
-  }), _vm._v(" "), _c('img', {
-    staticStyle: {
-      "height": "70px",
-      "width": "70px",
-      "margin-right": "15px"
-    },
-    attrs: {
-      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
-    }
-  }), _vm._v(" "), _c('img', {
-    staticStyle: {
-      "height": "70px",
-      "width": "70px",
-      "margin-right": "15px"
-    },
-    attrs: {
-      "src": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"
-    }
-  }), _vm._v(" "), _c('span', {
-    staticStyle: {
-      "width": "25px",
-      "height": "15px",
-      "background": "#000000",
-      "opacity": "0.6",
-      "color": "#ffffff",
-      "position": "absolute",
-      "font-size": "12px",
-      "text-align": "center",
-      "right": "66px",
-      "margin-top": "55px"
-    }
-  }, [_vm._v("9张")])])]), _vm._v(" "), _c('van-row', {
-    attrs: {
-      "mpcomid": '44'
-    }
-  }, [_c('div', {
-    staticClass: "bottom"
-  }, [_c('span', {
-    staticClass: "resource"
-  }, [_vm._v("来自百度地图")]), _vm._v(" "), _c('img', {
-    staticClass: "likeImg",
-    attrs: {
-      "src": "../../../static/images/like.png"
-    }
-  }), _vm._v(" "), _c('span', {
-    staticClass: "likes"
-  }, [_vm._v("5")])])])], 1)], 1)], 1)]), _vm._v(" "), _c('div', {
+  }, _vm._l((_vm.commentListInfo), function(comment, commentListInfoIndex) {
+    return _c('div', {
+      key: commentListInfoIndex,
+      staticClass: "commentDetail"
+    }, [_c('van-row', {
+      attrs: {
+        "mpcomid": '33-' + commentListInfoIndex
+      }
+    }, [_c('van-col', {
+      attrs: {
+        "span": "3",
+        "mpcomid": '22-' + commentListInfoIndex
+      }
+    }, [_c('img', {
+      staticClass: "portrait",
+      attrs: {
+        "src": comment.userImage
+      }
+    })]), _vm._v(" "), _c('van-col', {
+      attrs: {
+        "span": "19",
+        "offset": "1",
+        "mpcomid": '32-' + commentListInfoIndex
+      }
+    }, [_c('van-row', {
+      attrs: {
+        "mpcomid": '23-' + commentListInfoIndex
+      }
+    }, [_c('span', {
+      staticClass: "userName"
+    }, [_vm._v(_vm._s(comment.userName))])]), _vm._v(" "), _c('van-row', {
+      attrs: {
+        "mpcomid": '28-' + commentListInfoIndex
+      }
+    }, [_c('van-col', {
+      attrs: {
+        "span": "8",
+        "mpcomid": '25-' + commentListInfoIndex
+      }
+    }, [_c('van-rate', {
+      attrs: {
+        "value": comment.overallRating,
+        "size": "13",
+        "count": "5",
+        "disabled-color": "#00BFFF",
+        "disabled": "",
+        "mpcomid": '24-' + commentListInfoIndex
+      }
+    })], 1), _vm._v(" "), _c('van-col', {
+      attrs: {
+        "span": "3",
+        "mpcomid": '26-' + commentListInfoIndex
+      }
+    }, [_c('span', {
+      staticClass: "rate"
+    }, [_vm._v(_vm._s(comment.overallRating))])]), _vm._v(" "), _c('van-col', {
+      attrs: {
+        "span": "8",
+        "offset": "5",
+        "mpcomid": '27-' + commentListInfoIndex
+      }
+    }, [_c('div', {
+      staticClass: "time"
+    }, [_c('span', [_vm._v(_vm._s(comment.date))])])])], 1), _vm._v(" "), _c('van-row', {
+      attrs: {
+        "mpcomid": '29-' + commentListInfoIndex
+      }
+    }, [_c('div', {
+      staticClass: "detail"
+    }, [_c('span', [_vm._v("\n                    " + _vm._s(comment.comment) + "\n                  ")])])]), _vm._v(" "), _c('van-row', {
+      attrs: {
+        "mpcomid": '30-' + commentListInfoIndex
+      }
+    }, [_c('div', [_vm._l((comment.userImg), function(img, imgIndex) {
+      return (imgIndex < 3 && img) ? _c('img', {
+        key: imgIndex,
+        staticClass: "userImg",
+        attrs: {
+          "src": img,
+          "data-src": img,
+          "eventid": '0-' + commentListInfoIndex + '-' + imgIndex
+        },
+        on: {
+          "click": function($event) {
+            _vm.seePhoto(img)
+          }
+        }
+      }) : _vm._e()
+    }), _vm._v(" "), (_vm.imgIndex > 3) ? _c('span', {
+      staticStyle: {
+        "width": "25px",
+        "height": "15px",
+        "background": "#000000",
+        "opacity": "0.6",
+        "color": "#ffffff",
+        "position": "absolute",
+        "font-size": "12px",
+        "text-align": "center",
+        "right": "66px",
+        "margin-top": "55px"
+      }
+    }, [_vm._v("9张")]) : _vm._e()], 2)]), _vm._v(" "), _c('van-row', {
+      attrs: {
+        "mpcomid": '31-' + commentListInfoIndex
+      }
+    }, [_c('div', {
+      staticClass: "bottom"
+    }, [_c('span', {
+      staticClass: "resource"
+    }, [_vm._v(_vm._s(comment.resource))]), _vm._v(" "), _c('img', {
+      staticClass: "likeImg",
+      attrs: {
+        "src": "../../../static/images/like.png"
+      }
+    }), _vm._v(" "), _c('span', {
+      staticClass: "likes"
+    }, [_vm._v("5")])])])], 1)], 1)], 1)
+  })), _vm._v(" "), _c('div', {
     staticClass: "seeAll"
   }, [_c('span', [_vm._v("查看全部")]), _vm._v(" "), _c('van-icon', {
     attrs: {
       "name": "arrow",
-      "mpcomid": '47'
+      "mpcomid": '34'
     }
   })], 1)])], 1)]), _vm._v(" "), _c('div', [_c('div', {
     staticClass: "photograph"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '50'
+      "mpcomid": '37'
     }
   }, [_c('div', {
     staticClass: "title"
@@ -1130,17 +1082,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('van-icon', {
     attrs: {
       "name": "arrow",
-      "mpcomid": '49'
+      "mpcomid": '36'
     }
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "photos"
-  }, _vm._l((_vm.imgList), function(item, index) {
-    return (index <= 3) ? _c('img', {
-      key: index,
+  }, _vm._l((_vm.imgList), function(item, imgListIndex) {
+    return (imgListIndex <= 3) ? _c('img', {
+      key: imgListIndex,
       attrs: {
         "src": item,
         "data-src": item,
-        "eventid": '0-' + index
+        "eventid": '1-' + imgListIndex
       },
       on: {
         "click": function($event) {

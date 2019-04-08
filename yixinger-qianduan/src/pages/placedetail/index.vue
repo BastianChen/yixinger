@@ -40,7 +40,9 @@
           </div>
         </van-col>
         <van-col span="12">
-          <van-tag v-for="(item, index) in tags1 " :key="index" color="#FFF6EF" text-color="#C7A98B" class="tags1">
+          <van-tag v-for="(item, tags1Index) in tags1" :key="tags1Index" v-if="tags1Index<3" color="#FFF6EF"
+                   text-color="#C7A98B"
+                   class="tags1">
             {{item}}
           </van-tag>
         </van-col>
@@ -100,21 +102,24 @@
         </van-row>
       </div>
     </div>
-    <div>
+    <div v-if="isTagShow">
       <div class="content">
         <van-row>
           <div class="title">
-            <span>印象标签</span><span class="more">发现更多<van-icon name="arrow"/></span>
+            <span>印象标签</span>
+            <!--<span class="more">发现更多<van-icon name="arrow"/></span>-->
           </div>
           <div class="tag">
             <div>
-              <van-tag color="#f2826a" plain size="large" class="vanTag" v-for="(item, index) in tag1OfContent "
-                       :key="index">{{item}}
+              <van-tag color="#f2826a" plain size="large" class="vanTag"
+                       v-for="(tag1, tag1OfContentIndex) in tag1OfContent"
+                       :key="tag1OfContentIndex">{{tag1}}
               </van-tag>
             </div>
             <div style="margin-top: 10px">
-              <van-tag color="#f2826a" plain size="large" class="vanTag" v-for="(item, index) in tag2OfContent "
-                       :key="index">{{item}}
+              <van-tag color="#f2826a" plain size="large" class="vanTag"
+                       v-for="(tag2, tag2OfContentIndex) in tag2OfContent"
+                       :key="tag2OfContentIndex">{{tag2}}
               </van-tag>
             </div>
           </div>
@@ -138,20 +143,21 @@
             </button>
           </div>
           <div class="commentDetails">
-            <div class="commentDetail">
+            <div class="commentDetail" v-for="(comment, commentListInfoIndex) in commentListInfo "
+                 :key="commentListInfoIndex">
               <van-row>
                 <van-col span="3">
                   <img class="portrait"
-                       src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
+                       :src="comment.userImage"/>
                 </van-col>
                 <van-col span="19" offset="1">
                   <van-row>
-                    <span class="userName">158****3385</span>
+                    <span class="userName">{{comment.userName}}</span>
                   </van-row>
                   <van-row>
                     <van-col span="8">
                       <van-rate
-                        :value="overallRating"
+                        :value="comment.overallRating"
                         size="13"
                         count="5"
                         disabled-color="#00BFFF"
@@ -159,34 +165,35 @@
                       />
                     </van-col>
                     <van-col span="3">
-                      <span class="rate">{{overallRating}}</span>
+                      <span class="rate">{{comment.overallRating}}</span>
                     </van-col>
                     <van-col span="8" offset="5">
-                      <div class="time"><span>2019-04-04</span></div>
+                      <div class="time"><span>{{comment.date}}</span></div>
                     </van-col>
                   </van-row>
                   <van-row>
                     <div class="detail">
                     <span>
-                      位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...
+                      {{comment.comment}}
                     </span>
                     </div>
                   </van-row>
                   <van-row>
                     <div>
-                      <img style="height: 70px;width: 70px;margin-right: 15px"
-                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
-                      <img style="height: 70px;width: 70px;margin-right: 15px"
-                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
-                      <img style="height: 70px;width: 70px;margin-right: 15px"
-                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
-                      <span
-                        style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">9张</span>
+                      <img class="userImg" v-for="(img, imgIndex) in comment.userImg " :key="imgIndex"
+                           :src="img"
+                           :data-src="img" v-if="imgIndex<3&&img" @click="seePhoto(img)"/>
+                      <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
+                      <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
+                      <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
+                      <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
+                      <span v-if="imgIndex>3"
+                            style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">9张</span>
                     </div>
                   </van-row>
                   <van-row>
                     <div class="bottom">
-                      <span class="resource">来自百度地图</span>
+                      <span class="resource">{{comment.resource}}</span>
                       <img class="likeImg" src="../../../static/images/like.png"/>
                       <span class="likes">5</span>
                     </div>
@@ -194,62 +201,62 @@
                 </van-col>
               </van-row>
             </div>
-            <div class="commentDetail">
-              <van-row>
-                <van-col span="3">
-                  <img class="portrait"
-                       src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
-                </van-col>
-                <van-col span="19" offset="1">
-                  <van-row>
-                    <span class="userName">158****3385</span>
-                  </van-row>
-                  <van-row>
-                    <van-col span="8">
-                      <van-rate
-                        :value="overallRating"
-                        size="13"
-                        count="5"
-                        disabled-color="#00BFFF"
-                        disabled
-                      />
-                    </van-col>
-                    <van-col span="3">
-                      <span class="rate">{{overallRating}}</span>
-                    </van-col>
-                    <van-col span="8" offset="5">
-                      <div class="time"><span>2019-04-04</span></div>
-                    </van-col>
-                  </van-row>
-                  <van-row>
-                    <div class="detail">
-                    <span>
-                      位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...
-                    </span>
-                    </div>
-                  </van-row>
-                  <van-row>
-                    <div>
-                      <img style="height: 70px;width: 70px;margin-right: 15px"
-                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
-                      <img style="height: 70px;width: 70px;margin-right: 15px"
-                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
-                      <img style="height: 70px;width: 70px;margin-right: 15px"
-                           src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>
-                      <span
-                        style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">9张</span>
-                    </div>
-                  </van-row>
-                  <van-row>
-                    <div class="bottom">
-                      <span class="resource">来自百度地图</span>
-                      <img class="likeImg" src="../../../static/images/like.png"/>
-                      <span class="likes">5</span>
-                    </div>
-                  </van-row>
-                </van-col>
-              </van-row>
-            </div>
+            <!--<div class="commentDetail">-->
+            <!--<van-row>-->
+            <!--<van-col span="3">-->
+            <!--<img class="portrait"-->
+            <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
+            <!--</van-col>-->
+            <!--<van-col span="19" offset="1">-->
+            <!--<van-row>-->
+            <!--<span class="userName">158****3385</span>-->
+            <!--</van-row>-->
+            <!--<van-row>-->
+            <!--<van-col span="8">-->
+            <!--<van-rate-->
+            <!--:value="overallRating"-->
+            <!--size="13"-->
+            <!--count="5"-->
+            <!--disabled-color="#00BFFF"-->
+            <!--disabled-->
+            <!--/>-->
+            <!--</van-col>-->
+            <!--<van-col span="3">-->
+            <!--<span class="rate">{{overallRating}}</span>-->
+            <!--</van-col>-->
+            <!--<van-col span="8" offset="5">-->
+            <!--<div class="time"><span>2019-04-04</span></div>-->
+            <!--</van-col>-->
+            <!--</van-row>-->
+            <!--<van-row>-->
+            <!--<div class="detail">-->
+            <!--<span>-->
+            <!--位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--</van-row>-->
+            <!--<van-row>-->
+            <!--<div>-->
+            <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
+            <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
+            <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
+            <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
+            <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
+            <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
+            <!--<span-->
+            <!--style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">9张</span>-->
+            <!--</div>-->
+            <!--</van-row>-->
+            <!--<van-row>-->
+            <!--<div class="bottom">-->
+            <!--<span class="resource">来自百度地图</span>-->
+            <!--<img class="likeImg" src="../../../static/images/like.png"/>-->
+            <!--<span class="likes">5</span>-->
+            <!--</div>-->
+            <!--</van-row>-->
+            <!--</van-col>-->
+            <!--</van-row>-->
+            <!--</div>位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...-->
           </div>
           <div class="seeAll">
             <span>查看全部</span>
@@ -265,8 +272,8 @@
             <span>相册</span><span class="more"><van-icon name="arrow"/></span>
           </div>
           <div class="photos">
-            <img v-for="(item, index) in imgList "
-                 :key="index" :src="item" :data-src="item" v-if="index<=3" @click="seePhoto(item)"/>
+            <img v-for="(item, imgListIndex) in imgList "
+                 :key="imgListIndex" :src="item" :data-src="item" v-if="imgListIndex<=3" @click="seePhoto(item)"/>
           </div>
         </van-row>
       </div>
@@ -282,20 +289,24 @@ export default {
     return {
       uid: '',
       placeDetailData: {},
-      name: '西湖风景区',
-      overallRating: 4.3,
+      name: '',
+      overallRating: 0,
       distance: '11.4km',
-      address: '杭州市西湖区龙井路1号',
-      showtag: '5A景区',
-      sugTime: '0.5-1天',
-      bestTime: '3月-5月;9月-11月',
-      telephone1: '15868143385',
-      telephone2: '13575419350',
+      address: '',
+      showtag: '',
+      sugTime: '',
+      bestTime: '',
+      telephone1: '',
+      telephone2: '',
       isOneTelephone: true,// 判断是否有两个电话
-      tags1: ['世界文化遗产', '适合散步', '夜景赞'],
-      tag1OfContent: ['人气旺(323)', '景色优美(299)', '免费项目(94)'],
-      tag2OfContent: ['环境很好(79)', '收费合理(59)', '水很清澈(35)'],
-      commentNumber: 900,
+      tags1: [],
+      // tag1OfContent: ['人气旺(323)', '景色优美(299)', '免费项目(94)'],
+      // tag2OfContent: ['环境很好(79)', '收费合理(59)', '水很清澈(35)'],
+      tag1OfContent: [],
+      tag2OfContent: [],
+      isTagShow: true,
+      commentNumber: 0,
+      commentListInfo: [],
       imgList: ['http://hiphotos.baidu.com/map/pic/item/b3fb43166d224f4a23eb6f7404f790529822d162.jpg', 'http://hiphotos.baidu.com/map/pic/item/738b4710b912c8fc4a42f05af1039245d78821f7.jpg', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132'],
       hour: '周五至周日11:00-13:30;16:30-20:30周一至周四11:00-13:00;16:30-20:30非营;周五至周日11:00-13:30',
       introduce: '西湖古称“钱塘湖”，又名“西子湖”，古代诗人苏轼就对它评价道：“欲把西湖比西子，淡妆西湖古称“钱塘湖”，又名“名名名名名子，淡妆浓抹总...',
@@ -473,6 +484,10 @@ export default {
   },
   onUnload() {
     this.banner = [];
+    this.tag1OfContent = [];
+    this.tag2OfContent = [];
+    this.commentListInfo = [];
+    this.tags1 = [];
   },
   methods: {
     /**
@@ -506,8 +521,14 @@ export default {
         this.showtag = this.placeDetailData.place.showtag;
         if (this.placeDetailData.place.tags1) {
           let tags1Array = this.placeDetailData.place.tags1.split(';');
-          for (let j = 0; j < tags1Array.length; j++) {
-            this.tags1.push(tags1Array[j]);
+          if (tags1Array.length < 3) {
+            for (let j = 0; j < tags1Array.length; j++) {
+              this.tags1.push(tags1Array[j]);
+            }
+          } else {
+            for (let j = 0; j < 3; j++) {
+              this.tags1.push(tags1Array[j]);
+            }
           }
         } else {
           this.tags1 = [];
@@ -525,7 +546,77 @@ export default {
           this.telephone1 = '暂无';
         }
         this.hour = this.placeDetailData.place.shopHours;
-
+        if (this.placeDetailData.place.content != '暂无') {
+          this.isTagShow = true;
+          let contentArray = this.placeDetailData.place.content.split(';');
+          if (contentArray.length <= 3) {
+            for (let i = 0; i < contentArray.length; i++) {
+              this.tag1OfContent.push(contentArray[i]);
+            }
+          } else if (contentArray.length > 3 && contentArray.length <= 6) {
+            for (let i = 0; i < contentArray.length; i++) {
+              if (i < 3) {
+                this.tag1OfContent.push(contentArray[i]);
+              } else {
+                this.tag2OfContent.push(contentArray[i]);
+              }
+            }
+          } else {
+            for (let i = 3; i < 6; i++) {
+              if (i < 3) {
+                this.tag1OfContent.push(contentArray[i]);
+              } else {
+                this.tag2OfContent.push(contentArray[i]);
+              }
+            }
+          }
+        } else {
+          this.isTagShow = false;
+        }
+        this.commentNumber = this.placeDetailData.place.commentNumber;
+        this.handleCommentList();
+        //this.handleCommentList(JSON.parse(this.placeDetailData.place.commentList));
+      })
+    },
+    handleCommentList() {
+      // let commentDetail = {};
+      // for (let i = 0; i < commentList.length; i++) {
+      //   //this.$set(commentDetail, 'userName', commentList[i].user_name);
+      //   let pictures = commentList[i].pics;
+      //   commentDetail.userLogo = commentList[i].user_logo;
+      //   commentDetail.userName = commentList[i].user_name;
+      //   commentDetail.overallRating = commentList[i].overall_rating;
+      //   commentDetail.date = commentList[i].date;
+      //   commentDetail.content = commentList[i].content.substring(0, 55) + '...';
+      //   for (let j = 0; j < pictures.length; j++) {
+      //     commentList.imgUrl.push(pictures[j].pic_url);
+      //   }
+      //   commentDetail.resource = commentList[i].cn_name;
+      //   this.commentListInfo.push(commentDetail);
+      // }
+      this.$httpWX.get({
+        url: apiurl.getPlaceCommentByUid,
+        data: {
+          uid: this.placeDetailData.place.uid,
+          pageNo: 1,
+          pageSize: 3
+        },
+      }).then(res => {
+        this.commentListInfo = res.data.items;
+        let userImgArray = [];
+        for (let i = 0; i < this.commentListInfo.length; i++) {
+          if (this.commentListInfo[i].imageList) {
+            var userImg = JSON.parse(this.commentListInfo[i].imageList);
+            userImgArray = [];
+            for (let j = 0; j < userImg.length; j++) {
+              userImgArray.push(userImg[j].pic_url);
+            }
+            this.$set(this.commentListInfo[i], 'userImg', userImgArray);
+          } else {
+            this.$set(this.commentListInfo[i], 'userImg', null);
+          }
+          this.$set(this.commentListInfo[i], 'date', this.commentListInfo[i].date.split(" ")[0]);
+        }
       })
     }
   }

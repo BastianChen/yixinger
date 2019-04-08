@@ -5,7 +5,7 @@
   background: #F4F4F4;
   .swiper {
     width: 100%;
-    height: 200 rpx;
+    height: 450 rpx;
     .swiper-container {
       width: 100%;
       .swiper-item {
@@ -41,6 +41,7 @@
     }
     .tags1 {
       padding: 0 5 rpx;
+      margin-right: 10px;
     }
   }
   .introduce {
@@ -193,6 +194,11 @@
           overflow:hidden;
           text-overflow: ellipsis;
           margin-bottom: 10px;
+        }
+        .userImg{
+          height: 70px;
+          width: 70px;
+          margin-right: 15px;
         }
         .bottom{
           padding: 0 0 10px 0;
