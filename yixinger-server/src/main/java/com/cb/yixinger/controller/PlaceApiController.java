@@ -124,6 +124,11 @@ public class PlaceApiController {
             logger.info("未读取到 {} 缓存数据", placeName);
             Place place = placeService.getPlaceByUid(uid);
             if (place != null) {
+                if (place.getContent() != null) {
+                    place.setContent(placeService.resetContent(place.getContent()));
+                } else {
+                    place.setContent("暂无");
+                }
                 List<PlaceComment> placeCommentList = placeCommentService.getPlaceComment(uid);
                 List<PlacePhoto> placePhotoList = placePhotoService.getPlacePhoto(uid);
                 PlaceDTO placeDTO = new PlaceDTO();

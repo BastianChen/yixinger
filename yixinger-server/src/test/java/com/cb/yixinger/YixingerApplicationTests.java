@@ -276,4 +276,9 @@ public class YixingerApplicationTests {
         field.set(a, "aaaa");
         System.out.println("APPID："+Constants.APPID);
     }
+
+    @Test
+    public void resetContentTest(){
+        System.out.println(placeService.resetContent("[[{\"count\":94,\"label_id\":\"scope_5_02\",\"label_name\":\"免费项目\"}],[{\"count\":35,\"label_id\":\"scope_1_09\",\"label_name\":\"水很清澈\"}],[{\"count\":323,\"label_id\":\"scope_1_03\",\"label_name\":\"人气旺\"},{\"count\":299,\"label_id\":\"scope_1_02\",\"label_name\":\"景色优美\"},{\"count\":79,\"label_id\":\"scope_1_01\",\"label_name\":\"环境很好\"}],[{\"count\":59,\"label_id\":\"scope_5_01\",\"label_name\":\"收费合理\"}]]"));
+    }
 }

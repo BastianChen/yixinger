@@ -2,12 +2,10 @@ package com.cb.yixinger.service.impl;
 
 import com.cb.yixinger.dao.PlaceDao;
 import com.cb.yixinger.dao.PlaceMapper;
-import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.Place;
 import com.cb.yixinger.service.PlaceService;
 import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.DistanceUtil;
-import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -338,6 +336,49 @@ public class PlaceServiceImpl implements PlaceService {
             len = flag;
         }
         return placeList;
+    }
+
+    @Override
+    public String resetContent(String content) {
+        JSONArray newContentArray = new JSONArray();
+        JSONArray array;
+        JSONArray contentArray = JSONArray.fromObject(content);
+        if (contentArray.size() > 0) {
+            for (int i = 0; i < contentArray.size(); i++) {
+                array = (JSONArray) contentArray.get(i);
+                for (int j = 0; j < array.size(); j++) {
+                    newContentArray.add(array.get(j));
+                }
+            }
+            // 设置边界的冒泡排序
+            int len = newContentArray.size();
+            int flag = len;
+            // 如果flag>0则排序结束
+            while (flag > 0) {
+                flag = 0;
+                for (int i = 1; i < len; i++) {
+                    // 比较评分，若前面小于后面则交换数据
+                    if (((JSONObject) newContentArray.get(i - 1)).optInt("count") < ((JSONObject) newContentArray.get(i)).optInt("count")) {
+                        JSONObject temp = (JSONObject) newContentArray.get(i);
+                        newContentArray.set(i, (JSONObject) newContentArray.get(i - 1));
+                        newContentArray.set(i - 1, temp);
+                        // 设置最新边界
+                        flag = i;
+                    }
+                }
+                // 记录遍历的边界
+                len = flag;
+            }
+            String contentStr = "";
+            for (Object contentObject : newContentArray) {
+                contentStr = contentStr + ((JSONObject) contentObject).optString("label_name") + "(" +
+                        ((JSONObject) contentObject).optString("count") + ");";
+            }
+            contentStr = contentStr.substring(0, contentStr.length() - 1);
+            return contentStr;
+        } else {
+            return "暂无";
+        }
     }
 
     public void setPhotoList(JSONObject dataInfo, JSONObject avocado, JSONArray list, JSONObject photoList, Place place) {

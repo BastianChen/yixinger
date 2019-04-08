@@ -17,4 +17,6 @@ public interface PlaceService {
     List<Place> getPlaceList(Integer type);
 
     List<Place> getPlaceList(String uidList, Double longitude, Double latitude);
+
+    String resetContent(String content);
 }
