@@ -98,7 +98,9 @@ public class PlaceApiController {
     @ApiOperation(value = "根据uid获取游玩地点信息", notes = "根据uid获取游玩地点信息 ", response = BaseMessage.class)
     @RequestMapping(value = "/getPlaceByUid", produces = {"application/json"}, method = RequestMethod.GET)
     public ResponseEntity<BaseMessage> getPlaceByUid(
-            @ApiParam(value = "地点uid", required = true) @RequestParam(value = "uid") String uid) {
+            @ApiParam(value = "地点uid", required = true) @RequestParam(value = "uid") String uid,
+            @ApiParam(value = "经度") @RequestParam(value = "longitude", required = false) Double longitude,
+            @ApiParam(value = "纬度") @RequestParam(value = "latitude", required = false) Double latitude) {
         BaseMessage baseMessage = new BaseMessage();
         String placeName = "place?uid=" + uid;
         String placeCommentListName = "placeCommentList?uid=" + uid;
@@ -129,6 +131,7 @@ public class PlaceApiController {
                 } else {
                     place.setContent("暂无");
                 }
+                place.setDistance(DistanceUtil.GetShortDistance(longitude, latitude, place.getLongitude(), place.getLatitude()));
                 List<PlaceComment> placeCommentList = placeCommentService.getPlaceComment(uid);
                 List<PlacePhoto> placePhotoList = placePhotoService.getPlacePhoto(uid);
                 PlaceDTO placeDTO = new PlaceDTO();
