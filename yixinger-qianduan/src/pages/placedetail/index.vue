@@ -5,7 +5,7 @@
               duration="500">
         <block v-for="(item, index) in banner " :key="index">
           <swiper-item class="swiper-item">
-            <image :src="item" class="slide-image"/>
+            <image :src="item" :data-src="item" @click="seePhoto(item,banner)" class="slide-image"/>
           </swiper-item>
         </block>
       </swiper>
@@ -147,7 +147,7 @@
                  :key="commentListInfoIndex">
               <van-row>
                 <van-col span="3">
-                  <img class="portrait"
+                  <img class="portrait" @click="seeUserImage(comment.userImage)"
                        :src="comment.userImage"/>
                 </van-col>
                 <van-col span="19" offset="1">
@@ -174,89 +174,28 @@
                   <van-row>
                     <div class="detail">
                     <span>
-                      {{comment.comment}}
+                      {{comment.newComment}}
                     </span>
                     </div>
                   </van-row>
                   <van-row>
                     <div>
                       <img class="userImg" v-for="(img, imgIndex) in comment.userImg " :key="imgIndex"
-                           :src="img"
-                           :data-src="img" v-if="imgIndex<3&&img" @click="seePhoto(img)"/>
-                      <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
-                      <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
-                      <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
-                      <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
-                      <span v-if="imgIndex>3"
-                            style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">9张</span>
+                           :src="img" :data-src="img" v-if="imgIndex<3&&img" @click="seePhoto(img,comment.userImg)"/>
+                      <span v-if="comment.moreThanThree"
+                            style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">{{comment.imgLength}}张</span>
                     </div>
                   </van-row>
                   <van-row>
                     <div class="bottom">
                       <span class="resource">{{comment.resource}}</span>
                       <img class="likeImg" src="../../../static/images/like.png"/>
-                      <span class="likes">5</span>
+                      <span class="likes">{{comment.likes}}</span>
                     </div>
                   </van-row>
                 </van-col>
               </van-row>
             </div>
-            <!--<div class="commentDetail">-->
-            <!--<van-row>-->
-            <!--<van-col span="3">-->
-            <!--<img class="portrait"-->
-            <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
-            <!--</van-col>-->
-            <!--<van-col span="19" offset="1">-->
-            <!--<van-row>-->
-            <!--<span class="userName">158****3385</span>-->
-            <!--</van-row>-->
-            <!--<van-row>-->
-            <!--<van-col span="8">-->
-            <!--<van-rate-->
-            <!--:value="overallRating"-->
-            <!--size="13"-->
-            <!--count="5"-->
-            <!--disabled-color="#00BFFF"-->
-            <!--disabled-->
-            <!--/>-->
-            <!--</van-col>-->
-            <!--<van-col span="3">-->
-            <!--<span class="rate">{{overallRating}}</span>-->
-            <!--</van-col>-->
-            <!--<van-col span="8" offset="5">-->
-            <!--<div class="time"><span>2019-04-04</span></div>-->
-            <!--</van-col>-->
-            <!--</van-row>-->
-            <!--<van-row>-->
-            <!--<div class="detail">-->
-            <!--<span>-->
-            <!--位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...-->
-            <!--</span>-->
-            <!--</div>-->
-            <!--</van-row>-->
-            <!--<van-row>-->
-            <!--<div>-->
-            <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
-            <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
-            <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
-            <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
-            <!--<img style="height: 70px;width: 70px;margin-right: 15px"-->
-            <!--src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIn6LQJNqACR7upOO7QQ8wcoZxHU9rzekAnUVQmnGDyad3k0mX6DJ0iaYKUicYANOD9yAVLC805hyPw/132"/>-->
-            <!--<span-->
-            <!--style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;">9张</span>-->
-            <!--</div>-->
-            <!--</van-row>-->
-            <!--<van-row>-->
-            <!--<div class="bottom">-->
-            <!--<span class="resource">来自百度地图</span>-->
-            <!--<img class="likeImg" src="../../../static/images/like.png"/>-->
-            <!--<span class="likes">5</span>-->
-            <!--</div>-->
-            <!--</van-row>-->
-            <!--</van-col>-->
-            <!--</van-row>-->
-            <!--</div>位置：地铁🚇一号线西湖文化广场C出口，周边交通便利环境：近武林广场，武林码头，杭州大厦，比较热闹博物馆：周一闭馆，平时...-->
           </div>
           <div class="seeAll">
             <span>查看全部</span>
@@ -272,8 +211,9 @@
             <span>相册</span><span class="more"><van-icon name="arrow"/></span>
           </div>
           <div class="photos">
-            <img v-for="(item, imgListIndex) in imgList "
-                 :key="imgListIndex" :src="item" :data-src="item" v-if="imgListIndex<=3" @click="seePhoto(item)"/>
+            <img v-for="(photos, imgListIndex) in imgList "
+                 :key="imgListIndex" :src="photos" v-if="imgListIndex<=3"
+                 @click="seePhoto(photos,imgList)"/>
           </div>
         </van-row>
       </div>
@@ -493,10 +433,18 @@ export default {
     /**
      * 预览图片
      */
-    seePhoto(index) {
+    seePhoto(index, imgList) {
       wx.previewImage({
         current: index, // 当前显示图片的http链接
-        urls: this.imgList // 需要预览的图片http链接列表
+        urls: imgList // 需要预览的图片http链接列表
+      })
+    },
+    seeUserImage(imgUrl){
+      let imgArray=[];
+      imgArray.push(imgUrl);
+      wx.previewImage({
+        current: imgUrl, // 当前显示图片的http链接
+        urls: imgArray // 需要预览的图片http链接列表
       })
     },
     getPlaceDetailData() {
@@ -579,21 +527,6 @@ export default {
       })
     },
     handleCommentList() {
-      // let commentDetail = {};
-      // for (let i = 0; i < commentList.length; i++) {
-      //   //this.$set(commentDetail, 'userName', commentList[i].user_name);
-      //   let pictures = commentList[i].pics;
-      //   commentDetail.userLogo = commentList[i].user_logo;
-      //   commentDetail.userName = commentList[i].user_name;
-      //   commentDetail.overallRating = commentList[i].overall_rating;
-      //   commentDetail.date = commentList[i].date;
-      //   commentDetail.content = commentList[i].content.substring(0, 55) + '...';
-      //   for (let j = 0; j < pictures.length; j++) {
-      //     commentList.imgUrl.push(pictures[j].pic_url);
-      //   }
-      //   commentDetail.resource = commentList[i].cn_name;
-      //   this.commentListInfo.push(commentDetail);
-      // }
       this.$httpWX.get({
         url: apiurl.getPlaceCommentByUid,
         data: {
@@ -605,6 +538,11 @@ export default {
         this.commentListInfo = res.data.items;
         let userImgArray = [];
         for (let i = 0; i < this.commentListInfo.length; i++) {
+          if (this.commentListInfo[i].comment.length > 58) {
+            this.$set(this.commentListInfo[i], 'newComment', this.commentListInfo[i].comment.substring(0, 58) + '...');
+          } else {
+            this.$set(this.commentListInfo[i], 'newComment', this.commentListInfo[i].comment);
+          }
           if (this.commentListInfo[i].imageList) {
             var userImg = JSON.parse(this.commentListInfo[i].imageList);
             userImgArray = [];
@@ -612,6 +550,12 @@ export default {
               userImgArray.push(userImg[j].pic_url);
             }
             this.$set(this.commentListInfo[i], 'userImg', userImgArray);
+            if (userImgArray.length > 3) {
+              this.$set(this.commentListInfo[i], 'moreThanThree', true);
+            } else {
+              this.$set(this.commentListInfo[i], 'moreThanThree', false);
+            }
+            this.$set(this.commentListInfo[i], 'imgLength', userImgArray.length);
           } else {
             this.$set(this.commentListInfo[i], 'userImg', null);
           }

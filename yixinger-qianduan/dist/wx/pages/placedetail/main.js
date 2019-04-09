@@ -307,66 +307,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -578,10 +518,18 @@ if (false) {(function () {
     /**
      * 预览图片
      */
-    seePhoto: function seePhoto(index) {
+    seePhoto: function seePhoto(index, imgList) {
       wx.previewImage({
         current: index, // 当前显示图片的http链接
-        urls: this.imgList // 需要预览的图片http链接列表
+        urls: imgList // 需要预览的图片http链接列表
+      });
+    },
+    seeUserImage: function seeUserImage(imgUrl) {
+      var imgArray = [];
+      imgArray.push(imgUrl);
+      wx.previewImage({
+        current: imgUrl, // 当前显示图片的http链接
+        urls: imgArray // 需要预览的图片http链接列表
       });
     },
     getPlaceDetailData: function getPlaceDetailData() {
@@ -668,21 +616,6 @@ if (false) {(function () {
     handleCommentList: function handleCommentList() {
       var _this2 = this;
 
-      // let commentDetail = {};
-      // for (let i = 0; i < commentList.length; i++) {
-      //   //this.$set(commentDetail, 'userName', commentList[i].user_name);
-      //   let pictures = commentList[i].pics;
-      //   commentDetail.userLogo = commentList[i].user_logo;
-      //   commentDetail.userName = commentList[i].user_name;
-      //   commentDetail.overallRating = commentList[i].overall_rating;
-      //   commentDetail.date = commentList[i].date;
-      //   commentDetail.content = commentList[i].content.substring(0, 55) + '...';
-      //   for (let j = 0; j < pictures.length; j++) {
-      //     commentList.imgUrl.push(pictures[j].pic_url);
-      //   }
-      //   commentDetail.resource = commentList[i].cn_name;
-      //   this.commentListInfo.push(commentDetail);
-      // }
       this.$httpWX.get({
         url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceCommentByUid,
         data: {
@@ -694,6 +627,11 @@ if (false) {(function () {
         _this2.commentListInfo = res.data.items;
         var userImgArray = [];
         for (var i = 0; i < _this2.commentListInfo.length; i++) {
+          if (_this2.commentListInfo[i].comment.length > 58) {
+            _this2.$set(_this2.commentListInfo[i], 'newComment', _this2.commentListInfo[i].comment.substring(0, 58) + '...');
+          } else {
+            _this2.$set(_this2.commentListInfo[i], 'newComment', _this2.commentListInfo[i].comment);
+          }
           if (_this2.commentListInfo[i].imageList) {
             var userImg = JSON.parse(_this2.commentListInfo[i].imageList);
             userImgArray = [];
@@ -701,6 +639,12 @@ if (false) {(function () {
               userImgArray.push(userImg[j].pic_url);
             }
             _this2.$set(_this2.commentListInfo[i], 'userImg', userImgArray);
+            if (userImgArray.length > 3) {
+              _this2.$set(_this2.commentListInfo[i], 'moreThanThree', true);
+            } else {
+              _this2.$set(_this2.commentListInfo[i], 'moreThanThree', false);
+            }
+            _this2.$set(_this2.commentListInfo[i], 'imgLength', userImgArray.length);
           } else {
             _this2.$set(_this2.commentListInfo[i], 'userImg', null);
           }
@@ -742,7 +686,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('image', {
       staticClass: "slide-image",
       attrs: {
-        "src": item
+        "src": item,
+        "data-src": item,
+        "eventid": '0-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.seePhoto(item, _vm.banner)
+        }
       }
     })])], 1)
   }))], 1), _vm._v(" "), _c('div', {
@@ -961,7 +912,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('img', {
       staticClass: "portrait",
       attrs: {
-        "src": comment.userImage
+        "src": comment.userImage,
+        "eventid": '1-' + commentListInfoIndex
+      },
+      on: {
+        "click": function($event) {
+          _vm.seeUserImage(comment.userImage)
+        }
       }
     })]), _vm._v(" "), _c('van-col', {
       attrs: {
@@ -1014,7 +971,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('div', {
       staticClass: "detail"
-    }, [_c('span', [_vm._v("\n                    " + _vm._s(comment.comment) + "\n                  ")])])]), _vm._v(" "), _c('van-row', {
+    }, [_c('span', [_vm._v("\n                    " + _vm._s(comment.newComment) + "\n                  ")])])]), _vm._v(" "), _c('van-row', {
       attrs: {
         "mpcomid": '30-' + commentListInfoIndex
       }
@@ -1025,15 +982,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         attrs: {
           "src": img,
           "data-src": img,
-          "eventid": '0-' + commentListInfoIndex + '-' + imgIndex
+          "eventid": '2-' + commentListInfoIndex + '-' + imgIndex
         },
         on: {
           "click": function($event) {
-            _vm.seePhoto(img)
+            _vm.seePhoto(img, comment.userImg)
           }
         }
       }) : _vm._e()
-    }), _vm._v(" "), (_vm.imgIndex > 3) ? _c('span', {
+    }), _vm._v(" "), (comment.moreThanThree) ? _c('span', {
       staticStyle: {
         "width": "25px",
         "height": "15px",
@@ -1046,7 +1003,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "right": "66px",
         "margin-top": "55px"
       }
-    }, [_vm._v("9张")]) : _vm._e()], 2)]), _vm._v(" "), _c('van-row', {
+    }, [_vm._v(_vm._s(comment.imgLength) + "张")]) : _vm._e()], 2)]), _vm._v(" "), _c('van-row', {
       attrs: {
         "mpcomid": '31-' + commentListInfoIndex
       }
@@ -1061,7 +1018,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('span', {
       staticClass: "likes"
-    }, [_vm._v("5")])])])], 1)], 1)], 1)
+    }, [_vm._v(_vm._s(comment.likes))])])])], 1)], 1)], 1)
   })), _vm._v(" "), _c('div', {
     staticClass: "seeAll"
   }, [_c('span', [_vm._v("查看全部")]), _vm._v(" "), _c('van-icon', {
@@ -1086,17 +1043,16 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "photos"
-  }, _vm._l((_vm.imgList), function(item, imgListIndex) {
+  }, _vm._l((_vm.imgList), function(photos, imgListIndex) {
     return (imgListIndex <= 3) ? _c('img', {
       key: imgListIndex,
       attrs: {
-        "src": item,
-        "data-src": item,
-        "eventid": '1-' + imgListIndex
+        "src": photos,
+        "eventid": '3-' + imgListIndex
       },
       on: {
         "click": function($event) {
-          _vm.seePhoto(item)
+          _vm.seePhoto(photos, _vm.imgList)
         }
       }
     }) : _vm._e()
