@@ -77,7 +77,7 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
                     continue;
                 }
                 placeComment.setPlaceId(placeId);
-                placeComment.setLikes(jsonObject.optInt("mark_total", 0));
+                placeComment.setLikes(jsonObject.optInt("favorNum", 0));
                 placeComment.setDate(jsonObject.optString("date"));
                 placeComment.setUserName(jsonObject.optString("user_name"));
                 placeComment.setUserImage(jsonObject.optString("user_logo"));
