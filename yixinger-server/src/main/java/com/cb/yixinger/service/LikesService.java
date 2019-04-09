@@ -13,4 +13,6 @@ public interface LikesService {
     List<Likes> getLikes(String userId, Integer placeCommentId);
 
     void deleteLikes(String idList);
+
+    List<Likes> getLikedCommentByPlaceIdAndUserId(String placeId, String openid);
 }

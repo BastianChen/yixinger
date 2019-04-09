@@ -22,7 +22,7 @@ public interface PlaceCommentService {
 
     PlaceComment getPlaceCommentByPlaceCommentId(Integer placeCommentId);
 
-    PlaceComment updateLikes(Likes likes, PlaceComment placeComment, Boolean isLikes, String userId);
+    PlaceComment updateLikes(Likes likes, PlaceComment placeComment, Boolean isLikes, String userId, String placeId);
 
     void deleteCommentById(String idList);
 }

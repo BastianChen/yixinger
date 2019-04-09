@@ -49,4 +49,14 @@ public class LikesServiceImpl  implements LikesService {
             likesMapper.deleteByExample(example);
         }
     }
+
+    @Override
+    public List<Likes> getLikedCommentByPlaceIdAndUserId(String placeId, String openid) {
+        Example example = new Example(Likes.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("placeId", placeId);
+        criteria.andEqualTo("userId", openid);
+        List<Likes> likesList = likesMapper.selectByExample(example);
+        return likesList;
+    }
 }

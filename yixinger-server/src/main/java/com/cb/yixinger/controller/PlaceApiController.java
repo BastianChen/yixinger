@@ -252,7 +252,8 @@ public class PlaceApiController {
     @RequestMapping(value = "/updateLikes", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> updateLikes(
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
-            @ApiParam(value = "评论id", required = true) @RequestParam(value = "placeCommentId") Integer placeCommentId) {
+            @ApiParam(value = "评论id", required = true) @RequestParam(value = "placeCommentId") Integer placeCommentId,
+            @ApiParam(value = "地点uid", required = true) @RequestParam(value = "placeId") String placeId) {
         BaseMessage baseMessage = new BaseMessage();
         PlaceComment placeComment = placeCommentService.getPlaceCommentByPlaceCommentId(placeCommentId);
         if (placeComment != null) {
@@ -260,12 +261,12 @@ public class PlaceApiController {
             List<Likes> likesList = likesService.getLikes(userId, placeCommentId);
             if (likesList != null && !likesList.isEmpty()) {
                 logger.info("用户openid为 {} 的用户已经给该评论点过赞", userId);
-                PlaceComment updatedPlaceComment = placeCommentService.updateLikes(likesList.get(0), placeComment, true, userId);
+                PlaceComment updatedPlaceComment = placeCommentService.updateLikes(likesList.get(0), placeComment, true, userId, placeId);
                 baseMessage.setData(updatedPlaceComment);
                 baseMessage.setMessage("取消点赞成功");
             } else {
                 logger.info("用户openid为 {} 的用户没有给该评论点过赞", userId);
-                PlaceComment updatedPlaceComment = placeCommentService.updateLikes(null, placeComment, false, userId);
+                PlaceComment updatedPlaceComment = placeCommentService.updateLikes(null, placeComment, false, userId, placeId);
                 baseMessage.setData(updatedPlaceComment);
                 baseMessage.setMessage("点赞成功");
             }
@@ -481,6 +482,22 @@ public class PlaceApiController {
         BaseMessage baseMessage = new BaseMessage();
         Double distance = DistanceUtil.GetShortDistance(longitude1, latitude1, longitude2, latitude2);
         baseMessage.setData(distance);
+        return baseMessage.response();
+    }
+
+    @LoggerManage(logDescription = "根据placeId以及openid搜索出用户点赞过的评论")
+    @ApiOperation(value = "根据placeId以及openid搜索出用户点赞过的评论", notes = "根据placeId以及userId搜索出用户点赞过的评论 ", response = BaseMessage.class)
+    @RequestMapping(value = "/getLikedCommentByPlaceIdAndUserId", produces = {"application/json"}, method = RequestMethod.GET)
+    public ResponseEntity<BaseMessage> getLikedCommentByPlaceIdAndUserId(
+            @ApiParam(value = "地点placeId", required = true) @RequestParam String placeId,
+            @ApiParam(value = "用户openid", required = true) @RequestParam String openid) {
+        BaseMessage baseMessage = new BaseMessage();
+        List<Likes> likesList = likesService.getLikedCommentByPlaceIdAndUserId(placeId, openid);
+        if (likesList != null && likesList.size() > 0) {
+            baseMessage.setData(likesList);
+        } else {
+            baseMessage.initStateAndMessage(1001, "暂无点赞记录");
+        }
         return baseMessage.response();
     }
 }

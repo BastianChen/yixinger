@@ -87,7 +87,7 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
                 if (CommonUtil.isNullOrWhiteSpace(placeComment.getUserImage())) {
                     placeComment.setUserImage("https://wzcb97.top/images/default.jpg");
                 }
-                placeComment.setResource(jsonObject.optString("cn_name","百度地图"));
+                placeComment.setResource(jsonObject.optString("cn_name", "百度地图"));
                 placeCommentMapper.insertSelective(placeComment);
             }
         }
@@ -116,13 +116,14 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
     }
 
     @Override
-    public PlaceComment updateLikes(Likes likes, PlaceComment placeComment, Boolean isLikes, String userId) {
+    public PlaceComment updateLikes(Likes likes, PlaceComment placeComment, Boolean isLikes, String userId, String placeId) {
         if (isLikes == false) {
             logger.info("用户点赞操作开始");
             placeComment.setLikes(placeComment.getLikes() + 1);
             likes = new Likes();
             likes.setUserId(userId);
             likes.setPlaceCommentId(placeComment.getId());
+            likes.setPlaceId(placeId);
             Boolean isSuccessLike = likesMapper.insertSelective(likes) > 0;
             if (isSuccessLike) {
                 logger.info("用户点赞成功");

@@ -12,4 +12,5 @@ public class Likes {
     private Integer id;
     private String userId;
     private Integer placeCommentId;
+    private String placeId;
 }
