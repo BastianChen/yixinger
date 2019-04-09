@@ -25,4 +25,6 @@ public interface PlaceCommentService {
     PlaceComment updateLikes(Likes likes, PlaceComment placeComment, Boolean isLikes, String userId, String placeId);
 
     void deleteCommentById(String idList);
+
+    Integer getCommentNumber(String uid);
 }

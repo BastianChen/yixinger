@@ -180,4 +180,17 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
             }
         }
     }
+
+    @Override
+    public Integer getCommentNumber(String uid) {
+        Example example = new Example(PlaceComment.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("placeId", uid);
+        List<PlaceComment> placeCommentList = placeCommentMapper.selectByExample(example);
+        if (placeCommentList != null && placeCommentList.size() > 0) {
+            return placeCommentList.size();
+        } else {
+            return 0;
+        }
+    }
 }

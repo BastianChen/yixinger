@@ -134,6 +134,7 @@ public class PlaceApiController {
                 place.setDistance(DistanceUtil.GetShortDistance(longitude, latitude, place.getLongitude(), place.getLatitude()));
                 List<PlaceComment> placeCommentList = placeCommentService.getPlaceComment(uid);
                 List<PlacePhoto> placePhotoList = placePhotoService.getPlacePhoto(uid);
+                place.setCommentNumber(placeCommentService.getCommentNumber(uid));
                 PlaceDTO placeDTO = new PlaceDTO();
                 placeDTO.setPlace(place);
                 placeDTO.setPlaceCommentList(placeCommentList);
