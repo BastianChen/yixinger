@@ -14,9 +14,11 @@
           {{name}}
         </label></van-row>
       <van-row class="_van-row data-v-8962503e distanceAndAddress">
-        <van-col span="4" class="_van-col data-v-8962503e">
-          {{distance}}| </van-col>
-        <van-col span="19" offset="1" class="_van-col data-v-8962503e">
+        <van-col span="3" class="_van-col data-v-8962503e">
+          {{distance}}
+        </van-col>
+        <van-col span="1" class="_van-col data-v-8962503e"> | </van-col>
+        <van-col span="19" class="_van-col data-v-8962503e">
           {{address}}
         </van-col>
       </van-row>
@@ -29,17 +31,17 @@
             {{showtag}}
           </view>
         </van-col>
-        <van-col span="12" class="_van-col data-v-8962503e">
-          <van-tag wx:key="tags1Index" key="{{tags1Index}}" wx:if="{{tags1Index<3}}" color="#FFF6EF" text-color="#C7A98B" class="_van-tag data-v-8962503e tags1" wx:for="{{tags1}}" wx:for-index="tags1Index" wx:for-item="item">
+        <van-col span="12" offset="1" class="_van-col data-v-8962503e">
+          <van-tag wx:key="tags1Index" key="{{tags1Index}}" wx:if="{{tags1Index<=tags1ShowIndex}}" color="#FFF6EF" text-color="#C7A98B" class="_van-tag data-v-8962503e tags1" wx:for="{{tags1}}" wx:for-index="tags1Index" wx:for-item="item">
             {{item}}
           </van-tag>
         </van-col>
       </van-row>
     </view>
-    <view class="_div data-v-8962503e introduce">
+    <view class="_div data-v-8962503e introduce" wx:if="{{isSurveyOfScenery}}">
       <van-row class="_van-row data-v-8962503e">
         <view class="_div data-v-8962503e title"> 景区概况 </view>
-        <view class="_div data-v-8962503e content">
+        <view class="_div data-v-8962503e content" wx:if="{{isIntroduceShow}}">
           <van-row class="_van-row data-v-8962503e">
             <van-col span="22" class="_van-col data-v-8962503e"><label class="_span data-v-8962503e">
                 {{introduce}}
@@ -51,21 +53,21 @@
             </van-col>
           </van-row>
         </view>
-        <view class="_div data-v-8962503e sugTime"><label class="_span data-v-8962503e firstSpan">建议游玩</label><label class="_span data-v-8962503e secondSpan">{{sugTime}}</label></view>
-        <view class="_div data-v-8962503e sugTime"><label class="_span data-v-8962503e firstSpan">最佳季节</label><label class="_span data-v-8962503e secondSpan">{{bestTime}}</label></view>
+        <view class="_div data-v-8962503e sugTime" wx:if="{{isSugTimeShow}}"><label class="_span data-v-8962503e firstSpan">建议游玩</label><label class="_span data-v-8962503e secondSpan">{{sugTime}}</label></view>
+        <view class="_div data-v-8962503e sugTime" wx:if="{{isBestTimeShow}}"><label class="_span data-v-8962503e firstSpan">最佳季节</label><label class="_span data-v-8962503e secondSpan">{{bestTime}}</label></view>
       </van-row>
     </view>
-    <view class="_div data-v-8962503e telephone">
+    <view class="_div data-v-8962503e telephone" wx:if="{{isTelephoneShow}}">
       <van-row class="_van-row data-v-8962503e">
         <view class="_div data-v-8962503e title"> 电话 </view>
-        <view class="_div data-v-8962503e one">
+        <view class="_div data-v-8962503e one" wx:if="{{isTelephone1Show}}">
           {{telephone1}}
         </view>
-        <view class="_div data-v-8962503e two"><label class="_span data-v-8962503e otherSpan">{{telephone1}}</label> <label class="_span data-v-8962503e centerSpan">|</label> <label class="_span data-v-8962503e otherSpan">{{telephone2}}</label></view>
+        <view class="_div data-v-8962503e two" wx:if="{{isTelephone2Show}}"><label class="_span data-v-8962503e otherSpan">{{telephone1}}</label> <label class="_span data-v-8962503e centerSpan">|</label> <label class="_span data-v-8962503e otherSpan">{{telephone2}}</label></view>
       </van-row>
     </view>
-    <view class="_div data-v-8962503e">
-      <view class="_div data-v-8962503e shopHours">
+    <view wx:if="{{isHourShow}}" class="_div data-v-8962503e">
+      <view class="_div data-v-8962503e shopHours" wx:if="{{isHourShow}}">
         <van-row class="_van-row data-v-8962503e">
           <view class="_div data-v-8962503e title"> 营业时间 </view>
           <view class="_div data-v-8962503e hour">
@@ -83,7 +85,7 @@
               <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-8962503e vanTag" wx:key="tag1OfContentIndex" key="{{tag1OfContentIndex}}" wx:for="{{tag1OfContent}}" wx:for-index="tag1OfContentIndex" wx:for-item="tag1">{{tag1}}
               </van-tag>
             </view>
-            <view style="margin-top: 10px" class="_div data-v-8962503e">
+            <view style="margin-top: 10px" wx:if="{{isTag2OfContentShow}}" class="_div data-v-8962503e">
               <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-8962503e vanTag" wx:key="tag2OfContentIndex" key="{{tag2OfContentIndex}}" wx:for="{{tag2OfContent}}" wx:for-index="tag2OfContentIndex" wx:for-item="tag2">{{tag2}}
               </van-tag>
             </view>
@@ -121,32 +123,32 @@
                   </van-row>
                   <van-row class="_van-row data-v-8962503e">
                     <view class="_div data-v-8962503e">
-                      <image class="_img data-v-8962503e userImg" wx:key="imgIndex" key="{{imgIndex}}" src="{{img}}" data-src="{{img}}" wx:if="{{imgIndex<3&&img}}" bindtap="handleProxy" data-eventid="{{'2-'+commentListInfoIndex+'-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{comment.userImg}}" wx:for-index="imgIndex" wx:for-item="img"></image> <label wx:if="{{comment.moreThanThree}}" style="width:25px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;" class="_span data-v-8962503e">{{comment.imgLength}}张</label>
+                      <image class="_img data-v-8962503e userImg" wx:key="imgIndex" key="{{imgIndex}}" src="{{img}}" data-src="{{img}}" wx:if="{{imgIndex<3&&img}}" bindtap="handleProxy" data-eventid="{{'2-'+commentListInfoIndex+'-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{comment.userImg}}" wx:for-index="imgIndex" wx:for-item="img"></image> <label wx:if="{{comment.moreThanThree}}" style="width:30px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:66px;margin-top:55px;" class="_span data-v-8962503e">{{comment.imgLength}}张</label>
                     </view>
                   </van-row>
                   <van-row class="_van-row data-v-8962503e">
                     <view class="_div data-v-8962503e bottom"><label class="_span data-v-8962503e resource">{{comment.resource}}</label>
-                      <image class="_img data-v-8962503e likeImg" src="/static/images/like.png"></image> <label class="_span data-v-8962503e likes">{{comment.likes}}</label>
+                      <image class="_img data-v-8962503e likeImg" src="{{comment.likeImgUrl}}" bindtap="handleProxy" data-eventid="{{'3-'+commentListInfoIndex}}" data-comkey="{{$k}}"></image> <label class="_span data-v-8962503e likes">{{comment.likes}}</label>
                     </view>
                   </van-row>
                 </van-col>
               </van-row>
             </view>
           </view>
-          <view class="_div data-v-8962503e seeAll"><label class="_span data-v-8962503e">查看全部</label>
+          <view class="_div data-v-8962503e seeAll" wx:if="{{isSeeAllShow}}"><label class="_span data-v-8962503e">查看全部</label>
             <van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon>
           </view>
         </van-row>
       </view>
     </view>
-    <view class="_div data-v-8962503e">
+    <view wx:if="{{isImgListShow}}" class="_div data-v-8962503e">
       <view class="_div data-v-8962503e photograph">
         <van-row class="_van-row data-v-8962503e">
           <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">相册</label><label class="_span data-v-8962503e more">
               <van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon>
             </label></view>
           <view class="_div data-v-8962503e photos">
-            <image wx:key="imgListIndex" key="{{imgListIndex}}" src="{{photos}}" wx:if="{{imgListIndex<=3}}" bindtap="handleProxy" data-eventid="{{'3-'+imgListIndex}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="imgListIndex" wx:for-item="photos" class="_img data-v-8962503e"></image>
+            <image wx:key="imgListIndex" key="{{imgListIndex}}" src="{{photos}}" wx:if="{{imgListIndex<=3}}" bindtap="handleProxy" data-eventid="{{'4-'+imgListIndex}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="imgListIndex" wx:for-item="photos" class="_img data-v-8962503e"></image>
           </view>
         </van-row>
       </view>

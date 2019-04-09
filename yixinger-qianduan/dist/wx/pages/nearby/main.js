@@ -282,6 +282,16 @@ if (false) {(function () {
         }
       }
       this.active = this.$route.query.type;
+    },
+    seeDetail: function seeDetail(item) {
+      this.$router.push({
+        path: '../placedetail/main',
+        query: {
+          uid: item.uid,
+          longitude: this.longitude,
+          latitude: this.latitude
+        }
+      });
     }
   }
 });
@@ -302,7 +312,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "animated": "",
       "swipeable": "",
       "color": "#00BFFF",
-      "eventid": '0',
+      "eventid": '2',
       "mpcomid": '18'
     },
     on: {
@@ -324,7 +334,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('span', [_vm._v("\n            暂无推荐景点\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.sceneryData), function(item, index) {
     return (!_vm.isSceneryDataEmpty) ? _c('div', {
       key: index,
-      staticClass: "secondDiv"
+      staticClass: "secondDiv",
+      attrs: {
+        "eventid": '0-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.seeDetail(item)
+        }
+      }
     }, [_c('div', [_c('div', {
       staticClass: "rowBottom"
     }, [_c('van-row', {
@@ -416,7 +434,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('span', [_vm._v("\n            暂无推荐餐馆\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.restaurantData), function(item, index) {
     return (!_vm.isRestaurantDataEmpty) ? _c('div', {
       key: index,
-      staticClass: "secondDiv"
+      staticClass: "secondDiv",
+      attrs: {
+        "eventid": '1-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.seeDetail(item)
+        }
+      }
     }, [_c('div', [_c('div', {
       staticClass: "rowBottom"
     }, [_c('van-row', {

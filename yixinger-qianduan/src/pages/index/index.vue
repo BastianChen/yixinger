@@ -183,8 +183,8 @@ export default {
       dayPictureUrl: '',
       uidListForType1: '',// 景点uidList
       uidListForType2: '',// 餐馆uidList
-      latitudeList: '',// 经度list
-      longitudeList: '',// 维度list
+      latitudeList: '',// 维度list
+      longitudeList: '',// 经度list
       type: '',// 游玩地点类型
       uids: '',// 用于轮播
       isLogin: false,// 判断是否已经授权登录
@@ -247,72 +247,17 @@ export default {
       this.$router.push('../photo/photo')
     },
     getUserInfo() {
-      // 调用登录接口
-      // wx.login({
-      //   success: () => {
-      //     wx.getUserInfo({
-      //       success: (res) => {
-      //         this.userInfo = res.userInfo
-      //         console.log(res)
-      //         console.log(this.userInfo)
-      //       }
-      //     })
-      //   }
-      // }),
       wx.login({
         //获取code
         success: (res) => {
-          // this.code = res.code;
-          // console.log(res.code) //返回code
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo
               console.log(res)
               console.log(this.userInfo)
               this.isLogin = true;
-              //this.setDisc(this.userInfo);
-              // wx.request({
-              //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx52a9380821d85603&secret=353ae1409d24e026d2bdcb0b180953e8&js_code=' + this.code + '&grant_type=authorization_code',
-              //   data: {},
-              //   header: {
-              //     'content-type': 'application/json'
-              //   },
-              //   success: (res) => {
-              //     console.log("openid"+res)
-              //     openid = res.data.openid //返回openid
-              //   }
-              //})
             }
           })
-          // wx.getLocation({
-          //   type: 'wgs84',
-          //   success(res) {
-          //     console.log(res)
-          //     const latitude = res.latitude
-          //     const longitude = res.longitude
-          //     const speed = res.speed
-          //     const accuracy = res.accuracy
-          //     wx.request({ // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
-          //       url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&location=' + latitude + ',' + longitude + '&output=json&coordtype=wgs84ll',
-          //       data: {},
-          //       header: {
-          //         'Content-Type': 'application/json'
-          //       },
-          //       success(res) {
-          //         console.log(res.data.result);
-          //         console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-          //         this.cityName = '杭州市';
-          //       },
-          //       fail: function () {
-          //         // fail
-          //         this.cityName = '杭州市';
-          //       },
-          //       complete: function () {
-          //         // complete
-          //       }
-          //     })
-          //   }
-          // })
         }
       })
     },
@@ -548,7 +493,9 @@ export default {
       this.$router.push({
         path: `../placedetail/main`,
         query: {
-          uid: uid
+          uid: uid,
+          longitude: this.longitude,
+          latitude: this.latitude,
         }
       });
     },

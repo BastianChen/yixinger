@@ -12,7 +12,7 @@
             </span>
           </div>
         </div>
-        <div v-for="(item, index) in sceneryData" :key="index" class="secondDiv" v-if="!isSceneryDataEmpty">
+        <div v-for="(item, index) in sceneryData" :key="index" class="secondDiv" v-if="!isSceneryDataEmpty" @click="seeDetail(item)">
           <div>
             <div class="rowBottom">
               <van-row>
@@ -65,7 +65,7 @@
             </span>
           </div>
         </div>
-        <div v-for="(item, index) in restaurantData" :key="index" class="secondDiv"
+        <div v-for="(item, index) in restaurantData" :key="index" class="secondDiv" @click="seeDetail(item)"
              v-if="!isRestaurantDataEmpty">
           <div>
             <div class="rowBottom">
@@ -194,6 +194,16 @@ export default {
         }
       }
       this.active = this.$route.query.type;
+    },
+    seeDetail(item){
+      this.$router.push({
+        path: `../placedetail/main`,
+        query: {
+          uid: item.uid,
+          longitude: this.longitude,
+          latitude: this.latitude,
+        }
+      });
     }
   }
 }

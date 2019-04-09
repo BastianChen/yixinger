@@ -16,6 +16,7 @@ export const apiurl = {
   addOrUpdateUserHistory: '/Place/addOrUpdateUserHistory', // 添加或更新用户浏览记录
   deleteUserHistory: '/Place/deleteUserHistory', // 删除用户浏览记录
   getUserHistoryByUserId: '/Place/getUserHistoryByUserId', // 根据用户openid获取浏览记录
+  getLikedCommentByPlaceIdAndUserId: '/Place/getLikedCommentByPlaceIdAndUserId', // 根据placeId以及openid搜索出用户点赞过的评论
   /**用户信息API*/
   addUser: '/User/addUser', // 添加用户信息
   getUser: '/User/getUser', // 获取并翻译用户信息

@@ -89,13 +89,13 @@
 }
 .index .telephone .one.data-v-8962503e {
   border-top: 2rpx solid #E8E8E8;
-  font-size: 28rpx;
-  text-align: left;
+  font-size: 32rpx;
+  text-align: center;
   padding: 20rpx 0;
 }
 .index .telephone .two.data-v-8962503e {
   border-top: 2rpx solid #E8E8E8;
-  font-size: 28rpx;
+  font-size: 32rpx;
   padding: 20rpx;
 }
 .index .telephone .two .otherSpan.data-v-8962503e {
@@ -116,8 +116,8 @@
 }
 .index .shopHours .hour.data-v-8962503e {
   border-top: 2rpx solid #E8E8E8;
-  font-size: 28rpx;
-  text-align: left;
+  font-size: 32rpx;
+  text-align: center;
   padding: 20rpx 0;
 }
 .index .content.data-v-8962503e {

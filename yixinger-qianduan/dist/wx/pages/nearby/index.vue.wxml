@@ -1,6 +1,6 @@
 <template name="1f21f144">
   <view class="_div data-v-3984eb6c index">
-    <van-tabs active="{{active}}" bindchange="handleProxy" sticky animated swipeable color="#00BFFF" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_van-tabs data-v-3984eb6c">
+    <van-tabs active="{{active}}" bindchange="handleProxy" sticky animated swipeable color="#00BFFF" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_van-tabs data-v-3984eb6c">
       <van-tab title="景点" class="_van-tab data-v-3984eb6c">
         <view class="_div data-v-3984eb6c firstDiv" wx:if="{{isSceneryDataEmpty}}">
           <view class="_div data-v-3984eb6c">
@@ -8,7 +8,7 @@
           </view>
           <view class="_div data-v-3984eb6c title"><label class="_span data-v-3984eb6c"> 暂无推荐景点 </label></view>
         </view>
-        <view wx:key="index" key="{{index}}" class="_div data-v-3984eb6c secondDiv" wx:if="{{!isSceneryDataEmpty}}" wx:for="{{sceneryData}}" wx:for-index="index" wx:for-item="item">
+        <view wx:key="index" key="{{index}}" class="_div data-v-3984eb6c secondDiv" wx:if="{{!isSceneryDataEmpty}}" bindtap="handleProxy" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}" wx:for="{{sceneryData}}" wx:for-index="index" wx:for-item="item">
           <view class="_div data-v-3984eb6c">
             <view class="_div data-v-3984eb6c rowBottom">
               <van-row class="_van-row data-v-3984eb6c">
@@ -50,7 +50,7 @@
           </view>
           <view class="_div data-v-3984eb6c title"><label class="_span data-v-3984eb6c"> 暂无推荐餐馆 </label></view>
         </view>
-        <view wx:key="index" key="{{index}}" class="_div data-v-3984eb6c secondDiv" wx:if="{{!isRestaurantDataEmpty}}" wx:for="{{restaurantData}}" wx:for-index="index" wx:for-item="item">
+        <view wx:key="index" key="{{index}}" class="_div data-v-3984eb6c secondDiv" bindtap="handleProxy" wx:if="{{!isRestaurantDataEmpty}}" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{restaurantData}}" wx:for-index="index" wx:for-item="item">
           <view class="_div data-v-3984eb6c">
             <view class="_div data-v-3984eb6c rowBottom">
               <van-row class="_van-row data-v-3984eb6c">
