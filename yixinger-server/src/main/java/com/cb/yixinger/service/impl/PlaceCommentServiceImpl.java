@@ -20,6 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
         if (!CommonUtil.isNullOrWhiteSpace(commentList)) {
             JSONArray jsonArray = JSONArray.fromObject(commentList);
             logger.info("对爬取下来的部分评论进行解析");
+            List<PlaceComment> placeCommentList = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 PlaceComment placeComment = new PlaceComment();
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
@@ -88,7 +90,10 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
                     placeComment.setUserImage("https://wzcb97.top/images/default.jpg");
                 }
                 placeComment.setResource(jsonObject.optString("cn_name", "百度地图"));
-                placeCommentMapper.insertSelective(placeComment);
+                placeCommentList.add(placeComment);
+            }
+            for (int i = placeCommentList.size() - 1; i >= 0; i--) {
+                placeCommentMapper.insertSelective(placeCommentList.get(i));
             }
         }
     }
