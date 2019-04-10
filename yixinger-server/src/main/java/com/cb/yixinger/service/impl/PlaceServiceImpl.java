@@ -125,7 +125,15 @@ public class PlaceServiceImpl implements PlaceService {
                         }
                         list = dataInfo.optJSONArray("imgList");
                         if (list != null && list.size() > 0) {
-                            place.setImgList(list.toString());
+                            String imgList = "";
+                            for (int i = 0; i < list.size(); i++) {
+                                if (i != list.size()) {
+                                    imgList = imgList + ((JSONObject) list.get(i)).optString("imgs") + ";";
+                                } else {
+                                    imgList = imgList + ((JSONObject) list.get(i)).optString("imgs");
+                                }
+                            }
+                            place.setPhotoList(imgList);
                         }
                         // 餐馆推荐菜数
                         Integer count = dataInfo.optInt("count", 0);
