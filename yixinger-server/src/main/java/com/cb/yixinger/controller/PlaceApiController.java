@@ -64,6 +64,7 @@ public class PlaceApiController {
             @ApiParam(value = "前端传回的地点经度", required = true) @RequestParam(value = "latitudeList") String latitudeList,
             @ApiParam(value = "前端传回的地点维度", required = true) @RequestParam(value = "longitudeList") String longitudeList,
             @ApiParam(value = "游玩地点类型（1：景点；2：餐馆）", required = true) @RequestParam(value = "type") String type) {
+        logger.info("经度为{}，维度为{}", latitudeList,longitudeList);
         BaseMessage baseMessage = new BaseMessage();
         List<String> uid = Arrays.asList(uidList.split(";"));
         List<String> latitude = Arrays.asList(latitudeList.split(";"));
