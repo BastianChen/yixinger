@@ -1,1 +1,48 @@
 @import "../../common/vendor.wxss";
+
+.index .firstDiv.data-v-2ecb44f2 {
+  text-align: center;
+  margin-top: 400rpx;
+}
+.index .firstDiv ._img.data-v-2ecb44f2 {
+  width: 160rpx;
+  height: 160rpx;
+}
+.index .firstDiv .title.data-v-2ecb44f2 {
+  font-size: 28rpx;
+  font-family: KaiTi;
+}
+.index .secondDiv.data-v-2ecb44f2 {
+  margin: 20rpx 10rpx;
+}
+.index .secondDiv .rowBottom.data-v-2ecb44f2 {
+  border-bottom: 2rpx solid #E8E8E8;
+}
+.index .secondDiv .rowBottom ._img.data-v-2ecb44f2 {
+  width: 212rpx;
+  height: 212rpx;
+  padding: 20rpx 0;
+}
+.index .secondDiv .rowBottom .secondCol .nameDiv.data-v-2ecb44f2 {
+  font-weight: bold;
+  font-size: 40rpx;
+  font-family: KaiTi;
+  padding-top: 10rpx;
+}
+.index .secondDiv .rowBottom .secondCol .distanceAndAddressDiv.data-v-2ecb44f2 {
+  font-size: 36rpx;
+  font-family: KaiTi;
+  padding-top: 20rpx;
+}
+.index .secondDiv .rowBottom .secondCol .overallratingAndShowTagDiv.data-v-2ecb44f2 {
+  padding-top: 20rpx;
+  font-size: 32rpx;
+  font-family: KaiTi;
+  color: #6C6C6C;
+}
+.index .secondDiv .rowBottom .secondCol .overallratingAndShowTagDiv .tagPaddingTop.data-v-2ecb44f2 {
+  padding-top: 20rpx;
+}
+.index .secondDiv .rowBottom .secondCol .overallratingAndShowTagDiv .tagPaddingTop ._span.data-v-2ecb44f2 {
+  margin-right: 10rpx;
+}

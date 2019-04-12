@@ -55,73 +55,81 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex';
-import {apiurl} from "@/service/api.js";
+  import {mapGetters, mapMutations} from 'vuex';
+  import {apiurl} from "@/service/api.js";
 
-export default {
-  computed: {
-    ...mapGetters([
-      'disc'
-    ])
-  },
-  created() {
-    this.getUserInfo();
-    //this.userInfo = this.$store.getters.disc;
-  },
-  mounted() {
-    //this.userInfo = this.$store.getters.disc;
-  },
-  data() {
-    return {
-      isLogin: false,
-      code: '',
-      openid: '',
-      userInfo: {}
-    };
-  },
-  components: {},
-  methods: {
-    ...mapMutations({
-      setDisc: 'set_disc'
-    }),
-    getUserInfo() {
-      wx.login({
-        //获取code
-        success: (res) => {
-          this.code = res.code;
-          console.log("code" + this.code)
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo;
-              // console.log("userInfo++++" + JSON.stringify(this.userInfo))
-              this.isLogin = true;
-              this.$httpWX.post({
-                url: apiurl.addUser + '?code=' + this.code,
-                data: this.userInfo,
-                header: {
-                  'Content-type': 'application/json'
-                }
-              }).then(res => {
-                this.openid = res.data;
-                this.userInfo.openid = this.openid;
-                this.setDisc(this.userInfo);
-                this.$httpWX.get({
-                  url: apiurl.getUser,
-                  data: {
-                    openid: this.openid,
-                    language: 'zh'
-                  },
-                }).then(res => {
-                  this.userInfo = res.data;
+  export default {
+    computed: {
+      ...mapGetters([
+        'disc'
+      ])
+    },
+    created() {
+      this.getUserInfo();
+      //this.userInfo = this.$store.getters.disc;
+    },
+    mounted() {
+      //this.userInfo = this.$store.getters.disc;
+    },
+    data() {
+      return {
+        isLogin: false,
+        code: '',
+        openid: '',
+        userInfo: {}
+      };
+    },
+    components: {},
+    methods: {
+      ...mapMutations({
+        setDisc: 'set_disc'
+      }),
+      getUserInfo() {
+        wx.login({
+          //获取code
+          success: (res) => {
+            this.code = res.code;
+            console.log("code" + this.code)
+            wx.getUserInfo({
+              success: (res) => {
+                this.userInfo = res.userInfo;
+                // console.log("userInfo++++" + JSON.stringify(this.userInfo))
+                this.isLogin = true;
+                this.$httpWX.post({
+                  url: apiurl.addUser + '?code=' + this.code,
+                  data: this.userInfo,
+                  header: {
+                    'Content-type': 'application/json'
+                  }
+                }).then(data => {
+                  let _this = this;
+                  wx.getLocation({
+                    type: 'wgs84',
+                    success(res) {
+                      _this.userInfo.latitude = res.latitude
+                      _this.userInfo.longitude = res.longitude
+                      _this.openid = data.data;
+                      _this.userInfo.openid = _this.openid;
+                      _this.setDisc(_this.userInfo);
+                      _this.$httpWX.get({
+                        url: apiurl.getUser,
+                        data: {
+                          openid: _this.openid,
+                          language: 'zh'
+                        },
+                      }).then(userInfo => {
+                        _this.userInfo = userInfo.data;
+                      })
+                    }
+                  })
                 })
-              })
-            }
-          })
-        }
-      })
+              }
+            })
+          }
+        })
+      }
     }
-  }
-};
+  };
 
 </script>
 <style lang='scss' scoped>

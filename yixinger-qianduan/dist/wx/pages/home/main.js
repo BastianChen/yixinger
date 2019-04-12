@@ -171,36 +171,44 @@ if (false) {(function () {
     setDisc: 'set_disc'
   }), {
     getUserInfo: function getUserInfo() {
-      var _this = this;
+      var _this2 = this;
 
       wx.login({
         //获取code
         success: function success(res) {
-          _this.code = res.code;
-          console.log("code" + _this.code);
+          _this2.code = res.code;
+          console.log("code" + _this2.code);
           wx.getUserInfo({
             success: function success(res) {
-              _this.userInfo = res.userInfo;
+              _this2.userInfo = res.userInfo;
               // console.log("userInfo++++" + JSON.stringify(this.userInfo))
-              _this.isLogin = true;
-              _this.$httpWX.post({
-                url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].addUser + '?code=' + _this.code,
-                data: _this.userInfo,
+              _this2.isLogin = true;
+              _this2.$httpWX.post({
+                url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].addUser + '?code=' + _this2.code,
+                data: _this2.userInfo,
                 header: {
                   'Content-type': 'application/json'
                 }
-              }).then(function (res) {
-                _this.openid = res.data;
-                _this.userInfo.openid = _this.openid;
-                _this.setDisc(_this.userInfo);
-                _this.$httpWX.get({
-                  url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].getUser,
-                  data: {
-                    openid: _this.openid,
-                    language: 'zh'
+              }).then(function (data) {
+                var _this = _this2;
+                wx.getLocation({
+                  type: 'wgs84',
+                  success: function success(res) {
+                    _this.userInfo.latitude = res.latitude;
+                    _this.userInfo.longitude = res.longitude;
+                    _this.openid = data.data;
+                    _this.userInfo.openid = _this.openid;
+                    _this.setDisc(_this.userInfo);
+                    _this.$httpWX.get({
+                      url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].getUser,
+                      data: {
+                        openid: _this.openid,
+                        language: 'zh'
+                      }
+                    }).then(function (userInfo) {
+                      _this.userInfo = userInfo.data;
+                    });
                   }
-                }).then(function (res) {
-                  _this.userInfo = res.data;
                 });
               });
             }

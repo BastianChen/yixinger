@@ -259,7 +259,6 @@ if (false) {(function () {
   },
   onShow: function onShow() {
     this.flag = true;
-    console.log(this.flag);
   },
   onUnload: function onUnload() {
     this.flag = false;
@@ -267,11 +266,14 @@ if (false) {(function () {
     this.isPlay = false;
     this.isTranslated = false;
     this.translateResult = ' ';
+    this.translateText = [];
+    this.words_result = [];
+    this.words_result_num = 0;
+    this.originalText = [];
     this.text = '';
     this.fromType = 'auto';
     this.language = '自动检测 -> 中文';
     this.imageUrl = '';
-    console.log(this.flag);
   },
   mounted: function mounted() {
     if (!this.isFirst && !this.$route.query.isHistory) {

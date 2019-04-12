@@ -1,3 +1,50 @@
 .index {
-
+  .firstDiv {
+    text-align: center;
+    margin-top: 200px;
+    img {
+      width: 80px;
+      height: 80px;
+    }
+    .title {
+      font-size: 14px;
+      font-family: KaiTi;
+    }
+  }
+  .secondDiv {
+    margin: 10px 5px;
+    .rowBottom{
+      border-bottom: 1px solid #E8E8E8;
+      img {
+        width: 106px;
+        height: 106px;
+        padding: 10px 0;
+      }
+      .secondCol {
+        .nameDiv {
+          font-weight: bold;
+          font-size: 20px;
+          font-family: KaiTi;
+          padding-top: 5px;
+        }
+        .distanceAndAddressDiv {
+          font-size: 18px;
+          font-family: KaiTi;
+          padding-top: 10px;
+        }
+        .overallratingAndShowTagDiv {
+          padding-top: 10px;
+          font-size: 16px;
+          font-family: KaiTi;
+          color: #6C6C6C;
+          .tagPaddingTop{
+            padding-top: 10px;
+            span{
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
 }
