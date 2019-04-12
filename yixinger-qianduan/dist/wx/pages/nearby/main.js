@@ -198,6 +198,8 @@ if (false) {(function () {
 //
 //
 //
+//
+//
 
 
 
@@ -217,7 +219,8 @@ if (false) {(function () {
       uidListForType1: '', // 景点uidList
       uidListForType2: '', // 餐馆uidList
       longitude: '', //所在地经度
-      latitude: '' // 所在地维度
+      latitude: '', // 所在地维度
+      price: 0
     };
   },
   mounted: function mounted() {
@@ -505,7 +508,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_vm._v("\n                        " + _vm._s(item.overallRating) + "\n                      ")])], 1), _vm._v(" "), _c('div', {
       staticClass: "tagPaddingTop"
-    }, [_c('van-tag', {
+    }, [(item.price || item.price != '') ? _c('span', [_vm._v("¥" + _vm._s(item.price))]) : _vm._e(), _vm._v(" "), _c('van-tag', {
       attrs: {
         "color": "#f2826a",
         "plain": "",

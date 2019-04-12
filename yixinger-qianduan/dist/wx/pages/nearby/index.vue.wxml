@@ -74,7 +74,7 @@
                           {{item.overallRating}}
                         </van-col>
                       </van-row>
-                      <view class="_div data-v-3984eb6c tagPaddingTop">
+                      <view class="_div data-v-3984eb6c tagPaddingTop"><label wx:if="{{item.price||item.price!=''}}" class="_span data-v-3984eb6c">¥{{item.price}}</label>
                         <van-tag color="#f2826a" plain size="large" class="_van-tag data-v-3984eb6c">{{item.showtag}}</van-tag>
                       </view>
                     </view>

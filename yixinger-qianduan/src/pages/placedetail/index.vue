@@ -38,12 +38,17 @@
             disabled
           />
         </van-col>
-        <van-col span="5">
+        <van-col span="7" v-if="placeType==2&&price!=0">
+          <div class="showTag">
+            ¥{{price}} {{showtag}}
+          </div>
+        </van-col>
+        <van-col span="5" v-else>
           <div class="showTag">
             {{showtag}}
           </div>
         </van-col>
-        <van-col span="12" offset="1">
+        <van-col span="11">
           <van-tag v-for="(item, tags1Index) in tags1" :key="tags1Index" v-if="tags1Index<=tags1ShowIndex"
                    color="#FFF6EF"
                    text-color="#C7A98B"
@@ -282,9 +287,12 @@
         totalPhotoNumber: 0,
         show: false,
         phoneNumber: '',
+        price: 0,
+        placeType: 1,
         actions: [
           {
-            name: ''
+            name: '',
+            disabled: true
           },
           {
             name: '呼叫'
@@ -327,6 +335,7 @@
       this.hour = '';
       this.introduce = '';
       this.phoneNumber = '';
+      this.price = 0;
     },
     methods: {
       /**
@@ -359,6 +368,7 @@
           },
         }).then(res => {
           this.placeDetailData = res.data;
+          this.placeType = this.placeDetailData.place.type;
           if (this.placeDetailData.placePhotoList != null && this.placeDetailData.placePhotoList.length > 0) {
             for (let i = 0; i < this.placeDetailData.placePhotoList.length; i++) {
               this.banner.push(this.placeDetailData.placePhotoList[i].imageUrl);
@@ -375,6 +385,13 @@
             parseInt(this.placeDetailData.place.distance) + 'm' : 0 + 'm';
           this.address = this.placeDetailData.place.address;
           this.overallRating = this.placeDetailData.place.overallRating;
+          if (this.placeDetailData.place.type == 2) {
+            if (!this.placeDetailData.place.price || this.placeDetailData.place.price == '') {
+              this.price = 0;
+            } else {
+              this.price = parseInt(this.placeDetailData.place.price);
+            }
+          }
           this.showtag = this.placeDetailData.place.showtag;
           if (this.placeDetailData.place.tags1) {
             let tags1Array = this.placeDetailData.place.tags1.split(';');

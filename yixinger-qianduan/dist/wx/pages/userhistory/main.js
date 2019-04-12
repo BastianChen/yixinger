@@ -89,7 +89,21 @@ if (false) {(function () {
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    name: "index.vue"
+  data: function data() {
+    return {
+      active: 0,
+      imageUrl: '',
+      userInfo: {},
+      restaurantData: {},
+      sceneryData: {},
+      yearsInphotoDistinguish: [],
+      yearsIntextDistinguish: [],
+      district: '', // 直辖市
+      city: '', // 城市名
+      isRestaurantDataEmpty: false,
+      isSceneryDataEmpty: false
+    };
+  }
 });
 
 /***/ }),

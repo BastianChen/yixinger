@@ -49,7 +49,7 @@
   font-family: KaiTi;
 }
 .index .info .showTag.data-v-8962503e {
-  font-size: 36rpx;
+  font-size: 32rpx;
   font-family: KaiTi;
   color: #676767;
   text-align: center;

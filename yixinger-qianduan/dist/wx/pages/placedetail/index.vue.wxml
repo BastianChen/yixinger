@@ -28,12 +28,16 @@
         <van-col span="6" class="_van-col data-v-8962503e">
           <van-rate value="{{overallRating}}" size="13" count="5" disabled-color="#00BFFF" disabled class="_van-rate data-v-8962503e"></van-rate>
         </van-col>
-        <van-col span="5" class="_van-col data-v-8962503e">
+        <van-col span="7" wx:if="{{placeType==2&&price!=0}}" class="_van-col data-v-8962503e">
+          <view class="_div data-v-8962503e showTag"> ¥{{price}} {{showtag}}
+          </view>
+        </van-col>
+        <van-col span="5" wx:else class="_van-col data-v-8962503e">
           <view class="_div data-v-8962503e showTag">
             {{showtag}}
           </view>
         </van-col>
-        <van-col span="12" offset="1" class="_van-col data-v-8962503e">
+        <van-col span="11" class="_van-col data-v-8962503e">
           <van-tag wx:key="tags1Index" key="{{tags1Index}}" wx:if="{{tags1Index<=tags1ShowIndex}}" color="#FFF6EF" text-color="#C7A98B" class="_van-tag data-v-8962503e tags1" wx:for="{{tags1}}" wx:for-index="tags1Index" wx:for-item="item">
             {{item}}
           </van-tag>

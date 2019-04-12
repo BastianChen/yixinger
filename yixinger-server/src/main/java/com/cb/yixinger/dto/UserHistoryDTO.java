@@ -31,4 +31,6 @@ public class UserHistoryDTO {
     private String image;
     @ApiModelProperty(value = "距离")
     private Double distance;
+    @ApiModelProperty(value = "游玩地点类型（1：景点；2：餐馆）")
+    private Integer type;
 }

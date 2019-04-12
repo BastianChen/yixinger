@@ -25,7 +25,7 @@ public class UserHistoryDao {
     public List<UserHistoryDTO> getUserHistoryByUserId(String userId) {
         String sql = "SELECT history.id,history.user_id AS userId, history.place_id AS placeId, history.read_date AS readDate," +
                 "place.name AS placeName,place.address,place.showtag,place.overall_rating AS overallRating,place.price," +
-                "place.image FROM place LEFT JOIN user_history history ON history.place_id = place.uid ";
+                "place.image,place.type FROM place LEFT JOIN user_history history ON history.place_id = place.uid ";
         Dictionary<String, Object> dictionary = new Hashtable<>();
         if (!CommonUtil.isNullOrWhiteSpace(userId)) {
             sql += " WHERE history.user_id = #{userId} order by readDate desc";

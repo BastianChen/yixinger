@@ -4,7 +4,21 @@
 
 <script>
     export default {
-        name: "index.vue"
+      data() {
+        return {
+          active: 0,
+          imageUrl: '',
+          userInfo: {},
+          restaurantData: {},
+          sceneryData: {},
+          yearsInphotoDistinguish: [],
+          yearsIntextDistinguish: [],
+          district: '',// 直辖市
+          city: '',// 城市名
+          isRestaurantDataEmpty: false,
+          isSceneryDataEmpty: false,
+        }
+      },
     }
 </script>
 

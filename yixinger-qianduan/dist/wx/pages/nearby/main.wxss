@@ -43,3 +43,6 @@
 .index .secondDiv .rowBottom .secondCol .overallratingAndShowTagDiv .tagPaddingTop.data-v-3984eb6c {
   padding-top: 20rpx;
 }
+.index .secondDiv .rowBottom .secondCol .overallratingAndShowTagDiv .tagPaddingTop ._span.data-v-3984eb6c {
+  margin-right: 10rpx;
+}
