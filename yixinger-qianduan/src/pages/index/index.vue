@@ -3,8 +3,7 @@
     <div class="search">
       <span class="dingwei"></span>
       <div>{{cityName}}</div>
-      <div>{{temperature}}
-      </div>
+      <div>{{temperature}}</div>
       <div @click="toSearch">
         <input type="text" placeholder="搜索">
         <span class="icon"></span>
@@ -275,6 +274,8 @@ export default {
           wx.request({
             url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' +
             '&location=' + _this.latitude + ',' + _this.longitude + '&output=json&coordtype=wgs84ll',
+            // url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' +
+            // '&location=' + 52.17643737792969 + ',' + 10.548863410949707 + '&output=json&coordtype=wgs84ll',
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -315,6 +316,8 @@ export default {
           wx.request({
             url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' +
             '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + longitude + '%2C' + latitude,
+            // url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' +
+            // '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + 10 + '%2C' + 10,
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -342,6 +345,9 @@ export default {
             url: 'https://api.map.baidu.com/place/v2/search?query=%E6%99%AF%E7%82%B9&scope=1&filter=&coord_type=2' +
             '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
             '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+            // url: 'https://api.map.baidu.com/place/v2/search?query=%E6%99%AF%E7%82%B9&scope=1&filter=&coord_type=2' +
+            // '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
+            // '&ret_coordtype=gcj02ll&location=' + 13.82031 + '%2C' + 100.66471,
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -378,6 +384,9 @@ export default {
                   url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' +
                   '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
                   '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+                  // url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' +
+                  // '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
+                  // '&ret_coordtype=gcj02ll&location=' + 10.548863410949707 + '%2C' + 52.17643737792969,
                   data: {},
                   header: {
                     'Content-Type': 'application/json'
@@ -437,7 +446,9 @@ export default {
       this.$httpWX.get({
         url: apiurl.getPlaceListByUids,
         data: {
-          uidList: this.uids
+          uidList: this.uids,
+          // longitude: this.longitude,
+          // latitude: this.latitude
         },
       }).then(res => {
         for (let i = 0; i < 6; i++) {

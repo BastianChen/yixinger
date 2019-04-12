@@ -12,7 +12,8 @@
     "pages/textdistinguish/main",
     "pages/operationhistory/main",
     "pages/nearby/main",
-    "pages/placedetail/main"
+    "pages/placedetail/main",
+    "pages/userhistory/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -9,6 +9,8 @@
 .index .swiper.data-v-8962503e {
   width: 100%;
   height: 450 rpx;
+  position: relative;
+  z-index: 0;
 }
 .index .swiper .swiper-container.data-v-8962503e {
   width: 100%;
@@ -31,6 +33,16 @@
   font-size: 40rpx;
   font-family: KaiTi;
   padding-top: 10rpx;
+}
+.index .info .navigation.data-v-8962503e {
+  width: 120rpx;
+  height: 120rpx;
+  float: right;
+  margin-top: -80rpx;
+  margin-right: 60rpx;
+  border-radius: 50%;
+  z-index: 1000;
+  position: relative;
 }
 .index .info .distanceAndAddress.data-v-8962503e {
   font-size: 36rpx;
@@ -237,6 +249,11 @@
   padding: 30rpx 0;
   margin: 0 20rpx;
   border-bottom: 2rpx solid #E8E8E8;
+}
+.index .photograph .title .totalNumber.data-v-8962503e {
+  font-size: 34rpx;
+  margin-left: 16rpx;
+  color: #A7A7A7;
 }
 .index .photograph .title .more.data-v-8962503e {
   float: right;

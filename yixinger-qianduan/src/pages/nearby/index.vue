@@ -123,11 +123,11 @@ export default {
       isSceneryDataEmpty: false,
       restaurantData: {},
       sceneryData: {},
-      name: '汇合城购物中心',
-      distance: '756m',
-      address: '江干区-新风路619号',
-      overallrating: 4.3,
-      showTag: '购物中心',
+      name: '',
+      distance: '',
+      address: '',
+      overallrating: 0,
+      showTag: '',
       uidListForType1: '',// 景点uidList
       uidListForType2: '',// 餐馆uidList
       longitude: '',//所在地经度
@@ -143,6 +143,7 @@ export default {
       this.uidListForType2 = this.$route.query.uidListForType2;
       this.longitude = this.$route.query.longitude;
       this.latitude = this.$route.query.latitude;
+      this.active = this.$route.query.type;
       this.$httpWX.get({
         url: apiurl.getPlaceListByUids,
         data: {
@@ -193,7 +194,6 @@ export default {
             + 'km' : parseInt(data[i].distance) + 'm' : 0 + 'm';
         }
       }
-      this.active = this.$route.query.type;
     },
     seeDetail(item){
       this.$router.push({
@@ -204,7 +204,14 @@ export default {
           latitude: this.latitude,
         }
       });
-    }
+    },
+    onChange(index) {
+      if (index.target.index == 0) {
+        this.active = 0;
+      } else if (index.target.index == 1) {
+        this.active = 1;
+      }
+    },
   }
 }
 </script>

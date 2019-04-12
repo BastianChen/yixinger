@@ -5,7 +5,7 @@
   <cover-view class="place_info" wx:if="{{placeData.title!=null}}">
     <cover-view class="h1">{{placeData.title}}</cover-view>
     <cover-view class="h2">{{placeData.address}}</cover-view>
-    <cover-image class="img" src="../../img/gohere.png" bindtouchstart="navigation"/>
+    <cover-image class="img" src="../../img/navigation.png" bindtouchstart="navigation"/>
     <!-- <cover-view aria-role="button" bindtouchstart="navigation">导航</cover-view> -->
     <!-- <van-button type="primary" size="normal" round class="_van-button data-v-548e5345" bindtouchstart="navigation">导航</van-button> -->
   </cover-view>

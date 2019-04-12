@@ -1,13 +1,13 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([6],{
+global.webpackJsonp([7],{
 
 /***/ 183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(184);
 
@@ -83,13 +83,12 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(32);
 
-//
 //
 //
 //
@@ -368,6 +367,8 @@ if (false) {(function () {
           // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
           wx.request({
             url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' + '&location=' + _this.latitude + ',' + _this.longitude + '&output=json&coordtype=wgs84ll',
+            // url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' +
+            // '&location=' + 52.17643737792969 + ',' + 10.548863410949707 + '&output=json&coordtype=wgs84ll',
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -408,6 +409,8 @@ if (false) {(function () {
           // 获取天气信息
           wx.request({
             url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' + '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + longitude + '%2C' + latitude,
+            // url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' +
+            // '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + 10 + '%2C' + 10,
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -434,6 +437,9 @@ if (false) {(function () {
           // 获取周边景点信息
           wx.request({
             url: 'https://api.map.baidu.com/place/v2/search?query=%E6%99%AF%E7%82%B9&scope=1&filter=&coord_type=2' + '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' + '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+            // url: 'https://api.map.baidu.com/place/v2/search?query=%E6%99%AF%E7%82%B9&scope=1&filter=&coord_type=2' +
+            // '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
+            // '&ret_coordtype=gcj02ll&location=' + 13.82031 + '%2C' + 100.66471,
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -468,6 +474,9 @@ if (false) {(function () {
                 // 获取周边餐馆信息
                 wx.request({
                   url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' + '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' + '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
+                  // url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' +
+                  // '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
+                  // '&ret_coordtype=gcj02ll&location=' + 10.548863410949707 + '%2C' + 52.17643737792969,
                   data: {},
                   header: {
                     'Content-Type': 'application/json'
@@ -532,6 +541,8 @@ if (false) {(function () {
         url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getPlaceListByUids,
         data: {
           uidList: this.uids
+          // longitude: this.longitude,
+          // latitude: this.latitude
         }
       }).then(function (res) {
         for (var i = 0; i < 6; i++) {
@@ -625,7 +636,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "search"
   }, [_c('span', {
     staticClass: "dingwei"
-  }), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.cityName))]), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.temperature) + "\n    ")]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.cityName))]), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.temperature))]), _vm._v(" "), _c('div', {
     attrs: {
       "eventid": '0'
     },

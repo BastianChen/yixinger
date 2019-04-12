@@ -1,4 +1,4 @@
-<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="326fd37c">
+<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="bf7327e4">
   <view class="_div data-v-064d55ee index">
     <view class="_div data-v-064d55ee firstDiv">
       <view class="_div data-v-064d55ee firstRow">
@@ -8,7 +8,7 @@
       </view>
       <view class="_div data-v-064d55ee secondRow">
         <van-row class="_van-row data-v-064d55ee">
-          <image src="{{imageUrl}}" hidden="{{!(isShow)}}" class="_img data-v-064d55ee" style=" {{('width:' + imgWidth + ';' + 'height:' + imgHeight + ';')}}"></image>
+          <image src="{{imageUrl}}" hidden="{{!(isShow)}}" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee" style=" {{('width:' + imgWidth + ';' + 'height:' + imgHeight + ';')}}"></image>
         </van-row>
       </view>
       <view class="_div data-v-064d55ee thirdRow">
@@ -35,8 +35,8 @@
     <view class="_div data-v-064d55ee secondDiv" hidden="{{!(isTranslated)}}">
       <view class="_div data-v-064d55ee firstRow"><label class="_span data-v-064d55ee"> -- 翻译结果 -- </label></view>
       <view class="_div data-v-064d55ee secondRow">
-        <view class="_div data-v-064d55ee"><template data="{{...$root[$kk+'10'], $root}}" is="ed185ca6"></template>
-          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee"></image>
+        <view class="_div data-v-064d55ee"><template data="{{...$root[$kk+'10'], $root}}" is="9aa3b73e"></template>
+          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee"></image>
         </view>
       </view>
     </view>

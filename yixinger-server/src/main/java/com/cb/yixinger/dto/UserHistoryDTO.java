@@ -29,4 +29,6 @@ public class UserHistoryDTO {
     private String price;
     @ApiModelProperty(value = "图片url")
     private String image;
+    @ApiModelProperty(value = "距离")
+    private Double distance;
 }

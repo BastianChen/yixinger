@@ -12,7 +12,7 @@
       </div>
       <div class="secondRow">
         <van-row>
-          <img :src="imageUrl" :style="{width:imgWidth,height:imgHeight}" v-show="isShow"/>
+          <img :src="imageUrl" :style="{width:imgWidth,height:imgHeight}" v-show="isShow" @click="seePhoto(imageUrl)"/>
         </van-row>
       </div>
       <div class="thirdRow">
@@ -180,9 +180,9 @@ export default {
         //console.log("屏幕宽度" + winWidth);
       }
     })
-    console.log(JSON.parse(this.data.data.result))
+    //console.log(JSON.parse(this.data.data.result))
     this.results = JSON.parse(this.data.data.result).result;
-    console.log("this.results      " + JSON.stringify(this.results));
+    //console.log("this.results      " + JSON.stringify(this.results));
     for (let i = 0; i < this.results.length; i++) {
       if (this.type == '4') {
         this.results[i].probability = (this.results[i].probability * 100).toFixed(2)
@@ -192,7 +192,16 @@ export default {
       //console.log("score" + this.results[i].baike_info.image_url);
     }
   },
-  methods: {}
+  methods: {
+    seePhoto(imageUrl) {
+      let imgArray = [];
+      imgArray.push(imageUrl);
+      wx.previewImage({
+        current: imageUrl, // 当前显示图片的http链接
+        urls: imgArray // 需要预览的图片http链接列表
+      })
+    }
+  }
 }
 </script>
 

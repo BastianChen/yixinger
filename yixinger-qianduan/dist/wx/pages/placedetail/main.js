@@ -1,13 +1,13 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([3],{
+global.webpackJsonp([4],{
 
 /***/ 198:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(199);
 
@@ -83,10 +83,11 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(32);
 
 //
 //
@@ -316,6 +317,12 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -340,15 +347,13 @@ if (false) {(function () {
       isOneTelephone: true, // 判断是否有两个电话
       tags1: [],
       tags1ShowIndex: 0,
-      // tag1OfContent: ['人气旺(323)', '景色优美(299)', '免费项目(94)'],
-      // tag2OfContent: ['环境很好(79)', '收费合理(59)', '水很清澈(35)'],
       tag1OfContent: [],
       tag2OfContent: [],
       isTagShow: true,
       commentNumber: 0,
       commentListInfo: [],
       imgList: [],
-      hour: '周五至周日11:00-13:30;16:30-20:30周一至周四11:00-13:00;16:30-20:30非营;周五至周日11:00-13:30',
+      hour: '',
       introduce: '',
       isIntroduceShow: false,
       isSugTimeShow: false,
@@ -364,7 +369,15 @@ if (false) {(function () {
       banner: [],
       userInfo: {},
       likeImgUrl: '/static/images/like.png',
-      likedHistory: {}
+      likedHistory: {},
+      totalPhotoNumber: 0,
+      show: false,
+      phoneNumber: '',
+      actions: [{
+        name: ''
+      }, {
+        name: '呼叫'
+      }]
     };
   },
 
@@ -374,6 +387,7 @@ if (false) {(function () {
     this.userInfo = this.$store.getters.disc;
     this.uid = this.$route.query.uid;
     this.getLikedCommentByPlaceIdAndUserId();
+    this.addOrUpdateUserHistory();
   },
   onUnload: function onUnload() {
     this.banner = [];
@@ -382,6 +396,20 @@ if (false) {(function () {
     this.commentListInfo = [];
     this.tags1 = [];
     this.imgList = [];
+    this.name = '';
+    this.overallRating = 0;
+    this.distance = '';
+    this.address = '';
+    this.showtag = '';
+    this.sugTime = '';
+    this.bestTime = '';
+    this.telephone1 = '';
+    this.telephone2 = '';
+    this.commentNumber = 0;
+    this.totalPhotoNumber = 0;
+    this.hour = '';
+    this.introduce = '';
+    this.phoneNumber = '';
   },
 
   methods: {
@@ -389,7 +417,6 @@ if (false) {(function () {
      * 预览图片
      */
     seePhoto: function seePhoto(index, imgList) {
-      console.log(imgList instanceof Array);
       if (imgList instanceof Array) {
         wx.previewImage({
           current: index, // 当前显示图片的http链接
@@ -421,6 +448,9 @@ if (false) {(function () {
         if (_this.placeDetailData.placePhotoList != null && _this.placeDetailData.placePhotoList.length > 0) {
           for (var i = 0; i < _this.placeDetailData.placePhotoList.length; i++) {
             _this.banner.push(_this.placeDetailData.placePhotoList[i].imageUrl);
+            if (i == 4) {
+              break;
+            }
           }
         } else {
           _this.banner.push(_this.placeDetailData.place.image);
@@ -544,6 +574,7 @@ if (false) {(function () {
           for (var _i4 = 0; _i4 < res.data.placePhotoList.length; _i4++) {
             _this.imgList.push(res.data.placePhotoList[_i4].imageUrl);
           }
+          _this.totalPhotoNumber = _this.imgList.length;
           _this.isImgListShow = true;
         } else {
           _this.isImgListShow = false;
@@ -587,6 +618,7 @@ if (false) {(function () {
           }
           _this2.$set(_this2.commentListInfo[i], 'date', _this2.commentListInfo[i].date.split(" ")[0]);
           if (_this2.likedHistory) {
+            // 有点赞记录
             for (var m = 0; m < _this2.likedHistory.length; m++) {
               if (_this2.commentListInfo[i].id == _this2.likedHistory[m].placeCommentId) {
                 _this2.$set(_this2.commentListInfo[i], 'likeImgUrl', '/static/images/liked.png');
@@ -596,6 +628,7 @@ if (false) {(function () {
               }
             }
           } else {
+            // 无点赞记录
             _this2.$set(_this2.commentListInfo[i], 'likeImgUrl', '/static/images/like.png');
           }
         }
@@ -639,10 +672,46 @@ if (false) {(function () {
           openid: this.userInfo.openid
         }
       }).then(function (res) {
-        if (res.state == 0) {
-          _this4.likedHistory = res.data;
-        }
+        _this4.likedHistory = res.data;
         _this4.getPlaceDetailData();
+      });
+    },
+    phoneCall: function phoneCall(number) {
+      this.show = true;
+      this.actions[0].name = number;
+      this.phoneNumber = number;
+    },
+    onSelect: function onSelect(index) {
+      if (index.target.name == '呼叫') {
+        wx.makePhoneCall({
+          phoneNumber: this.phoneNumber
+        });
+      }
+    },
+    onCancel: function onCancel() {
+      this.show = false;
+    },
+    addOrUpdateUserHistory: function addOrUpdateUserHistory() {
+      // 添加或更新用户浏览记录
+      this.$httpWX.post({
+        url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].addOrUpdateUserHistory,
+        data: {
+          userId: this.userInfo.openid,
+          placeId: this.uid
+        }
+      }).then(function (res) {});
+    },
+    seeIntroduce: function seeIntroduce() {
+      __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__["a" /* default */].alert({
+        message: this.placeDetailData.place.introduce
+      }).then(function () {});
+    },
+    navigation: function navigation() {
+      wx.openLocation({
+        latitude: parseFloat(this.placeDetailData.place.latitude),
+        longitude: parseFloat(this.placeDetailData.place.longitude),
+        name: this.name,
+        address: this.address
       });
     }
   }
@@ -697,7 +766,18 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('span', {
     staticClass: "name"
-  }, [_vm._v("\n        " + _vm._s(_vm.name) + "\n      ")])]), _vm._v(" "), _c('van-row', {
+  }, [_vm._v("\n        " + _vm._s(_vm.name) + "\n      ")]), _vm._v(" "), _c('img', {
+    staticClass: "navigation",
+    attrs: {
+      "src": "../../../static/images/navigation.png",
+      "eventid": '1'
+    },
+    on: {
+      "click": function($event) {
+        _vm.navigation()
+      }
+    }
+  })]), _vm._v(" "), _c('van-row', {
     staticClass: "distanceAndAddress",
     attrs: {
       "mpcomid": '5'
@@ -783,7 +863,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "mpcomid": '14'
     }
   }, [_c('div', {
-    staticClass: "right"
+    staticClass: "right",
+    attrs: {
+      "eventid": '2'
+    },
+    on: {
+      "click": function($event) {
+        _vm.seeIntroduce()
+      }
+    }
   }, [_c('van-icon', {
     attrs: {
       "name": "arrow",
@@ -810,15 +898,39 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "title"
   }, [_vm._v("\n        电话\n      ")]), _vm._v(" "), (_vm.isTelephone1Show) ? _c('div', {
-    staticClass: "one"
+    staticClass: "one",
+    attrs: {
+      "eventid": '3'
+    },
+    on: {
+      "click": function($event) {
+        _vm.phoneCall(_vm.telephone1)
+      }
+    }
   }, [_vm._v("\n        " + _vm._s(_vm.telephone1) + "\n      ")]) : _vm._e(), _vm._v(" "), (_vm.isTelephone2Show) ? _c('div', {
     staticClass: "two"
   }, [_c('span', {
-    staticClass: "otherSpan"
+    staticClass: "otherSpan",
+    attrs: {
+      "eventid": '4'
+    },
+    on: {
+      "click": function($event) {
+        _vm.phoneCall(_vm.telephone1)
+      }
+    }
   }, [_vm._v(_vm._s(_vm.telephone1))]), _vm._v(" "), _c('span', {
     staticClass: "centerSpan"
   }, [_vm._v("|")]), _vm._v(" "), _c('span', {
-    staticClass: "otherSpan"
+    staticClass: "otherSpan",
+    attrs: {
+      "eventid": '5'
+    },
+    on: {
+      "click": function($event) {
+        _vm.phoneCall(_vm.telephone2)
+      }
+    }
   }, [_vm._v(_vm._s(_vm.telephone2))])]) : _vm._e()])], 1) : _vm._e(), _vm._v(" "), (_vm.isHourShow) ? _c('div', [(_vm.isHourShow) ? _c('div', {
     staticClass: "shopHours"
   }, [_c('van-row', {
@@ -911,7 +1023,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "portrait",
       attrs: {
         "src": comment.userImage,
-        "eventid": '1-' + commentListInfoIndex
+        "eventid": '6-' + commentListInfoIndex
       },
       on: {
         "click": function($event) {
@@ -955,7 +1067,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('span', {
       staticClass: "rate"
-    }, [_vm._v(_vm._s(comment.overallRating))])]), _vm._v(" "), _c('van-col', {
+    }, [_vm._v(_vm._s(comment.overallRating) + "分")])]), _vm._v(" "), _c('van-col', {
       attrs: {
         "span": "8",
         "offset": "5",
@@ -980,7 +1092,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         attrs: {
           "src": img,
           "data-src": img,
-          "eventid": '2-' + commentListInfoIndex + '-' + imgIndex
+          "eventid": '7-' + commentListInfoIndex + '-' + imgIndex
         },
         on: {
           "click": function($event) {
@@ -998,8 +1110,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "position": "absolute",
         "font-size": "12px",
         "text-align": "center",
-        "right": "66px",
-        "margin-top": "55px"
+        "right": "65px",
+        "margin-top": "52px"
       }
     }, [_vm._v(_vm._s(comment.imgLength) + "张")]) : _vm._e()], 2)]), _vm._v(" "), _c('van-row', {
       attrs: {
@@ -1013,7 +1125,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "likeImg",
       attrs: {
         "src": comment.likeImgUrl,
-        "eventid": '3-' + commentListInfoIndex
+        "eventid": '8-' + commentListInfoIndex
       },
       on: {
         "click": function($event) {
@@ -1039,6 +1151,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "title"
   }, [_c('span', [_vm._v("相册")]), _c('span', {
+    staticClass: "totalNumber"
+  }, [_vm._v("(共" + _vm._s(_vm.totalPhotoNumber) + "张)")]), _vm._v(" "), _c('span', {
     staticClass: "more"
   }, [_c('van-icon', {
     attrs: {
@@ -1052,7 +1166,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       key: imgListIndex,
       attrs: {
         "src": photos,
-        "eventid": '4-' + imgListIndex
+        "eventid": '9-' + imgListIndex
       },
       on: {
         "click": function($event) {
@@ -1060,7 +1174,24 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }
       }
     }) : _vm._e()
-  }))])], 1)]) : _vm._e()])
+  }))])], 1)]) : _vm._e(), _vm._v(" "), _c('van-action-sheet', {
+    attrs: {
+      "show": _vm.show,
+      "actions": _vm.actions,
+      "cancel-text": "取消",
+      "eventid": '10',
+      "mpcomid": '39'
+    },
+    on: {
+      "select": _vm.onSelect,
+      "cancel": _vm.onCancel
+    }
+  }), _vm._v(" "), _c('van-dialog', {
+    attrs: {
+      "id": "van-dialog",
+      "mpcomid": '40'
+    }
+  })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true

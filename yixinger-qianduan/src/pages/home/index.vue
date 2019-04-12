@@ -26,6 +26,7 @@
           <van-cell
             title="浏览记录"
             is-link
+            url="/pages/userhistory/main"
           />
           <van-cell
             title="操作记录"

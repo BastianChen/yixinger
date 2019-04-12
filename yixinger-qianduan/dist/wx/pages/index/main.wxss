@@ -27,15 +27,13 @@
 }
 .index .search ._div.data-v-378baaca:nth-child(2) {
   float: left;
-  width: 130rpx;
-  text-align: center;
+  width: 400rpx;
+  text-align: left;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-weight: bold;
   font-size: 40rpx;
-  margin-left: 50rpx;
-  font-family: STSong;
+  margin-left: 60rpx;
 }
 .index .search ._div.data-v-378baaca:nth-child(3) {
   float: right;

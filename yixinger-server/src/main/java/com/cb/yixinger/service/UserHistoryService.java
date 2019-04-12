@@ -20,4 +20,5 @@ public interface UserHistoryService {
     Boolean updateUserHistory(UserHistory userHistory);
 
     List<UserHistoryDTO> getUserHistoryListByUserId(String userId);
+
 }

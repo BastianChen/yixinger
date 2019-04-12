@@ -1,13 +1,13 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([8],{
+global.webpackJsonp([9],{
 
 /***/ 104:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(105);
 
@@ -83,13 +83,10 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mpvue_wxparse__ = __webpack_require__(47);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mpvue_wxparse__ = __webpack_require__(48);
 
 //
 //
@@ -163,7 +160,7 @@ if (false) {(function () {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   components: {
-    wxParse: __WEBPACK_IMPORTED_MODULE_3_mpvue_wxparse__["a" /* default */]
+    wxParse: __WEBPACK_IMPORTED_MODULE_2_mpvue_wxparse__["a" /* default */]
   },
   data: function data() {
     return {
@@ -191,7 +188,7 @@ if (false) {(function () {
     };
   },
 
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])(['disc'])),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['disc'])),
   onLoad: function onLoad(opts) {
     this.type = opts.type;
     switch (this.type) {
@@ -269,9 +266,9 @@ if (false) {(function () {
         //console.log("屏幕宽度" + winWidth);
       }
     });
-    console.log(JSON.parse(this.data.data.result));
+    //console.log(JSON.parse(this.data.data.result))
     this.results = JSON.parse(this.data.data.result).result;
-    console.log("this.results      " + __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(this.results));
+    //console.log("this.results      " + JSON.stringify(this.results));
     for (var i = 0; i < this.results.length; i++) {
       if (this.type == '4') {
         this.results[i].probability = (this.results[i].probability * 100).toFixed(2);
@@ -282,7 +279,16 @@ if (false) {(function () {
     }
   },
 
-  methods: {}
+  methods: {
+    seePhoto: function seePhoto(imageUrl) {
+      var imgArray = [];
+      imgArray.push(imageUrl);
+      wx.previewImage({
+        current: imageUrl, // 当前显示图片的http链接
+        urls: imgArray // 需要预览的图片http链接列表
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -326,7 +332,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       height: _vm.imgHeight
     }),
     attrs: {
-      "src": _vm.imageUrl
+      "src": _vm.imageUrl,
+      "eventid": '0'
+    },
+    on: {
+      "click": function($event) {
+        _vm.seePhoto(_vm.imageUrl)
+      }
     }
   })])], 1), _vm._v(" "), _c('div', {
     staticClass: "thirdRow"
@@ -399,7 +411,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _vm._v(" "), _c('img', {
     attrs: {
       "src": _vm.broadcastImgUrl,
-      "eventid": '0'
+      "eventid": '1'
     },
     on: {
       "click": _vm.play

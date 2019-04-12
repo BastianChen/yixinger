@@ -1,13 +1,13 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([5],{
+global.webpackJsonp([6],{
 
 /***/ 188:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(189);
 
@@ -209,11 +209,11 @@ if (false) {(function () {
       isSceneryDataEmpty: false,
       restaurantData: {},
       sceneryData: {},
-      name: '汇合城购物中心',
-      distance: '756m',
-      address: '江干区-新风路619号',
-      overallrating: 4.3,
-      showTag: '购物中心',
+      name: '',
+      distance: '',
+      address: '',
+      overallrating: 0,
+      showTag: '',
       uidListForType1: '', // 景点uidList
       uidListForType2: '', // 餐馆uidList
       longitude: '', //所在地经度
@@ -232,6 +232,7 @@ if (false) {(function () {
       this.uidListForType2 = this.$route.query.uidListForType2;
       this.longitude = this.$route.query.longitude;
       this.latitude = this.$route.query.latitude;
+      this.active = this.$route.query.type;
       this.$httpWX.get({
         url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceListByUids,
         data: {
@@ -281,7 +282,6 @@ if (false) {(function () {
           data[i].distance = data[i].distance ? data[i].distance >= 1000 ? (data[i].distance / 1000).toFixed(1) + 'km' : parseInt(data[i].distance) + 'm' : 0 + 'm';
         }
       }
-      this.active = this.$route.query.type;
     },
     seeDetail: function seeDetail(item) {
       this.$router.push({
@@ -292,6 +292,13 @@ if (false) {(function () {
           latitude: this.latitude
         }
       });
+    },
+    onChange: function onChange(index) {
+      if (index.target.index == 0) {
+        this.active = 0;
+      } else if (index.target.index == 1) {
+        this.active = 1;
+      }
     }
   }
 });

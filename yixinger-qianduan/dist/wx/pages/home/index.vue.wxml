@@ -1,4 +1,4 @@
-<template name="2570a9fe">
+<template name="5ee601b2">
   <view class="_div data-v-40d83a4c">
     <view class="_div data-v-40d83a4c my">
       <view class="_div data-v-40d83a4c myinfo" wx:if="{{isLogin}}">
@@ -15,7 +15,7 @@
           <van-cell title="地区" value="{{userInfo.province+' '+userInfo.city}}" size="large" class="_van-cell data-v-40d83a4c"></van-cell>
         </view>
         <view style="padding-top: 20px" class="_div data-v-40d83a4c">
-          <van-cell title="浏览记录" is-link class="_van-cell data-v-40d83a4c"></van-cell>
+          <van-cell title="浏览记录" is-link url="/pages/userhistory/main" class="_van-cell data-v-40d83a4c"></van-cell>
           <van-cell title="操作记录" is-link url="/pages/operationhistory/main" class="_van-cell data-v-40d83a4c"></van-cell>
         </view>
       </view>

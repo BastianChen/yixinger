@@ -166,7 +166,7 @@ public class PlaceApiController {
             @ApiParam(value = "前端传回的uid", required = true) @RequestParam(value = "uidList") String uidList,
             @ApiParam(value = "经度") @RequestParam(value = "longitude", required = false) Double longitude,
             @ApiParam(value = "纬度") @RequestParam(value = "latitude", required = false) Double latitude) {
-        logger.info("经度为{}，维度为{}", longitude,latitude);
+        logger.info("经度为{}，维度为{}", longitude, latitude);
         BaseMessage baseMessage = new BaseMessage();
         List<Place> placeList = placeService.getPlaceList(uidList, longitude, latitude);
         if (placeList != null && placeList.size() > 0) {
@@ -458,11 +458,18 @@ public class PlaceApiController {
     @ApiOperation(value = "根据用户openid获取浏览记录", notes = "根据用户openid获取浏览记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/getUserHistoryByUserId", produces = {"application/json"}, method = RequestMethod.GET)
     public ResponseEntity<BaseMessage> getUserHistoryByUserId(
+            @ApiParam(value = "经度1（杭州是120左右）", required = true) @RequestParam double longitude,
+            @ApiParam(value = "纬度1（杭州是30左右）", required = true) @RequestParam double latitude,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
         List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
         if (userHistoryList != null && userHistoryList.size() > 0) {
             logger.info("获取openid为 {} 的浏览记录成功", userId);
+            for (int i = 0; i < userHistoryList.size(); i++) {
+                Place place = placeService.getPlaceByUid(userHistoryList.get(i).getPlaceId());
+                userHistoryList.get(i).setDistance(DistanceUtil.GetShortDistance(longitude, latitude,
+                        place.getLongitude(), place.getLatitude()));
+            }
             baseMessage.setData(userHistoryList);
             baseMessage.setMessage("获取用户浏览记录成功");
         } else {

@@ -1,4 +1,4 @@
-<template name="37e30f6c">
+<template name="252e7920">
   <view class="_div data-v-f610f38c index">
     <van-tabs active="{{active}}" bindchange="handleProxy" sticky animated swipeable color="#00BFFF" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_van-tabs data-v-f610f38c">
       <van-tab title="图像识别" class="_van-tab data-v-f610f38c">
