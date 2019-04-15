@@ -83,11 +83,12 @@ public class PlaceApiController {
                     placePhotoService.addPlacePhotoByReptile(place.getPhotoList(), uid.get(i));
                     logger.info("添加游玩地点 {} 成功", place.getName());
                 } else {
-                    if (baseMessage.getExtra() != null) {
-                        baseMessage.setExtra(baseMessage.getExtra() + uid.get(i) + ";");
-                    } else {
-                        baseMessage.setExtra("uid为以下的地点既不为景点也不为餐馆：" + uid.get(i) + ";");
-                    }
+                    baseMessage.initStateAndMessage(1001, "该地点既不为景点也不为餐馆");
+//                    if (baseMessage.getExtra() != null) {
+//                        baseMessage.setExtra(baseMessage.getExtra() + uid.get(i) + ";");
+//                    } else {
+//                        baseMessage.setExtra("uid为以下的地点既不为景点也不为餐馆：" + uid.get(i) + ";");
+//                    }
                 }
             }
         }
