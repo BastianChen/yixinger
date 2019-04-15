@@ -85,9 +85,9 @@ if (false) {(function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(22);
 
 //
 //
@@ -263,7 +263,7 @@ if (false) {(function () {
       },
       active: 0,
       code: '',
-      cityName: '',
+      cityName: '正在定位...',
       banner: [], // 轮播数据数组
       sceneryData: [], // 附近景点数组
       restaurantData: [], // 附近餐馆数组
@@ -336,6 +336,11 @@ if (false) {(function () {
     },
     photoPage: function photoPage() {
       this.$router.push('../photo/photo');
+    },
+    toSearch: function toSearch() {
+      wx.navigateTo({
+        url: '../suggestion/suggestion'
+      });
     },
     getUserInfo: function getUserInfo() {
       var _this3 = this;

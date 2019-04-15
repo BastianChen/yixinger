@@ -83,10 +83,10 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_api_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_api_js__ = __webpack_require__(8);
 
 //
 //
@@ -446,8 +446,6 @@ if (false) {(function () {
               }
             }
             _this2.setYearsOrder(_this2.yearsIntextDistinguish);
-            console.log(_this2.textDistinguishData);
-            console.log(_this2.yearsIntextDistinguish);
           }
         });
       }
@@ -460,7 +458,7 @@ if (false) {(function () {
       while (flag > 0) {
         flag = 0;
         for (var m = 1; m < len; m++) {
-          // 比较评分，若前面小于后面则交换数据
+          // 比较年份，若前面小于后面则交换数据
           if (years[m] < years[m + 1]) {
             year = years[m];
             years[m] = years[m + 1];
@@ -540,7 +538,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     return (!_vm.isphotoDistinguishDataEmpty) ? _c('div', {
       key: key,
       staticStyle: {
-        "margin": "10px 5px",
+        "margin": "10px 5px 20px 5px",
         "width": "100%",
         "font-weight": "bold",
         "font-size": "28px",

@@ -12,44 +12,79 @@
             </span>
           </div>
         </div>
-        <div v-for="(item, index) in sceneryData" :key="index" class="secondDiv" v-if="!isSceneryDataEmpty"
-             @click="seeDetail(item)">
-          <div>
-            <div class="rowBottom">
-              <van-row>
-                <van-col span="4" offset="1">
-                  <img :src="item.image"/>
-                </van-col>
-                <van-col span="15" offset="4">
-                  <div class="secondCol">
-                    <div class="nameDiv">
-                      {{item.placeName}}
+        <div class="secondDiv" v-for="(year, key) in yearsSceneryData" :key="key" v-if="!isSceneryDataEmpty">
+          <van-row>
+            <van-col span="8" offset="1">
+              {{year}}年
+            </van-col>
+          </van-row>
+          <div v-for="(item, index) in sceneryData" :key="index">
+            <div v-if="item.year==year">
+              <div class="rowBottom">
+                <van-row>
+                  <van-col span="4" offset="1">
+                    <div>
+                    <span v-if="item.dateType==1">
+                    今天
+                  </span>
+                      <span v-if="item.dateType==2">
+                    昨天
+                  </span>
+                      <span v-if="item.dateType==3">
+                    {{item.day}}
+                  </span>
+                      <span v-if="item.dateType==4||item.dateType==5">
+                    &nbsp;
+                  </span>
+                      <span style="font-size: 14px;margin-left:-7px;" v-if="item.dateType==3">
+                    {{item.month}}
+                  </span>
                     </div>
-                    <div class="distanceAndAddressDiv">
-                      {{item.distance}}|{{item.address}}
-                    </div>
-                    <div class="overallratingAndShowTagDiv">
-                      <van-row v-show="item.overallRating">
-                        <van-col span="11">
-                          <van-rate
-                            :value="item.overallRating"
-                            size="15"
-                            count="5"
-                            disabled-color="#00BFFF"
-                            disabled
-                          />
-                        </van-col>
-                        <van-col span="3">
-                          {{item.overallRating}}
-                        </van-col>
-                      </van-row>
-                      <div class="tagPaddingTop" v-show="item.showtag">
-                        <van-tag color="#f2826a" plain size="large">{{item.showtag}}</van-tag>
-                      </div>
-                    </div>
-                  </div>
-                </van-col>
-              </van-row>
+                  </van-col>
+                  <van-col span="18" @longpress="clickLong(item.id,1)" @click="seeDetails(item)">
+                    <van-card
+                      :desc="item.address"
+                      :title="item.placeName"
+                      :thumb="item.image"
+                      :tag="item.showtag"
+                      centered lazy-load
+                    >
+                    </van-card>
+                  </van-col>
+                  <!--<van-col span="4" offset="1">-->
+                  <!--<img :src="item.image"/>-->
+                  <!--</van-col>-->
+                  <!--<van-col span="15" offset="4">-->
+                  <!--<div class="secondCol">-->
+                  <!--<div class="nameDiv">-->
+                  <!--{{item.placeName}}-->
+                  <!--</div>-->
+                  <!--<div class="distanceAndAddressDiv">-->
+                  <!--{{item.distance}}|{{item.address}}-->
+                  <!--</div>-->
+                  <!--<div class="overallratingAndShowTagDiv">-->
+                  <!--<van-row v-show="item.overallRating">-->
+                  <!--<van-col span="11">-->
+                  <!--<van-rate-->
+                  <!--:value="item.overallRating"-->
+                  <!--size="15"-->
+                  <!--count="5"-->
+                  <!--disabled-color="#00BFFF"-->
+                  <!--disabled-->
+                  <!--/>-->
+                  <!--</van-col>-->
+                  <!--<van-col span="3">-->
+                  <!--{{item.overallRating}}-->
+                  <!--</van-col>-->
+                  <!--</van-row>-->
+                  <!--<div class="tagPaddingTop" v-show="item.showtag">-->
+                  <!--<van-tag color="#f2826a" plain size="large">{{item.showtag}}</van-tag>-->
+                  <!--</div>-->
+                  <!--</div>-->
+                  <!--</div>-->
+                  <!--</van-col>-->
+                </van-row>
+              </div>
             </div>
           </div>
         </div>
@@ -65,50 +100,87 @@
             </span>
           </div>
         </div>
-        <div v-for="(item, index) in restaurantData" :key="index" class="secondDiv" @click="seeDetail(item)"
-             v-if="!isRestaurantDataEmpty">
-          <div>
-            <div class="rowBottom">
-              <van-row>
-                <van-col span="4" offset="1">
-                  <img :src="item.image"/>
-                </van-col>
-                <van-col span="15" offset="4">
-                  <div class="secondCol">
-                    <div class="nameDiv">
-                      {{item.placeName}}
+        <div class="secondDiv" v-for="(year, key) in yearsRestaurantData" :key="key" v-if="!isRestaurantDataEmpty">
+          <van-row>
+            <van-col span="8" offset="1">
+              {{year}}年
+            </van-col>
+          </van-row>
+          <div v-for="(item, index) in restaurantData" :key="index" class="secondDiv">
+            <div v-if="item.year==year">
+              <div class="rowBottom">
+                <van-row>
+                  <van-col span="4" offset="1">
+                    <div>
+                    <span v-if="item.dateType==1">
+                    今天
+                  </span>
+                      <span v-if="item.dateType==2">
+                    昨天
+                  </span>
+                      <span v-if="item.dateType==3">
+                    {{item.day}}
+                  </span>
+                      <span v-if="item.dateType==4||item.dateType==5">
+                    &nbsp;
+                  </span>
+                      <span style="font-size: 14px;margin-left:-7px;" v-if="item.dateType==3">
+                    {{item.month}}
+                  </span>
                     </div>
-                    <div class="distanceAndAddressDiv">
-                      {{item.distance}}|{{item.address}}
-                    </div>
-                    <div class="overallratingAndShowTagDiv">
-                      <van-row>
-                        <van-col span="11">
-                          <van-rate
-                            :value="item.overallRating"
-                            size="15"
-                            count="5"
-                            disabled-color="#00BFFF"
-                            disabled
-                          />
-                        </van-col>
-                        <van-col span="3">
-                          {{item.overallRating}}
-                        </van-col>
-                      </van-row>
-                      <div class="tagPaddingTop">
-                        <span v-if="item.price||item.price!=''">¥{{item.price}}</span>
-                        <van-tag color="#f2826a" plain size="large">{{item.showtag}}</van-tag>
-                      </div>
-                    </div>
-                  </div>
-                </van-col>
-              </van-row>
+                  </van-col>
+                  <van-col span="18" @longpress="clickLong(item.id,2)" @click="seeDetails(item)">
+                    <van-card
+                      :desc="item.address"
+                      :title="item.placeName"
+                      :thumb="item.image"
+                      :tag="item.showtag"
+                      :price="item.price"
+                      centered lazy-load
+                    >
+                    </van-card>
+                  </van-col>
+                  <!--<van-col span="4" offset="1">-->
+                  <!--<img :src="item.image"/>-->
+                  <!--</van-col>-->
+                  <!--<van-col span="15" offset="4">-->
+                  <!--<div class="secondCol">-->
+                  <!--<div class="nameDiv">-->
+                  <!--{{item.placeName}}-->
+                  <!--</div>-->
+                  <!--<div class="distanceAndAddressDiv">-->
+                  <!--{{item.distance}}|{{item.address}}-->
+                  <!--</div>-->
+                  <!--<div class="overallratingAndShowTagDiv">-->
+                  <!--<van-row>-->
+                  <!--<van-col span="11">-->
+                  <!--<van-rate-->
+                  <!--:value="item.overallRating"-->
+                  <!--size="15"-->
+                  <!--count="5"-->
+                  <!--disabled-color="#00BFFF"-->
+                  <!--disabled-->
+                  <!--/>-->
+                  <!--</van-col>-->
+                  <!--<van-col span="3">-->
+                  <!--{{item.overallRating}}-->
+                  <!--</van-col>-->
+                  <!--</van-row>-->
+                  <!--<div class="tagPaddingTop">-->
+                  <!--<span v-if="item.price||item.price!=''">¥{{item.price}}</span>-->
+                  <!--<van-tag color="#f2826a" plain size="large">{{item.showtag}}</van-tag>-->
+                  <!--</div>-->
+                  <!--</div>-->
+                  <!--</div>-->
+                  <!--</van-col>-->
+                </van-row>
+              </div>
             </div>
           </div>
         </div>
       </van-tab>
     </van-tabs>
+    <van-dialog id="van-dialog" style="text-align: center"/>
   </div>
 </template>
 
@@ -133,17 +205,63 @@
       }
     },
     onUnload() {
-      this.restaurantData=[];
-      this.sceneryData=[];
-      this.yearsRestaurantData=[];
-      this.yearsSceneryData=[];
+      this.restaurantData = [];
+      this.sceneryData = [];
+      this.yearsRestaurantData = [];
+      this.yearsSceneryData = [];
     },
     mounted() {
       this.userInfo = this.$store.getters.disc;
       this.getUserHistoryByUserId();
     },
     methods: {
+      clickLong(id, type) {
+        Dialog.confirm({
+          title: '温馨提示',
+          message: '您确定要删除该条记录？'
+        }).then(() => {
+          this.$httpWX.post({
+            url: apiurl.deleteUserHistory,
+            data: {
+              idList: id
+            },
+          }).then(res => {
+            this.getUserHistoryByUserId();
+            wx.showToast({
+              title: res.message,
+              icon: 'none'
+            });
+            if (type == 1) {
+              this.active = 0;
+            } else {
+              this.active = 1;
+            }
+            // setTimeout(() => {
+            //   wx.hideToast();
+            // }, 2000);
+          })
+        }).catch(() => {
+          console.log("取消")
+        });
+      },
+      onChange(index) {
+        if (index.target.index == 0) {
+          this.active = 0;
+        } else if (index.target.index == 1) {
+          this.active = 1;
+        }
+      },
+      seeDetails(data) {
+        this.$router.push({
+          path: `../placedetail/main`,
+          query: {uid: data.placeId, longitude: this.userInfo.longitude, latitude: this.userInfo.latitude}
+        });
+      },
       getUserHistoryByUserId() {
+        this.restaurantData = [];
+        this.sceneryData = [];
+        this.yearsRestaurantData = [];
+        this.yearsSceneryData = [];
         this.$httpWX.get({
           url: apiurl.getUserHistoryByUserId,
           data: {
@@ -153,18 +271,75 @@
           },
         }).then(res => {
           let placeData = res.data;
+          let myDate = new Date();
+          let isTodayFirst = false;
+          let isYesterdayFirst = false;
           for (let i = 0; i < placeData.length; i++) {
-            if (placeData[i].placeName.length > 9) {
-              placeData[i].placeName = placeData[i].placeName.substring(0, 9) + '...';
+            let dateArray = placeData[i].readDate.split('-');
+            let isRepeated = false;
+            if (placeData[i].placeName.length > 10) {
+              placeData[i].placeName = placeData[i].placeName.substring(0, 10) + '...';
             }
-            if (placeData[i].address.length > 7) {
-              placeData[i].address = placeData[i].address.substring(0, 7) + '...';
+            if (placeData[i].address.length > 10) {
+              placeData[i].address = placeData[i].address.substring(0, 10) + '...';
             }
-            placeData[i].distance = placeData[i].distance ? placeData[i].distance >= 1000 ? (placeData[i].distance / 1000).toFixed(1)
-              + 'km' : parseInt(placeData[i].distance) + 'm' : 0 + 'm';
+            if (!placeData[i].price || placeData[i].price == 0 || placeData[i].price == '' || placeData[i].price == '暂无' || placeData[i].price == 'false') {
+              placeData[i].price = null;
+            }
+            // 设置时间
+            placeData[i].year = dateArray[0];
+            placeData[i].month = dateArray[1].substring(1, 2) + '月';
+            placeData[i].day = dateArray[2].split(' ')[0];
+            if ((myDate.getFullYear() == dateArray[0]) && ((myDate.getMonth() + 1) == dateArray[1].substring(1, 2))
+              && (myDate.getDate() == dateArray[2].split(' ')[0])) {
+              if (!isTodayFirst) {
+                placeData[i].dateType = 1;// 时间为今天
+                isTodayFirst = true;
+              } else {
+                placeData[i].dateType = 4;// 时间为今天,但不是第一条
+              }
+            } else if ((myDate.getFullYear() == dateArray[0]) && ((myDate.getMonth() + 1) == dateArray[1].substring(1, 2))
+              && (myDate.getDate() - 1 == dateArray[2].split(' ')[0])) {
+              if (!isYesterdayFirst) {
+                placeData[i].dateType = 2;// 时间为昨天
+                isYesterdayFirst = true;
+              } else {
+                placeData[i].dateType = 5;// 时间为昨天,但不是第一条
+              }
+            } else {
+              placeData[i].dateType = 3;// 正常时间
+            }
             if (placeData[i].type == 1) {
+              if (this.yearsSceneryData.length == 0) {
+                this.yearsSceneryData.push(dateArray[0]);
+                isRepeated = false;
+              } else {
+                for (let j = 0; j < this.yearsSceneryData.length; j++) {
+                  if (this.yearsSceneryData[j] == dateArray[0]) {
+                    isRepeated = true;
+                    break;
+                  }
+                }
+                if (!isRepeated) {
+                  this.yearsSceneryData.push(dateArray[0]);
+                }
+              }
               this.sceneryData.push(placeData[i]);
             } else {
+              if (this.yearsRestaurantData.length == 0) {
+                this.yearsRestaurantData.push(dateArray[0]);
+                isRepeated = false;
+              } else {
+                for (let j = 0; j < this.yearsRestaurantData.length; j++) {
+                  if (this.yearsRestaurantData[j] == dateArray[0]) {
+                    isRepeated = true;
+                    break;
+                  }
+                }
+                if (!isRepeated) {
+                  this.yearsRestaurantData.push(dateArray[0]);
+                }
+              }
               this.restaurantData.push(placeData[i]);
             }
           }

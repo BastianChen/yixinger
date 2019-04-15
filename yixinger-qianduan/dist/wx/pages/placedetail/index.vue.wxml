@@ -16,11 +16,11 @@
         <image class="_img data-v-8962503e navigation" bindtap="handleProxy" src="/static/images/navigation.png" data-eventid="{{'1'}}" data-comkey="{{$k}}"></image>
       </van-row>
       <van-row class="_van-row data-v-8962503e distanceAndAddress">
-        <van-col span="3" class="_van-col data-v-8962503e">
+        <van-col span="4" class="_van-col data-v-8962503e">
           {{distance}}
         </van-col>
-        <van-col span="1" class="_van-col data-v-8962503e"> | </van-col>
-        <van-col span="19" class="_van-col data-v-8962503e">
+        <van-col span="1" offset="1" class="_van-col data-v-8962503e"> | </van-col>
+        <van-col span="17" offset="1" class="_van-col data-v-8962503e">
           {{address}}
         </van-col>
       </van-row>

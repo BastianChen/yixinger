@@ -11,7 +11,7 @@
     </div>
 
     <div class="swiper">
-      <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true"
+      <swiper class="swiper-container"   indicator-dots="true" autoplay="true" interval="3000" circular="true"
               duration="500">
         <block v-for="(item, index) in banner " :key="index">
           <swiper-item class="swiper-item">
@@ -172,7 +172,7 @@ export default {
       },
       active: 0,
       code: '',
-      cityName: '',
+      cityName: '正在定位...',
       banner: [],// 轮播数据数组
       sceneryData: [],// 附近景点数组
       restaurantData: [],// 附近餐馆数组
@@ -244,6 +244,11 @@ export default {
     },
     photoPage() {
       this.$router.push('../photo/photo')
+    },
+    toSearch() {
+      wx.navigateTo({
+        url: '../suggestion/suggestion'
+      });
     },
     getUserInfo() {
       wx.login({

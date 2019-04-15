@@ -85,9 +85,9 @@ if (false) {(function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(22);
 
 //
 //
@@ -466,11 +466,15 @@ if (false) {(function () {
           _this.banner.push(_this.placeDetailData.place.image);
         }
         _this.name = _this.placeDetailData.place.name;
-        _this.distance = _this.placeDetailData.place.distance ? _this.placeDetailData.place.distance >= 1000 ? (_this.placeDetailData.place.distance / 1000).toFixed(1) + 'km' : parseInt(_this.placeDetailData.place.distance) + 'm' : 0 + 'm';
+        if (_this.placeDetailData.place.distance / 1000 >= 10000) {
+          _this.distance = '>10000km';
+        } else {
+          _this.distance = _this.placeDetailData.place.distance ? _this.placeDetailData.place.distance >= 1000 ? (_this.placeDetailData.place.distance / 1000).toFixed(1) + 'km' : parseInt(_this.placeDetailData.place.distance) + 'm' : 0 + 'm';
+        }
         _this.address = _this.placeDetailData.place.address;
         _this.overallRating = _this.placeDetailData.place.overallRating;
         if (_this.placeDetailData.place.type == 2) {
-          if (!_this.placeDetailData.place.price || _this.placeDetailData.place.price == '') {
+          if (!_this.placeDetailData.place.price || _this.placeDetailData.place.price == '' || _this.placeDetailData.place.price == '暂无' || _this.placeDetailData.place.price == 'false') {
             _this.price = 0;
           } else {
             _this.price = parseInt(_this.placeDetailData.place.price);
@@ -801,17 +805,19 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('van-col', {
     attrs: {
-      "span": "3",
+      "span": "4",
       "mpcomid": '2'
     }
   }, [_vm._v("\n        " + _vm._s(_vm.distance) + "\n      ")]), _vm._v(" "), _c('van-col', {
     attrs: {
       "span": "1",
+      "offset": "1",
       "mpcomid": '3'
     }
   }, [_vm._v("\n        |\n      ")]), _vm._v(" "), _c('van-col', {
     attrs: {
-      "span": "19",
+      "span": "17",
+      "offset": "1",
       "mpcomid": '4'
     }
   }, [_vm._v("\n        " + _vm._s(_vm.address) + "\n      ")])], 1), _vm._v(" "), _c('van-row', {

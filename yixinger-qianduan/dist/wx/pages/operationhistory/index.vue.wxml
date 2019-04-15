@@ -8,7 +8,7 @@
           </view>
           <view style="font-size: 14px;font-family: KaiTi" class="_div data-v-f610f38c"><label class="_span data-v-f610f38c"> 暂无记录 </label></view>
         </view>
-        <view style="margin: 10px 5px;width: 100%;font-weight: bold;font-size: 28px;font-family: KaiTi" wx:key="key" key="{{key}}" wx:if="{{!isphotoDistinguishDataEmpty}}" wx:for="{{yearsInphotoDistinguish}}" wx:for-index="key" wx:for-item="year" class="_div data-v-f610f38c">
+        <view style="margin: 10px 5px 20px 5px;width: 100%;font-weight: bold;font-size: 28px;font-family: KaiTi" wx:key="key" key="{{key}}" wx:if="{{!isphotoDistinguishDataEmpty}}" wx:for="{{yearsInphotoDistinguish}}" wx:for-index="key" wx:for-item="year" class="_div data-v-f610f38c">
           <van-row class="_van-row data-v-f610f38c">
             <van-col span="8" offset="1" class="_van-col data-v-f610f38c">
               {{year}}年 </van-col>

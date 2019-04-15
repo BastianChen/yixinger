@@ -18,13 +18,13 @@
         <img class="navigation" @click="navigation()" src="../../../static/images/navigation.png"/>
       </van-row>
       <van-row class="distanceAndAddress">
-        <van-col span="3">
+        <van-col span="4">
           {{distance}}
         </van-col>
-        <van-col span="1">
+        <van-col span="1" offset="1">
           |
         </van-col>
-        <van-col span="19">
+        <van-col span="17" offset="1">
           {{address}}
         </van-col>
       </van-row>
@@ -380,13 +380,18 @@
             this.banner.push(this.placeDetailData.place.image);
           }
           this.name = this.placeDetailData.place.name;
-          this.distance = this.placeDetailData.place.distance ? this.placeDetailData.place.distance >= 1000 ?
-            (this.placeDetailData.place.distance / 1000).toFixed(1) + 'km' :
-            parseInt(this.placeDetailData.place.distance) + 'm' : 0 + 'm';
+          if (this.placeDetailData.place.distance / 1000 >= 10000) {
+            this.distance = '>10000km';
+          } else {
+            this.distance = this.placeDetailData.place.distance ? this.placeDetailData.place.distance >= 1000 ?
+              (this.placeDetailData.place.distance / 1000).toFixed(1) + 'km' :
+              parseInt(this.placeDetailData.place.distance) + 'm' : 0 + 'm';
+          }
           this.address = this.placeDetailData.place.address;
           this.overallRating = this.placeDetailData.place.overallRating;
           if (this.placeDetailData.place.type == 2) {
-            if (!this.placeDetailData.place.price || this.placeDetailData.place.price == '') {
+            if (!this.placeDetailData.place.price || this.placeDetailData.place.price == '' ||
+              this.placeDetailData.place.price == '暂无' || this.placeDetailData.place.price == 'false') {
               this.price = 0;
             } else {
               this.price = parseInt(this.placeDetailData.place.price);

@@ -13,10 +13,14 @@
   font-family: KaiTi;
 }
 .index .secondDiv.data-v-2ecb44f2 {
-  margin: 20rpx 10rpx;
+  margin: 20rpx 10rpx 40rpx 10rpx;
+  width: 100%;
+  font-weight: bold;
+  font-size: 56rpx;
+  font-family: KaiTi;
 }
 .index .secondDiv .rowBottom.data-v-2ecb44f2 {
-  border-bottom: 2rpx solid #E8E8E8;
+  margin: 20rpx 10rpx;
 }
 .index .secondDiv .rowBottom ._img.data-v-2ecb44f2 {
   width: 212rpx;

@@ -12,9 +12,13 @@
     }
   }
   .secondDiv {
-    margin: 10px 5px;
+    margin: 10px 5px 20px 5px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 28px;
+    font-family: KaiTi;
     .rowBottom{
-      border-bottom: 1px solid #E8E8E8;
+      margin: 10px 5px;
       img {
         width: 106px;
         height: 106px;

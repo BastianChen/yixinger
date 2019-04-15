@@ -1,6 +1,12 @@
 <view class="section">
-  <input placeholder="输入关键字"  type="text" bindinput="bindKeyInput"/>
+  <input id="search" placeholder="搜索"  type="text" bindinput="bindKeyInput" auto-focus="true"/>
+  <span class="icon"></span>
 </view>
+<view class="empty"></view>
 <view class="sug_info">
-  <text>{{sugData}}</text>
+  <!-- <text>{{sugData}}</text> -->
+  <view wx:for="{{sugData}}" wx:for-index="index" wx:for-item="item" bindtap="search" data-name="{{item}}" class="searchData">
+  <!-- <button type="default"> {{item.name}} {{item.province}}-{{item.city}}-{{item.district}}</button> -->
+ {{item.name}} {{item.province}}-{{item.city}}-{{item.district}}
+  </view>
 </view>
