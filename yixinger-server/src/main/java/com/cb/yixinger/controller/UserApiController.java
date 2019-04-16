@@ -45,7 +45,7 @@ public class UserApiController {
         String openId = userService.getOpenId(code);
         User user = userService.getUser(openId);
         if (user != null) {
-            userService.updateUser(user);
+            userService.updateUser(newUser);
             baseMessage.initStateAndMessage(1001, "该用户已存在并更新用户信息");
         } else {
             newUser.setOpenid(openId);
