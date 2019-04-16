@@ -17,8 +17,27 @@
             size="large"
           />
           <van-cell
+            v-if="userInfo.city"
             title="地区"
             :value="userInfo.province+' '+userInfo.city"
+            size="large"
+          />
+          <van-cell
+            v-if="(!userInfo.city)&&(userInfo.province)"
+            title="地区"
+            :value="userInfo.country+' '+userInfo.province"
+            size="large"
+          />
+          <van-cell
+            v-if="(!userInfo.city)&&(!userInfo.province)&&(userInfo.country)"
+            title="地区"
+            :value="userInfo.country"
+            size="large"
+          />
+          <van-cell
+            v-if="(!userInfo.city)&&(!userInfo.province)&&(!userInfo.country)"
+            title="地区"
+            value="暂无"
             size="large"
           />
         </div>
@@ -93,7 +112,7 @@
             wx.getUserInfo({
               success: (res) => {
                 this.userInfo = res.userInfo;
-                // console.log("userInfo++++" + JSON.stringify(this.userInfo))
+                //console.log("userInfo++++" + JSON.stringify(this.userInfo))
                 this.isLogin = true;
                 this.$httpWX.post({
                   url: apiurl.addUser + '?code=' + this.code,

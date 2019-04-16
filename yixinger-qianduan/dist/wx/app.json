@@ -13,7 +13,8 @@
     "pages/operationhistory/main",
     "pages/nearby/main",
     "pages/placedetail/main",
-    "pages/userhistory/main"
+    "pages/userhistory/main",
+    "pages/addcomment/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

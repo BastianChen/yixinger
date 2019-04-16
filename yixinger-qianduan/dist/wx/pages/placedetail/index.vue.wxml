@@ -102,14 +102,14 @@
     <view class="_div data-v-8962503e">
       <view class="_div data-v-8962503e comment">
         <van-row class="_van-row data-v-8962503e">
-          <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">评论</label><label class="_span data-v-8962503e commentNumber">({{commentNumber}}条评论)</label> <button type="primary" size="mini" plain="false" bindtap="primary" class="_button data-v-8962503e addComment">
+          <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">评论</label><label class="_span data-v-8962503e commentNumber">({{commentNumber}}条评论)</label> <button type="primary" size="mini" plain="false" bindtap="handleProxy" class="_button data-v-8962503e addComment" data-eventid="{{'6'}}" data-comkey="{{$k}}">
               <van-icon name="edit" size="15px" style="padding-top: 5px" class="_van-icon data-v-8962503e"></van-icon> 写评论
             </button></view>
           <view class="_div data-v-8962503e commentDetails">
             <view class="_div data-v-8962503e commentDetail" wx:key="commentListInfoIndex" key="{{commentListInfoIndex}}" wx:for="{{commentListInfo}}" wx:for-index="commentListInfoIndex" wx:for-item="comment">
               <van-row class="_van-row data-v-8962503e">
                 <van-col span="3" class="_van-col data-v-8962503e">
-                  <image class="_img data-v-8962503e portrait" bindtap="handleProxy" src="{{comment.userImage}}" data-eventid="{{'6-'+commentListInfoIndex}}" data-comkey="{{$k}}"></image>
+                  <image class="_img data-v-8962503e portrait" bindtap="handleProxy" src="{{comment.userImage}}" data-eventid="{{'7-'+commentListInfoIndex}}" data-comkey="{{$k}}"></image>
                 </van-col>
                 <van-col span="19" offset="1" class="_van-col data-v-8962503e">
                   <van-row class="_van-row data-v-8962503e"><label class="_span data-v-8962503e userName">{{comment.userName}}</label></van-row>
@@ -129,12 +129,12 @@
                   </van-row>
                   <van-row class="_van-row data-v-8962503e">
                     <view class="_div data-v-8962503e">
-                      <image class="_img data-v-8962503e userImg" wx:key="imgIndex" key="{{imgIndex}}" src="{{img}}" data-src="{{img}}" wx:if="{{imgIndex<3&&img}}" bindtap="handleProxy" data-eventid="{{'7-'+commentListInfoIndex+'-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{comment.userImg}}" wx:for-index="imgIndex" wx:for-item="img"></image> <label wx:if="{{comment.moreThanThree}}" style="width:30px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:65px;margin-top:52px;" class="_span data-v-8962503e">{{comment.imgLength}}张</label>
+                      <image class="_img data-v-8962503e userImg" wx:key="imgIndex" key="{{imgIndex}}" src="{{img}}" data-src="{{img}}" wx:if="{{imgIndex<3&&img}}" bindtap="handleProxy" data-eventid="{{'8-'+commentListInfoIndex+'-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{comment.userImg}}" wx:for-index="imgIndex" wx:for-item="img"></image> <label wx:if="{{comment.moreThanThree}}" style="width:30px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:65px;margin-top:52px;" class="_span data-v-8962503e">{{comment.imgLength}}张</label>
                     </view>
                   </van-row>
                   <van-row class="_van-row data-v-8962503e">
                     <view class="_div data-v-8962503e bottom"><label class="_span data-v-8962503e resource">{{comment.resource}}</label>
-                      <image class="_img data-v-8962503e likeImg" src="{{comment.likeImgUrl}}" bindtap="handleProxy" data-eventid="{{'8-'+commentListInfoIndex}}" data-comkey="{{$k}}"></image> <label class="_span data-v-8962503e likes">{{comment.likes}}</label>
+                      <image class="_img data-v-8962503e likeImg" src="{{comment.likeImgUrl}}" bindtap="handleProxy" data-eventid="{{'9-'+commentListInfoIndex}}" data-comkey="{{$k}}"></image> <label class="_span data-v-8962503e likes">{{comment.likes}}</label>
                     </view>
                   </van-row>
                 </van-col>
@@ -154,12 +154,12 @@
               <van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon>
             </label></view>
           <view class="_div data-v-8962503e photos">
-            <image wx:key="imgListIndex" key="{{imgListIndex}}" src="{{photos}}" wx:if="{{imgListIndex<=3}}" bindtap="handleProxy" data-eventid="{{'9-'+imgListIndex}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="imgListIndex" wx:for-item="photos" class="_img data-v-8962503e"></image>
+            <image wx:key="imgListIndex" key="{{imgListIndex}}" src="{{photos}}" wx:if="{{imgListIndex<=3}}" bindtap="handleProxy" data-eventid="{{'10-'+imgListIndex}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="imgListIndex" wx:for-item="photos" class="_img data-v-8962503e"></image>
           </view>
         </van-row>
       </view>
     </view>
-    <van-action-sheet show="{{show}}" actions="{{actions}}" cancel-text="取消" bindselect="handleProxy" bindcancel="handleProxy" data-eventid="{{'10'}}" data-comkey="{{$k}}" class="_van-action-sheet data-v-8962503e"></van-action-sheet>
+    <van-action-sheet show="{{show}}" actions="{{actions}}" cancel-text="取消" bindselect="handleProxy" bindcancel="handleProxy" data-eventid="{{'11'}}" data-comkey="{{$k}}" class="_van-action-sheet data-v-8962503e"></van-action-sheet>
     <van-dialog id="van-dialog" class="_van-dialog data-v-8962503e"></van-dialog>
   </view>
 </template>

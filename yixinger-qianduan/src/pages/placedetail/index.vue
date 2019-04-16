@@ -147,6 +147,7 @@
               plain="false"
               bindtap="primary"
               class="addComment"
+              @click="addComment()"
             >
               <van-icon name="edit" size="15px" style="padding-top: 5px"/>
               写评论
@@ -644,6 +645,14 @@
           longitude: parseFloat(this.placeDetailData.place.longitude),
           name: this.name,
           address: this.address
+        });
+      },
+      addComment(){
+        this.$router.push({
+          path: `../addcomment/main`,
+          query: {
+            title: this.name
+          }
         });
       }
     }

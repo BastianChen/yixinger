@@ -2,14 +2,14 @@ require("../../common/manifest.js");
 require("../../common/vendor.js");
 global.webpackJsonp([4],{
 
-/***/ 198:
+/***/ 203:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(204);
 
 
 
@@ -18,16 +18,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 199:
+/***/ 204:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_8962503e_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_8962503e_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(207);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(200)
+  __webpack_require__(205)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -72,14 +72,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 200:
+/***/ 205:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 201:
+/***/ 206:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89,6 +89,7 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(22);
 
+//
 //
 //
 //
@@ -734,13 +735,21 @@ if (false) {(function () {
         name: this.name,
         address: this.address
       });
+    },
+    addComment: function addComment() {
+      this.$router.push({
+        path: '../addcomment/main',
+        query: {
+          title: this.name
+        }
+      });
     }
   }
 });
 
 /***/ }),
 
-/***/ 202:
+/***/ 207:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1022,7 +1031,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "type": "primary",
       "size": "mini",
       "plain": "false",
-      "bindtap": "primary"
+      "bindtap": "primary",
+      "eventid": '6'
+    },
+    on: {
+      "click": function($event) {
+        _vm.addComment()
+      }
     }
   }, [_c('van-icon', {
     staticStyle: {
@@ -1052,7 +1067,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "portrait",
       attrs: {
         "src": comment.userImage,
-        "eventid": '6-' + commentListInfoIndex
+        "eventid": '7-' + commentListInfoIndex
       },
       on: {
         "click": function($event) {
@@ -1121,7 +1136,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         attrs: {
           "src": img,
           "data-src": img,
-          "eventid": '7-' + commentListInfoIndex + '-' + imgIndex
+          "eventid": '8-' + commentListInfoIndex + '-' + imgIndex
         },
         on: {
           "click": function($event) {
@@ -1154,7 +1169,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "likeImg",
       attrs: {
         "src": comment.likeImgUrl,
-        "eventid": '8-' + commentListInfoIndex
+        "eventid": '9-' + commentListInfoIndex
       },
       on: {
         "click": function($event) {
@@ -1195,7 +1210,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       key: imgListIndex,
       attrs: {
         "src": photos,
-        "eventid": '9-' + imgListIndex
+        "eventid": '10-' + imgListIndex
       },
       on: {
         "click": function($event) {
@@ -1208,7 +1223,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "show": _vm.show,
       "actions": _vm.actions,
       "cancel-text": "取消",
-      "eventid": '10',
+      "eventid": '11',
       "mpcomid": '40'
     },
     on: {
@@ -1235,5 +1250,5 @@ if (false) {
 
 /***/ })
 
-},[198]);
+},[203]);
 //# sourceMappingURL=main.js.map
