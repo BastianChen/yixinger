@@ -82,8 +82,8 @@ public class UserApiController {
                 logger.info("翻译用户 {} 信息成功", user.getNickName());
                 baseMessage.setMessage("获取并翻译用户 " + user.getNickName() + " 信息成功");
                 JSONObject jsonObject = JSONObject.fromObject(user);
-                redisTemplate.opsForValue().set("user-" + openid, jsonObject.toString(), 1, TimeUnit.HOURS);
-                logger.info("将用户数据添加到redis缓存中，缓存名为user-{}，缓存时间为1小时", openid);
+                redisTemplate.opsForValue().set("user-" + openid, jsonObject.toString(), 30, TimeUnit.MINUTES);
+                logger.info("将用户数据添加到redis缓存中，缓存名为user-{}，缓存时间为30分钟", openid);
             } else {
                 logger.info("不存在openid为 {} 的用户", openid);
                 baseMessage.initStateAndMessage(1001, "不存在该用户");
