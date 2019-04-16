@@ -6,6 +6,7 @@ import com.cb.yixinger.entity.Translator;
 import com.cb.yixinger.entity.User;
 import com.cb.yixinger.service.TranslatorService;
 import com.cb.yixinger.config.Constants;
+import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.TransApi;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -34,19 +35,35 @@ public class TranslatorServiceImpl implements TranslatorService {
     @Override
     public User translateUserInfo(User user, String language) {
         TransApi api = new TransApi(Constants.APP_ID, Constants.SECURITY_KEY);
-        JSONObject jsonObject = JSONObject.fromObject(api.getTransResult(user.getCity(), "auto", language));
-        JSONArray jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
-        user.setCity(jsonArray.getJSONObject(0).getString("dst"));
-        jsonObject = JSONObject.fromObject(api.getTransResult(user.getProvince(), "auto", language));
-        jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
-        user.setProvince(jsonArray.getJSONObject(0).getString("dst"));
-        jsonObject = JSONObject.fromObject(api.getTransResult(user.getCountry(), "auto", language));
-        jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
-        user.setCountry(jsonArray.getJSONObject(0).getString("dst"));
+        JSONObject jsonObject;
+        JSONArray jsonArray;
+        if (CommonUtil.isNotEmpty(user.getCity())) {
+            jsonObject = JSONObject.fromObject(api.getTransResult(user.getCity(), "auto", language));
+            jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
+            user.setCity(jsonArray.getJSONObject(0).getString("dst"));
+        } else {
+            user.setCity(null);
+        }
+        if (CommonUtil.isNotEmpty(user.getProvince())) {
+            jsonObject = JSONObject.fromObject(api.getTransResult(user.getProvince(), "auto", language));
+            jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
+            user.setProvince(jsonArray.getJSONObject(0).getString("dst"));
+        } else {
+            user.setProvince(null);
+        }
+        if (CommonUtil.isNotEmpty(user.getCountry())) {
+            jsonObject = JSONObject.fromObject(api.getTransResult(user.getCountry(), "auto", language));
+            jsonArray = JSONArray.fromObject(jsonObject.getString("trans_result"));
+            user.setCountry(jsonArray.getJSONObject(0).getString("dst"));
+        } else {
+            user.setCountry(null);
+        }
         if ("1".equals(user.getGender())) {
             user.setGender("男");
         } else if ("2".equals(user.getGender())) {
             user.setGender("女");
+        } else if ("0".equals(user.getGender())) {
+            user.setGender("暂无");
         }
         return user;
     }
