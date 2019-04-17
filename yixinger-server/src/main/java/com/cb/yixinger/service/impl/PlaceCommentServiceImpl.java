@@ -54,6 +54,8 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = sdf.format(System.currentTimeMillis());
         placeComment.setDate(date);
+        placeComment.setCommentType(2);
+        placeComment.setResource("易行ER");
         return placeCommentMapper.insertSelective(placeComment) > 0;
     }
 
@@ -107,11 +109,11 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
      */
     @Override
     public List<PlaceComment> getPlaceComment(String uid) {
-        Example example = new Example(PlaceComment.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("placeId", uid);
-        criteria.andEqualTo("commentType", 1);
-        List<PlaceComment> placeCommentList = placeCommentMapper.selectByExample(example);
+        List<PlaceComment> placeCommentList = placeCommentMapper.querytPlaceCommentByUid(uid);
+//        Example example = new Example(PlaceComment.class);
+//        Example.Criteria criteria = example.createCriteria();
+//        criteria.andEqualTo("placeId", uid);
+//        List<PlaceComment> placeCommentList = placeCommentMapper.selectByExample(example);
         return placeCommentList;
     }
 

@@ -246,6 +246,10 @@ public class PlaceApiController {
         } else {
             logger.info("给uid为 {} 的游玩地点添加评论成功", placeComment.getPlaceId());
             baseMessage.setMessage("评论成功");
+            String placeCommentListName = "placeCommentList?uid=" + placeComment.getPlaceId();
+            List<PlaceComment> placeCommentList = placeCommentService.getPlaceComment(placeComment.getPlaceId());
+            JSONArray placeCommentListJsonArray = JSONArray.parseArray(JSON.toJSONString(placeCommentList));
+            redisTemplate.opsForValue().set(placeCommentListName, placeCommentListJsonArray.toString(), 1, TimeUnit.HOURS);
         }
         return baseMessage.response();
     }
