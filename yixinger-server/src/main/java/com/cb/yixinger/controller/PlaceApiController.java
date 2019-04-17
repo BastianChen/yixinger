@@ -216,27 +216,37 @@ public class PlaceApiController {
         return baseMessage.response();
     }
 
+    @LoggerManage(logDescription = "上传图片接口（用于上传多张图片）")
+    @ApiOperation(value = "上传图片接口（用于上传多张图片）", notes = "上传图片接口（用于上传多张图片） ", response = BaseMessage.class)
+    @RequestMapping(value = "/uploadImage", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.POST)
+    public ResponseEntity<BaseMessage> uploadImage(
+            @ApiParam(value = "图片", required = true) @RequestParam(value = "imageFile") MultipartFile imageFile) throws IOException {
+        BaseMessage baseMessage = new BaseMessage();
+        String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/comment/";
+        String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
+        if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
+            logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
+            baseMessage.setData("/images/photo/" + imageName + "_src.jpg");
+        } else {
+            logger.info("返回的图片名称为Null");
+            baseMessage.initStateAndMessage(1001, "上传图片失败,返回的图片名称为Null");
+        }
+        return baseMessage.response();
+    }
+
     @LoggerManage(logDescription = "根据uid给游玩地点添加评论")
     @ApiOperation(value = "根据uid给游玩地点添加评论", notes = "根据uid给游玩地点添加评论 ", response = BaseMessage.class)
     @RequestMapping(value = "/addPlaceComment", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> addPlaceComment(
-            @ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
-            @ApiParam(value = "评论", required = true) @RequestBody PlaceComment placeComment) throws IOException {
+            @ApiParam(value = "图片列表集合", required = true) @RequestParam(value = "imageList") String imageList,
+            @ApiParam(value = "评论", required = true) @RequestBody PlaceComment placeComment) {
         BaseMessage baseMessage = new BaseMessage();
-        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/comment/";
-        String imageName;
         JSONArray imageArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
-        for (MultipartFile imageFile : imageFiles) {
-            imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
-            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
-                logger.info("返回的图片名称为 {}", imageName);
-                jsonObject.put("pic_url", "/images/comment/" + imageName + "_src.jpg");
-                imageArray.add(jsonObject);
-            } else {
-                logger.info("返回的图片名称为Null");
-                baseMessage.initStateAndMessage(1001, "添加评论失败");
-            }
+        List<String> image = Arrays.asList(imageList.split(";"));
+        for (String img : image) {
+            jsonObject.put("pic_url", "/images/comment/" + img + "_src.jpg");
+            imageArray.add(jsonObject);
         }
         placeComment.setImageList(imageArray.toString());
         boolean result = placeCommentService.addPlaceComment(placeComment);
