@@ -226,7 +226,7 @@ public class PlaceApiController {
         String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
         if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
             logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
-            baseMessage.setData("/images/photo/" + imageName + "_src.jpg");
+            baseMessage.setData("/images/comment/" + imageName + "_src.jpg");
         } else {
             logger.info("返回的图片名称为Null");
             baseMessage.initStateAndMessage(1001, "上传图片失败,返回的图片名称为Null");
@@ -245,7 +245,7 @@ public class PlaceApiController {
         JSONObject jsonObject = new JSONObject();
         List<String> image = Arrays.asList(imageList.split(";"));
         for (String img : image) {
-            jsonObject.put("pic_url", "/images/comment/" + img + "_src.jpg");
+            jsonObject.put("pic_url", img);
             imageArray.add(jsonObject);
         }
         placeComment.setImageList(imageArray.toString());
