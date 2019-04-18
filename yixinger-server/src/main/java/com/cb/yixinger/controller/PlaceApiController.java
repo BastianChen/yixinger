@@ -238,17 +238,19 @@ public class PlaceApiController {
     @ApiOperation(value = "根据uid给游玩地点添加评论", notes = "根据uid给游玩地点添加评论 ", response = BaseMessage.class)
     @RequestMapping(value = "/addPlaceComment", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> addPlaceComment(
-            @ApiParam(value = "图片列表集合", required = true) @RequestParam(value = "imageList") String imageList,
+            @ApiParam(value = "图片列表集合") @RequestParam(value = "imageList", required = false) String imageList,
             @ApiParam(value = "评论", required = true) @RequestBody PlaceComment placeComment) {
         BaseMessage baseMessage = new BaseMessage();
-        JSONArray imageArray = new JSONArray();
-        List<String> image = Arrays.asList(imageList.split(";"));
-        for (String img : image) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("pic_url", img);
-            imageArray.add(jsonObject);
+        if (CommonUtil.isNotEmpty(imageList)) {
+            JSONArray imageArray = new JSONArray();
+            List<String> image = Arrays.asList(imageList.split(";"));
+            for (String img : image) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("pic_url", img);
+                imageArray.add(jsonObject);
+            }
+            placeComment.setImageList(imageArray.toString());
         }
-        placeComment.setImageList(imageArray.toString());
         boolean result = placeCommentService.addPlaceComment(placeComment);
         if (!result) {
             logger.error("给uid为 {} 的游玩地点添加评论失败", placeComment.getPlaceId());
