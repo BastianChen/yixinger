@@ -242,9 +242,9 @@ public class PlaceApiController {
             @ApiParam(value = "评论", required = true) @RequestBody PlaceComment placeComment) {
         BaseMessage baseMessage = new BaseMessage();
         JSONArray imageArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
         List<String> image = Arrays.asList(imageList.split(";"));
         for (String img : image) {
+            JSONObject jsonObject = new JSONObject();
             jsonObject.put("pic_url", img);
             imageArray.add(jsonObject);
         }
