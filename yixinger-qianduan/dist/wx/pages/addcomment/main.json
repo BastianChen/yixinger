@@ -3,7 +3,8 @@
     "van-row": "/static/vant-weapp/dist/row/index",
     "van-col": "/static/vant-weapp/dist/col/index",
     "van-rate": "/static/vant-weapp/dist/rate/index",
-    "van-field": "/static/vant-weapp/dist/field/index"
+    "van-field": "/static/vant-weapp/dist/field/index",
+    "van-dialog": "/static/vant-weapp/dist/dialog/index"
   },
   "navigationBarTitleText": ""
 }

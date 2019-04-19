@@ -1,3 +1,57 @@
 .index {
-
+  .firstDiv {
+    width: 100%;
+    padding: 20px;
+    border-bottom: 1px solid #E8E8E8;
+    .firstCol{
+      font-size: 16px;
+      font-family: KaiTi;
+    }
+    .secondCol{
+      margin-top:-5px
+    }
+    .thirdCol {
+      font-size: 16px;
+      font-family: KaiTi;
+      text-align: right;
+    }
+  }
+  .secondDiv {
+    margin: 20px auto;
+    .text {
+      margin: 0 auto;
+      font-size: 16px;
+      font-family: KaiTi;
+      height: 120px;
+    }
+  }
+  .thirdDiv {
+    margin-left: 20px;
+    img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+  .forthDiv{
+    margin: 5px 15px;
+    img{
+      width: 70px;
+      height: 70px;
+      padding: 0 7px;
+    }
+  }
+  .fifthDiv{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0 auto;
+    .commit-btn{
+      margin-left: 5%;
+      background-color: #1989FA;
+      border-color: #1989FA;
+      color: #ffffff;
+      width: 90%;
+      border-radius: 20px;
+    }
+  }
 }

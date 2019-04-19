@@ -129,6 +129,7 @@
                       _this.userInfo.longitude = res.longitude
                       _this.openid = data.data;
                       _this.userInfo.openid = _this.openid;
+                      _this.userInfo.isComment = false;
                       _this.setDisc(_this.userInfo);
                       _this.$httpWX.get({
                         url: apiurl.getUser,

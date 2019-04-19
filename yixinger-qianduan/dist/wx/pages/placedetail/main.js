@@ -2,14 +2,14 @@ require("../../common/manifest.js");
 require("../../common/vendor.js");
 global.webpackJsonp([4],{
 
-/***/ 203:
+/***/ 208:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(209);
 
 
 
@@ -18,16 +18,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 204:
+/***/ 209:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(206);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_8962503e_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_8962503e_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(212);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(205)
+  __webpack_require__(210)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -72,22 +72,22 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 205:
+/***/ 210:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 206:
+/***/ 211:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(17);
 
 //
 //
@@ -386,14 +386,24 @@ if (false) {(function () {
         disabled: true
       }, {
         name: '呼叫'
-      }]
+      }],
+      isComment: false // 用于辨别是否为添加评论操作
     };
   },
 
   computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])(['disc'])),
   created: function created() {},
+  onShow: function onShow() {
+    this.userInfo = this.$store.getters.disc;
+    this.isComment = this.userInfo.isComment;
+    if (this.isComment) {
+      this.getLikedCommentByPlaceIdAndUserId();
+      this.addOrUpdateUserHistory();
+    }
+  },
   mounted: function mounted() {
     this.userInfo = this.$store.getters.disc;
+    this.isComment = this.userInfo.isComment;
     this.uid = this.$route.query.uid;
     this.getLikedCommentByPlaceIdAndUserId();
     this.addOrUpdateUserHistory();
@@ -427,6 +437,7 @@ if (false) {(function () {
      * 预览图片
      */
     seePhoto: function seePhoto(index, imgList) {
+      this.isComment = false;
       if (imgList instanceof Array) {
         wx.previewImage({
           current: index, // 当前显示图片的http链接
@@ -444,6 +455,8 @@ if (false) {(function () {
     getPlaceDetailData: function getPlaceDetailData() {
       var _this = this;
 
+      this.tag1OfContent = [];
+      this.tag2OfContent = [];
       this.longitude = this.$route.query.longitude;
       this.latitude = this.$route.query.latitude;
       this.$httpWX.get({
@@ -583,14 +596,7 @@ if (false) {(function () {
         } else {
           _this.isTagShow = false;
         }
-        _this.commentNumber = _this.placeDetailData.place.commentNumber;
-        if (_this.commentNumber > 0) {
-          _this.isSeeAllShow = true;
-          // 处理评论
-          _this.handleCommentList();
-        } else {
-          _this.isSeeAllShow = false;
-        }
+        _this.handleCommentList();
         // 处理图片列表
         if (res.data.placePhotoList.length > 0) {
           for (var _i4 = 0; _i4 < res.data.placePhotoList.length; _i4++) {
@@ -603,6 +609,8 @@ if (false) {(function () {
         }
       });
     },
+
+    // 处理评论
     handleCommentList: function handleCommentList() {
       var _this2 = this;
 
@@ -615,8 +623,20 @@ if (false) {(function () {
         }
       }).then(function (res) {
         _this2.commentListInfo = res.data.items;
+        _this2.commentNumber = res.data.totalNum;
+        if (_this2.commentNumber > 0) {
+          _this2.isSeeAllShow = true;
+        } else {
+          _this2.isSeeAllShow = false;
+        }
         var userImgArray = [];
-        for (var i = 0; i < _this2.commentListInfo.length; i++) {
+        var length = 0;
+        if (_this2.commentListInfo.length <= 3) {
+          length = _this2.commentListInfo.length;
+        } else {
+          length = 3;
+        }
+        for (var i = 0; i < length; i++) {
           if (_this2.commentListInfo[i].comment.length > 58) {
             _this2.$set(_this2.commentListInfo[i], 'newComment', _this2.commentListInfo[i].comment.substring(0, 58) + '...');
           } else {
@@ -626,7 +646,11 @@ if (false) {(function () {
             var userImg = JSON.parse(_this2.commentListInfo[i].imageList);
             userImgArray = [];
             for (var j = 0; j < userImg.length; j++) {
-              userImgArray.push(userImg[j].pic_url);
+              if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+              } else {
+                userImgArray.push(userImg[j].pic_url);
+              }
             }
             _this2.$set(_this2.commentListInfo[i], 'userImg', userImgArray);
             if (userImgArray.length > 3) {
@@ -737,10 +761,22 @@ if (false) {(function () {
       });
     },
     addComment: function addComment() {
+      this.isComment = false;
       this.$router.push({
         path: '../addcomment/main',
         query: {
-          title: this.name
+          title: this.name,
+          placeId: this.uid
+        }
+      });
+    },
+    seeAllComments: function seeAllComments() {
+      this.isComment = false;
+      this.$router.push({
+        path: '../commentlist/main',
+        query: {
+          title: this.name,
+          placeId: this.uid
         }
       });
     }
@@ -749,7 +785,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 207:
+/***/ 212:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -799,7 +835,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v("\n        " + _vm._s(_vm.name) + "\n      ")]), _vm._v(" "), _c('img', {
     staticClass: "navigation",
     attrs: {
-      "src": "../../../static/images/navigation.png",
+      "src": "https://wzcb97.top/images/index/navigation.png",
       "eventid": '1'
     },
     on: {
@@ -1051,7 +1087,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _vm._v("\n            写评论\n          ")], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "commentDetails"
   }, _vm._l((_vm.commentListInfo), function(comment, commentListInfoIndex) {
-    return _c('div', {
+    return (commentListInfoIndex < 3) ? _c('div', {
       key: commentListInfoIndex,
       staticClass: "commentDetail"
     }, [_c('van-row', {
@@ -1178,9 +1214,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('span', {
       staticClass: "likes"
-    }, [_vm._v(_vm._s(comment.likes))])])])], 1)], 1)], 1)
+    }, [_vm._v(_vm._s(comment.likes))])])])], 1)], 1)], 1) : _vm._e()
   })), _vm._v(" "), (_vm.isSeeAllShow) ? _c('div', {
-    staticClass: "seeAll"
+    staticClass: "seeAll",
+    attrs: {
+      "eventid": '10'
+    },
+    on: {
+      "click": function($event) {
+        _vm.seeAllComments()
+      }
+    }
   }, [_c('span', [_vm._v("查看全部")]), _vm._v(" "), _c('van-icon', {
     attrs: {
       "name": "arrow",
@@ -1210,7 +1254,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       key: imgListIndex,
       attrs: {
         "src": photos,
-        "eventid": '10-' + imgListIndex
+        "eventid": '11-' + imgListIndex
       },
       on: {
         "click": function($event) {
@@ -1223,7 +1267,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "show": _vm.show,
       "actions": _vm.actions,
       "cancel-text": "取消",
-      "eventid": '11',
+      "eventid": '12',
       "mpcomid": '40'
     },
     on: {
@@ -1250,5 +1294,5 @@ if (false) {
 
 /***/ })
 
-},[203]);
+},[208]);
 //# sourceMappingURL=main.js.map

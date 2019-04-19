@@ -17,11 +17,19 @@ public class PlacePhotoDao {
     @Autowired
     private PlacePhotoMapper placePhotoMapper;
 
-    public List<PlacePhoto> getPlaceCommentByUid(String uid){
+    public List<PlacePhoto> getPlacePhotoByUid(String uid) {
         Example example = new Example(PlacePhoto.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("placeId", uid);
         List<PlacePhoto> placePhotoList = placePhotoMapper.selectByExample(example);
         return placePhotoList;
+    }
+
+    public Integer getCountByUid(String uid) {
+        Example example = new Example(PlacePhoto.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("placeId", uid);
+        Integer count = placePhotoMapper.selectCountByExample(example);
+        return count;
     }
 }

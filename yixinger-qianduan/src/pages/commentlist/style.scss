@@ -1,0 +1,76 @@
+.index {
+  .firstDiv{
+    border-top: 1px solid #E8E8E8;
+    padding: 10px 0 0 0;
+    .commentDetail{
+      border-bottom: 1px solid #E8E8E8;
+      margin-top: 10px;
+      .portrait{
+        height: 100rpx;
+        width: 100rpx;
+        border-radius: 50%
+      }
+      .userName{
+        font-size: 15px;
+        font-weight: bold;
+      }
+      .rate{
+        font-size: 13px;
+        color: #A7A7A7;
+      }
+      .time{
+        font-size: 13px;
+        color: #A7A7A7;
+        text-align: right;
+        padding-top:12rpx;
+      }
+      .detail{
+        font-size: 13px;
+        height: 50px;
+        letter-spacing: 1px;
+        overflow:hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 10px;
+      }
+      .userImg{
+        height: 70px;
+        width: 70px;
+        margin-right: 15px;
+      }
+      .bottom{
+        padding: 0 0 10px 0;
+        .resource{
+          font-size: 13px;
+          color: #A7A7A7;
+        }
+        .likes{
+          font-size: 13px;
+          color: #A7A7A7;
+          float: right;
+          padding-top:13rpx;
+        }
+        .likeImg{
+          width: 15px;
+          height: 15px;
+          float: right;
+          padding-top:13rpx;
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+  .secondDiv{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0 auto;
+    .commit-btn{
+      margin-left: 5%;
+      background-color: #1989FA;
+      border-color: #1989FA;
+      color: #ffffff;
+      width: 90%;
+      border-radius: 20px;
+    }
+  }
+}

@@ -66,9 +66,9 @@ public class PlacePhotoServiceImpl implements PlacePhotoService {
 
     @Override
     public PageBean<PlacePhoto> getPlacePhotoByUid(String uid, Integer pageNo, Integer pageSize) {
-        List<PlacePhoto> placePhotoList = placePhotoDao.getPlaceCommentByUid(uid);
         PageHelper.startPage(pageNo, pageSize);
-        int totalCount = placePhotoList.size();
+        List<PlacePhoto> placePhotoList = placePhotoDao.getPlacePhotoByUid(uid);
+        int totalCount = placePhotoDao.getCountByUid(uid);
         PageBean<PlacePhoto> pageData = new PageBean<>(pageNo, pageSize, totalCount);
         pageData.setItems(placePhotoList);
         return pageData;

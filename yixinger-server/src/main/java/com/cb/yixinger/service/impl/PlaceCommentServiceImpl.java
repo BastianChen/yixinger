@@ -9,6 +9,7 @@ import com.cb.yixinger.entity.PlaceComment;
 import com.cb.yixinger.service.PlaceCommentService;
 import com.cb.yixinger.utils.CommonUtil;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -41,9 +42,9 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
 
     @Override
     public PageBean<PlaceComment> getPlaceCommentByUid(String uid, Integer pageNo, Integer pageSize) {
-        List<PlaceComment> placeCommentList = placeCommentDao.getPlaceCommentByUid(uid);
         PageHelper.startPage(pageNo, pageSize);
-        int totalCount = placeCommentList.size();
+        List<PlaceComment> placeCommentList = placeCommentDao.getPlaceCommentByUid(uid);
+        int totalCount = placeCommentDao.getCountByUid(uid);
         PageBean<PlaceComment> pageData = new PageBean<>(pageNo, pageSize, totalCount);
         pageData.setItems(placeCommentList);
         return pageData;

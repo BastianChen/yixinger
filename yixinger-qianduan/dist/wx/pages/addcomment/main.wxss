@@ -1,1 +1,57 @@
 @import "../../common/vendor.wxss";
+
+.index .firstDiv.data-v-446d7bcb {
+  width: 100%;
+  padding: 40rpx;
+  border-bottom: 2rpx solid #E8E8E8;
+}
+.index .firstDiv .firstCol.data-v-446d7bcb {
+  font-size: 32rpx;
+  font-family: KaiTi;
+}
+.index .firstDiv .secondCol.data-v-446d7bcb {
+  margin-top: -10rpx;
+}
+.index .firstDiv .thirdCol.data-v-446d7bcb {
+  font-size: 32rpx;
+  font-family: KaiTi;
+  text-align: right;
+}
+.index .secondDiv.data-v-446d7bcb {
+  margin: 40rpx auto;
+}
+.index .secondDiv .text.data-v-446d7bcb {
+  margin: 0 auto;
+  font-size: 32rpx;
+  font-family: KaiTi;
+  height: 240rpx;
+}
+.index .thirdDiv.data-v-446d7bcb {
+  margin-left: 40rpx;
+}
+.index .thirdDiv ._img.data-v-446d7bcb {
+  width: 140rpx;
+  height: 140rpx;
+}
+.index .forthDiv.data-v-446d7bcb {
+  margin: 10rpx 30rpx;
+}
+.index .forthDiv ._img.data-v-446d7bcb {
+  width: 140rpx;
+  height: 140rpx;
+  padding: 0 14rpx;
+}
+.index .fifthDiv.data-v-446d7bcb {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin: 0 auto;
+}
+.index .fifthDiv .commit-btn.data-v-446d7bcb {
+  margin-left: 5%;
+  background-color: #1989FA;
+  border-color: #1989FA;
+  color: #ffffff;
+  width: 90%;
+  border-radius: 40rpx;
+}

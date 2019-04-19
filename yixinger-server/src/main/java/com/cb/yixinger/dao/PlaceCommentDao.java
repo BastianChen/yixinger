@@ -35,6 +35,14 @@ public class PlaceCommentDao {
         return placeCommentList;
     }
 
+    public Integer getCountByUid(String uid) {
+        Example example = new Example(PlaceComment.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("placeId", uid);
+        Integer count = placeCommentMapper.selectCountByExample(example);
+        return count;
+    }
+
 //    {
 //        String sql = "SELECT id,likes,date,user_name,user_image,overall_rating,comment,image_list,resource from place_comment " +
 //                "where place_id = #{uid} LIMIT 0,3";

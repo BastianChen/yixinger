@@ -1,3 +1,17 @@
 <template name="3aca80f1">
-  <view class="_div data-v-446d7bcb"> ss </view>
-</template>
+  <view class="_div data-v-446d7bcb index">
+    <view class="_div data-v-446d7bcb firstDiv">
+      <van-row class="_van-row data-v-446d7bcb">
+        <van-col span="5" offset="1" class="_van-col data-v-446d7bcb"><label class="_span data-v-446d7bcb firstCol">请您评分</label></van-col>
+        <van-col span="10" class="_van-col data-v-446d7bcb">
+          <view class="_div data-v-446d7bcb secondCol">
+            <van-rate value="{{rateValue}}" size="25" color="#00BFFF" void-color="#00BFFF" bindchange="handleProxy" style="text-align: center" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_van-rate data-v-446d7bcb"></van-rate>
+          </view>
+        </van-col>
+        <van-col span="2" offset="1" class="_van-col data-v-446d7bcb"><label class="_span data-v-446d7bcb thirdCol">{{value}}</label></van-col>
+      </van-row>
+    </view>
+    <view class="_div data-v-446d7bcb secondDiv">
+      <van-row class="_van-row data-v-446d7bcb"><textarea class="_textarea data-v-446d7bcb text" maxlength="2000" value="{{comment}}" name="content" placeholder="写下我的感受..." bindinput="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" /></van-row></view> <view class="_div data-v-446d7bcb thirdDiv"><van-row class="_van-row data-v-446d7bcb"><image src="/static/images/add_photo.png" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_img data-v-446d7bcb"></image></van-row></view> <view class="_div data-v-446d7bcb forthDiv"><image wx:key="index" key="{{index}}" src="{{item}}" bindlongpress="handleProxy" bindtap="handleProxy" data-eventid="{{'3-'+index}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="index" wx:for-item="item" class="_img data-v-446d7bcb"></image></view> <view class="_div data-v-446d7bcb fifthDiv"><van-row class="_van-row data-v-446d7bcb"><button type="primary" size="mini" plain="false" bindtap="handleProxy" class="_button data-v-446d7bcb commit-btn" data-eventid="{{'4'}}" data-comkey="{{$k}}">
+        发表
+      </button></van-row></view> <van-dialog id="van-dialog" style="text-align: center" class="_van-dialog data-v-446d7bcb"></van-dialog></view></template>

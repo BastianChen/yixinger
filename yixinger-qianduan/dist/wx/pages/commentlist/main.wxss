@@ -1,0 +1,76 @@
+@import "../../common/vendor.wxss";
+
+.index .firstDiv.data-v-e625b5f4 {
+  border-top: 2rpx solid #E8E8E8;
+  padding: 20rpx 0 0 0;
+}
+.index .firstDiv .commentDetail.data-v-e625b5f4 {
+  border-bottom: 2rpx solid #E8E8E8;
+  margin-top: 20rpx;
+}
+.index .firstDiv .commentDetail .portrait.data-v-e625b5f4 {
+  height: 100rpx;
+  width: 100rpx;
+  border-radius: 50%;
+}
+.index .firstDiv .commentDetail .userName.data-v-e625b5f4 {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.index .firstDiv .commentDetail .rate.data-v-e625b5f4 {
+  font-size: 26rpx;
+  color: #A7A7A7;
+}
+.index .firstDiv .commentDetail .time.data-v-e625b5f4 {
+  font-size: 26rpx;
+  color: #A7A7A7;
+  text-align: right;
+  padding-top: 12rpx;
+}
+.index .firstDiv .commentDetail .detail.data-v-e625b5f4 {
+  font-size: 26rpx;
+  height: 100rpx;
+  letter-spacing: 2rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 20rpx;
+}
+.index .firstDiv .commentDetail .userImg.data-v-e625b5f4 {
+  height: 140rpx;
+  width: 140rpx;
+  margin-right: 30rpx;
+}
+.index .firstDiv .commentDetail .bottom.data-v-e625b5f4 {
+  padding: 0 0 20rpx 0;
+}
+.index .firstDiv .commentDetail .bottom .resource.data-v-e625b5f4 {
+  font-size: 26rpx;
+  color: #A7A7A7;
+}
+.index .firstDiv .commentDetail .bottom .likes.data-v-e625b5f4 {
+  font-size: 26rpx;
+  color: #A7A7A7;
+  float: right;
+  padding-top: 13rpx;
+}
+.index .firstDiv .commentDetail .bottom .likeImg.data-v-e625b5f4 {
+  width: 30rpx;
+  height: 30rpx;
+  float: right;
+  padding-top: 13rpx;
+  margin-left: 10rpx;
+}
+.index .secondDiv.data-v-e625b5f4 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin: 0 auto;
+}
+.index .secondDiv .commit-btn.data-v-e625b5f4 {
+  margin-left: 5%;
+  background-color: #1989FA;
+  border-color: #1989FA;
+  color: #ffffff;
+  width: 90%;
+  border-radius: 40rpx;
+}

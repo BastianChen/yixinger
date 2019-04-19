@@ -15,7 +15,7 @@
         <span class="name">
           {{name}}
         </span>
-        <img class="navigation" @click="navigation()" src="../../../static/images/navigation.png"/>
+        <img class="navigation" @click="navigation()" src="https://wzcb97.top/images/index/navigation.png"/>
       </van-row>
       <van-row class="distanceAndAddress">
         <van-col span="4">
@@ -155,7 +155,7 @@
           </div>
           <div class="commentDetails">
             <div class="commentDetail" v-for="(comment, commentListInfoIndex) in commentListInfo "
-                 :key="commentListInfoIndex">
+                 :key="commentListInfoIndex" v-if="commentListInfoIndex<3">
               <van-row>
                 <van-col span="3">
                   <img class="portrait" @click="seePhoto(comment.userImage,comment.userImage)"
@@ -209,7 +209,7 @@
               </van-row>
             </div>
           </div>
-          <div class="seeAll" v-if="isSeeAllShow">
+          <div class="seeAll" v-if="isSeeAllShow" @click="seeAllComments()">
             <span>查看全部</span>
             <van-icon name="arrow"/>
           </div>
@@ -299,6 +299,7 @@
             name: '呼叫'
           }
         ],
+        isComment: false// 用于辨别是否为添加评论操作
       }
     },
     computed: {
@@ -309,8 +310,17 @@
     created() {
 
     },
+    onShow() {
+      this.userInfo = this.$store.getters.disc;
+      this.isComment = this.userInfo.isComment;
+      if (this.isComment) {
+        this.getLikedCommentByPlaceIdAndUserId();
+        this.addOrUpdateUserHistory();
+      }
+    },
     mounted() {
       this.userInfo = this.$store.getters.disc;
+      this.isComment = this.userInfo.isComment;
       this.uid = this.$route.query.uid;
       this.getLikedCommentByPlaceIdAndUserId();
       this.addOrUpdateUserHistory();
@@ -343,6 +353,7 @@
        * 预览图片
        */
       seePhoto(index, imgList) {
+        this.isComment = false;
         if (imgList instanceof Array) {
           wx.previewImage({
             current: index, // 当前显示图片的http链接
@@ -358,6 +369,8 @@
         }
       },
       getPlaceDetailData() {
+        this.tag1OfContent = [];
+        this.tag2OfContent = [];
         this.longitude = this.$route.query.longitude;
         this.latitude = this.$route.query.latitude;
         this.$httpWX.get({
@@ -500,14 +513,7 @@
           } else {
             this.isTagShow = false;
           }
-          this.commentNumber = this.placeDetailData.place.commentNumber;
-          if (this.commentNumber > 0) {
-            this.isSeeAllShow = true;
-            // 处理评论
-            this.handleCommentList();
-          } else {
-            this.isSeeAllShow = false;
-          }
+          this.handleCommentList();
           // 处理图片列表
           if (res.data.placePhotoList.length > 0) {
             for (let i = 0; i < res.data.placePhotoList.length; i++) {
@@ -520,6 +526,7 @@
           }
         })
       },
+      // 处理评论
       handleCommentList() {
         this.$httpWX.get({
           url: apiurl.getPlaceCommentByUid,
@@ -530,8 +537,20 @@
           },
         }).then(res => {
           this.commentListInfo = res.data.items;
+          this.commentNumber = res.data.totalNum;
+          if (this.commentNumber > 0) {
+            this.isSeeAllShow = true;
+          } else {
+            this.isSeeAllShow = false;
+          }
           let userImgArray = [];
-          for (let i = 0; i < this.commentListInfo.length; i++) {
+          let length = 0;
+          if (this.commentListInfo.length <= 3) {
+            length = this.commentListInfo.length;
+          } else {
+            length = 3;
+          }
+          for (let i = 0; i < length; i++) {
             if (this.commentListInfo[i].comment.length > 58) {
               this.$set(this.commentListInfo[i], 'newComment', this.commentListInfo[i].comment.substring(0, 58) + '...');
             } else {
@@ -541,7 +560,11 @@
               var userImg = JSON.parse(this.commentListInfo[i].imageList);
               userImgArray = [];
               for (let j = 0; j < userImg.length; j++) {
-                userImgArray.push(userImg[j].pic_url);
+                if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                  userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+                } else {
+                  userImgArray.push(userImg[j].pic_url);
+                }
               }
               this.$set(this.commentListInfo[i], 'userImg', userImgArray);
               if (userImgArray.length > 3) {
@@ -567,7 +590,6 @@
               this.$set(this.commentListInfo[i], 'likeImgUrl', '/static/images/like.png');
             }
           }
-
         })
       },
       like(commentId, likeImgUrl, index) {
@@ -647,11 +669,23 @@
           address: this.address
         });
       },
-      addComment(){
+      addComment() {
+        this.isComment = false;
         this.$router.push({
           path: `../addcomment/main`,
           query: {
-            title: this.name
+            title: this.name,
+            placeId: this.uid
+          }
+        });
+      },
+      seeAllComments(){
+        this.isComment = false;
+        this.$router.push({
+          path: `../commentlist/main`,
+          query: {
+            title: this.name,
+            placeId: this.uid
           }
         });
       }

@@ -145,7 +145,7 @@ export default {
             icon: 'loading'
           })
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-          var tempFilePaths = res.tempFilePaths
+          var tempFilePaths = res.tempFilePaths;
           //上传图片到服务器api
           wx.uploadFile({
             url: 'https://wzcb97.top/' + apiurl.aipOcr, //仅为示例，非真实的接口地址
