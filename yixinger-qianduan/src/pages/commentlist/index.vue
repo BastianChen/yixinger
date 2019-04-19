@@ -2,7 +2,7 @@
   <div class="index">
     <div class="firstDiv">
       <div class="commentDetail" v-for="(comment, commentListInfoIndex) in commentListInfo "
-           :key="commentListInfoIndex" v-if="commentListInfoIndex<3">
+           :key="commentListInfoIndex">
         <van-row>
           <van-col span="3">
             <img class="portrait" @click="seePhoto(comment.userImage,comment.userImage)"
@@ -31,9 +31,9 @@
             </van-row>
             <van-row>
               <div class="detail">
-                    <span>
-                      {{comment.newComment}}
-                    </span>
+                <span>
+                  {{comment.comment}}
+                </span>
               </div>
             </van-row>
             <van-row>
@@ -56,7 +56,16 @@
         </van-row>
       </div>
     </div>
-    <div class="secondDiv">
+    <div class="secondDiv" v-show="isShowLine">
+      <img src="../../../static/images/line.png" class="firstImg"/>
+      <div class="content">
+            <span>
+              我是有底线的
+            </span>
+      </div>
+      <img src="../../../static/images/line.png" class="secondImg"/>
+    </div>
+    <div class="thirdDiv">
       <van-row>
         <button
           type="primary"
@@ -82,15 +91,54 @@
         isComment: false,
         pageNo: 1,
         pageSize: 10,
-        commentListInfo: []
+        totalPage: 0,
+        commentListInfo: [],
+        likeImgUrl: '/static/images/like.png',
+        likedHistory: {},
+        isShowLine: false
       }
     },
-    onLoad(opts) {
+    onShow() {
+      this.userInfo = this.$store.getters.disc;
+      this.isComment = this.userInfo.isComment;
+      if (this.isComment) {
+        this.getNewComment();
+      }
+    },
+    onReachBottom() {
+      if (this.pageNo + 1 <= this.totalPage) {
+        this.pageNo = this.pageNo + 1;
+        this.isShowLine = false;
+        this.getCommentList();
+      } else {
+        this.isShowLine = true;
+      }
     },
     mounted() {
-      this.getCommentList();
+      this.userInfo = this.$store.getters.disc;
+      this.isComment = this.userInfo.isComment;
+      this.getLikedCommentByPlaceIdAndUserId();
     },
     methods: {
+      /**
+       * 预览图片
+       */
+      seePhoto(index, imgList) {
+        this.isComment = false;
+        if (imgList instanceof Array) {
+          wx.previewImage({
+            current: index, // 当前显示图片的http链接
+            urls: imgList // 需要预览的图片http链接列表
+          })
+        } else {
+          let imgArray = [];
+          imgArray.push(imgList);
+          wx.previewImage({
+            current: index, // 当前显示图片的http链接
+            urls: imgArray // 需要预览的图片http链接列表
+          })
+        }
+      },
       commit() {
         this.isComment = false;
         this.$router.push({
@@ -109,8 +157,141 @@
             pageNo: this.pageNo,
             pageSize: this.pageSize
           }
-        }).then(data => {
-          this.commentListInfo = res.data;
+        }).then(res => {
+          this.totalPage = res.data.totalPage;
+          if (res.data.totalNum < 11) {
+            this.isShowLine = true;
+          }
+          if (this.commentListInfo.length != 0 && (this.$route.query.placeId != this.commentListInfo[0].placeId)) {
+            this.commentListInfo = [];
+          }
+          let dataList = res.data.items;
+          for (let i = 0; i < dataList.length; i++) {
+            if (dataList[i].imageList) {
+              var userImg = JSON.parse(dataList[i].imageList);
+              let userImgArray = [];
+              for (let j = 0; j < userImg.length; j++) {
+                if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                  userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+                } else {
+                  userImgArray.push(userImg[j].pic_url);
+                }
+              }
+              this.$set(dataList[i], 'userImg', userImgArray);
+              if (userImgArray.length > 3) {
+                this.$set(dataList[i], 'moreThanThree', true);
+              } else {
+                this.$set(dataList[i], 'moreThanThree', false);
+              }
+              this.$set(dataList[i], 'imgLength', userImgArray.length);
+            } else {
+              this.$set(dataList[i], 'userImg', null);
+            }
+            this.$set(dataList[i], 'date', dataList[i].date.split(" ")[0]);
+            if (this.likedHistory) {// 有点赞记录
+              for (let m = 0; m < this.likedHistory.length; m++) {
+                if (dataList[i].id == this.likedHistory[m].placeCommentId) {
+                  this.$set(dataList[i], 'likeImgUrl', '/static/images/liked.png');
+                  break;
+                } else {
+                  this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+                }
+              }
+            } else {// 无点赞记录
+              this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+            }
+            this.commentListInfo.push(dataList[i]);
+          }
+        })
+      },
+      getNewComment() {
+        this.$httpWX.get({
+          url: apiurl.getPlaceCommentByUid,
+          data: {
+            uid: this.$route.query.placeId,
+            pageNo: 1,
+            pageSize: 1
+          }
+        }).then(res => {
+          this.totalPage = res.data.totalPage;
+          if (res.data.totalNum < 11) {
+            this.isShowLine = true;
+          }
+          let dataList = res.data.items;
+          for (let i = 0; i < dataList.length; i++) {
+            if (dataList[i].imageList) {
+              var userImg = JSON.parse(dataList[i].imageList);
+              let userImgArray = [];
+              for (let j = 0; j < userImg.length; j++) {
+                if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                  userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+                } else {
+                  userImgArray.push(userImg[j].pic_url);
+                }
+              }
+              this.$set(dataList[i], 'userImg', userImgArray);
+              if (userImgArray.length > 3) {
+                this.$set(dataList[i], 'moreThanThree', true);
+              } else {
+                this.$set(dataList[i], 'moreThanThree', false);
+              }
+              this.$set(dataList[i], 'imgLength', userImgArray.length);
+            } else {
+              this.$set(dataList[i], 'userImg', null);
+            }
+            this.$set(dataList[i], 'date', dataList[i].date.split(" ")[0]);
+            if (this.likedHistory) {// 有点赞记录
+              for (let m = 0; m < this.likedHistory.length; m++) {
+                if (dataList[i].id == this.likedHistory[m].placeCommentId) {
+                  this.$set(dataList[i], 'likeImgUrl', '/static/images/liked.png');
+                  break;
+                } else {
+                  this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+                }
+              }
+            } else {// 无点赞记录
+              this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+            }
+            this.commentListInfo.unshift(dataList[i]);
+          }
+        })
+      },
+      getLikedCommentByPlaceIdAndUserId() {
+        this.$httpWX.get({
+          url: apiurl.getLikedCommentByPlaceIdAndUserId,
+          data: {
+            placeId: this.$route.query.placeId,
+            openid: this.userInfo.openid
+          },
+        }).then(res => {
+          this.likedHistory = res.data;
+          this.getCommentList();
+        })
+      },
+      like(commentId, likeImgUrl, index) {
+        this.$httpWX.post({
+          url: apiurl.updateLikes,
+          data: {
+            userId: this.userInfo.openid,
+            placeCommentId: commentId,
+            placeId: this.$route.query.placeId
+          },
+        }).then(res => {
+          if (res.state == 0) {
+            if (likeImgUrl == '/static/images/like.png') {
+              this.commentListInfo[index].likeImgUrl = '/static/images/liked.png';
+              this.commentListInfo[index].likes = res.data.likes;
+            } else {
+              this.commentListInfo[index].likeImgUrl = '/static/images/like.png';
+              this.commentListInfo[index].likes = res.data.likes;
+            }
+          } else {
+            wx.showToast({
+              title: res.message,
+              duration: 3000,
+              icon: 'none'
+            });
+          }
         })
       }
     }

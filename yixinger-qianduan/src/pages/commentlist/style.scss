@@ -1,7 +1,8 @@
 .index {
   .firstDiv{
     border-top: 1px solid #E8E8E8;
-    padding: 10px 0 0 0;
+    padding: 10px;
+    margin-bottom: 60px;
     .commentDetail{
       border-bottom: 1px solid #E8E8E8;
       margin-top: 10px;
@@ -26,7 +27,6 @@
       }
       .detail{
         font-size: 13px;
-        height: 50px;
         letter-spacing: 1px;
         overflow:hidden;
         text-overflow: ellipsis;
@@ -60,10 +60,44 @@
     }
   }
   .secondDiv{
-    position: absolute;
+    padding: 0 10px;
+    .firstImg{
+      width: 80px;
+      height: 40px;
+      padding: 10px;
+      position: absolute;
+      left: 40px;
+      margin-top: -80px;
+    }
+    .content{
+      color: #9D9DA5;
+      font-size: 16px;
+      text-align: center;
+      position: absolute;
+      left: 149px;
+      margin-top: -64px;
+    }
+    .secondImg{
+      width: 80px;
+      height: 40px;
+      padding: 10px;
+      position: absolute;
+      right: 40px;
+      margin-top: -80px;
+    }
+    span{
+      color: #9D9DA5;
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+  .thirdDiv{
+   // position: absolute;
     bottom: 0;
     width: 100%;
     margin: 0 auto;
+    position: fixed;
+    z-index: 99;
     .commit-btn{
       margin-left: 5%;
       background-color: #1989FA;

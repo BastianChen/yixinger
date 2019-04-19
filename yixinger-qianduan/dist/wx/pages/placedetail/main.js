@@ -771,7 +771,7 @@ if (false) {(function () {
       });
     },
     seeAllComments: function seeAllComments() {
-      this.isComment = false;
+      this.isComment = true;
       this.$router.push({
         path: '../commentlist/main',
         query: {

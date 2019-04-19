@@ -1,7 +1,9 @@
 {
   "usingComponents": {
-    "van-popup": "/static/vant-weapp/dist/popup/index",
-    "van-action-sheet": "/static/vant-weapp/dist/action-sheet/index"
+    "van-row": "/static/vant-weapp/dist/row/index",
+    "van-col": "/static/vant-weapp/dist/col/index",
+    "van-rate": "/static/vant-weapp/dist/rate/index",
+    "van-tag": "/static/vant-weapp/dist/tag/index"
   },
   "navigationBarTitleText": "评论"
 }

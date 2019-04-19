@@ -240,6 +240,9 @@
   padding: 20rpx 0;
   text-align: center;
 }
+.index .comment .seeAll.data-v-8962503e:active {
+  background-color: #e8e8e8;
+}
 .index .photograph.data-v-8962503e {
   background: #ffffff;
   margin-bottom: 20rpx;
@@ -257,6 +260,9 @@
 }
 .index .photograph .title .more.data-v-8962503e {
   float: right;
+}
+.index .photograph .title.data-v-8962503e:active {
+  background-color: #e8e8e8;
 }
 .index .photograph .photos.data-v-8962503e {
   padding: 20rpx 0;

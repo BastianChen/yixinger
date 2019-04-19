@@ -238,6 +238,9 @@
       padding: 10px 0;
       text-align: center;
     }
+    .seeAll:active{
+      background-color: #e8e8e8;
+    }
   }
   .photograph{
     background: #ffffff;
@@ -255,6 +258,9 @@
       .more{
         float: right;
       }
+    }
+    .title:active{
+      background-color: #e8e8e8;
     }
     .photos{
       padding: 10px 0;

@@ -159,6 +159,15 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -168,15 +177,55 @@ if (false) {(function () {
       isComment: false,
       pageNo: 1,
       pageSize: 10,
-      commentListInfo: []
+      totalPage: 0,
+      commentListInfo: [],
+      likeImgUrl: '/static/images/like.png',
+      likedHistory: {},
+      isShowLine: false
     };
   },
-  onLoad: function onLoad(opts) {},
+  onShow: function onShow() {
+    this.userInfo = this.$store.getters.disc;
+    this.isComment = this.userInfo.isComment;
+    if (this.isComment) {
+      this.getNewComment();
+    }
+  },
+  onReachBottom: function onReachBottom() {
+    if (this.pageNo + 1 <= this.totalPage) {
+      this.pageNo = this.pageNo + 1;
+      this.isShowLine = false;
+      this.getCommentList();
+    } else {
+      this.isShowLine = true;
+    }
+  },
   mounted: function mounted() {
-    this.getCommentList();
+    this.userInfo = this.$store.getters.disc;
+    this.isComment = this.userInfo.isComment;
+    this.getLikedCommentByPlaceIdAndUserId();
   },
 
   methods: {
+    /**
+     * 预览图片
+     */
+    seePhoto: function seePhoto(index, imgList) {
+      this.isComment = false;
+      if (imgList instanceof Array) {
+        wx.previewImage({
+          current: index, // 当前显示图片的http链接
+          urls: imgList // 需要预览的图片http链接列表
+        });
+      } else {
+        var imgArray = [];
+        imgArray.push(imgList);
+        wx.previewImage({
+          current: index, // 当前显示图片的http链接
+          urls: imgArray // 需要预览的图片http链接列表
+        });
+      }
+    },
     commit: function commit() {
       this.isComment = false;
       this.$router.push({
@@ -197,8 +246,151 @@ if (false) {(function () {
           pageNo: this.pageNo,
           pageSize: this.pageSize
         }
-      }).then(function (data) {
-        _this.commentListInfo = res.data;
+      }).then(function (res) {
+        _this.totalPage = res.data.totalPage;
+        if (res.data.totalNum < 11) {
+          _this.isShowLine = true;
+        }
+        if (_this.commentListInfo.length != 0 && _this.$route.query.placeId != _this.commentListInfo[0].placeId) {
+          _this.commentListInfo = [];
+        }
+        var dataList = res.data.items;
+        for (var i = 0; i < dataList.length; i++) {
+          if (dataList[i].imageList) {
+            var userImg = JSON.parse(dataList[i].imageList);
+            var userImgArray = [];
+            for (var j = 0; j < userImg.length; j++) {
+              if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+              } else {
+                userImgArray.push(userImg[j].pic_url);
+              }
+            }
+            _this.$set(dataList[i], 'userImg', userImgArray);
+            if (userImgArray.length > 3) {
+              _this.$set(dataList[i], 'moreThanThree', true);
+            } else {
+              _this.$set(dataList[i], 'moreThanThree', false);
+            }
+            _this.$set(dataList[i], 'imgLength', userImgArray.length);
+          } else {
+            _this.$set(dataList[i], 'userImg', null);
+          }
+          _this.$set(dataList[i], 'date', dataList[i].date.split(" ")[0]);
+          if (_this.likedHistory) {
+            // 有点赞记录
+            for (var m = 0; m < _this.likedHistory.length; m++) {
+              if (dataList[i].id == _this.likedHistory[m].placeCommentId) {
+                _this.$set(dataList[i], 'likeImgUrl', '/static/images/liked.png');
+                break;
+              } else {
+                _this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+              }
+            }
+          } else {
+            // 无点赞记录
+            _this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+          }
+          _this.commentListInfo.push(dataList[i]);
+        }
+      });
+    },
+    getNewComment: function getNewComment() {
+      var _this2 = this;
+
+      this.$httpWX.get({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getPlaceCommentByUid,
+        data: {
+          uid: this.$route.query.placeId,
+          pageNo: 1,
+          pageSize: 1
+        }
+      }).then(function (res) {
+        _this2.totalPage = res.data.totalPage;
+        if (res.data.totalNum < 11) {
+          _this2.isShowLine = true;
+        }
+        var dataList = res.data.items;
+        for (var i = 0; i < dataList.length; i++) {
+          if (dataList[i].imageList) {
+            var userImg = JSON.parse(dataList[i].imageList);
+            var userImgArray = [];
+            for (var j = 0; j < userImg.length; j++) {
+              if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+              } else {
+                userImgArray.push(userImg[j].pic_url);
+              }
+            }
+            _this2.$set(dataList[i], 'userImg', userImgArray);
+            if (userImgArray.length > 3) {
+              _this2.$set(dataList[i], 'moreThanThree', true);
+            } else {
+              _this2.$set(dataList[i], 'moreThanThree', false);
+            }
+            _this2.$set(dataList[i], 'imgLength', userImgArray.length);
+          } else {
+            _this2.$set(dataList[i], 'userImg', null);
+          }
+          _this2.$set(dataList[i], 'date', dataList[i].date.split(" ")[0]);
+          if (_this2.likedHistory) {
+            // 有点赞记录
+            for (var m = 0; m < _this2.likedHistory.length; m++) {
+              if (dataList[i].id == _this2.likedHistory[m].placeCommentId) {
+                _this2.$set(dataList[i], 'likeImgUrl', '/static/images/liked.png');
+                break;
+              } else {
+                _this2.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+              }
+            }
+          } else {
+            // 无点赞记录
+            _this2.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+          }
+          _this2.commentListInfo.unshift(dataList[i]);
+        }
+      });
+    },
+    getLikedCommentByPlaceIdAndUserId: function getLikedCommentByPlaceIdAndUserId() {
+      var _this3 = this;
+
+      this.$httpWX.get({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].getLikedCommentByPlaceIdAndUserId,
+        data: {
+          placeId: this.$route.query.placeId,
+          openid: this.userInfo.openid
+        }
+      }).then(function (res) {
+        _this3.likedHistory = res.data;
+        _this3.getCommentList();
+      });
+    },
+    like: function like(commentId, likeImgUrl, index) {
+      var _this4 = this;
+
+      this.$httpWX.post({
+        url: __WEBPACK_IMPORTED_MODULE_0__service_api_js__["a" /* apiurl */].updateLikes,
+        data: {
+          userId: this.userInfo.openid,
+          placeCommentId: commentId,
+          placeId: this.$route.query.placeId
+        }
+      }).then(function (res) {
+        if (res.state == 0) {
+          if (likeImgUrl == '/static/images/like.png') {
+            _this4.commentListInfo[index].likeImgUrl = '/static/images/liked.png';
+            _this4.commentListInfo[index].likes = res.data.likes;
+          } else {
+            _this4.commentListInfo[index].likeImgUrl = '/static/images/like.png';
+            _this4.commentListInfo[index].likes = res.data.likes;
+          }
+        } else {
+          wx.showToast({
+            title: res.message,
+            duration: 3000,
+            icon: 'none'
+          });
+        }
       });
     }
   }
@@ -216,7 +408,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "firstDiv"
   }, _vm._l((_vm.commentListInfo), function(comment, commentListInfoIndex) {
-    return (commentListInfoIndex < 3) ? _c('div', {
+    return _c('div', {
       key: commentListInfoIndex,
       staticClass: "commentDetail"
     }, [_c('van-row', {
@@ -290,7 +482,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('div', {
       staticClass: "detail"
-    }, [_c('span', [_vm._v("\n                    " + _vm._s(comment.newComment) + "\n                  ")])])]), _vm._v(" "), _c('van-row', {
+    }, [_c('span', [_vm._v("\n                " + _vm._s(comment.comment) + "\n              ")])])]), _vm._v(" "), _c('van-row', {
       attrs: {
         "mpcomid": '8-' + commentListInfoIndex
       }
@@ -343,9 +535,27 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('span', {
       staticClass: "likes"
-    }, [_vm._v(_vm._s(comment.likes))])])])], 1)], 1)], 1) : _vm._e()
+    }, [_vm._v(_vm._s(comment.likes))])])])], 1)], 1)], 1)
   })), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.isShowLine),
+      expression: "isShowLine"
+    }],
     staticClass: "secondDiv"
+  }, [_c('img', {
+    staticClass: "firstImg",
+    attrs: {
+      "src": "../../../static/images/line.png"
+    }
+  }), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('img', {
+    staticClass: "secondImg",
+    attrs: {
+      "src": "../../../static/images/line.png"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "thirdDiv"
   }, [_c('van-row', {
     attrs: {
       "mpcomid": '12'
@@ -366,7 +576,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("\n        发表评论\n      ")])], 1)], 1)])
 }
-var staticRenderFns = []
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "content"
+  }, [_c('span', [_vm._v("\n            我是有底线的\n          ")])])
+}]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);

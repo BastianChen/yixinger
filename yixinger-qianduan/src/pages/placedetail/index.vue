@@ -679,8 +679,8 @@
           }
         });
       },
-      seeAllComments(){
-        this.isComment = false;
+      seeAllComments() {
+        this.isComment = true;
         this.$router.push({
           path: `../commentlist/main`,
           query: {

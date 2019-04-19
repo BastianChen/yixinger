@@ -4,8 +4,6 @@
     "van-col": "/static/vant-weapp/dist/col/index",
     "van-rate": "/static/vant-weapp/dist/rate/index",
     "van-tag": "/static/vant-weapp/dist/tag/index",
-    "van-rate": "/static/vant-weapp/dist/rate/index",
-    "van-tag": "/static/vant-weapp/dist/tag/index",
     "van-icon": "/static/vant-weapp/dist/icon/index",
     "van-action-sheet": "/static/vant-weapp/dist/action-sheet/index",
     "van-dialog": "/static/vant-weapp/dist/dialog/index"

@@ -1,7 +1,7 @@
 <template name="26e63b26">
   <view class="_div data-v-e625b5f4 index">
     <view class="_div data-v-e625b5f4 firstDiv">
-      <view class="_div data-v-e625b5f4 commentDetail" wx:key="commentListInfoIndex" key="{{commentListInfoIndex}}" wx:if="{{commentListInfoIndex<3}}" wx:for="{{commentListInfo}}" wx:for-index="commentListInfoIndex" wx:for-item="comment">
+      <view class="_div data-v-e625b5f4 commentDetail" wx:key="commentListInfoIndex" key="{{commentListInfoIndex}}" wx:for="{{commentListInfo}}" wx:for-index="commentListInfoIndex" wx:for-item="comment">
         <van-row class="_van-row data-v-e625b5f4">
           <van-col span="3" class="_van-col data-v-e625b5f4">
             <image class="_img data-v-e625b5f4 portrait" bindtap="handleProxy" src="{{comment.userImage}}" data-eventid="{{'0-'+commentListInfoIndex}}" data-comkey="{{$k}}"></image>
@@ -19,7 +19,7 @@
             </van-row>
             <van-row class="_van-row data-v-e625b5f4">
               <view class="_div data-v-e625b5f4 detail"><label class="_span data-v-e625b5f4">
-                  {{comment.newComment}}
+                  {{comment.comment}}
                 </label></view>
             </van-row>
             <van-row class="_van-row data-v-e625b5f4">
@@ -36,7 +36,12 @@
         </van-row>
       </view>
     </view>
-    <view class="_div data-v-e625b5f4 secondDiv">
+    <view class="_div data-v-e625b5f4 secondDiv" hidden="{{!(isShowLine)}}">
+      <image src="/static/images/line.png" class="_img data-v-e625b5f4 firstImg"></image>
+      <view class="_div data-v-e625b5f4 content"><label class="_span data-v-e625b5f4"> 我是有底线的 </label></view>
+      <image src="/static/images/line.png" class="_img data-v-e625b5f4 secondImg"></image>
+    </view>
+    <view class="_div data-v-e625b5f4 thirdDiv">
       <van-row class="_van-row data-v-e625b5f4"><button type="primary" size="mini" plain="false" bindtap="handleProxy" class="_button data-v-e625b5f4 commit-btn" data-eventid="{{'3'}}" data-comkey="{{$k}}"> 发表评论 </button></van-row>
     </view>
   </view>

@@ -2,7 +2,8 @@
 
 .index .firstDiv.data-v-e625b5f4 {
   border-top: 2rpx solid #E8E8E8;
-  padding: 20rpx 0 0 0;
+  padding: 20rpx;
+  margin-bottom: 120rpx;
 }
 .index .firstDiv .commentDetail.data-v-e625b5f4 {
   border-bottom: 2rpx solid #E8E8E8;
@@ -29,7 +30,6 @@
 }
 .index .firstDiv .commentDetail .detail.data-v-e625b5f4 {
   font-size: 26rpx;
-  height: 100rpx;
   letter-spacing: 2rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -61,12 +61,45 @@
   margin-left: 10rpx;
 }
 .index .secondDiv.data-v-e625b5f4 {
+  padding: 0 20rpx;
+}
+.index .secondDiv .firstImg.data-v-e625b5f4 {
+  width: 160rpx;
+  height: 80rpx;
+  padding: 20rpx;
   position: absolute;
+  left: 80rpx;
+  margin-top: -160rpx;
+}
+.index .secondDiv .content.data-v-e625b5f4 {
+  color: #9D9DA5;
+  font-size: 32rpx;
+  text-align: center;
+  position: absolute;
+  left: 298rpx;
+  margin-top: -128rpx;
+}
+.index .secondDiv .secondImg.data-v-e625b5f4 {
+  width: 160rpx;
+  height: 80rpx;
+  padding: 20rpx;
+  position: absolute;
+  right: 80rpx;
+  margin-top: -160rpx;
+}
+.index .secondDiv ._span.data-v-e625b5f4 {
+  color: #9D9DA5;
+  font-size: 28rpx;
+  text-align: center;
+}
+.index .thirdDiv.data-v-e625b5f4 {
   bottom: 0;
   width: 100%;
   margin: 0 auto;
+  position: fixed;
+  z-index: 99;
 }
-.index .secondDiv .commit-btn.data-v-e625b5f4 {
+.index .thirdDiv .commit-btn.data-v-e625b5f4 {
   margin-left: 5%;
   background-color: #1989FA;
   border-color: #1989FA;
