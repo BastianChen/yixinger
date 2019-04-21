@@ -220,13 +220,16 @@ public class PlaceApiController {
     @ApiOperation(value = "上传图片接口（用于上传多张图片）", notes = "上传图片接口（用于上传多张图片） ", response = BaseMessage.class)
     @RequestMapping(value = "/uploadImage", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> uploadImage(
-            @ApiParam(value = "图片", required = true) @RequestParam(value = "imageFile") MultipartFile imageFile) throws IOException {
+            @ApiParam(value = "图片", required = true) @RequestParam(value = "imageFile") MultipartFile imageFile,
+            @ApiParam(value = "图片保存路径类型（1：评论图片2：相册图片）", required = true) @RequestParam(value = "type") String type) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
-        String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/comment/";
+        String resourcePath = "1".equals(type) ? System.getProperty("user.dir") + "/src/main/resources/static/images/comment/"
+                : System.getProperty("user.dir") + "/src/main/resources/static/images/placephoto/";
         String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
         if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
             logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
-            baseMessage.setData("/images/comment/" + imageName + "_src.jpg");
+            baseMessage.setData("1".equals(type) ? "/images/comment/" + imageName + "_src.jpg" : "/images/placephoto/"
+                    + imageName + "_src.jpg");
         } else {
             logger.info("返回的图片名称为Null");
             baseMessage.initStateAndMessage(1001, "上传图片失败,返回的图片名称为Null");
@@ -375,14 +378,11 @@ public class PlaceApiController {
     @ApiOperation(value = "根据uid给游玩地点上传图片", notes = "根据uid给游玩地点上传图片 ", response = BaseMessage.class)
     @RequestMapping(value = "/addPlacePhoto", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> addPlacePhoto(
-            @ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile[] imageFiles,
-            //@ApiParam(value = "图片列表", required = true) @RequestParam(value = "imageFiles") MultipartFile imageFile,
+            @ApiParam(value = "图片列表集合", required = true) @RequestParam(value = "imageList") String imageList,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
             @ApiParam(value = "用户昵称", required = true) @RequestParam(value = "userName") String userName,
             @ApiParam(value = "地点uid", required = true) @RequestParam(value = "placeId") String placeId) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
-        String resourcePath = System.getProperty("user.dir") + "/yixinger-server/src/main/resources/static/images/placephoto/";
-        String imageName;
         PlacePhoto placePhoto = new PlacePhoto();
         placePhoto.setUserId(userId);
         placePhoto.setUserName(userName);
@@ -393,22 +393,18 @@ public class PlaceApiController {
         placePhoto.setCommentType(2);
         placePhoto.setReadTimes(0);
         placePhoto.setImageSource("易行ER");
-        for (MultipartFile imageFile : imageFiles) {
-            imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
-            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
-                logger.info("返回的图片名称为 {}", imageName);
-                if (CommonUtil.isNullOrWhiteSpace(placePhoto.getImageUrl())) {
-                    placePhoto.setImageUrl("/images/placephoto/" + imageName + "_src.jpg");
-                } else {
-                    placePhoto.setImageUrl(placePhoto.getImageUrl() + ";" + "/images/placephoto/" + imageName + "_src.jpg");
-                }
-            } else {
-                logger.info("返回的图片名称为Null");
-                baseMessage.initStateAndMessage(1001, "上传失败");
+        if (CommonUtil.isNotEmpty(imageList)) {
+            List<String> image = Arrays.asList(imageList.split(";"));
+            for (String img : image) {
+                logger.info("返回的图片名称为 {}", img);
+                placePhoto.setImageUrl("/images/placephoto/" + img + "_src.jpg");
+                placePhotoService.addPlacePhoto(placePhoto);
             }
+            baseMessage.setMessage("上传成功");
+        } else {
+            logger.info("返回的图片名称为Null");
+            baseMessage.initStateAndMessage(1001, "图片列表为空");
         }
-        placePhotoService.addPlacePhoto(placePhoto);
-        baseMessage.setMessage("上传成功");
         return baseMessage.response();
     }
 

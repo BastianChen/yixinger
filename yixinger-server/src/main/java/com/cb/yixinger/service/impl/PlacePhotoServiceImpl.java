@@ -112,6 +112,7 @@ public class PlacePhotoServiceImpl implements PlacePhotoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addPlacePhoto(PlacePhoto placePhoto) {
         placePhotoMapper.insertSelective(placePhoto);
     }
