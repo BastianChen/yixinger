@@ -147,19 +147,19 @@
         </van-row>
       </view>
     </view>
-    <view wx:if="{{isImgListShow}}" class="_div data-v-8962503e">
+    <view class="_div data-v-8962503e">
       <view class="_div data-v-8962503e photograph">
         <van-row class="_van-row data-v-8962503e">
-          <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">相册</label><label class="_span data-v-8962503e totalNumber">(共{{totalPhotoNumber}}张)</label> <label class="_span data-v-8962503e more">
+          <view class="_div data-v-8962503e title" bindtap="handleProxy" data-eventid="{{'11'}}" data-comkey="{{$k}}"><label class="_span data-v-8962503e">相册</label><label class="_span data-v-8962503e totalNumber">(共{{totalPhotoNumber}}张)</label> <label class="_span data-v-8962503e more">
               <van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon>
             </label></view>
-          <view class="_div data-v-8962503e photos">
-            <image wx:key="imgListIndex" key="{{imgListIndex}}" src="{{photos}}" wx:if="{{imgListIndex<=3}}" bindtap="handleProxy" data-eventid="{{'11-'+imgListIndex}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="imgListIndex" wx:for-item="photos" class="_img data-v-8962503e"></image>
+          <view class="_div data-v-8962503e photos" wx:if="{{isImgListShow}}">
+            <image wx:key="imgListIndex" key="{{imgListIndex}}" src="{{photos}}" wx:if="{{imgListIndex<=3}}" bindtap="handleProxy" data-eventid="{{'12-'+imgListIndex}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="imgListIndex" wx:for-item="photos" class="_img data-v-8962503e"></image>
           </view>
         </van-row>
       </view>
     </view>
-    <van-action-sheet show="{{show}}" actions="{{actions}}" cancel-text="取消" bindselect="handleProxy" bindcancel="handleProxy" data-eventid="{{'12'}}" data-comkey="{{$k}}" class="_van-action-sheet data-v-8962503e"></van-action-sheet>
+    <van-action-sheet show="{{show}}" actions="{{actions}}" cancel-text="取消" bindselect="handleProxy" bindcancel="handleProxy" data-eventid="{{'13'}}" data-comkey="{{$k}}" class="_van-action-sheet data-v-8962503e"></van-action-sheet>
     <van-dialog id="van-dialog" class="_van-dialog data-v-8962503e"></van-dialog>
   </view>
 </template>

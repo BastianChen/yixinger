@@ -42,13 +42,16 @@
   padding: 0 14rpx;
 }
 .index .fifthDiv.data-v-446d7bcb {
-  position: absolute;
   bottom: 0;
   width: 100%;
   margin: 0 auto;
+  position: fixed;
+  z-index: 99;
+  background: #ffffff;
 }
 .index .fifthDiv .commit-btn.data-v-446d7bcb {
   margin-left: 5%;
+  margin-top: 10rpx;
   background-color: #1989FA;
   border-color: #1989FA;
   color: #ffffff;

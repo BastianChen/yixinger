@@ -40,8 +40,8 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "查看评论",
-					"pathName": "pages/commentlist/main",
+					"name": "图片列表",
+					"pathName": "pages/photolist/main",
 					"scene": null
 				}
 			]

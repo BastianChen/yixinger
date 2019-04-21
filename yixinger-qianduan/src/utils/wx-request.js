@@ -2,10 +2,12 @@
 //const host = 'http://localhost:8080'
 const host = 'https://wzcb97.top'
 
-function request(url, method, data, header, title) {
-  wx.showLoading({
-    title: title == null ? '加载中...' : title // 数据请求前loading
-  })
+function request(url, method, data, header, title,isShowLoading) {
+  if (!isShowLoading) {
+    wx.showLoading({
+      title: title == null ? '加载中...' : title // 数据请求前loading
+    })
+  }
   if (header != null) {
     return new Promise((resolve, reject) => {
       wx.request({
@@ -54,11 +56,11 @@ function request(url, method, data, header, title) {
 }
 
 function get(obj) {
-  return request(obj.url, 'GET', obj.data, obj.header, obj.title)
+  return request(obj.url, 'GET', obj.data, obj.header, obj.title,obj.isShowLoading)
 }
 
 function post(obj) {
-  return request(obj.url, 'POST', obj.data, obj.header, obj.title)
+  return request(obj.url, 'POST', obj.data, obj.header, obj.title,obj.isShowLoading)
 }
 
 export default {

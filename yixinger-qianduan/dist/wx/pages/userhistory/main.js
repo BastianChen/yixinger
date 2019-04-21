@@ -2,14 +2,14 @@ require("../../common/manifest.js");
 require("../../common/vendor.js");
 global.webpackJsonp([2],{
 
-/***/ 218:
+/***/ 228:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(229);
 
 
 
@@ -18,16 +18,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 219:
+/***/ 229:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_2ecb44f2_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_2ecb44f2_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(232);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(220)
+  __webpack_require__(230)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -72,84 +72,19 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 220:
+/***/ 230:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 221:
+/***/ 231:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(7);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(3);
 //
 //
 //
@@ -291,6 +226,9 @@ if (false) {(function () {
       isSceneryDataEmpty: false
     };
   },
+  onShow: function onShow() {
+    this.getUserHistoryByUserId();
+  },
   onUnload: function onUnload() {
     this.restaurantData = [];
     this.sceneryData = [];
@@ -326,9 +264,6 @@ if (false) {(function () {
           } else {
             _this.active = 1;
           }
-          // setTimeout(() => {
-          //   wx.hideToast();
-          // }, 2000);
         });
       }).catch(function () {
         console.log("取消");
@@ -364,8 +299,10 @@ if (false) {(function () {
       }).then(function (res) {
         var placeData = res.data;
         var myDate = new Date();
-        var isTodayFirst = false;
-        var isYesterdayFirst = false;
+        var isTodayFirstOfScenery = false;
+        var isYesterdayFirstOfScenery = false;
+        var isTodayFirstOfRestaurant = false;
+        var isYesterdayFirstOfRestaurant = false;
         for (var i = 0; i < placeData.length; i++) {
           var dateArray = placeData[i].readDate.split('-');
           var isRepeated = false;
@@ -383,18 +320,36 @@ if (false) {(function () {
           placeData[i].month = dateArray[1].substring(1, 2) + '月';
           placeData[i].day = dateArray[2].split(' ')[0];
           if (myDate.getFullYear() == dateArray[0] && myDate.getMonth() + 1 == dateArray[1].substring(1, 2) && myDate.getDate() == dateArray[2].split(' ')[0]) {
-            if (!isTodayFirst) {
-              placeData[i].dateType = 1; // 时间为今天
-              isTodayFirst = true;
+            if (placeData[i].type == 1) {
+              if (!isTodayFirstOfScenery) {
+                placeData[i].dateType = 1; // 时间为今天
+                isTodayFirstOfScenery = true;
+              } else {
+                placeData[i].dateType = 4; // 时间为今天,但不是第一条
+              }
             } else {
-              placeData[i].dateType = 4; // 时间为今天,但不是第一条
+              if (!isTodayFirstOfRestaurant) {
+                placeData[i].dateType = 1; // 时间为今天
+                isTodayFirstOfRestaurant = true;
+              } else {
+                placeData[i].dateType = 4; // 时间为今天,但不是第一条
+              }
             }
           } else if (myDate.getFullYear() == dateArray[0] && myDate.getMonth() + 1 == dateArray[1].substring(1, 2) && myDate.getDate() - 1 == dateArray[2].split(' ')[0]) {
-            if (!isYesterdayFirst) {
-              placeData[i].dateType = 2; // 时间为昨天
-              isYesterdayFirst = true;
+            if (placeData[i].type == 1) {
+              if (!isYesterdayFirstOfScenery) {
+                placeData[i].dateType = 2; // 时间为昨天
+                isYesterdayFirstOfScenery = true;
+              } else {
+                placeData[i].dateType = 5; // 时间为昨天,但不是第一条
+              }
             } else {
-              placeData[i].dateType = 5; // 时间为昨天,但不是第一条
+              if (!isYesterdayFirstOfRestaurant) {
+                placeData[i].dateType = 2; // 时间为昨天
+                isYesterdayFirstOfRestaurant = true;
+              } else {
+                placeData[i].dateType = 5; // 时间为昨天,但不是第一条
+              }
             }
           } else {
             placeData[i].dateType = 3; // 正常时间
@@ -440,7 +395,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 222:
+/***/ 232:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -502,12 +457,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           "offset": "1",
           "mpcomid": '2-' + key + '-' + index
         }
-      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
+      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                      今天\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                      昨天\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                      " + _vm._s(item.day) + "\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                        \n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
         staticStyle: {
           "font-size": "14px",
           "margin-left": "-7px"
         }
-      }, [_vm._v("\n                  " + _vm._s(item.month) + "\n                ")]) : _vm._e()])]), _vm._v(" "), _c('van-col', {
+      }, [_vm._v("\n                      " + _vm._s(item.month) + "\n                    ")]) : _vm._e()])]), _vm._v(" "), _c('van-col', {
         attrs: {
           "span": "18",
           "eventid": '0-' + key + '-' + index,
@@ -631,5 +586,5 @@ if (false) {
 
 /***/ })
 
-},[218]);
+},[228]);
 //# sourceMappingURL=main.js.map

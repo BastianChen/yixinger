@@ -216,14 +216,14 @@
         </van-row>
       </div>
     </div>
-    <div v-if="isImgListShow">
+    <div>
       <div class="photograph">
         <van-row>
-          <div class="title">
+          <div class="title" @click="seePhotoList()">
             <span>相册</span><span class="totalNumber">(共{{totalPhotoNumber}}张)</span>
             <span class="more"><van-icon name="arrow"/></span>
           </div>
-          <div class="photos">
+          <div class="photos" v-if="isImgListShow">
             <img v-for="(photos, imgListIndex) in imgList"
                  :key="imgListIndex" :src="photos" v-if="imgListIndex<=3"
                  @click="seePhoto(photos,imgList)"/>
@@ -239,7 +239,7 @@
 
 <script>
   import {apiurl} from "@/service/api.js";
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapMutations} from 'vuex';
   import Dialog from '../../../static/vant-weapp/dist/dialog/dialog.js';
 
   export default {
@@ -349,11 +349,15 @@
       this.price = 0;
     },
     methods: {
+      ...mapMutations({
+        setDisc: 'set_disc'
+      }),
       /**
        * 预览图片
        */
       seePhoto(index, imgList) {
-        this.isComment = false;
+        this.userInfo.isComment = false;
+        this.setDisc(this.userInfo);
         if (imgList instanceof Array) {
           wx.previewImage({
             current: index, // 当前显示图片的http链接
@@ -371,6 +375,7 @@
       getPlaceDetailData() {
         this.tag1OfContent = [];
         this.tag2OfContent = [];
+        this.imgList = [];
         this.longitude = this.$route.query.longitude;
         this.latitude = this.$route.query.latitude;
         this.$httpWX.get({
@@ -517,7 +522,11 @@
           // 处理图片列表
           if (res.data.placePhotoList.length > 0) {
             for (let i = 0; i < res.data.placePhotoList.length; i++) {
-              this.imgList.push(res.data.placePhotoList[i].imageUrl)
+              if (res.data.placePhotoList[i].imageUrl.indexOf("/images/placephoto") != -1) {
+                this.imgList.push('https://wzcb97.top/' + res.data.placePhotoList[i].imageUrl)
+              } else {
+                this.imgList.push(res.data.placePhotoList[i].imageUrl)
+              }
             }
             this.totalPhotoNumber = this.imgList.length;
             this.isImgListShow = true;
@@ -636,6 +645,8 @@
         this.phoneNumber = number;
       },
       onSelect(index) {
+        this.userInfo.isComment = false;
+        this.setDisc(this.userInfo);
         if (index.target.name == '呼叫') {
           wx.makePhoneCall({
             phoneNumber: this.phoneNumber,
@@ -670,7 +681,8 @@
         });
       },
       addComment() {
-        this.isComment = false;
+        this.userInfo.isComment = false;
+        this.setDisc(this.userInfo);
         this.$router.push({
           path: `../addcomment/main`,
           query: {
@@ -680,9 +692,21 @@
         });
       },
       seeAllComments() {
-        this.isComment = true;
+        this.userInfo.isComment = false;
+        this.setDisc(this.userInfo);
         this.$router.push({
           path: `../commentlist/main`,
+          query: {
+            title: this.name,
+            placeId: this.uid
+          }
+        });
+      },
+      seePhotoList() {
+        this.userInfo.isComment = false;
+        this.setDisc(this.userInfo);
+        this.$router.push({
+          path: `../photolist/main`,
           query: {
             title: this.name,
             placeId: this.uid

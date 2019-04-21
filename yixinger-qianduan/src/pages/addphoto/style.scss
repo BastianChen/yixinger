@@ -1,0 +1,26 @@
+.index {
+  .firstDiv{
+    img {
+      width: 70px;
+      height: 70px;
+      padding: 10px;
+    }
+  }
+  .secondDiv{
+    bottom: 0;
+    width: 100%;
+    margin: 0 auto;
+    position: fixed;
+    z-index: 99;
+    background: #ffffff;
+    .commit-btn{
+      margin-left: 5%;
+      margin-top: 5px;
+      background-color: #1989FA;
+      border-color: #1989FA;
+      color: #ffffff;
+      width: 90%;
+      border-radius: 20px;
+    }
+  }
+}

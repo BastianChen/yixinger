@@ -44,5 +44,11 @@
     <view class="_div data-v-e625b5f4 thirdDiv">
       <van-row class="_van-row data-v-e625b5f4"><button type="primary" size="mini" plain="false" bindtap="handleProxy" class="_button data-v-e625b5f4 commit-btn" data-eventid="{{'3'}}" data-comkey="{{$k}}"> 发表评论 </button></van-row>
     </view>
+    <view class="_div data-v-e625b5f4 fifthDiv" wx:if="{{isCommentListEmpty}}">
+      <view class="_div data-v-e625b5f4">
+        <image src="/static/images/noContent.png" class="_img data-v-e625b5f4"></image>
+      </view>
+      <view class="_div data-v-e625b5f4 title"><label class="_span data-v-e625b5f4"> 暂无评论 </label></view>
+    </view>
   </view>
 </template>

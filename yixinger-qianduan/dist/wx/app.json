@@ -15,7 +15,9 @@
     "pages/placedetail/main",
     "pages/userhistory/main",
     "pages/addcomment/main",
-    "pages/commentlist/main"
+    "pages/commentlist/main",
+    "pages/addphoto/main",
+    "pages/photolist/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

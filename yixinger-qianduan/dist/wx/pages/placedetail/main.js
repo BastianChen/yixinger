@@ -2,14 +2,14 @@ require("../../common/manifest.js");
 require("../../common/vendor.js");
 global.webpackJsonp([4],{
 
-/***/ 208:
+/***/ 218:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(219);
 
 
 
@@ -18,16 +18,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 209:
+/***/ 219:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_8962503e_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_8962503e_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(222);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(210)
+  __webpack_require__(220)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -72,22 +72,22 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 210:
+/***/ 220:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 211:
+/***/ 221:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(13);
 
 //
 //
@@ -432,12 +432,15 @@ if (false) {(function () {
     this.price = 0;
   },
 
-  methods: {
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])({
+    setDisc: 'set_disc'
+  }), {
     /**
      * 预览图片
      */
     seePhoto: function seePhoto(index, imgList) {
-      this.isComment = false;
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
       if (imgList instanceof Array) {
         wx.previewImage({
           current: index, // 当前显示图片的http链接
@@ -457,6 +460,7 @@ if (false) {(function () {
 
       this.tag1OfContent = [];
       this.tag2OfContent = [];
+      this.imgList = [];
       this.longitude = this.$route.query.longitude;
       this.latitude = this.$route.query.latitude;
       this.$httpWX.get({
@@ -600,7 +604,11 @@ if (false) {(function () {
         // 处理图片列表
         if (res.data.placePhotoList.length > 0) {
           for (var _i4 = 0; _i4 < res.data.placePhotoList.length; _i4++) {
-            _this.imgList.push(res.data.placePhotoList[_i4].imageUrl);
+            if (res.data.placePhotoList[_i4].imageUrl.indexOf("/images/placephoto") != -1) {
+              _this.imgList.push('https://wzcb97.top/' + res.data.placePhotoList[_i4].imageUrl);
+            } else {
+              _this.imgList.push(res.data.placePhotoList[_i4].imageUrl);
+            }
           }
           _this.totalPhotoNumber = _this.imgList.length;
           _this.isImgListShow = true;
@@ -728,6 +736,8 @@ if (false) {(function () {
       this.phoneNumber = number;
     },
     onSelect: function onSelect(index) {
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
       if (index.target.name == '呼叫') {
         wx.makePhoneCall({
           phoneNumber: this.phoneNumber
@@ -761,7 +771,8 @@ if (false) {(function () {
       });
     },
     addComment: function addComment() {
-      this.isComment = false;
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
       this.$router.push({
         path: '../addcomment/main',
         query: {
@@ -771,7 +782,8 @@ if (false) {(function () {
       });
     },
     seeAllComments: function seeAllComments() {
-      this.isComment = true;
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
       this.$router.push({
         path: '../commentlist/main',
         query: {
@@ -779,13 +791,24 @@ if (false) {(function () {
           placeId: this.uid
         }
       });
+    },
+    seePhotoList: function seePhotoList() {
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
+      this.$router.push({
+        path: '../photolist/main',
+        query: {
+          title: this.name,
+          placeId: this.uid
+        }
+      });
     }
-  }
+  })
 });
 
 /***/ }),
 
-/***/ 212:
+/***/ 222:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1230,14 +1253,22 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "name": "arrow",
       "mpcomid": '36'
     }
-  })], 1) : _vm._e()])], 1)]), _vm._v(" "), (_vm.isImgListShow) ? _c('div', [_c('div', {
+  })], 1) : _vm._e()])], 1)]), _vm._v(" "), _c('div', [_c('div', {
     staticClass: "photograph"
   }, [_c('van-row', {
     attrs: {
       "mpcomid": '39'
     }
   }, [_c('div', {
-    staticClass: "title"
+    staticClass: "title",
+    attrs: {
+      "eventid": '11'
+    },
+    on: {
+      "click": function($event) {
+        _vm.seePhotoList()
+      }
+    }
   }, [_c('span', [_vm._v("相册")]), _c('span', {
     staticClass: "totalNumber"
   }, [_vm._v("(共" + _vm._s(_vm.totalPhotoNumber) + "张)")]), _vm._v(" "), _c('span', {
@@ -1247,14 +1278,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "name": "arrow",
       "mpcomid": '38'
     }
-  })], 1)]), _vm._v(" "), _c('div', {
+  })], 1)]), _vm._v(" "), (_vm.isImgListShow) ? _c('div', {
     staticClass: "photos"
   }, _vm._l((_vm.imgList), function(photos, imgListIndex) {
     return (imgListIndex <= 3) ? _c('img', {
       key: imgListIndex,
       attrs: {
         "src": photos,
-        "eventid": '11-' + imgListIndex
+        "eventid": '12-' + imgListIndex
       },
       on: {
         "click": function($event) {
@@ -1262,12 +1293,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }
       }
     }) : _vm._e()
-  }))])], 1)]) : _vm._e(), _vm._v(" "), _c('van-action-sheet', {
+  })) : _vm._e()])], 1)]), _vm._v(" "), _c('van-action-sheet', {
     attrs: {
       "show": _vm.show,
       "actions": _vm.actions,
       "cancel-text": "取消",
-      "eventid": '12',
+      "eventid": '13',
       "mpcomid": '40'
     },
     on: {
@@ -1294,5 +1325,5 @@ if (false) {
 
 /***/ })
 
-},[208]);
+},[218]);
 //# sourceMappingURL=main.js.map

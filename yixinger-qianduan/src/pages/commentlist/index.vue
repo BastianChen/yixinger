@@ -79,11 +79,22 @@
         </button>
       </van-row>
     </div>
+    <div class="fifthDiv" v-if="isCommentListEmpty">
+      <div>
+        <img src="../../../static/images/noContent.png"/>
+      </div>
+      <div class="title">
+        <span>
+          暂无评论
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import {apiurl} from "@/service/api.js";
+  import {mapMutations} from 'vuex';
 
   export default {
     data() {
@@ -95,7 +106,8 @@
         commentListInfo: [],
         likeImgUrl: '/static/images/like.png',
         likedHistory: {},
-        isShowLine: false
+        isShowLine: false,
+        isCommentListEmpty: false
       }
     },
     onShow() {
@@ -120,11 +132,13 @@
       this.getLikedCommentByPlaceIdAndUserId();
     },
     methods: {
+      ...mapMutations({
+        setDisc: 'set_disc'
+      }),
       /**
        * 预览图片
        */
       seePhoto(index, imgList) {
-        this.isComment = false;
         if (imgList instanceof Array) {
           wx.previewImage({
             current: index, // 当前显示图片的http链接
@@ -140,7 +154,6 @@
         }
       },
       commit() {
-        this.isComment = false;
         this.$router.push({
           path: `../addcomment/main`,
           query: {
@@ -158,49 +171,53 @@
             pageSize: this.pageSize
           }
         }).then(res => {
-          this.totalPage = res.data.totalPage;
-          if (res.data.totalNum < 11) {
-            this.isShowLine = true;
-          }
-          if (this.commentListInfo.length != 0 && (this.$route.query.placeId != this.commentListInfo[0].placeId)) {
-            this.commentListInfo = [];
-          }
-          let dataList = res.data.items;
-          for (let i = 0; i < dataList.length; i++) {
-            if (dataList[i].imageList) {
-              var userImg = JSON.parse(dataList[i].imageList);
-              let userImgArray = [];
-              for (let j = 0; j < userImg.length; j++) {
-                if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
-                  userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
-                } else {
-                  userImgArray.push(userImg[j].pic_url);
+          if (res.state != 0) {
+            this.isCommentListEmpty = true;
+          } else {
+            this.totalPage = res.data.totalPage;
+            if (res.data.totalNum < 11) {
+              this.isShowLine = true;
+            }
+            if (this.commentListInfo.length != 0 && (this.$route.query.placeId != this.commentListInfo[0].placeId)) {
+              this.commentListInfo = [];
+            }
+            let dataList = res.data.items;
+            for (let i = 0; i < dataList.length; i++) {
+              if (dataList[i].imageList) {
+                var userImg = JSON.parse(dataList[i].imageList);
+                let userImgArray = [];
+                for (let j = 0; j < userImg.length; j++) {
+                  if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                    userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+                  } else {
+                    userImgArray.push(userImg[j].pic_url);
+                  }
                 }
-              }
-              this.$set(dataList[i], 'userImg', userImgArray);
-              if (userImgArray.length > 3) {
-                this.$set(dataList[i], 'moreThanThree', true);
+                this.$set(dataList[i], 'userImg', userImgArray);
+                if (userImgArray.length > 3) {
+                  this.$set(dataList[i], 'moreThanThree', true);
+                } else {
+                  this.$set(dataList[i], 'moreThanThree', false);
+                }
+                this.$set(dataList[i], 'imgLength', userImgArray.length);
               } else {
-                this.$set(dataList[i], 'moreThanThree', false);
+                this.$set(dataList[i], 'userImg', null);
               }
-              this.$set(dataList[i], 'imgLength', userImgArray.length);
-            } else {
-              this.$set(dataList[i], 'userImg', null);
-            }
-            this.$set(dataList[i], 'date', dataList[i].date.split(" ")[0]);
-            if (this.likedHistory) {// 有点赞记录
-              for (let m = 0; m < this.likedHistory.length; m++) {
-                if (dataList[i].id == this.likedHistory[m].placeCommentId) {
-                  this.$set(dataList[i], 'likeImgUrl', '/static/images/liked.png');
-                  break;
-                } else {
-                  this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+              this.$set(dataList[i], 'date', dataList[i].date.split(" ")[0]);
+              if (this.likedHistory) {// 有点赞记录
+                for (let m = 0; m < this.likedHistory.length; m++) {
+                  if (dataList[i].id == this.likedHistory[m].placeCommentId) {
+                    this.$set(dataList[i], 'likeImgUrl', '/static/images/liked.png');
+                    break;
+                  } else {
+                    this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+                  }
                 }
+              } else {// 无点赞记录
+                this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
               }
-            } else {// 无点赞记录
-              this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+              this.commentListInfo.push(dataList[i]);
             }
-            this.commentListInfo.push(dataList[i]);
           }
         })
       },
@@ -211,48 +228,51 @@
             uid: this.$route.query.placeId,
             pageNo: 1,
             pageSize: 1
-          }
+          },
+          isShowLoading: true
         }).then(res => {
           this.totalPage = res.data.totalPage;
           if (res.data.totalNum < 11) {
             this.isShowLine = true;
           }
-          let dataList = res.data.items;
-          for (let i = 0; i < dataList.length; i++) {
-            if (dataList[i].imageList) {
-              var userImg = JSON.parse(dataList[i].imageList);
-              let userImgArray = [];
-              for (let j = 0; j < userImg.length; j++) {
-                if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
-                  userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
-                } else {
-                  userImgArray.push(userImg[j].pic_url);
+          if (res.data.items[0].id != this.commentListInfo[0].id) {
+            let dataList = res.data.items;
+            for (let i = 0; i < dataList.length; i++) {
+              if (dataList[i].imageList) {
+                var userImg = JSON.parse(dataList[i].imageList);
+                let userImgArray = [];
+                for (let j = 0; j < userImg.length; j++) {
+                  if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                    userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+                  } else {
+                    userImgArray.push(userImg[j].pic_url);
+                  }
                 }
-              }
-              this.$set(dataList[i], 'userImg', userImgArray);
-              if (userImgArray.length > 3) {
-                this.$set(dataList[i], 'moreThanThree', true);
+                this.$set(dataList[i], 'userImg', userImgArray);
+                if (userImgArray.length > 3) {
+                  this.$set(dataList[i], 'moreThanThree', true);
+                } else {
+                  this.$set(dataList[i], 'moreThanThree', false);
+                }
+                this.$set(dataList[i], 'imgLength', userImgArray.length);
               } else {
-                this.$set(dataList[i], 'moreThanThree', false);
+                this.$set(dataList[i], 'userImg', null);
               }
-              this.$set(dataList[i], 'imgLength', userImgArray.length);
-            } else {
-              this.$set(dataList[i], 'userImg', null);
-            }
-            this.$set(dataList[i], 'date', dataList[i].date.split(" ")[0]);
-            if (this.likedHistory) {// 有点赞记录
-              for (let m = 0; m < this.likedHistory.length; m++) {
-                if (dataList[i].id == this.likedHistory[m].placeCommentId) {
-                  this.$set(dataList[i], 'likeImgUrl', '/static/images/liked.png');
-                  break;
-                } else {
-                  this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+              this.$set(dataList[i], 'date', dataList[i].date.split(" ")[0]);
+              if (this.likedHistory) {// 有点赞记录
+                for (let m = 0; m < this.likedHistory.length; m++) {
+                  if (dataList[i].id == this.likedHistory[m].placeCommentId) {
+                    this.$set(dataList[i], 'likeImgUrl', '/static/images/liked.png');
+                    break;
+                  } else {
+                    this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+                  }
                 }
+              } else {// 无点赞记录
+                this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
               }
-            } else {// 无点赞记录
-              this.$set(dataList[i], 'likeImgUrl', '/static/images/like.png');
+              this.commentListInfo.unshift(dataList[i]);
             }
-            this.commentListInfo.unshift(dataList[i]);
           }
         })
       },
@@ -285,6 +305,8 @@
               this.commentListInfo[index].likeImgUrl = '/static/images/like.png';
               this.commentListInfo[index].likes = res.data.likes;
             }
+            this.userInfo.isComment = true;
+            this.setDisc(this.userInfo);
           } else {
             wx.showToast({
               title: res.message,

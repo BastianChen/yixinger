@@ -113,7 +113,7 @@
         this.comment = event.mp.detail.value;
       },
       commit() {
-        if (this.comment == ''||this.comment.match(/^[ ]*$/)) {
+        if (this.comment == '' || this.comment.match(/^[ ]*$/)) {
           wx.showToast({
             title: '请写下您的感受',
             icon: 'none'
@@ -136,10 +136,10 @@
         if (data.length != 0) {
           for (i = 0; i < data.length; i++) {
             wx.uploadFile({
-              url: 'https://wzcb97.top/' + apiurl.uploadImage, //仅为示例，非真实的接口地址
+              url: 'https://wzcb97.top/' + apiurl.uploadImage,
               filePath: data[i],
               name: 'imageFile',
-              data: null,
+              formData: {type: 1},
               success: function (res) {
                 if (JSON.parse(res.data).state == 0) {
                   var imageUrl = JSON.parse(res.data);

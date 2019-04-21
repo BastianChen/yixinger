@@ -136,10 +136,12 @@ if (false) {(function () {
 //const host = 'http://localhost:8080'
 var host = 'https://wzcb97.top';
 
-function request(url, method, data, header, title) {
-  wx.showLoading({
-    title: title == null ? '加载中...' : title // 数据请求前loading
-  });
+function request(url, method, data, header, title, isShowLoading) {
+  if (!isShowLoading) {
+    wx.showLoading({
+      title: title == null ? '加载中...' : title // 数据请求前loading
+    });
+  }
   if (header != null) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       wx.request({
@@ -188,11 +190,11 @@ function request(url, method, data, header, title) {
 }
 
 function get(obj) {
-  return request(obj.url, 'GET', obj.data, obj.header, obj.title);
+  return request(obj.url, 'GET', obj.data, obj.header, obj.title, obj.isShowLoading);
 }
 
 function post(obj) {
-  return request(obj.url, 'POST', obj.data, obj.header, obj.title);
+  return request(obj.url, 'POST', obj.data, obj.header, obj.title, obj.isShowLoading);
 }
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -210,7 +212,7 @@ function post(obj) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getters__ = __webpack_require__(92);

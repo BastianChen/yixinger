@@ -98,12 +98,26 @@
   margin: 0 auto;
   position: fixed;
   z-index: 99;
+  background: #ffffff;
 }
 .index .thirdDiv .commit-btn.data-v-e625b5f4 {
   margin-left: 5%;
+  margin-top: 10rpx;
   background-color: #1989FA;
   border-color: #1989FA;
   color: #ffffff;
   width: 90%;
   border-radius: 40rpx;
+}
+.index .fifthDiv.data-v-e625b5f4 {
+  text-align: center;
+  margin-top: 400rpx;
+}
+.index .fifthDiv ._img.data-v-e625b5f4 {
+  width: 160rpx;
+  height: 160rpx;
+}
+.index .fifthDiv .title.data-v-e625b5f4 {
+  font-size: 28rpx;
+  font-family: KaiTi;
 }
