@@ -397,7 +397,7 @@ public class PlaceApiController {
             List<String> image = Arrays.asList(imageList.split(";"));
             for (String img : image) {
                 logger.info("返回的图片名称为 {}", img);
-                placePhoto.setImageUrl("img");
+                placePhoto.setImageUrl(img);
                 placePhotoService.addPlacePhoto(placePhoto);
             }
             baseMessage.setMessage("上传成功");
