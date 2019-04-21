@@ -56,12 +56,12 @@ public class PlacePhotoServiceImpl implements PlacePhotoService {
 
     @Override
     public List<PlacePhoto> getPlacePhoto(String uid) {
-        Example example = new Example(PlacePhoto.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("placeId", uid);
-        criteria.andEqualTo("commentType", 1);
-        List<PlacePhoto> placePhotoList = placePhotoMapper.selectByExample(example);
-        return placePhotoList;
+        return placePhotoDao.getPlacePhotoByUid(uid);
+//        Example example = new Example(PlacePhoto.class);
+//        Example.Criteria criteria = example.createCriteria();
+//        criteria.andEqualTo("placeId", uid);
+//        List<PlacePhoto> placePhotoList = placePhotoMapper.selectByExample(example);
+//        return placePhotoList;
     }
 
     @Override
