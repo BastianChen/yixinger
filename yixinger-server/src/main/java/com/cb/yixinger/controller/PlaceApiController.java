@@ -331,6 +331,10 @@ public class PlaceApiController {
             logger.info("获取uid为 {} 的游玩地点的第 {} 页的图片成功", uid, pageNo);
             baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点的图片成功");
             baseMessage.setData(placePhotoPageBean);
+            String placePhtotListName = "placePhotoList?uid=" + uid;
+            List<PlacePhoto> placePhotoList = placePhotoService.getPlacePhoto(uid);
+            JSONArray placePhotoArray = JSONArray.parseArray(JSON.toJSONString(placePhotoList));
+            redisTemplate.opsForValue().set(placePhtotListName, placePhotoArray.toString(), 1, TimeUnit.HOURS);
         } else {
             logger.info("没有uid为 {} 的游玩地点的图片", uid);
             baseMessage.initStateAndMessage(1001, "暂无图片");
