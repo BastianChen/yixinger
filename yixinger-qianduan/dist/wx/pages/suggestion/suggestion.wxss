@@ -8,7 +8,6 @@ input {
   height: 60rpx;
   border-radius: 40rpx;
   background: #fff;
-  box-sizing: border-box;
   text-align: left;
   padding-left: 20px;
   font-size: 30rpx;
@@ -25,7 +24,7 @@ input {
 .icon {
   position: absolute;
   top: 20rpx;
-  left: 48rpx;
+  left: 28rpx;
   background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;
   background-size: 100%;
   width: 28rpx;
@@ -46,7 +45,7 @@ input {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .searchData:active {
@@ -56,4 +55,37 @@ input {
 button {
   border: 0px;
   text-align: left;
+}
+
+.firstRow {
+  margin-left: 3px;
+}
+
+.secondRow {
+  margin-left: 3px;
+  font-size: 16px;
+  color: #8b8386;
+}
+
+.navigation {
+  width: 20px;
+  height: 20px;
+}
+
+.imgDiv {
+  margin-left: 3px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.clear {
+  position: absolute;
+  z-index: 9999;
+  top: 8rpx;
+  right: 38rpx;
+}
+
+.clearImg {
+  width: 50rpx;
+  height: 50rpx;
 }

@@ -3,44 +3,31 @@ var config = require('../../libs/config.js');
 var city = '';
 Page({
   data: {
-    sugData: ''
+    sugData: '',
+    inputValue: ''
   },
-  onLoad: function () {
+  onLoad: function() {
     var that = this;
     var BMap = new bmap.BMapWX({
       ak: config.Config.ak
     });
-    // var fail = function(data) {
-    //   console.log(data)
-    // };
-    // var success = function(data) {
-    //   console.log(data)
-    //   city = data.originalData.results[0].city
-    // }
-    // BMap.search({
-    //   "query": '美食',
-    //   fail: fail,
-    //   success: success,
-    //   iconPath: '../../img/marker_checked.png',
-    //   iconTapPath: '../../img/marker_checked.png'
-    // });
   },
-  bindKeyInput: function (e) {
-
+  bindKeyInput: function(e) {
     var that = this;
     if (e.detail.value === '') {
       that.setData({
-        sugData: ''
+        sugData: '',
+        inputValue: e.detail.value
       });
       return;
     }
     var BMap = new bmap.BMapWX({
       ak: config.Config.ak
     });
-    var fail = function (data) {
+    var fail = function(data) {
       console.log(data)
     };
-    var success = function (data) {
+    var success = function(data) {
       console.log(data)
       var sugData = data.result;
       that.setData({
@@ -54,9 +41,8 @@ Page({
       fail: fail,
       success: success
     });
-
   },
-  search: function (e) {
+  search: function(e) {
     var data = e.currentTarget.dataset.name;
     var latitude = data.location.lat;
     var longitude = data.location.lng;
@@ -74,7 +60,7 @@ Page({
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
       },
       success(res) {
-        if(res.data.state==0){
+        if (res.data.state == 0) {
           wx.getLocation({
             type: 'wgs84',
             success(locate) {
@@ -86,21 +72,27 @@ Page({
               })
             }
           })
-        }else{
+        } else {
           wx.showToast({
             title: res.data.message,
             icon: 'none',
             duration: 3000
-          });                  
+          });
         }
       },
-      fail: function () {
+      fail: function() {
         // fail
       },
-      complete: function () {
+      complete: function() {
         // complete
       }
     })
-
+  },
+  clear: function() {
+    var that = this;
+    that.setData({
+      sugData: '',
+      inputValue: ''
+    })
   }
 })
