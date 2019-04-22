@@ -1,0 +1,24 @@
+@import "../../common/vendor.wxss";
+
+.index .firstDiv ._img.data-v-75831fc4 {
+  width: 140rpx;
+  height: 140rpx;
+  padding: 20rpx;
+}
+.index .secondDiv.data-v-75831fc4 {
+  bottom: 0;
+  width: 100%;
+  margin: 0 auto;
+  position: fixed;
+  z-index: 99;
+  background: #ffffff;
+}
+.index .secondDiv .commit-btn.data-v-75831fc4 {
+  margin-left: 5%;
+  margin-top: 10rpx;
+  background-color: #1989FA;
+  border-color: #1989FA;
+  color: #ffffff;
+  width: 90%;
+  border-radius: 40rpx;
+}

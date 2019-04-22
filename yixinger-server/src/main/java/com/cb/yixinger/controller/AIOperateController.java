@@ -79,12 +79,10 @@ public class AIOperateController {
     @RequestMapping(value = "/getPhotoDistinguishList", produces = {"application/json"}, method = RequestMethod.GET)
     public ResponseEntity<BaseMessage> getPhotoDistinguishList(
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
-            @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）") @RequestParam(value = "type", required = false) String type,
-            @ApiParam(value = "页数", required = true, defaultValue = "1") @RequestParam(value = "pageNo") Integer pageNo,
-            @ApiParam(value = "列数", required = true, defaultValue = "10") @RequestParam(value = "pageSize") Integer pageSize) {
+            @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）") @RequestParam(value = "type", required = false) String type) {
         BaseMessage baseMessage = new BaseMessage();
-        PageBean<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, type, pageNo, pageSize);
-        if (photoDistinguishList.getItems() != null && photoDistinguishList.getItems().size() > 0) {
+        List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, type);
+        if (photoDistinguishList != null && photoDistinguishList.size() > 0) {
             logger.info("获取图像识别所有记录成功");
             baseMessage.setMessage("获取图像识别所有记录成功");
             baseMessage.setData(photoDistinguishList);
@@ -145,12 +143,10 @@ public class AIOperateController {
     @ApiOperation(value = "根据用户openid获取文字识别所有记录", notes = "根据用户openid获取文字识别所有记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/getTextDistinguishList", produces = {"application/json"}, method = RequestMethod.GET)
     public ResponseEntity<BaseMessage> getTextDistinguishList(
-            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
-            @ApiParam(value = "页数", required = true, defaultValue = "1") @RequestParam(value = "pageNo") Integer pageNo,
-            @ApiParam(value = "列数", required = true, defaultValue = "10") @RequestParam(value = "pageSize") Integer pageSize) {
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
-        PageBean<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId, pageNo, pageSize);
-        if (textDistinguishList.getItems() != null && textDistinguishList.getItems().size() > 0) {
+        List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId);
+        if (textDistinguishList != null && textDistinguishList.size() > 0) {
             logger.info("获取文字识别所有记录成功");
             baseMessage.setMessage("获取文字识别所有记录成功");
             baseMessage.setData(textDistinguishList);

@@ -1,7 +1,8 @@
 package com.cb.yixinger.service;
 
-import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.TextDistinguish;
+
+import java.util.List;
 
 /**
  * @Description: 文字识别Service
@@ -11,7 +12,7 @@ import com.cb.yixinger.entity.TextDistinguish;
 public interface TextDistinguishService {
     TextDistinguish textDistinguish(String imagePath, String userId, String cityName, String imageSavePath);
 
-    PageBean<TextDistinguish> getTextDistinguishList(String userId, Integer pageNo, Integer pageSize);
+    List<TextDistinguish> getTextDistinguishList(String userId);
 
     void deleteTextDistinguishById(String idList);
 }

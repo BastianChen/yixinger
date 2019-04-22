@@ -78,13 +78,13 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
     }
 
     @Override
-    public PageBean<TextDistinguish> getTextDistinguishList(String userId, Integer pageNo, Integer pageSize) {
-        PageHelper.startPage(pageNo, pageSize);
+    public List<TextDistinguish> getTextDistinguishList(String userId) {
+        //PageHelper.startPage(pageNo, pageSize);
         List<TextDistinguish> textDistinguishList = textDistinguishDao.getTextDistinguishByUid(userId);
-        int totalCount = textDistinguishDao.getCountByUid(userId);
-        PageBean<TextDistinguish> pageData = new PageBean<>(pageNo, pageSize, totalCount);
-        pageData.setItems(textDistinguishList);
-        return pageData;
+//        int totalCount = textDistinguishDao.getCountByUid(userId);
+//        PageBean<TextDistinguish> pageData = new PageBean<>(pageNo, pageSize, totalCount);
+//        pageData.setItems(textDistinguishList);
+        return textDistinguishList;
     }
 
     @Override

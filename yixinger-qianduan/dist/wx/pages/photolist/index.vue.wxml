@@ -1,0 +1,37 @@
+<template name="58e4b879">
+  <view class="_div data-v-4f089b19 index">
+    <view class="_div data-v-4f089b19 firstDiv">
+      <van-row class="_van-row data-v-4f089b19">
+        <van-col span="12" class="_van-col data-v-4f089b19">
+          <view class="_div data-v-4f089b19 imgCol1">
+            <image wx:key="imgIndex" key="{{imgIndex}}" src="{{img.imageUrl}}" data-src="{{img.imageUrl}}" bindtap="handleProxy" data-eventid="{{'0-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{firstPhotoList}}" wx:for-index="imgIndex" wx:for-item="img" class="_img data-v-4f089b19" style=" {{('width:' + img.imgWidth + ';' + 'height:' + img.imgHeight + ';')}}"></image>
+          </view>
+        </van-col>
+        <van-col span="12" class="_van-col data-v-4f089b19">
+          <view class="_div data-v-4f089b19 imgCol2">
+            <image wx:key="imgIndex" key="{{imgIndex}}" src="{{img.imageUrl}}" data-src="{{img.imageUrl}}" bindtap="handleProxy" data-eventid="{{'1-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{secondPhotoList}}" wx:for-index="imgIndex" wx:for-item="img" class="_img data-v-4f089b19" style=" {{('width:' + img.imgWidth + ';' + 'height:' + img.imgHeight + ';')}}"></image>
+          </view>
+        </van-col>
+      </van-row>
+      <van-row class="_van-row data-v-4f089b19">
+        <view class="_div data-v-4f089b19 imgCol1">
+          <image wx:key="imgIndex" key="{{imgIndex}}" src="{{img.imageUrl}}" data-src="{{img.imageUrl}}" bindtap="handleProxy" data-eventid="{{'2-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{baiduPhotoList}}" wx:for-index="imgIndex" wx:for-item="img" class="_img data-v-4f089b19"></image>
+        </view>
+      </van-row>
+    </view>
+    <view class="_div data-v-4f089b19 secondDiv">
+      <van-row class="_van-row data-v-4f089b19"><button type="primary" size="mini" plain="false" bindtap="handleProxy" class="_button data-v-4f089b19 commit-btn" data-eventid="{{'3'}}" data-comkey="{{$k}}"> 上传图片 </button></van-row>
+    </view>
+    <view class="_div data-v-4f089b19 thirdDiv" hidden="{{!(isShowLine)}}">
+      <image src="/static/images/line.png" class="_img data-v-4f089b19 firstImg"></image>
+      <view class="_div data-v-4f089b19 content"><label class="_span data-v-4f089b19"> 我是有底线的 </label></view>
+      <image src="/static/images/line.png" class="_img data-v-4f089b19 secondImg"></image>
+    </view>
+    <view class="_div data-v-4f089b19 fifthDiv" wx:if="{{isPhotoListEmpty}}">
+      <view class="_div data-v-4f089b19">
+        <image src="/static/images/noContent.png" class="_img data-v-4f089b19"></image>
+      </view>
+      <view class="_div data-v-4f089b19 title"><label class="_span data-v-4f089b19"> 暂无图片 </label></view>
+    </view>
+  </view>
+</template>

@@ -2,13 +2,10 @@ package com.cb.yixinger.service.impl;
 
 import com.cb.yixinger.dao.PhotoDistinguishDao;
 import com.cb.yixinger.dao.PhotoDistinguishMapper;
-import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.PhotoDistinguish;
 import com.cb.yixinger.service.PhotoDistinguishService;
 import com.cb.yixinger.config.Constants;
-import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.ai.imageclassify.AipImageClassify;
-import com.github.pagehelper.PageHelper;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -102,13 +98,13 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
     }
 
     @Override
-    public PageBean<PhotoDistinguish> getPhotoDistinguishList(String userId, String type, Integer pageNo, Integer pageSize) {
-        PageHelper.startPage(pageNo, pageSize);
+    public List<PhotoDistinguish> getPhotoDistinguishList(String userId, String type) {
+        //PageHelper.startPage(pageNo, pageSize);
         List<PhotoDistinguish> photoDistinguishList = photoDistinguishDao.getPhotoDistinguishList(userId, type);
-        int totalCount = photoDistinguishDao.getCountByUid(userId,type);
-        PageBean<PhotoDistinguish> pageData = new PageBean<>(pageNo, pageSize, totalCount);
-        pageData.setItems(photoDistinguishList);
-        return pageData;
+//        int totalCount = photoDistinguishDao.getCountByUid(userId,type);
+//        PageBean<PhotoDistinguish> pageData = new PageBean<>(pageNo, pageSize, totalCount);
+//        pageData.setItems(photoDistinguishList);
+        return photoDistinguishList;
     }
 
     @Override

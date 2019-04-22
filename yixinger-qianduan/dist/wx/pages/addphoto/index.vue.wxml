@@ -1,0 +1,12 @@
+<template name="4b9a8604">
+  <view class="_div data-v-75831fc4 index">
+    <view class="_div data-v-75831fc4 firstDiv">
+      <image wx:key="imgIndex" key="{{imgIndex}}" src="{{img}}" data-src="{{img}}" bindtap="handleProxy" bindlongpress="handleProxy" data-eventid="{{'0-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="imgIndex" wx:for-item="img" class="_img data-v-75831fc4"></image>
+      <image src="/static/images/add_photo.png" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_img data-v-75831fc4"></image>
+    </view>
+    <view class="_div data-v-75831fc4 secondDiv">
+      <van-row class="_van-row data-v-75831fc4"><button type="primary" size="mini" plain="false" bindtap="handleProxy" class="_button data-v-75831fc4 commit-btn" data-eventid="{{'2'}}" data-comkey="{{$k}}"> 发表 </button></van-row>
+    </view>
+    <van-dialog id="van-dialog" class="_van-dialog data-v-75831fc4"></van-dialog>
+  </view>
+</template>
