@@ -1,11 +1,14 @@
 package com.cb.yixinger.service.impl;
 
+import com.cb.yixinger.dao.TextDistinguishDao;
 import com.cb.yixinger.dao.TextDistinguishMapper;
+import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.TextDistinguish;
 import com.cb.yixinger.service.TextDistinguishService;
 import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.ai.ocr.AipOcr;
+import com.github.pagehelper.PageHelper;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +33,8 @@ import java.util.List;
 public class TextDistinguishServiceImpl implements TextDistinguishService {
     @Autowired
     private TextDistinguishMapper textDistinguishMapper;
+    @Autowired
+    private TextDistinguishDao textDistinguishDao;
     private static final Logger logger = LoggerFactory.getLogger(TextDistinguishServiceImpl.class);
 
     /**
@@ -73,12 +78,13 @@ public class TextDistinguishServiceImpl implements TextDistinguishService {
     }
 
     @Override
-    public List<TextDistinguish> getTextDistinguishList(String userId) {
-        Example example = new Example(TextDistinguish.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("userId", userId);
-        List<TextDistinguish> textDistinguishList = textDistinguishMapper.selectByExample(example);
-        return textDistinguishList;
+    public PageBean<TextDistinguish> getTextDistinguishList(String userId, Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<TextDistinguish> textDistinguishList = textDistinguishDao.getTextDistinguishByUid(userId);
+        int totalCount = textDistinguishDao.getCountByUid(userId);
+        PageBean<TextDistinguish> pageData = new PageBean<>(pageNo, pageSize, totalCount);
+        pageData.setItems(textDistinguishList);
+        return pageData;
     }
 
     @Override

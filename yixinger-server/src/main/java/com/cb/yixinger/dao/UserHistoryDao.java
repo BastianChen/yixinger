@@ -2,9 +2,11 @@ package com.cb.yixinger.dao;
 
 import com.cb.yixinger.config.SqlMapper;
 import com.cb.yixinger.dto.UserHistoryDTO;
+import com.cb.yixinger.entity.UserHistory;
 import com.cb.yixinger.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -33,5 +35,13 @@ public class UserHistoryDao {
         }
         List<UserHistoryDTO> userHistoryDTOList = sqlMapper.selectList(sql, dictionary, UserHistoryDTO.class);
         return userHistoryDTOList;
+    }
+
+    public Integer getCountByUid(String userId) {
+        Example example = new Example(UserHistory.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId", userId);
+        Integer count = userHistoryMapper.selectCountByExample(example);
+        return count;
     }
 }

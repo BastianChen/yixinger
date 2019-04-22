@@ -1,11 +1,14 @@
 package com.cb.yixinger.service.impl;
 
+import com.cb.yixinger.dao.PhotoDistinguishDao;
 import com.cb.yixinger.dao.PhotoDistinguishMapper;
+import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.PhotoDistinguish;
 import com.cb.yixinger.service.PhotoDistinguishService;
 import com.cb.yixinger.config.Constants;
 import com.cb.yixinger.utils.CommonUtil;
 import com.cb.yixinger.utils.ai.imageclassify.AipImageClassify;
+import com.github.pagehelper.PageHelper;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +33,8 @@ import java.util.List;
 public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
     @Autowired
     private PhotoDistinguishMapper photoDistinguishMapper;
+    @Autowired
+    private PhotoDistinguishDao photoDistinguishDao;
     private static final Logger logger = LoggerFactory.getLogger(PhotoDistinguishSerciceImpl.class);
 
     /**
@@ -97,15 +102,13 @@ public class PhotoDistinguishSerciceImpl implements PhotoDistinguishService {
     }
 
     @Override
-    public List<PhotoDistinguish> getPhotoDistinguishList(String userId, String type) {
-        Example example = new Example(PhotoDistinguish.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("userId", userId);
-        if (!CommonUtil.isNullOrWhiteSpace(type)) {
-            criteria.andEqualTo("type", type);
-        }
-        List<PhotoDistinguish> photoDistinguishList = photoDistinguishMapper.selectByExample(example);
-        return photoDistinguishList;
+    public PageBean<PhotoDistinguish> getPhotoDistinguishList(String userId, String type, Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<PhotoDistinguish> photoDistinguishList = photoDistinguishDao.getPhotoDistinguishList(userId, type);
+        int totalCount = photoDistinguishDao.getCountByUid(userId,type);
+        PageBean<PhotoDistinguish> pageData = new PageBean<>(pageNo, pageSize, totalCount);
+        pageData.setItems(photoDistinguishList);
+        return pageData;
     }
 
     @Override

@@ -1,8 +1,7 @@
 package com.cb.yixinger.service;
 
+import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.PhotoDistinguish;
-
-import java.util.List;
 
 /**
  * @Description: 图像识别Service
@@ -12,7 +11,7 @@ import java.util.List;
 public interface PhotoDistinguishService {
     PhotoDistinguish photoDistinguishBytype(String imagePath, String type, String userId, String cityName, String imageSavePath);
 
-    List<PhotoDistinguish> getPhotoDistinguishList(String userId, String type);
+    PageBean<PhotoDistinguish> getPhotoDistinguishList(String userId, String type, Integer pageNo, Integer pageSize);
 
     void deletePhotoDistinguishById(String idList);
 }

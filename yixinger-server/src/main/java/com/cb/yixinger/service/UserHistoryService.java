@@ -1,9 +1,8 @@
 package com.cb.yixinger.service;
 
 import com.cb.yixinger.dto.UserHistoryDTO;
+import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.UserHistory;
-
-import java.util.List;
 
 /**
  * @Description: 用户浏览记录Service
@@ -19,6 +18,6 @@ public interface UserHistoryService {
 
     Boolean updateUserHistory(UserHistory userHistory);
 
-    List<UserHistoryDTO> getUserHistoryListByUserId(String userId);
+    PageBean<UserHistoryDTO> getUserHistoryListByUserId(String userId, Integer pageNo, Integer pageSize);
 
 }

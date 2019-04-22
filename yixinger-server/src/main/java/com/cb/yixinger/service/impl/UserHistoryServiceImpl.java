@@ -3,10 +3,12 @@ package com.cb.yixinger.service.impl;
 import com.cb.yixinger.dao.UserHistoryDao;
 import com.cb.yixinger.dao.UserHistoryMapper;
 import com.cb.yixinger.dto.UserHistoryDTO;
+import com.cb.yixinger.entity.PageBean;
 import com.cb.yixinger.entity.PlacePhoto;
 import com.cb.yixinger.entity.TkMybatisTest;
 import com.cb.yixinger.entity.UserHistory;
 import com.cb.yixinger.service.UserHistoryService;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +74,12 @@ public class UserHistoryServiceImpl implements UserHistoryService {
     }
 
     @Override
-    public List<UserHistoryDTO> getUserHistoryListByUserId(String userId) {
-        return userHistoryDao.getUserHistoryByUserId(userId);
+    public PageBean<UserHistoryDTO> getUserHistoryListByUserId(String userId, Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<UserHistoryDTO> userHistoryDTOList = userHistoryDao.getUserHistoryByUserId(userId);
+        int totalCount = userHistoryDao.getCountByUid(userId);
+        PageBean<UserHistoryDTO> pageData = new PageBean<>(pageNo, pageSize, totalCount);
+        pageData.setItems(userHistoryDTOList);
+        return pageData;
     }
 }
