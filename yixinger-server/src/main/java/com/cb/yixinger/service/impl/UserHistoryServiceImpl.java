@@ -74,12 +74,12 @@ public class UserHistoryServiceImpl implements UserHistoryService {
     }
 
     @Override
-    public PageBean<UserHistoryDTO> getUserHistoryListByUserId(String userId, Integer pageNo, Integer pageSize) {
-        PageHelper.startPage(pageNo, pageSize);
+    public List<UserHistoryDTO> getUserHistoryListByUserId(String userId) {
+        //PageHelper.startPage(pageNo, pageSize);
         List<UserHistoryDTO> userHistoryDTOList = userHistoryDao.getUserHistoryByUserId(userId);
-        int totalCount = userHistoryDao.getCountByUid(userId);
-        PageBean<UserHistoryDTO> pageData = new PageBean<>(pageNo, pageSize, totalCount);
-        pageData.setItems(userHistoryDTOList);
-        return pageData;
+//        int totalCount = userHistoryDao.getCountByUid(userId);
+//        PageBean<UserHistoryDTO> pageData = new PageBean<>(pageNo, pageSize, totalCount);
+//        pageData.setItems(userHistoryDTOList);
+        return userHistoryDTOList;
     }
 }

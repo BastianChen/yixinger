@@ -227,6 +227,7 @@ if (false) {(function () {
     };
   },
   onShow: function onShow() {
+    this.userInfo = this.$store.getters.disc;
     this.getUserHistoryByUserId();
   },
   onUnload: function onUnload() {

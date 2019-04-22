@@ -477,16 +477,14 @@ public class PlaceApiController {
     public ResponseEntity<BaseMessage> getUserHistoryByUserId(
             @ApiParam(value = "经度1（杭州是120左右）", required = true) @RequestParam double longitude,
             @ApiParam(value = "纬度1（杭州是30左右）", required = true) @RequestParam double latitude,
-            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
-            @ApiParam(value = "页数", required = true, defaultValue = "1") @RequestParam(value = "pageNo") Integer pageNo,
-            @ApiParam(value = "列数", required = true, defaultValue = "10") @RequestParam(value = "pageSize") Integer pageSize) {
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
-        PageBean<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId, pageNo, pageSize);
-        if (userHistoryList.getItems() != null && userHistoryList.getItems().size() > 0) {
+        List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
+        if (userHistoryList != null && userHistoryList.size() > 0) {
             logger.info("获取openid为 {} 的浏览记录成功", userId);
-            for (int i = 0; i < userHistoryList.getItems().size(); i++) {
-                Place place = placeService.getPlaceByUid(userHistoryList.getItems().get(i).getPlaceId());
-                userHistoryList.getItems().get(i).setDistance(DistanceUtil.GetShortDistance(longitude, latitude,
+            for (int i = 0; i < userHistoryList.size(); i++) {
+                Place place = placeService.getPlaceByUid(userHistoryList.get(i).getPlaceId());
+                userHistoryList.get(i).setDistance(DistanceUtil.GetShortDistance(longitude, latitude,
                         place.getLongitude(), place.getLatitude()));
             }
             baseMessage.setData(userHistoryList);

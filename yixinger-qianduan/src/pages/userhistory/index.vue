@@ -140,6 +140,7 @@
       }
     },
     onShow() {
+      this.userInfo = this.$store.getters.disc;
       this.getUserHistoryByUserId();
     },
     onUnload() {
