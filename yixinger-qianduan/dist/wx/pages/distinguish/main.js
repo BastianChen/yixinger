@@ -154,6 +154,36 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -255,12 +285,12 @@ if (false) {(function () {
         //console.log("图片" + JSON.stringify(res))
         var winWidth = wx.getSystemInfoSync().windowWidth;
         if (res.width > winWidth) {
-          _this.imgWidth = winWidth * 0.9 + 'px';
+          _this.imgWidth = winWidth * 0.9;
           var rate = winWidth * 0.9 / res.width;
-          _this.imgHeight = res.height * rate + 'px';
+          _this.imgHeight = res.height * rate;
         } else {
-          _this.imgWidth = res.width + 'px';
-          _this.imgHeight = res.height + 'px';
+          _this.imgWidth = res.width;
+          _this.imgHeight = res.height;
         }
         _this.isShow = true;
         //console.log("屏幕宽度" + winWidth);
@@ -275,7 +305,11 @@ if (false) {(function () {
       } else {
         this.results[i].score = (this.results[i].score * 100).toFixed(2);
       }
-      //console.log("score" + this.results[i].baike_info.image_url);
+      if (!this.results[i].baike_info || !this.results[i].baike_info.image_url) {
+        var baike = {};
+        baike.image_url = '/static/images/no_photo.png';
+        this.$set(this.results[i], 'baike_info', baike);
+      }
     }
   },
 
@@ -301,24 +335,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "index"
   }, [_c('div', {
+    staticClass: "radius"
+  }), _vm._v(" "), _c('div', {
     staticClass: "firstDiv"
   }, [_c('div', {
-    staticClass: "firstRow"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '1'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "6",
-      "offset": "3",
-      "mpcomid": '0'
-    }
-  }, [_c('span', [_vm._v("\n          识别图片：\n        ")])])], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "secondRow"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '2'
+      "mpcomid": '0'
     }
   }, [_c('img', {
     directives: [{
@@ -328,8 +352,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       expression: "isShow"
     }],
     style: ({
-      width: _vm.imgWidth,
-      height: _vm.imgHeight
+      width: _vm.imgWidth + 'px',
+      height: _vm.imgHeight + 'px'
     }),
     attrs: {
       "src": _vm.imageUrl,
@@ -341,88 +365,68 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }
   })])], 1), _vm._v(" "), _c('div', {
-    staticClass: "thirdRow"
-  }, [_c('van-row', {
+    staticClass: "list",
+    style: ({
+      'margin-top': _vm.imgHeight - 40 + 'px'
+    })
+  }, [_c('ul', [_c('scroll-view', {
+    staticClass: "scroll-view",
     attrs: {
-      "mpcomid": '4'
+      "scroll-x": true
     }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "6",
-      "offset": "3",
-      "mpcomid": '3'
-    }
-  }, [_c('span', [_vm._v("\n            识别结果：\n          ")])])], 1)], 1), _vm._v(" "), _c('div', {
-    staticClass: "forthRow"
   }, _vm._l((_vm.results), function(domain, index) {
-    return _c('van-row', {
-      key: domain.key,
-      attrs: {
-        "mpcomid": '9-' + index
-      }
+    return _c('li', {
+      key: domain.key
     }, [_c('div', {
-      staticStyle: {
-        "margin-top": "20px"
-      }
-    }, [_c('div', [_c('van-col', {
+      staticClass: "border"
+    }, [_c('div', {
+      staticClass: "top"
+    }, [_c('div', {
+      staticClass: "firstRow"
+    }, [_c('van-row', {
       attrs: {
-        "span": "6",
-        "offset": "1",
-        "mpcomid": '5-' + index
-      }
-    }, [(_vm.type == 1) ? _c('span', [_vm._v(_vm._s(domain.keyword))]) : _vm._e(), _vm._v(" "), (_vm.type != 1) ? _c('span', [_vm._v(_vm._s(domain.name))]) : _vm._e()])], 1), _vm._v(" "), _c('div', {
-      staticStyle: {
-        "padding-top": "8px"
+        "mpcomid": '3-' + index
       }
     }, [_c('van-col', {
+      staticClass: "firstCol",
       attrs: {
-        "span": "11",
-        "offset": "2",
-        "mpcomid": '8-' + index
+        "span": "16",
+        "offset": "1",
+        "mpcomid": '1-' + index
       }
-    }, [(_vm.type != 4) ? _c('van-progress', {
+    }, [(_vm.type == 1) ? _c('div', {
+      staticClass: "keyword"
+    }, [_vm._v(_vm._s(domain.keyword))]) : _vm._e(), _vm._v(" "), (_vm.type != 1) ? _c('div', {
+      staticClass: "keyword"
+    }, [_vm._v(_vm._s(domain.name))]) : _vm._e(), _vm._v(" "), (_vm.type == 1) ? _c('div', {
+      staticClass: "root"
+    }, [_vm._v(_vm._s(domain.root))]) : _vm._e()]), _vm._v(" "), _c('van-col', {
+      staticClass: "secondCol",
       attrs: {
-        "percentage": domain.score,
-        "color": "linear-gradient(to right, #87CEFF, #00BFFF)",
-        "mpcomid": '6-' + index
+        "span": "5",
+        "offset": "1",
+        "mpcomid": '2-' + index
       }
-    }) : _vm._e(), _vm._v(" "), (_vm.type == 4) ? _c('van-progress', {
+    }, [(_vm.type == 4) ? _c('div', {
+      staticClass: "score"
+    }, [_vm._v(_vm._s(domain.probability) + "%")]) : _c('div', {
+      staticClass: "score"
+    }, [_vm._v(_vm._s(domain.score) + "%")]), _vm._v(" "), _c('div', {
+      staticClass: "scoredDiv"
+    }, [_vm._v("相似度")])])], 1)], 1)]), _vm._v(" "), _c('img', {
       attrs: {
-        "percentage": domain.probability,
-        "color": "linear-gradient(to right, #87CEFF, #00BFFF)",
-        "mpcomid": '7-' + index
+        "src": domain.baike_info.image_url,
+        "eventid": '1-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.seePhoto(domain.baike_info.image_url)
+        }
       }
-    }) : _vm._e()], 1)], 1)])])
-  }))]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.isTranslated),
-      expression: "isTranslated"
-    }],
-    staticClass: "secondDiv"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "secondRow"
-  }, [_c('div', [_c('wxParse', {
-    attrs: {
-      "content": _vm.translateResult,
-      "mpcomid": '10'
-    }
-  }), _vm._v(" "), _c('img', {
-    attrs: {
-      "src": _vm.broadcastImgUrl,
-      "eventid": '1'
-    },
-    on: {
-      "click": _vm.play
-    }
-  })], 1)])])])
+    })])])
+  }))], 1)], 1)])])
 }
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "firstRow"
-  }, [_c('span', [_vm._v("\n          -- 翻译结果 --\n        ")])])
-}]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);

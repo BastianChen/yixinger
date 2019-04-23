@@ -3,9 +3,18 @@
 .my .login.data-v-40d83a4c {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  margin-top: 100%;
+  margin-top: 40%;
+}
+.my .login .imgAndSpan.data-v-40d83a4c {
+  margin: 80rpx auto;
+  width: 70%;
+  font-size: 32rpx;
+  color: #8B8B83;
+  text-align: center;
+}
+.my .login .imgAndSpan ._img.data-v-40d83a4c {
+  width: 260rpx;
+  height: 260rpx;
 }
 .my .login .button.data-v-40d83a4c {
   margin: auto;

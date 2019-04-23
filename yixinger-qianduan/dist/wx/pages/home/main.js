@@ -163,6 +163,16 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -170,12 +180,10 @@ if (false) {(function () {
 /* harmony default export */ __webpack_exports__["a"] = ({
   computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['disc'])),
   created: function created() {
+    this.isLogin = this.$store.getters.disc.isLogin ? true : false;
     this.getUserInfo();
-    //this.userInfo = this.$store.getters.disc;
   },
-  mounted: function mounted() {
-    //this.userInfo = this.$store.getters.disc;
-  },
+  mounted: function mounted() {},
   data: function data() {
     return {
       isLogin: false,
@@ -189,6 +197,14 @@ if (false) {(function () {
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapMutations */])({
     setDisc: 'set_disc'
   }), {
+    seePhoto: function seePhoto(img) {
+      var imgArray = [];
+      imgArray.push(img);
+      wx.previewImage({
+        current: img, // 当前显示图片的http链接
+        urls: imgArray // 需要预览的图片http链接列表
+      });
+    },
     getUserInfo: function getUserInfo() {
       var _this2 = this;
 
@@ -218,6 +234,7 @@ if (false) {(function () {
                     _this.openid = data.data;
                     _this.userInfo.openid = _this.openid;
                     _this.userInfo.isComment = false;
+                    _this.userInfo.isLogin = true;
                     _this.setDisc(_this.userInfo);
                     _this.$httpWX.get({
                       url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].getUser,
@@ -253,11 +270,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', [_c('img', {
     attrs: {
       "src": _vm.userInfo.avatarUrl,
-      "open-type": "getUserInfo",
+      "data-src": _vm.userInfo.avatarUrl,
       "eventid": '0'
     },
     on: {
-      "click": _vm.getUserInfo
+      "click": function($event) {
+        _vm.seePhoto(_vm.userInfo.avatarUrl)
+      }
     }
   }), _vm._v(" "), _c('div', [_c('p', [_vm._v(_vm._s(_vm.userInfo.nickName))])], 1)])]) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('div', [_c('div', {
     staticStyle: {
@@ -318,7 +337,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   })], 1)]) : _vm._e(), _vm._v(" "), (!_vm.isLogin) ? _c('div', {
     staticClass: "login"
-  }, [_c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "button"
   }, [_c('button', {
     staticStyle: {
@@ -339,7 +358,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("\n          登录\n        ")])], 1)]) : _vm._e()])])
 }
-var staticRenderFns = []
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "imgAndSpan"
+  }, [_c('div', [_c('img', {
+    attrs: {
+      "src": "../../../static/images/trip.png"
+    }
+  })]), _vm._v(" "), _c('div', [_c('span', [_vm._v("\n            登录用于获取用户的非隐私信息，并用于后续用户查看自己的行为记录\n          ")])])])
+}]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);

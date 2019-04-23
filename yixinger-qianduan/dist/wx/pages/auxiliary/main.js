@@ -145,6 +145,55 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -354,19 +403,9 @@ if (false) {(function () {
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "index"
-  }, [_c('div', [_c('button', {
-    staticStyle: {
-      "background-color": "#1989FA",
-      "border-color": "#1989FA",
-      "color": "#ffffff",
-      "width": "90%",
-      "margin-top": "20px"
-    },
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "secondDiv",
     attrs: {
-      "type": "primary",
-      "size": "default",
-      "plain": "false",
-      "bindtap": "primary",
       "eventid": '0'
     },
     on: {
@@ -374,16 +413,35 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.photoDistinguish()
       }
     }
-  }, [_vm._v("\n      图像识别\n    ")])], 1), _vm._v(" "), _c('div', [_c('button', {
-    staticStyle: {
-      "width": "90%",
-      "margin-top": "20px"
-    },
+  }, [_c('van-row', {
     attrs: {
-      "type": "primary",
-      "size": "default",
-      "plain": "false",
-      "bindtap": "primary",
+      "mpcomid": '2'
+    }
+  }, [_c('van-col', {
+    attrs: {
+      "span": "3",
+      "offset": "1",
+      "mpcomid": '0'
+    }
+  }, [_c('img', {
+    attrs: {
+      "src": "../../../static/images/photo_distinguish.png"
+    }
+  })]), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "17",
+      "offset": "2",
+      "mpcomid": '1'
+    }
+  }, [_c('div', {
+    staticClass: "firstCol"
+  }, [_c('span', [_vm._v("\n            图像识别\n          ")])]), _vm._v(" "), _c('div', {
+    staticClass: "secondCol"
+  }, [_c('span', [_vm._v("\n            包括通用图像识别等常用识别\n          ")])])])], 1)], 1), _vm._v(" "), _c('div', {
+    staticClass: "thirdDiv"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "fourthDiv",
+    attrs: {
       "eventid": '1'
     },
     on: {
@@ -391,13 +449,37 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.textDistinguish()
       }
     }
-  }, [_vm._v("\n      通用文字识别\n    ")])], 1), _vm._v(" "), _c('van-action-sheet', {
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '5'
+    }
+  }, [_c('van-col', {
+    attrs: {
+      "span": "3",
+      "offset": "1",
+      "mpcomid": '3'
+    }
+  }, [_c('img', {
+    attrs: {
+      "src": "../../../static/images/text_distinguish.png"
+    }
+  })]), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "17",
+      "offset": "2",
+      "mpcomid": '4'
+    }
+  }, [_c('div', {
+    staticClass: "firstCol"
+  }, [_c('span', [_vm._v("\n            文字识别\n          ")])]), _vm._v(" "), _c('div', {
+    staticClass: "secondCol"
+  }, [_c('span', [_vm._v("\n            目前只支持通用文字识别\n          ")])])])], 1)], 1), _vm._v(" "), _c('van-action-sheet', {
     attrs: {
       "show": _vm.show,
       "actions": _vm.actions,
       "cancel-text": "取消",
       "eventid": '2',
-      "mpcomid": '0'
+      "mpcomid": '6'
     },
     on: {
       "cancel": _vm.onCancel,
@@ -405,7 +487,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   })], 1)
 }
-var staticRenderFns = []
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "firstDiv"
+  }, [_c('div', [_c('img', {
+    attrs: {
+      "src": "../../../static/images/trip.png"
+    }
+  })]), _vm._v(" "), _c('div', [_c('span', [_vm._v("\n          辅助功能模块主要提供图像识别以及文字识别两大功能。另外，在文字识别模块中还提供了文字翻译以及语音合成功能。\n      ")])])])
+}]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);

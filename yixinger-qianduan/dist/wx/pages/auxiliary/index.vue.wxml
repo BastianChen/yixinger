@@ -1,7 +1,34 @@
 <template name="2587c7ef">
   <view class="_div data-v-1babaa8f index">
-    <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="handleProxy" style="background-color: #1989FA;border-color: #1989FA;color: #ffffff;width: 90%;margin-top: 20px" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_button data-v-1babaa8f"> 图像识别 </button></view>
-    <view class="_div data-v-1babaa8f"><button type="primary" size="default" plain="false" bindtap="handleProxy" style="width: 90%;margin-top: 20px" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-1babaa8f"> 通用文字识别 </button></view>
+    <view class="_div data-v-1babaa8f firstDiv">
+      <view class="_div data-v-1babaa8f">
+        <image src="/static/images/trip.png" class="_img data-v-1babaa8f"></image>
+      </view>
+      <view class="_div data-v-1babaa8f"><label class="_span data-v-1babaa8f">   辅助功能模块主要提供图像识别以及文字识别两大功能。另外，在文字识别模块中还提供了文字翻译以及语音合成功能。 </label></view>
+    </view>
+    <view class="_div data-v-1babaa8f secondDiv" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">
+      <van-row class="_van-row data-v-1babaa8f">
+        <van-col span="3" offset="1" class="_van-col data-v-1babaa8f">
+          <image src="/static/images/photo_distinguish.png" class="_img data-v-1babaa8f"></image>
+        </van-col>
+        <van-col span="17" offset="2" class="_van-col data-v-1babaa8f">
+          <view class="_div data-v-1babaa8f firstCol"><label class="_span data-v-1babaa8f"> 图像识别 </label></view>
+          <view class="_div data-v-1babaa8f secondCol"><label class="_span data-v-1babaa8f"> 包括通用图像识别等常用识别 </label></view>
+        </van-col>
+      </van-row>
+    </view>
+    <view class="_div data-v-1babaa8f thirdDiv"></view>
+    <view class="_div data-v-1babaa8f fourthDiv" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}">
+      <van-row class="_van-row data-v-1babaa8f">
+        <van-col span="3" offset="1" class="_van-col data-v-1babaa8f">
+          <image src="/static/images/text_distinguish.png" class="_img data-v-1babaa8f"></image>
+        </van-col>
+        <van-col span="17" offset="2" class="_van-col data-v-1babaa8f">
+          <view class="_div data-v-1babaa8f firstCol"><label class="_span data-v-1babaa8f"> 文字识别 </label></view>
+          <view class="_div data-v-1babaa8f secondCol"><label class="_span data-v-1babaa8f"> 目前只支持通用文字识别 </label></view>
+        </van-col>
+      </van-row>
+    </view>
     <van-action-sheet show="{{show}}" actions="{{actions}}" cancel-text="取消" bindcancel="handleProxy" bindselect="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_van-action-sheet data-v-1babaa8f"></van-action-sheet>
   </view>
 </template>

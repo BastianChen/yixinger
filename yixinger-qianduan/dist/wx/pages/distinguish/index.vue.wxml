@@ -1,42 +1,37 @@
-<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="bf7327e4">
+<template name="bf7327e4">
   <view class="_div data-v-064d55ee index">
+    <view class="_div data-v-064d55ee radius"></view>
     <view class="_div data-v-064d55ee firstDiv">
-      <view class="_div data-v-064d55ee firstRow">
-        <van-row class="_van-row data-v-064d55ee">
-          <van-col span="6" offset="3" class="_van-col data-v-064d55ee"><label class="_span data-v-064d55ee"> 识别图片： </label></van-col>
-        </van-row>
-      </view>
       <view class="_div data-v-064d55ee secondRow">
         <van-row class="_van-row data-v-064d55ee">
-          <image src="{{imageUrl}}" hidden="{{!(isShow)}}" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee" style=" {{('width:' + imgWidth + ';' + 'height:' + imgHeight + ';')}}"></image>
+          <image src="{{imageUrl}}" hidden="{{!(isShow)}}" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee" style=" {{('width:' + (imgWidth + 'px') + ';' + 'height:' + (imgHeight + 'px') + ';')}}"></image>
         </van-row>
       </view>
-      <view class="_div data-v-064d55ee thirdRow">
-        <van-row class="_van-row data-v-064d55ee">
-          <van-col span="6" offset="3" class="_van-col data-v-064d55ee"><label class="_span data-v-064d55ee"> 识别结果： </label></van-col>
-        </van-row>
-      </view>
-      <view class="_div data-v-064d55ee forthRow">
-        <van-row wx:key="domain.key" key="{{domain.key}}" wx:for="{{results}}" wx:for-index="index" wx:for-item="domain" class="_van-row data-v-064d55ee">
-          <view style="margin-top: 20px" class="_div data-v-064d55ee">
-            <view class="_div data-v-064d55ee">
-              <van-col span="6" offset="1" class="_van-col data-v-064d55ee"><label wx:if="{{type==1}}" class="_span data-v-064d55ee">{{domain.keyword}}</label> <label wx:if="{{type!=1}}" class="_span data-v-064d55ee">{{domain.name}}</label></van-col>
+      <view class="_div data-v-064d55ee list" style=" {{('margin-top:' + (imgHeight - 40 + 'px') + ';')}}">
+        <view class="_ul data-v-064d55ee">
+          <scroll-view class="_scroll-view data-v-064d55ee scroll-view" scroll-x="{{true}}">
+            <view wx:key="domain.key" key="{{domain.key}}" wx:for="{{results}}" wx:for-index="index" wx:for-item="domain" class="_li data-v-064d55ee">
+              <view class="_div data-v-064d55ee border">
+                <view class="_div data-v-064d55ee top">
+                  <view class="_div data-v-064d55ee firstRow">
+                    <van-row class="_van-row data-v-064d55ee">
+                      <van-col span="16" offset="1" class="_van-col data-v-064d55ee firstCol">
+                        <view class="_div data-v-064d55ee keyword" wx:if="{{type==1}}">{{domain.keyword}}</view>
+                        <view class="_div data-v-064d55ee keyword" wx:if="{{type!=1}}">{{domain.name}}</view>
+                        <view class="_div data-v-064d55ee root" wx:if="{{type==1}}">{{domain.root}}</view>
+                      </van-col>
+                      <van-col span="5" offset="1" class="_van-col data-v-064d55ee secondCol">
+                        <view class="_div data-v-064d55ee score" wx:if="{{type==4}}">{{domain.probability}}%</view>
+                        <view class="_div data-v-064d55ee score" wx:else>{{domain.score}}%</view>
+                        <view class="_div data-v-064d55ee scoredDiv">相似度</view>
+                      </van-col>
+                    </van-row>
+                  </view>
+                </view>
+                <image src="{{domain.baike_info.image_url}}" bindtap="handleProxy" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" class="_img data-v-064d55ee"></image>
+              </view>
             </view>
-            <view style="padding-top: 8px" class="_div data-v-064d55ee">
-              <van-col span="11" offset="2" class="_van-col data-v-064d55ee">
-                <van-progress wx:if="{{type!=4}}" percentage="{{domain.score}}" color="linear-gradient(to right, #87CEFF, #00BFFF)" class="_van-progress data-v-064d55ee"></van-progress>
-                <van-progress wx:if="{{type==4}}" percentage="{{domain.probability}}" color="linear-gradient(to right, #87CEFF, #00BFFF)" class="_van-progress data-v-064d55ee"></van-progress>
-              </van-col>
-            </view>
-          </view>
-        </van-row>
-      </view>
-    </view>
-    <view class="_div data-v-064d55ee secondDiv" hidden="{{!(isTranslated)}}">
-      <view class="_div data-v-064d55ee firstRow"><label class="_span data-v-064d55ee"> -- 翻译结果 -- </label></view>
-      <view class="_div data-v-064d55ee secondRow">
-        <view class="_div data-v-064d55ee"><template data="{{...$root[$kk+'10'], $root}}" is="9aa3b73e"></template>
-          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_img data-v-064d55ee"></image>
+          </scroll-view>
         </view>
       </view>
     </view>

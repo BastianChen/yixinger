@@ -1,5 +1,7 @@
 {
   "usingComponents": {
+    "van-row": "/static/vant-weapp/dist/row/index",
+    "van-col": "/static/vant-weapp/dist/col/index",
     "van-popup": "/static/vant-weapp/dist/popup/index",
     "van-action-sheet": "/static/vant-weapp/dist/action-sheet/index"
   }

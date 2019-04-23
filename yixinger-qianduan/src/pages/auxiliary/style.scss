@@ -1,8 +1,8 @@
 .index {
-  margin-top: 250px;
-  .auxiliary{
+  //margin-top: 250px;
+  .auxiliary {
     width: 100%;
-    margin-top: 20rpx;
+    margin-top: 20 rpx;
     background: #ffffff;
 
     .content {
@@ -14,7 +14,7 @@
 
       div {
         width: 90%;
-        height: 235rpx;
+        height: 235 rpx;
         margin: auto;
         position: relative;
 
@@ -22,9 +22,9 @@
           position: absolute;
           top: 20px;
           left: 10px;
-          padding: 10rpx;
+          padding: 10 rpx;
 
-          p{
+          p {
             text-align: center;
             font-size: 50px;
             color: #333333;
@@ -34,9 +34,64 @@
         img {
           width: 100%;
           height: 100%;
-          border-radius:5px;
+          border-radius: 5px;
         }
       }
     }
+  }
+  .firstDiv {
+    margin: 50px auto;
+    width: 70%;
+    font-size: 16px;
+    color: #8B8B83;
+    text-align: center;
+    img {
+      width: 130px;
+      height: 130px;
+    }
+  }
+  .secondDiv {
+    padding: 10px;
+    margin-top: 15%;
+    img {
+      width: 50px;
+      height: 50px;
+    }
+    .firstCol {
+      font-size: 18px;
+    }
+    .secondCol {
+      font-size: 16px;
+      padding-top: 8px;
+      color: #8B8B83;
+    }
+  }
+  .secondDiv:active{
+    background-color: #e8e8e8;
+  }
+
+  .thirdDiv{
+    width: 80%;
+    border-bottom: solid 1px #F4F4F4;
+    margin: 10px auto;
+  }
+
+  .fourthDiv{
+    padding: 10px;
+    img {
+      width: 50px;
+      height: 50px;
+    }
+    .firstCol {
+      font-size: 18px;
+    }
+    .secondCol {
+      font-size: 16px;
+      padding-top: 8px;
+      color: #8B8B83;
+    }
+  }
+  .fourthDiv:active{
+    background-color: #e8e8e8;
   }
 }

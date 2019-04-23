@@ -1,12 +1,28 @@
 @import "../../common/vendor.wxss";
 
-.index.data-v-064d55ee {
-  background: #F4F4F4;
+.index .radius.data-v-064d55ee {
+  width: 100%;
+  height: 200rpx;
+  position: relative;
+  z-index: -1;
+  overflow: hidden;
+}
+.index .radius.data-v-064d55ee::after {
+  content: '';
+  width: 140%;
+  height: 200rpx;
+  position: absolute;
+  left: -20%;
+  top: 0;
+  z-index: -1;
+  border-radius: 0 0 60% 60%;
+  background: linear-gradient(#00BFFF, #87CEFF);
 }
 .index .firstDiv.data-v-064d55ee {
   width: 100%;
   height: 70%;
   background: #ffffff;
+  text-align: center;
 }
 .index .firstDiv .firstRow.data-v-064d55ee {
   margin-top: 40rpx;
@@ -17,8 +33,66 @@
   margin-top: 40rpx;
 }
 .index .firstDiv .secondRow.data-v-064d55ee {
-  margin-top: 40rpx;
+  position: absolute;
+  top: 80rpx;
+  left: 0;
+  right: 0;
   text-align: center;
+}
+.index .firstDiv .secondRow ._img.data-v-064d55ee {
+  border-radius: 20rpx;
+}
+.index .firstDiv .list .scroll-view.data-v-064d55ee {
+  white-space: nowrap;
+}
+.index .firstDiv .list .scroll-view ._li.data-v-064d55ee {
+  display: inline-block;
+  width: 650rpx;
+  margin-left: 40rpx;
+  margin-bottom: 20rpx;
+  border: solid 2rpx #8B8B83;
+  border-radius: 20rpx;
+}
+.index .firstDiv .list .scroll-view ._li .border.data-v-064d55ee {
+  padding: 0 20rpx 40rpx 20rpx;
+}
+.index .firstDiv .list .scroll-view ._li .border .top.data-v-064d55ee {
+  margin-bottom: 20rpx;
+  border-bottom: solid 2rpx #8B8B83;
+}
+.index .firstDiv .list .scroll-view ._li .border .top .firstRow.data-v-064d55ee {
+  padding-bottom: 20rpx;
+}
+.index .firstDiv .list .scroll-view ._li .border .top .firstRow .firstCol.data-v-064d55ee {
+  text-align: left;
+}
+.index .firstDiv .list .scroll-view ._li .border .top .firstRow .firstCol .keyword.data-v-064d55ee {
+  font-size: 36rpx;
+}
+.index .firstDiv .list .scroll-view ._li .border .top .firstRow .firstCol .root.data-v-064d55ee {
+  font-size: 32rpx;
+  color: #8B8B83;
+}
+.index .firstDiv .list .scroll-view ._li .border .top .firstRow .secondCol.data-v-064d55ee {
+  text-align: right;
+}
+.index .firstDiv .list .scroll-view ._li .border .top .firstRow .secondCol .score.data-v-064d55ee {
+  font-size: 36rpx;
+  color: #00BFFF;
+}
+.index .firstDiv .list .scroll-view ._li .border .top .firstRow .secondCol .scoredDiv.data-v-064d55ee {
+  font-size: 32rpx;
+  color: #87CEFF;
+}
+.index .firstDiv .list .scroll-view ._li .border ._img.data-v-064d55ee {
+  width: 575rpx;
+  height: 400rpx;
+  border-radius: 10rpx;
+  text-align: center;
+  margin-bottom: 0;
+}
+.index .firstDiv .list .scroll-view ._li.data-v-064d55ee:last-child {
+  margin-right: 40rpx;
 }
 .index .firstDiv .thirdRow.data-v-064d55ee {
   margin-top: 40rpx;

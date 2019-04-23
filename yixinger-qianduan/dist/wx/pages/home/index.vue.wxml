@@ -3,7 +3,7 @@
     <view class="_div data-v-40d83a4c my">
       <view class="_div data-v-40d83a4c myinfo" wx:if="{{isLogin}}">
         <view class="_div data-v-40d83a4c">
-          <image src="{{userInfo.avatarUrl}}" open-type="getUserInfo" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-40d83a4c"></image>
+          <image src="{{userInfo.avatarUrl}}" data-src="{{userInfo.avatarUrl}}" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-40d83a4c"></image>
           <view class="_div data-v-40d83a4c">
             <view class="_p data-v-40d83a4c">{{userInfo.nickName}}</view>
           </view>
@@ -23,6 +23,12 @@
         </view>
       </view>
       <view class="_div data-v-40d83a4c login" wx:if="{{!isLogin}}">
+        <view class="_div data-v-40d83a4c imgAndSpan">
+          <view class="_div data-v-40d83a4c">
+            <image src="/static/images/trip.png" class="_img data-v-40d83a4c"></image>
+          </view>
+          <view class="_div data-v-40d83a4c"><label class="_span data-v-40d83a4c"> 登录用于获取用户的非隐私信息，并用于后续用户查看自己的行为记录 </label></view>
+        </view>
         <view class="_div data-v-40d83a4c button"><button type="primary" size="default" plain="false" bindtap="handleProxy" style="background-color: #1989FA;border-color: #1989FA;color: #ffffff" open-type="getUserInfo" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-40d83a4c"> 登录 </button></view>
       </view>
     </view>

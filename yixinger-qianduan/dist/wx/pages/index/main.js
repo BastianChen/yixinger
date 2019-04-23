@@ -176,8 +176,6 @@ if (false) {(function () {
         province: '',
         location: ''
       },
-      active: 0,
-      code: '',
       cityName: '正在定位...',
       banner: [], // 轮播数据数组
       sceneryData: [], // 附近景点数组
@@ -202,7 +200,27 @@ if (false) {(function () {
   },
 
   components: {},
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {},
+  onPullDownRefresh: function onPullDownRefresh() {
+    // wx.showNavigationBarLoading();
+    this.uidListForType1 = '';
+    this.uidListForType2 = '';
+    this.latitudeList = '';
+    this.longitudeList = '';
+    this.uids = '';
+    this.getLocation();
+    this.getIndexData();
+    // wx.stopPullDownRefresh;
+    // wx.hideNavigationBarLoading();
+  },
+  created: function created() {
+    // 调用应用实例的方法获取全局数据
+    this.getUserInfo();
+    this.getLocation();
+    this.getIndexData();
+    this.isLogin = this.$store.getters.disc.isLogin ? true : false;
+  },
+  mounted: function mounted() {
     var _this2 = this;
 
     setTimeout(function () {
@@ -216,15 +234,8 @@ if (false) {(function () {
           });
         });
       }
-    }, 1300);
+    }, 1500);
   },
-  created: function created() {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo();
-    this.getLocation();
-    this.getIndexData();
-  },
-  mounted: function mounted() {},
 
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])({
     setDisc: 'set_disc'
@@ -405,6 +416,10 @@ if (false) {(function () {
                         type: 2
                       }
                     }).then(function (res) {
+                      _this.banner = [];
+                      _this.sceneryData = [];
+                      _this.restaurantData = [];
+                      _this.allRestaurantData = [];
                       _this.getBannerData();
                       _this.getSceneryData();
                       _this.getRestaurantData();

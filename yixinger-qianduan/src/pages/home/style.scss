@@ -2,9 +2,18 @@
   .login{
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    margin-top: 100%;
+    margin-top: 40%;
+    .imgAndSpan{
+      margin:40px auto;
+      width: 70%;
+      font-size: 16px;
+      color: #8B8B83;
+      text-align: center;
+      img{
+        width: 130px;
+        height: 130px;
+      }
+    }
     .button{
       margin:auto;
       width: 90%;

@@ -1,11 +1,8 @@
 @import "../../common/vendor.wxss";
 
-.index.data-v-1babaa8f {
-  margin-top: 500rpx;
-}
 .index .auxiliary.data-v-1babaa8f {
   width: 100%;
-  margin-top: 20rpx;
+  margin-top: 20 rpx;
   background: #ffffff;
 }
 .index .auxiliary .content.data-v-1babaa8f {
@@ -17,7 +14,7 @@
 }
 .index .auxiliary .content ._div.data-v-1babaa8f {
   width: 90%;
-  height: 235rpx;
+  height: 235 rpx;
   margin: auto;
   position: relative;
 }
@@ -25,7 +22,7 @@
   position: absolute;
   top: 40rpx;
   left: 20rpx;
-  padding: 10rpx;
+  padding: 10 rpx;
 }
 .index .auxiliary .content ._div ._div ._p.data-v-1babaa8f {
   text-align: center;
@@ -36,4 +33,57 @@
   width: 100%;
   height: 100%;
   border-radius: 10rpx;
+}
+.index .firstDiv.data-v-1babaa8f {
+  margin: 100rpx auto;
+  width: 70%;
+  font-size: 32rpx;
+  color: #8B8B83;
+  text-align: center;
+}
+.index .firstDiv ._img.data-v-1babaa8f {
+  width: 260rpx;
+  height: 260rpx;
+}
+.index .secondDiv.data-v-1babaa8f {
+  padding: 20rpx;
+  margin-top: 15%;
+}
+.index .secondDiv ._img.data-v-1babaa8f {
+  width: 100rpx;
+  height: 100rpx;
+}
+.index .secondDiv .firstCol.data-v-1babaa8f {
+  font-size: 36rpx;
+}
+.index .secondDiv .secondCol.data-v-1babaa8f {
+  font-size: 32rpx;
+  padding-top: 16rpx;
+  color: #8B8B83;
+}
+.index .secondDiv.data-v-1babaa8f:active {
+  background-color: #e8e8e8;
+}
+.index .thirdDiv.data-v-1babaa8f {
+  width: 80%;
+  border-bottom: solid 2rpx #F4F4F4;
+  margin: 20rpx auto;
+}
+.index .fourthDiv.data-v-1babaa8f {
+  padding: 20rpx;
+}
+.index .fourthDiv ._img.data-v-1babaa8f {
+  width: 100rpx;
+  height: 100rpx;
+}
+.index .fourthDiv .firstCol.data-v-1babaa8f {
+  font-size: 36rpx;
+}
+.index .fourthDiv .secondCol.data-v-1babaa8f {
+  font-size: 32rpx;
+  padding-top: 16rpx;
+  color: #8B8B83;
+}
+.index .fourthDiv.data-v-1babaa8f:active {
+  background-color: #e8e8e8;
 }
