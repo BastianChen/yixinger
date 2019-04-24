@@ -362,14 +362,24 @@ if (false) {(function () {
                   _this2.$set(_this2.photoDistinguishData[i], 'dateType', 5); // 时间为昨天,但不是第一条
                 }
               } else {
-                _this2.$set(_this2.photoDistinguishData[i], 'dateType', 3); // 正常时间
+                var isFirst = false;
+                for (var j = 0; j < i; j++) {
+                  if (_this2.photoDistinguishData[i].year == _this2.photoDistinguishData[j].year && _this2.photoDistinguishData[i].month == _this2.photoDistinguishData[j].month && _this2.photoDistinguishData[i].day == _this2.photoDistinguishData[j].day) {
+                    _this2.$set(_this2.photoDistinguishData[i], 'dateType', 6); // 正常时间,但不是第一条
+                    isFirst = true;
+                    break;
+                  }
+                }
+                if (!isFirst) {
+                  _this2.$set(_this2.photoDistinguishData[i], 'dateType', 3); // 正常时间,但不是第一条
+                }
               }
               if (_this2.yearsInphotoDistinguish.length == 0) {
                 _this2.yearsInphotoDistinguish.push(dateArray[0]);
                 isRepeated = false;
               } else {
-                for (var j = 0; j < _this2.yearsInphotoDistinguish.length; j++) {
-                  if (_this2.yearsInphotoDistinguish[j] == dateArray[0]) {
+                for (var _j = 0; _j < _this2.yearsInphotoDistinguish.length; _j++) {
+                  if (_this2.yearsInphotoDistinguish[_j] == dateArray[0]) {
                     isRepeated = true;
                     break;
                   }
@@ -380,8 +390,6 @@ if (false) {(function () {
               }
             }
             _this2.setYearsOrder(_this2.yearsInphotoDistinguish);
-            console.log(_this2.photoDistinguishData);
-            console.log(_this2.yearsInphotoDistinguish);
           }
         });
       } else if (type == 2) {
@@ -402,7 +410,7 @@ if (false) {(function () {
               _this2.textDistinguishData[i].imageUrl = 'https://www.wzcb97.top/' + _this2.textDistinguishData[i].imageUrl;
               var desc = '文字识别';
               var result = JSON.parse(_this2.textDistinguishData[i].words).words_result;
-              var keyword = result[0].words + '...';
+              var keyword = result[0].words.length < 10 ? result[0].words : result[0].words.substring(1, 10) + '...';
               var dateArray = _this2.textDistinguishData[i].date.split('-');
               var cityNameArray = _this2.textDistinguishData[i].cityName.split('·');
               var isRepeated = false;
@@ -428,14 +436,24 @@ if (false) {(function () {
                   _this2.$set(_this2.textDistinguishData[i], 'dateType', 5); // 时间为昨天,但不是第一条
                 }
               } else {
-                _this2.$set(_this2.textDistinguishData[i], 'dateType', 3); // 正常时间
+                var isFirst = false;
+                for (var j = 0; j < i; j++) {
+                  if (_this2.textDistinguishData[i].year == _this2.textDistinguishData[j].year && _this2.textDistinguishData[i].month == _this2.textDistinguishData[j].month && _this2.textDistinguishData[i].day == _this2.textDistinguishData[j].day) {
+                    _this2.$set(_this2.textDistinguishData[i], 'dateType', 6); // 正常时间,但不是第一条
+                    isFirst = true;
+                    break;
+                  }
+                }
+                if (!isFirst) {
+                  _this2.$set(_this2.textDistinguishData[i], 'dateType', 3); // 正常时间,但不是第一条
+                }
               }
               if (_this2.yearsIntextDistinguish.length == 0) {
                 _this2.yearsIntextDistinguish.push(dateArray[0]);
                 isRepeated = false;
               } else {
-                for (var j = 0; j < _this2.yearsIntextDistinguish.length; j++) {
-                  if (_this2.yearsIntextDistinguish[j] == dateArray[0]) {
+                for (var _j2 = 0; _j2 < _this2.yearsIntextDistinguish.length; _j2++) {
+                  if (_this2.yearsIntextDistinguish[_j2] == dateArray[0]) {
                     isRepeated = true;
                     break;
                   }
@@ -570,7 +588,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           "offset": "1",
           "mpcomid": '2-' + key + '-' + index
         }
-      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
+      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5 || item.dateType == 6) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
         staticStyle: {
           "font-size": "14px",
           "margin-left": "-7px"
@@ -670,7 +688,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           "offset": "1",
           "mpcomid": '9-' + key + '-' + index
         }
-      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
+      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5 || item.dateType == 6) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
         staticStyle: {
           "font-size": "14px",
           "margin-left": "-7px"

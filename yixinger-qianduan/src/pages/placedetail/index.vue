@@ -376,6 +376,7 @@
         this.tag1OfContent = [];
         this.tag2OfContent = [];
         this.imgList = [];
+        this.banner = [];
         this.longitude = this.$route.query.longitude;
         this.latitude = this.$route.query.latitude;
         this.$httpWX.get({
@@ -390,6 +391,9 @@
           this.placeType = this.placeDetailData.place.type;
           if (this.placeDetailData.placePhotoList != null && this.placeDetailData.placePhotoList.length > 0) {
             for (let i = 0; i < this.placeDetailData.placePhotoList.length; i++) {
+              if (this.placeDetailData.placePhotoList[i].imageUrl.indexOf("/images/placephoto") != -1) {
+                this.placeDetailData.placePhotoList[i].imageUrl = 'https://wzcb97.top/' + this.placeDetailData.placePhotoList[i].imageUrl;
+              }
               this.banner.push(this.placeDetailData.placePhotoList[i].imageUrl);
               if (i == 4) {
                 break;
@@ -522,11 +526,7 @@
           // 处理图片列表
           if (res.data.placePhotoList.length > 0) {
             for (let i = 0; i < res.data.placePhotoList.length; i++) {
-              if (res.data.placePhotoList[i].imageUrl.indexOf("/images/placephoto") != -1) {
-                this.imgList.push('https://wzcb97.top/' + res.data.placePhotoList[i].imageUrl)
-              } else {
-                this.imgList.push(res.data.placePhotoList[i].imageUrl)
-              }
+              this.imgList.push(res.data.placePhotoList[i].imageUrl);
             }
             this.totalPhotoNumber = this.imgList.length;
             this.isImgListShow = true;

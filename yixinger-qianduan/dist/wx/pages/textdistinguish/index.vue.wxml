@@ -1,39 +1,39 @@
 <import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="f2ef20fe">
   <view class="_div data-v-1c5af7e1 index">
+    <view class="_div data-v-1c5af7e1 radius"></view>
     <view class="_div data-v-1c5af7e1 firstDiv">
-      <view class="_div data-v-1c5af7e1 firstRow">
-        <van-row class="_van-row data-v-1c5af7e1">
-          <van-col span="6" offset="3" class="_van-col data-v-1c5af7e1"><label class="_span data-v-1c5af7e1"> 识别图片： </label></van-col>
-        </van-row>
-      </view>
       <view class="_div data-v-1c5af7e1 secondRow">
-        <image src="{{imageUrl}}" hidden="{{!(isShow)}}" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-1c5af7e1" style=" {{('width:' + imgWidth + ';' + 'height:' + imgHeight + ';')}}"></image>
-      </view>
-      <view class="_div data-v-1c5af7e1 thirdRow">
-        <van-row class="_van-row data-v-1c5af7e1">
-          <van-col span="6" offset="3" class="_van-col data-v-1c5af7e1"><label class="_span data-v-1c5af7e1"> 识别结果： </label></van-col>
-        </van-row>
-      </view>
-      <view class="_div data-v-1c5af7e1 forthRow">
-        <van-row class="_van-row data-v-1c5af7e1">
-          <van-col span="18" offset="3" class="_van-col data-v-1c5af7e1"><template data="{{...$root[$kk+'4'], $root}}" is="9aa3b73e"></template></van-col>
-        </van-row>
-      </view>
-      <view class="_div data-v-1c5af7e1 fifthRow">
-        <van-row class="_van-row data-v-1c5af7e1">
-          <van-col span="10" offset="2" class="_van-col data-v-1c5af7e1"><button type="default" size="mini" plain="false" bindtap="handleProxy" style="width: 180px" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_button data-v-1c5af7e1">
-              {{language}}
-            </button></van-col>
-          <van-col span="4" offset="5" class="_van-col data-v-1c5af7e1"><button type="primary" size="mini" plain="false" bindtap="handleProxy" style="width: 80px;border-color: #1989FA;color: #1989FA" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_button data-v-1c5af7e1"> 翻译 </button></van-col>
-        </van-row>
+        <image src="{{imageUrl}}" hidden="{{!(isShow)}}" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_img data-v-1c5af7e1" style=" {{('width:' + (imgWidth + 'px') + ';' + 'height:' + (imgHeight + 'px') + ';')}}"></image>
       </view>
     </view>
-    <view class="_div data-v-1c5af7e1 secondDiv">
-      <view class="_div data-v-1c5af7e1 firstRow"><label class="_span data-v-1c5af7e1"> -- 翻译结果 -- </label></view>
-      <view class="_div data-v-1c5af7e1 secondRow">
-        <view class="_div data-v-1c5af7e1"><template data="{{...$root[$kk+'10'], $root}}" is="9aa3b73e"></template>
-          <image src="{{broadcastImgUrl}}" bindtap="handleProxy" hidden="{{!(isTranslated)}}" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_img data-v-1c5af7e1"></image>
-        </view>
+    <view class="_div data-v-1c5af7e1 secondDiv" style=" {{('margin-top:' + (imgHeight - 50 + 'px') + ';')}}">
+      <van-row class="_van-row data-v-1c5af7e1">
+        <van-col span="18" class="_van-col data-v-1c5af7e1">
+          <view class="_div data-v-1c5af7e1 firstCol"><template data="{{...$root[$kk+'0'], $root}}" is="9aa3b73e"></template></view>
+        </van-col>
+      </van-row>
+      <van-row class="_van-row data-v-1c5af7e1">
+        <van-col span="18" offset="6" class="_van-col data-v-1c5af7e1">
+          <view class="_div data-v-1c5af7e1 firstCol"><template data="{{...$root[$kk+'3'], $root}}" is="9aa3b73e"></template>
+            <image src="{{broadcastImgUrl}}" bindtap="handleProxy" hidden="{{!(isTranslated)}}" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_img data-v-1c5af7e1"></image>
+          </view>
+        </van-col>
+      </van-row>
+    </view>
+    <view class="_div data-v-1c5af7e1 thirdDiv">
+      <view class="_div data-v-1c5af7e1 bottom">
+        <van-row class="_van-row data-v-1c5af7e1">
+          <view class="_div data-v-1c5af7e1">
+            <van-col span="12" class="_van-col data-v-1c5af7e1">
+              <view class="_div data-v-1c5af7e1 firstCol" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}"><label class="_span data-v-1c5af7e1">
+                  {{language}}
+                </label></view>
+            </van-col>
+            <van-col span="12" class="_van-col data-v-1c5af7e1">
+              <view class="_div data-v-1c5af7e1 secondCol" bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}"><label class="_span data-v-1c5af7e1"> 翻译 </label></view>
+            </van-col>
+          </view>
+        </van-row>
       </view>
     </view>
     <view class="_div data-v-1c5af7e1">

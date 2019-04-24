@@ -197,7 +197,8 @@ if (false) {(function () {
       likeImgUrl: '/static/images/like.png',
       likedHistory: {},
       isShowLine: false,
-      isCommentListEmpty: false
+      isCommentListEmpty: false,
+      totalNum: 0
     };
   },
   onShow: function onShow() {
@@ -266,6 +267,7 @@ if (false) {(function () {
         if (res.state != 0) {
           _this.isCommentListEmpty = true;
         } else {
+          _this.totalNum = res.data.totalNum;
           _this.totalPage = res.data.totalPage;
           if (res.data.totalNum < 11) {
             _this.isShowLine = true;
@@ -327,8 +329,12 @@ if (false) {(function () {
         },
         isShowLoading: true
       }).then(function (res) {
-        _this2.totalPage = res.data.totalPage;
-        if (res.data.totalNum < 11) {
+        if ((_this2.totalNum + 1) % 10 == 0) {
+          _this2.totalPage = (_this2.totalNum + 1) / 10;
+        } else {
+          _this2.totalPage = (_this2.totalNum + 1) / 10 + 1;
+        }
+        if (_this2.totalNum + 1 < 11) {
           _this2.isShowLine = true;
         }
         if (res.data.items[0].id != _this2.commentListInfo[0].id) {

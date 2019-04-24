@@ -18,6 +18,8 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -40,8 +42,8 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "辅助功能界面",
-					"pathName": "pages/auxiliary/main",
+					"name": "操作记录",
+					"pathName": "pages/operationhistory/main",
 					"scene": null
 				}
 			]

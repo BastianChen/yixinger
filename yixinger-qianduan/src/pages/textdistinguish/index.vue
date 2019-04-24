@@ -1,82 +1,112 @@
 <template>
   <div class="index">
     <!--<scroll-view scroll-y :style="{height: windowHeight}" scroll-with-animation="true" :scroll-top="scrollTop">-->
+    <div class="radius"></div>
     <div class="firstDiv">
-      <div class="firstRow">
-        <van-row>
-          <van-col span="6" offset="3">
-          <span>
-            识别图片：
-          </span>
-          </van-col>
-        </van-row>
-      </div>
       <div class="secondRow">
-        <img :src="imageUrl" :style="{width:imgWidth,height:imgHeight}" v-show="isShow" @click="seePhoto(imageUrl)"/>
+        <img :src="imageUrl" :style="{width:imgWidth+'px',height:imgHeight+'px'}" v-show="isShow"
+             @click="seePhoto(imageUrl)"/>
       </div>
-      <div class="thirdRow">
-        <van-row>
-          <van-col span="6" offset="3">
-            <span>
-              识别结果：
-            </span>
-          </van-col>
-        </van-row>
-      </div>
-      <div class="forthRow">
-        <van-row>
-          <van-col span="18" offset="3">
-            <wxParse :content="result"/>
-          </van-col>
-        </van-row>
-      </div>
-      <div class="fifthRow">
-        <van-row>
-          <van-col span="10" offset="2">
-            <!--<div style="border-width: 1px;border-color: #333333;">-->
-            <!--<span @click="selectLanguage">-->
-            <!--{{language}}-->
-            <!--</span>-->
-            <!--</div>-->
-            <!--<van-button type="default" @click="selectLanguage">{{language}}</van-button>-->
-            <button
-              type="default"
-              size="mini"
-              plain="false"
-              bindtap="primary"
-              style="width: 180px"
-              @click="selectLanguage"
-            >
-              {{language}}
-            </button>
-          </van-col>
-          <van-col span="4" offset="5">
-            <button
-              type="primary"
-              size="mini"
-              plain="false"
-              bindtap="primary"
-              style="width: 80px;border-color: #1989FA;color: #1989FA"
-              @click="translate"
-            >
-              翻译
-            </button>
-            <!--<van-button plain type="primary">翻译</van-button>-->
-          </van-col>
-        </van-row>
-      </div>
+      <!--<div class="thirdRow">-->
+      <!--<van-row>-->
+      <!--<van-col span="6" offset="3">-->
+      <!--<span>-->
+      <!--识别结果：-->
+      <!--</span>-->
+      <!--</van-col>-->
+      <!--</van-row>-->
+      <!--</div>-->
+      <!--<div class="forthRow">-->
+      <!--<van-row>-->
+      <!--<van-col span="18" offset="3">-->
+      <!--<wxParse :content="result"/>-->
+      <!--</van-col>-->
+      <!--</van-row>-->
+      <!--</div>-->
+      <!--<div class="fifthRow">-->
+      <!--<van-row>-->
+      <!--<van-col span="10" offset="2">-->
+      <!--&lt;!&ndash;<div style="border-width: 1px;border-color: #333333;">&ndash;&gt;-->
+      <!--&lt;!&ndash;<span @click="selectLanguage">&ndash;&gt;-->
+      <!--&lt;!&ndash;{{language}}&ndash;&gt;-->
+      <!--&lt;!&ndash;</span>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<van-button type="default" @click="selectLanguage">{{language}}</van-button>&ndash;&gt;-->
+      <!--<button-->
+      <!--type="default"-->
+      <!--size="mini"-->
+      <!--plain="false"-->
+      <!--bindtap="primary"-->
+      <!--style="width: 180px"-->
+      <!--@click="selectLanguage"-->
+      <!--&gt;-->
+      <!--{{language}}-->
+      <!--</button>-->
+      <!--</van-col>-->
+      <!--<van-col span="4" offset="5">-->
+      <!--<button-->
+      <!--type="primary"-->
+      <!--size="mini"-->
+      <!--plain="false"-->
+      <!--bindtap="primary"-->
+      <!--style="width: 80px;border-color: #1989FA;color: #1989FA"-->
+      <!--@click="translate"-->
+      <!--&gt;-->
+      <!--翻译-->
+      <!--</button>-->
+      <!--&lt;!&ndash;<van-button plain type="primary">翻译</van-button>&ndash;&gt;-->
+      <!--</van-col>-->
+      <!--</van-row>-->
+      <!--</div>-->
     </div>
-    <div class="secondDiv">
-      <div class="firstRow">
-          <span>
-            -- 翻译结果 --
-          </span>
-      </div>
-      <div class="secondRow">
-        <div>
-          <wxParse :content="translateResult"/>
-          <img :src="broadcastImgUrl" @click="play" v-show="isTranslated"/>
-        </div>
+    <div class="secondDiv" :style="{'margin-top':imgHeight-50+'px'}">
+      <van-row>
+        <van-col span="18">
+          <div class="firstCol">
+            <wxParse :content="result"/>
+          </div>
+        </van-col>
+      </van-row>
+      <van-row>
+        <van-col span="18" offset="6">
+          <div class="firstCol">
+            <wxParse :content="translateResult"/>
+            <img :src="broadcastImgUrl" @click="play" v-show="isTranslated"/>
+          </div>
+        </van-col>
+      </van-row>
+      <!--<div class="firstRow">-->
+      <!--<span>-->
+      <!--&#45;&#45; 翻译结果 &#45;&#45;-->
+      <!--</span>-->
+      <!--</div>-->
+      <!--<div class="secondRow">-->
+      <!--<div>-->
+      <!--<wxParse :content="translateResult"/>-->
+      <!--<img :src="broadcastImgUrl" @click="play" v-show="isTranslated"/>-->
+      <!--</div>-->
+      <!--</div>-->
+    </div>
+    <div class="thirdDiv">
+      <div class="bottom">
+        <van-row>
+          <div>
+            <van-col span="12">
+              <div class="firstCol" @click="selectLanguage">
+             <span>
+               {{language}}
+             </span>
+              </div>
+            </van-col>
+            <van-col span="12">
+              <div class="secondCol" @click="translate">
+             <span>
+               翻译
+             </span>
+              </div>
+            </van-col>
+          </div>
+        </van-row>
       </div>
     </div>
     <!--</scroll-view>-->
@@ -209,12 +239,12 @@
           //console.log("图片" + JSON.stringify(res))
           let winWidth = wx.getSystemInfoSync().windowWidth;
           if (res.width > winWidth) {
-            _this.imgWidth = winWidth * 0.9 + 'px';
+            _this.imgWidth = winWidth * 0.9;
             let rate = (winWidth * 0.9) / res.width;
-            _this.imgHeight = res.height * rate + 'px';
+            _this.imgHeight = res.height * rate;
           } else {
-            _this.imgWidth = res.width + 'px';
-            _this.imgHeight = res.height + 'px';
+            _this.imgWidth = res.width;
+            _this.imgHeight = res.height;
           }
           _this.isShow = true;
           //console.log("屏幕宽度" + winWidth);
@@ -229,7 +259,7 @@
         words.word = this.words_result[i].words;
         this.originalText.push(words);
         if (i == 0) {
-          this.result = '<span>' + (i + 1) + '. ' + this.words_result[i].words + '<br/>'
+          this.result = '<span style="font-size: 16px;padding: 10px;text-align: left">' + (i + 1) + '. ' + this.words_result[i].words + '<br/>'
         } else if ((i + 1) == this.words_result_num) {
           this.result = this.result + (i + 1) + '. ' + this.words_result[i].words + '</span>'
         } else {
@@ -426,7 +456,8 @@
             this.text = this.text + this.translateText[i].word;
             let textWord = this.translateText[i].word;
             if (i == 0) {
-              this.translateResult = '<span>' + (i + 1) + '. ' + textWord + '<br/>'
+              this.translateResult = '<span style="font-size: 16px;padding: 10px;text-align: left">' +
+                (i + 1) + '. ' + textWord + '<br/>'
             } else if ((i + 1) == this.words_result_num) {
               this.translateResult = this.translateResult + (i + 1) + '. ' + textWord + '</span>'
             } else {

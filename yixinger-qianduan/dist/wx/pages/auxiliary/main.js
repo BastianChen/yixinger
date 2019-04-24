@@ -225,7 +225,7 @@ if (false) {(function () {
   },
   mounted: function mounted() {
     this.userInfo = this.$store.getters.disc;
-    console.log(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(this.userInfo));
+    //console.log(JSON.stringify(this.userInfo))
   },
 
   methods: {

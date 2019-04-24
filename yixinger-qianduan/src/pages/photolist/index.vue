@@ -191,7 +191,11 @@
                           _this.secondPhotoList.unshift(imageObject);
                         }
                       }
-                      _this.totalPhotoList.push(imageObject.imageUrl);
+                      if (!type) {
+                        _this.totalPhotoList.push(imageObject.imageUrl);
+                      } else {
+                        _this.totalPhotoList.unshift(imageObject.imageUrl);
+                      }
                       let winWidth = wx.getSystemInfoSync().windowWidth;
                       imageObject.imgWidth = winWidth * 0.45 + 'px';
                       let rate = (winWidth * 0.45) / res.width;

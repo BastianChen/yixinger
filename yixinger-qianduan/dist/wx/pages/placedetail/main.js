@@ -461,6 +461,7 @@ if (false) {(function () {
       this.tag1OfContent = [];
       this.tag2OfContent = [];
       this.imgList = [];
+      this.banner = [];
       this.longitude = this.$route.query.longitude;
       this.latitude = this.$route.query.latitude;
       this.$httpWX.get({
@@ -475,6 +476,9 @@ if (false) {(function () {
         _this.placeType = _this.placeDetailData.place.type;
         if (_this.placeDetailData.placePhotoList != null && _this.placeDetailData.placePhotoList.length > 0) {
           for (var i = 0; i < _this.placeDetailData.placePhotoList.length; i++) {
+            if (_this.placeDetailData.placePhotoList[i].imageUrl.indexOf("/images/placephoto") != -1) {
+              _this.placeDetailData.placePhotoList[i].imageUrl = 'https://wzcb97.top/' + _this.placeDetailData.placePhotoList[i].imageUrl;
+            }
             _this.banner.push(_this.placeDetailData.placePhotoList[i].imageUrl);
             if (i == 4) {
               break;
@@ -604,11 +608,7 @@ if (false) {(function () {
         // 处理图片列表
         if (res.data.placePhotoList.length > 0) {
           for (var _i4 = 0; _i4 < res.data.placePhotoList.length; _i4++) {
-            if (res.data.placePhotoList[_i4].imageUrl.indexOf("/images/placephoto") != -1) {
-              _this.imgList.push('https://wzcb97.top/' + res.data.placePhotoList[_i4].imageUrl);
-            } else {
-              _this.imgList.push(res.data.placePhotoList[_i4].imageUrl);
-            }
+            _this.imgList.push(res.data.placePhotoList[_i4].imageUrl);
           }
           _this.totalPhotoNumber = _this.imgList.length;
           _this.isImgListShow = true;

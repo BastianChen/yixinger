@@ -141,7 +141,7 @@
     },
     mounted() {
       this.userInfo = this.$store.getters.disc;
-      console.log(JSON.stringify(this.userInfo))
+      //console.log(JSON.stringify(this.userInfo))
     },
     methods: {
       getLocation() {

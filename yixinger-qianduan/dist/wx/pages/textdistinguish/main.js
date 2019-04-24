@@ -190,6 +190,36 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -299,12 +329,12 @@ if (false) {(function () {
         //console.log("图片" + JSON.stringify(res))
         var winWidth = wx.getSystemInfoSync().windowWidth;
         if (res.width > winWidth) {
-          _this.imgWidth = winWidth * 0.9 + 'px';
+          _this.imgWidth = winWidth * 0.9;
           var rate = winWidth * 0.9 / res.width;
-          _this.imgHeight = res.height * rate + 'px';
+          _this.imgHeight = res.height * rate;
         } else {
-          _this.imgWidth = res.width + 'px';
-          _this.imgHeight = res.height + 'px';
+          _this.imgWidth = res.width;
+          _this.imgHeight = res.height;
         }
         _this.isShow = true;
         //console.log("屏幕宽度" + winWidth);
@@ -319,7 +349,7 @@ if (false) {(function () {
       words.word = this.words_result[i].words;
       this.originalText.push(words);
       if (i == 0) {
-        this.result = '<span>' + (i + 1) + '. ' + this.words_result[i].words + '<br/>';
+        this.result = '<span style="font-size: 16px;padding: 10px;text-align: left">' + (i + 1) + '. ' + this.words_result[i].words + '<br/>';
       } else if (i + 1 == this.words_result_num) {
         this.result = this.result + (i + 1) + '. ' + this.words_result[i].words + '</span>';
       } else {
@@ -523,7 +553,7 @@ if (false) {(function () {
           _this5.text = _this5.text + _this5.translateText[i].word;
           var textWord = _this5.translateText[i].word;
           if (i == 0) {
-            _this5.translateResult = '<span>' + (i + 1) + '. ' + textWord + '<br/>';
+            _this5.translateResult = '<span style="font-size: 16px;padding: 10px;text-align: left">' + (i + 1) + '. ' + textWord + '<br/>';
           } else if (i + 1 == _this5.words_result_num) {
             _this5.translateResult = _this5.translateResult + (i + 1) + '. ' + textWord + '</span>';
           } else {
@@ -556,20 +586,10 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "index"
   }, [_c('div', {
+    staticClass: "radius"
+  }), _vm._v(" "), _c('div', {
     staticClass: "firstDiv"
   }, [_c('div', {
-    staticClass: "firstRow"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '1'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "6",
-      "offset": "3",
-      "mpcomid": '0'
-    }
-  }, [_c('span', [_vm._v("\n          识别图片：\n        ")])])], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "secondRow"
   }, [_c('img', {
     directives: [{
@@ -579,8 +599,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       expression: "isShow"
     }],
     style: ({
-      width: _vm.imgWidth,
-      height: _vm.imgHeight
+      width: _vm.imgWidth + 'px',
+      height: _vm.imgHeight + 'px'
     }),
     attrs: {
       "src": _vm.imageUrl,
@@ -591,91 +611,43 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.seePhoto(_vm.imageUrl)
       }
     }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "thirdRow"
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "secondDiv",
+    style: ({
+      'margin-top': _vm.imgHeight - 50 + 'px'
+    })
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '3'
-    }
-  }, [_c('van-col', {
-    attrs: {
-      "span": "6",
-      "offset": "3",
       "mpcomid": '2'
-    }
-  }, [_c('span', [_vm._v("\n            识别结果：\n          ")])])], 1)], 1), _vm._v(" "), _c('div', {
-    staticClass: "forthRow"
-  }, [_c('van-row', {
-    attrs: {
-      "mpcomid": '6'
     }
   }, [_c('van-col', {
     attrs: {
       "span": "18",
-      "offset": "3",
-      "mpcomid": '5'
+      "mpcomid": '1'
     }
+  }, [_c('div', {
+    staticClass: "firstCol"
   }, [_c('wxParse', {
     attrs: {
       "content": _vm.result,
-      "mpcomid": '4'
+      "mpcomid": '0'
     }
-  })], 1)], 1)], 1), _vm._v(" "), _c('div', {
-    staticClass: "fifthRow"
-  }, [_c('van-row', {
+  })], 1)])], 1), _vm._v(" "), _c('van-row', {
     attrs: {
-      "mpcomid": '9'
+      "mpcomid": '5'
     }
   }, [_c('van-col', {
     attrs: {
-      "span": "10",
-      "offset": "2",
-      "mpcomid": '7'
+      "span": "18",
+      "offset": "6",
+      "mpcomid": '4'
     }
-  }, [_c('button', {
-    staticStyle: {
-      "width": "180px"
-    },
-    attrs: {
-      "type": "default",
-      "size": "mini",
-      "plain": "false",
-      "bindtap": "primary",
-      "eventid": '1'
-    },
-    on: {
-      "click": _vm.selectLanguage
-    }
-  }, [_vm._v("\n            " + _vm._s(_vm.language) + "\n          ")])], 1), _vm._v(" "), _c('van-col', {
-    attrs: {
-      "span": "4",
-      "offset": "5",
-      "mpcomid": '8'
-    }
-  }, [_c('button', {
-    staticStyle: {
-      "width": "80px",
-      "border-color": "#1989FA",
-      "color": "#1989FA"
-    },
-    attrs: {
-      "type": "primary",
-      "size": "mini",
-      "plain": "false",
-      "bindtap": "primary",
-      "eventid": '2'
-    },
-    on: {
-      "click": _vm.translate
-    }
-  }, [_vm._v("\n            翻译\n          ")])], 1)], 1)], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "secondDiv"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "secondRow"
-  }, [_c('div', [_c('wxParse', {
+  }, [_c('div', {
+    staticClass: "firstCol"
+  }, [_c('wxParse', {
     attrs: {
       "content": _vm.translateResult,
-      "mpcomid": '10'
+      "mpcomid": '3'
     }
   }), _vm._v(" "), _c('img', {
     directives: [{
@@ -686,18 +658,52 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     attrs: {
       "src": _vm.broadcastImgUrl,
-      "eventid": '3'
+      "eventid": '1'
     },
     on: {
       "click": _vm.play
     }
-  })], 1)])]), _vm._v(" "), _c('div', [_c('van-popup', {
+  })], 1)])], 1)], 1), _vm._v(" "), _c('div', {
+    staticClass: "thirdDiv"
+  }, [_c('div', {
+    staticClass: "bottom"
+  }, [_c('van-row', {
+    attrs: {
+      "mpcomid": '8'
+    }
+  }, [_c('div', [_c('van-col', {
+    attrs: {
+      "span": "12",
+      "mpcomid": '6'
+    }
+  }, [_c('div', {
+    staticClass: "firstCol",
+    attrs: {
+      "eventid": '2'
+    },
+    on: {
+      "click": _vm.selectLanguage
+    }
+  }, [_c('span', [_vm._v("\n             " + _vm._s(_vm.language) + "\n           ")])])]), _vm._v(" "), _c('van-col', {
+    attrs: {
+      "span": "12",
+      "mpcomid": '7'
+    }
+  }, [_c('div', {
+    staticClass: "secondCol",
+    attrs: {
+      "eventid": '3'
+    },
+    on: {
+      "click": _vm.translate
+    }
+  }, [_c('span', [_vm._v("\n             翻译\n           ")])])])], 1)])], 1)]), _vm._v(" "), _c('div', [_c('van-popup', {
     attrs: {
       "show": _vm.pickerShow,
       "position": "bottom",
       "overlay": "false",
       "close-on-click-overlay": "",
-      "mpcomid": '12'
+      "mpcomid": '10'
     }
   }, [_c('van-picker', {
     attrs: {
@@ -705,7 +711,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "title": "翻译语种",
       "columns": _vm.columns,
       "eventid": '4',
-      "mpcomid": '11'
+      "mpcomid": '9'
     },
     on: {
       "cancel": _vm.onCancel,
@@ -713,11 +719,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   })], 1)], 1)])
 }
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "firstRow"
-  }, [_c('span', [_vm._v("\n          -- 翻译结果 --\n        ")])])
-}]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);

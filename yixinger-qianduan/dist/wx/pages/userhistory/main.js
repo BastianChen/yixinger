@@ -353,15 +353,27 @@ if (false) {(function () {
               }
             }
           } else {
-            placeData[i].dateType = 3; // 正常时间
+            var isFirst = false;
+            for (var j = 0; j < i; j++) {
+              if (placeData[i].year == placeData[j].year && placeData[i].month == placeData[j].month && placeData[i].day == placeData[j].day) {
+
+                placeData[i].dateType = 6; // 正常时间,但不是第一条
+                console.log("ssss" + placeData[i].dateType);
+                isFirst = true;
+                break;
+              }
+            }
+            if (!isFirst) {
+              placeData[i].dateType = 3; // 正常时间
+            }
           }
           if (placeData[i].type == 1) {
             if (_this2.yearsSceneryData.length == 0) {
               _this2.yearsSceneryData.push(dateArray[0]);
               isRepeated = false;
             } else {
-              for (var j = 0; j < _this2.yearsSceneryData.length; j++) {
-                if (_this2.yearsSceneryData[j] == dateArray[0]) {
+              for (var _j = 0; _j < _this2.yearsSceneryData.length; _j++) {
+                if (_this2.yearsSceneryData[_j] == dateArray[0]) {
                   isRepeated = true;
                   break;
                 }
@@ -376,8 +388,8 @@ if (false) {(function () {
               _this2.yearsRestaurantData.push(dateArray[0]);
               isRepeated = false;
             } else {
-              for (var _j = 0; _j < _this2.yearsRestaurantData.length; _j++) {
-                if (_this2.yearsRestaurantData[_j] == dateArray[0]) {
+              for (var _j2 = 0; _j2 < _this2.yearsRestaurantData.length; _j2++) {
+                if (_this2.yearsRestaurantData[_j2] == dateArray[0]) {
                   isRepeated = true;
                   break;
                 }
@@ -458,7 +470,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           "offset": "1",
           "mpcomid": '2-' + key + '-' + index
         }
-      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                      今天\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                      昨天\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                      " + _vm._s(item.day) + "\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                        \n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
+      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                      今天\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                      昨天\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                      " + _vm._s(item.day) + "\n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5 || item.dateType == 6) ? _c('span', [_vm._v("\n                        \n                    ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
         staticStyle: {
           "font-size": "14px",
           "margin-left": "-7px"
@@ -532,7 +544,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           "offset": "1",
           "mpcomid": '9-' + key + '-' + index
         }
-      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
+      }, [_c('div', [(item.dateType == 1) ? _c('span', [_vm._v("\n                  今天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 2) ? _c('span', [_vm._v("\n                  昨天\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', [_vm._v("\n                  " + _vm._s(item.day) + "\n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 4 || item.dateType == 5 || item.dateType == 6) ? _c('span', [_vm._v("\n                   \n                ")]) : _vm._e(), _vm._v(" "), (item.dateType == 3) ? _c('span', {
         staticStyle: {
           "font-size": "14px",
           "margin-left": "-7px"

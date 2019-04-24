@@ -33,7 +33,7 @@
                       <span v-if="item.dateType==3">
                         {{item.day}}
                       </span>
-                      <span v-if="item.dateType==4||item.dateType==5">
+                      <span v-if="item.dateType==4||item.dateType==5||item.dateType==6">
                          &nbsp;
                       </span>
                       <span style="font-size: 14px;margin-left:-7px;" v-if="item.dateType==3">
@@ -89,7 +89,7 @@
                       <span v-if="item.dateType==3">
                     {{item.day}}
                   </span>
-                      <span v-if="item.dateType==4||item.dateType==5">
+                      <span v-if="item.dateType==4||item.dateType==5||item.dateType==6">
                     &nbsp;
                   </span>
                       <span style="font-size: 14px;margin-left:-7px;" v-if="item.dateType==3">
@@ -263,7 +263,19 @@
                 }
               }
             } else {
-              placeData[i].dateType = 3;// 正常时间
+              let isFirst = false;
+              for (let j = 0; j < i; j++) {
+                if (placeData[i].year == placeData[j].year &&
+                  placeData[i].month == placeData[j].month &&
+                  placeData[i].day == placeData[j].day) {
+                  placeData[i].dateType = 6;// 正常时间,但不是第一条
+                  isFirst = true;
+                  break;
+                }
+              }
+              if (!isFirst) {
+                placeData[i].dateType = 3;// 正常时间
+              }
             }
             if (placeData[i].type == 1) {
               if (this.yearsSceneryData.length == 0) {

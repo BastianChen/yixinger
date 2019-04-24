@@ -1,5 +1,8 @@
 @import "../../common/vendor.wxss";
 
+.my.data-v-40d83a4c .van-cell {
+  font-size: 32rpx;
+}
 .my .login.data-v-40d83a4c {
   width: 100%;
   height: 100%;

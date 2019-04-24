@@ -20,7 +20,7 @@
                   <van-col span="4" offset="1" class="_van-col data-v-2ecb44f2">
                     <view class="_div data-v-2ecb44f2"><label wx:if="{{item.dateType==1}}" class="_span data-v-2ecb44f2"> 今天 </label> <label wx:if="{{item.dateType==2}}" class="_span data-v-2ecb44f2"> 昨天 </label> <label wx:if="{{item.dateType==3}}" class="_span data-v-2ecb44f2">
                         {{item.day}}
-                      </label> <label wx:if="{{item.dateType==4||item.dateType==5}}" class="_span data-v-2ecb44f2">   </label> <label style="font-size: 14px;margin-left:-7px;" wx:if="{{item.dateType==3}}" class="_span data-v-2ecb44f2">
+                      </label> <label wx:if="{{item.dateType==4||item.dateType==5||item.dateType==6}}" class="_span data-v-2ecb44f2">   </label> <label style="font-size: 14px;margin-left:-7px;" wx:if="{{item.dateType==3}}" class="_span data-v-2ecb44f2">
                         {{item.month}}
                       </label></view>
                   </van-col>
@@ -52,7 +52,7 @@
                   <van-col span="4" offset="1" class="_van-col data-v-2ecb44f2">
                     <view class="_div data-v-2ecb44f2"><label wx:if="{{item.dateType==1}}" class="_span data-v-2ecb44f2"> 今天 </label> <label wx:if="{{item.dateType==2}}" class="_span data-v-2ecb44f2"> 昨天 </label> <label wx:if="{{item.dateType==3}}" class="_span data-v-2ecb44f2">
                         {{item.day}}
-                      </label> <label wx:if="{{item.dateType==4||item.dateType==5}}" class="_span data-v-2ecb44f2">   </label> <label style="font-size: 14px;margin-left:-7px;" wx:if="{{item.dateType==3}}" class="_span data-v-2ecb44f2">
+                      </label> <label wx:if="{{item.dateType==4||item.dateType==5||item.dateType==6}}" class="_span data-v-2ecb44f2">   </label> <label style="font-size: 14px;margin-left:-7px;" wx:if="{{item.dateType==3}}" class="_span data-v-2ecb44f2">
                         {{item.month}}
                       </label></view>
                   </van-col>

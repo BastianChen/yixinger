@@ -107,7 +107,8 @@
         likeImgUrl: '/static/images/like.png',
         likedHistory: {},
         isShowLine: false,
-        isCommentListEmpty: false
+        isCommentListEmpty: false,
+        totalNum: 0
       }
     },
     onShow() {
@@ -174,6 +175,7 @@
           if (res.state != 0) {
             this.isCommentListEmpty = true;
           } else {
+            this.totalNum = res.data.totalNum;
             this.totalPage = res.data.totalPage;
             if (res.data.totalNum < 11) {
               this.isShowLine = true;
@@ -231,8 +233,12 @@
           },
           isShowLoading: true
         }).then(res => {
-          this.totalPage = res.data.totalPage;
-          if (res.data.totalNum < 11) {
+          if ((this.totalNum + 1) % 10 == 0) {
+            this.totalPage = (this.totalNum + 1) / 10;
+          } else {
+            this.totalPage = (this.totalNum + 1) / 10 + 1;
+          }
+          if ((this.totalNum + 1) < 11) {
             this.isShowLine = true;
           }
           if (res.data.items[0].id != this.commentListInfo[0].id) {

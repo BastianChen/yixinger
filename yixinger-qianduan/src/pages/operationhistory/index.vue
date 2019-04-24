@@ -33,7 +33,7 @@
                     <span v-if="item.dateType==3">
                     {{item.day}}
                   </span>
-                    <span v-if="item.dateType==4||item.dateType==5">
+                    <span v-if="item.dateType==4||item.dateType==5||item.dateType==6">
                     &nbsp;
                   </span>
                     <span style="font-size: 14px;margin-left:-7px;" v-if="item.dateType==3">
@@ -97,7 +97,7 @@
                     <span v-if="item.dateType==3">
                     {{item.day}}
                   </span>
-                    <span v-if="item.dateType==4||item.dateType==5">
+                    <span v-if="item.dateType==4||item.dateType==5||item.dateType==6">
                     &nbsp;
                   </span>
                     <span style="font-size: 14px;margin-left:-7px;" v-if="item.dateType==3">
@@ -269,7 +269,19 @@
                     this.$set(this.photoDistinguishData[i], 'dateType', 5);// 时间为昨天,但不是第一条
                   }
                 } else {
-                  this.$set(this.photoDistinguishData[i], 'dateType', 3);// 正常时间
+                  let isFirst = false;
+                  for (let j = 0; j < i; j++) {
+                    if (this.photoDistinguishData[i].year == this.photoDistinguishData[j].year &&
+                      this.photoDistinguishData[i].month == this.photoDistinguishData[j].month &&
+                      this.photoDistinguishData[i].day == this.photoDistinguishData[j].day) {
+                      this.$set(this.photoDistinguishData[i], 'dateType', 6);// 正常时间,但不是第一条
+                      isFirst = true;
+                      break;
+                    }
+                  }
+                  if (!isFirst) {
+                    this.$set(this.photoDistinguishData[i], 'dateType', 3);// 正常时间,但不是第一条
+                  }
                 }
                 if (this.yearsInphotoDistinguish.length == 0) {
                   this.yearsInphotoDistinguish.push(dateArray[0]);
@@ -287,8 +299,6 @@
                 }
               }
               this.setYearsOrder(this.yearsInphotoDistinguish)
-              console.log(this.photoDistinguishData)
-              console.log(this.yearsInphotoDistinguish)
             }
           })
         } else if (type == 2) {// 获取文字识别的记录
@@ -308,7 +318,7 @@
                 this.textDistinguishData[i].imageUrl = 'https://www.wzcb97.top/' + this.textDistinguishData[i].imageUrl
                 let desc = '文字识别';
                 let result = JSON.parse(this.textDistinguishData[i].words).words_result;
-                let keyword = result[0].words + '...';
+                let keyword = result[0].words.length < 10 ? result[0].words : result[0].words.substring(1, 10) + '...';
                 let dateArray = this.textDistinguishData[i].date.split('-');
                 let cityNameArray = this.textDistinguishData[i].cityName.split('·');
                 let isRepeated = false;
@@ -336,7 +346,19 @@
                     this.$set(this.textDistinguishData[i], 'dateType', 5);// 时间为昨天,但不是第一条
                   }
                 } else {
-                  this.$set(this.textDistinguishData[i], 'dateType', 3);// 正常时间
+                  let isFirst = false;
+                  for (let j = 0; j < i; j++) {
+                    if (this.textDistinguishData[i].year == this.textDistinguishData[j].year &&
+                      this.textDistinguishData[i].month == this.textDistinguishData[j].month &&
+                      this.textDistinguishData[i].day == this.textDistinguishData[j].day) {
+                      this.$set(this.textDistinguishData[i], 'dateType', 6);// 正常时间,但不是第一条
+                      isFirst = true;
+                      break;
+                    }
+                  }
+                  if (!isFirst) {
+                    this.$set(this.textDistinguishData[i], 'dateType', 3);// 正常时间,但不是第一条
+                  }
                 }
                 if (this.yearsIntextDistinguish.length == 0) {
                   this.yearsIntextDistinguish.push(dateArray[0]);
