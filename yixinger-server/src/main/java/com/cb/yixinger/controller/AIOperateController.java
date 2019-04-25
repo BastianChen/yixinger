@@ -71,7 +71,7 @@ public class AIOperateController {
                 baseMessage.setMessage("图像识别成功");
                 logger.info("更新用户openid为 {} 的图像识别记录缓存", userId);
                 String photoDistinguishName = "photoDistinguish?userId=" + userId;// 暂时不加type参数
-                List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, type);
+                List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, null);
                 JSONArray photoDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(photoDistinguishList));
                 redisTemplate.opsForValue().set(photoDistinguishName, photoDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
             } else {

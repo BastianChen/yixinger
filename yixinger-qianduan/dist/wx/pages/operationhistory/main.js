@@ -411,7 +411,7 @@ if (false) {(function () {
               _this2.textDistinguishData[i].imageUrl = 'https://www.wzcb97.top/' + _this2.textDistinguishData[i].imageUrl;
               var desc = '文字识别';
               var result = JSON.parse(_this2.textDistinguishData[i].words).words_result;
-              var keyword = result[0].words.length < 10 ? result[0].words : result[0].words.substring(1, 10) + '...';
+              var keyword = result[0].words.length < 10 ? result[0].words : result[0].words.substring(0, 10) + '...';
               var dateArray = _this2.textDistinguishData[i].date.split('-');
               var cityNameArray = _this2.textDistinguishData[i].cityName.split('·');
               var isRepeated = false;

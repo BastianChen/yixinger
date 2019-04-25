@@ -319,7 +319,7 @@
                 this.textDistinguishData[i].imageUrl = 'https://www.wzcb97.top/' + this.textDistinguishData[i].imageUrl
                 let desc = '文字识别';
                 let result = JSON.parse(this.textDistinguishData[i].words).words_result;
-                let keyword = result[0].words.length < 10 ? result[0].words : result[0].words.substring(1, 10) + '...';
+                let keyword = result[0].words.length < 10 ? result[0].words : result[0].words.substring(0, 10) + '...';
                 let dateArray = this.textDistinguishData[i].date.split('-');
                 let cityNameArray = this.textDistinguishData[i].cityName.split('·');
                 let isRepeated = false;
