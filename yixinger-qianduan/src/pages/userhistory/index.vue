@@ -141,6 +141,10 @@
     },
     onShow() {
       this.userInfo = this.$store.getters.disc;
+      this.restaurantData = [];
+      this.sceneryData = [];
+      this.yearsRestaurantData = [];
+      this.yearsSceneryData = [];
       this.getUserHistoryByUserId();
     },
     onUnload() {
@@ -162,7 +166,8 @@
           this.$httpWX.post({
             url: apiurl.deleteUserHistory,
             data: {
-              idList: id
+              idList: id,
+              userId: this.userInfo.openid
             },
           }).then(res => {
             this.getUserHistoryByUserId();

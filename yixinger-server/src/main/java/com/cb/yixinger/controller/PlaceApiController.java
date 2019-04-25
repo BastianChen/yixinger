@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -451,6 +450,11 @@ public class PlaceApiController {
                 baseMessage.setMessage("添加失败");
             }
         }
+        logger.info("更新用户openid为 {} 的浏览记录缓存", userId);
+        String userHistoryName = "userHistory?userId=" + userId;
+        List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
+        JSONArray userHistoryListJsonArray = JSONArray.parseArray(JSON.toJSONString(userHistoryList));
+        redisTemplate.opsForValue().set(userHistoryName, userHistoryListJsonArray.toString(), 1, TimeUnit.HOURS);
         return baseMessage.response();
     }
 
@@ -458,12 +462,17 @@ public class PlaceApiController {
     @ApiOperation(value = "删除用户浏览记录", notes = "删除用户浏览记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/deleteUserHistory", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deleteUserHistory(
-            @ApiParam(value = "用户浏览记录id", required = true) @RequestParam(value = "idList") String idList) {
+            @ApiParam(value = "用户浏览记录id", required = true) @RequestParam(value = "idList") String idList,
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             userHistoryService.deleteUserHistoryById(idList);
             logger.info("成功删除id为 {} 的浏览记录", idList);
             baseMessage.setMessage("删除成功");
+            String userHistoryName = "userHistory?userId=" + userId;
+            List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
+            JSONArray userHistoryListJsonArray = JSONArray.parseArray(JSON.toJSONString(userHistoryList));
+            redisTemplate.opsForValue().set(userHistoryName, userHistoryListJsonArray.toString(), 1, TimeUnit.HOURS);
         } else {
             logger.info("idList为空", idList);
             baseMessage.initStateAndMessage(1001, "idList为空");
@@ -479,22 +488,35 @@ public class PlaceApiController {
             @ApiParam(value = "纬度1（杭州是30左右）", required = true) @RequestParam double latitude,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
-        List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
-        if (userHistoryList != null && userHistoryList.size() > 0) {
-            logger.info("获取openid为 {} 的浏览记录成功", userId);
-            for (int i = 0; i < userHistoryList.size(); i++) {
-                Place place = placeService.getPlaceByUid(userHistoryList.get(i).getPlaceId());
-                userHistoryList.get(i).setDistance(DistanceUtil.GetShortDistance(longitude, latitude,
-                        place.getLongitude(), place.getLatitude()));
-            }
+        String userHistoryName = "userHistory?userId=" + userId;
+        String userHistoryListValue = redisTemplate.opsForValue().get(userHistoryName);
+        if (CommonUtil.isNotEmpty(userHistoryListValue)) {
+            List<UserHistoryDTO> userHistoryList = com.alibaba.fastjson.JSONObject.parseArray(userHistoryListValue, UserHistoryDTO.class);
+            baseMessage.setMessage("读取用户openid为 + " + userId + "的浏览记录成功");
             baseMessage.setData(userHistoryList);
-            baseMessage.setMessage("获取用户浏览记录成功");
+            logger.info("读取用户openid为 {} 的浏览记录缓存数据成功", userId);
+            return baseMessage.response();
         } else {
-            logger.info("不存在openid为 {} 的浏览记录", userId);
-            baseMessage.setMessageDetail("不存在浏览记录");
-            baseMessage.initStateAndMessage(1001, "获取用户浏览记录失败");
+            logger.info("未读取到用户openid为 {} 的浏览记录缓存数据", userId);
+            List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
+            if (userHistoryList != null && userHistoryList.size() > 0) {
+                logger.info("获取openid为 {} 的浏览记录成功", userId);
+                for (int i = 0; i < userHistoryList.size(); i++) {
+                    Place place = placeService.getPlaceByUid(userHistoryList.get(i).getPlaceId());
+                    userHistoryList.get(i).setDistance(DistanceUtil.GetShortDistance(longitude, latitude,
+                            place.getLongitude(), place.getLatitude()));
+                }
+                JSONArray userHistoryListJsonArray = JSONArray.parseArray(JSON.toJSONString(userHistoryList));
+                redisTemplate.opsForValue().set(userHistoryName, userHistoryListJsonArray.toString(), 1, TimeUnit.HOURS);
+                baseMessage.setData(userHistoryList);
+                baseMessage.setMessage("获取用户浏览记录成功");
+            } else {
+                logger.info("不存在openid为 {} 的浏览记录", userId);
+                baseMessage.setMessageDetail("不存在浏览记录");
+                baseMessage.initStateAndMessage(1001, "获取用户浏览记录失败");
+            }
+            return baseMessage.response();
         }
-        return baseMessage.response();
     }
 
     @LoggerManage(logDescription = "获取距离，单位为米")

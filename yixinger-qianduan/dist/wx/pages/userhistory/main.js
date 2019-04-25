@@ -228,6 +228,10 @@ if (false) {(function () {
   },
   onShow: function onShow() {
     this.userInfo = this.$store.getters.disc;
+    this.restaurantData = [];
+    this.sceneryData = [];
+    this.yearsRestaurantData = [];
+    this.yearsSceneryData = [];
     this.getUserHistoryByUserId();
   },
   onUnload: function onUnload() {
@@ -252,7 +256,8 @@ if (false) {(function () {
         _this.$httpWX.post({
           url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].deleteUserHistory,
           data: {
-            idList: id
+            idList: id,
+            userId: _this.userInfo.openid
           }
         }).then(function (res) {
           _this.getUserHistoryByUserId();
@@ -356,9 +361,7 @@ if (false) {(function () {
             var isFirst = false;
             for (var j = 0; j < i; j++) {
               if (placeData[i].year == placeData[j].year && placeData[i].month == placeData[j].month && placeData[i].day == placeData[j].day) {
-
                 placeData[i].dateType = 6; // 正常时间,但不是第一条
-                console.log("ssss" + placeData[i].dateType);
                 isFirst = true;
                 break;
               }

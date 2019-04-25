@@ -1,5 +1,6 @@
 package com.cb.yixinger.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.cb.yixinger.config.LoggerManage;
 import com.cb.yixinger.entity.*;
@@ -13,6 +14,7 @@ import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description:
@@ -42,6 +45,8 @@ public class AIOperateController {
     private SpeechService speechService;
     @Autowired
     private FileUploadService fileUploadService;
+    @Autowired
+    RedisTemplate<String, String> redisTemplate;
     private static final Logger logger = LoggerFactory.getLogger(AIOperateController.class);
 
     @LoggerManage(logDescription = "图像识别")
@@ -64,6 +69,11 @@ public class AIOperateController {
             if (photoDistinguish != null) {
                 baseMessage.setData(photoDistinguish);
                 baseMessage.setMessage("图像识别成功");
+                logger.info("更新用户openid为 {} 的图像识别记录缓存", userId);
+                String photoDistinguishName = "photoDistinguish?userId=" + userId;// 暂时不加type参数
+                List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, type);
+                JSONArray photoDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(photoDistinguishList));
+                redisTemplate.opsForValue().set(photoDistinguishName, photoDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
             } else {
                 baseMessage.initStateAndMessage(1001, "图像识别失败");
             }
@@ -81,28 +91,51 @@ public class AIOperateController {
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
             @ApiParam(value = "图像识别类型（1.通用图像识别2.植物识别3.动物识别4.菜品识别）") @RequestParam(value = "type", required = false) String type) {
         BaseMessage baseMessage = new BaseMessage();
-        List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, type);
-        if (photoDistinguishList != null && photoDistinguishList.size() > 0) {
-            logger.info("获取图像识别所有记录成功");
-            baseMessage.setMessage("获取图像识别所有记录成功");
-            baseMessage.setData(photoDistinguishList);
+        String photoDistinguishName;
+        if (CommonUtil.isNotEmpty(type)) {
+            photoDistinguishName = "photoDistinguish?userId=" + userId + "&type" + type;
         } else {
-            logger.info("暂无图像识别的历史记录");
-            baseMessage.initStateAndMessage(1001, "暂无历史记录");
+            photoDistinguishName = "photoDistinguish?userId=" + userId;
         }
-        return baseMessage.response();
+        String photoDistinguishListValue = redisTemplate.opsForValue().get(photoDistinguishName);
+        if (CommonUtil.isNotEmpty(photoDistinguishListValue)) {
+            List<PhotoDistinguish> photoDistinguishList = com.alibaba.fastjson.JSONObject.parseArray(photoDistinguishListValue, PhotoDistinguish.class);
+            baseMessage.setMessage("读取用户openid为 + " + userId + "的图像识别记录成功");
+            baseMessage.setData(photoDistinguishList);
+            logger.info("读取用户openid为 {} 的图像识别记录缓存数据成功", userId);
+            return baseMessage.response();
+        } else {
+            logger.info("未读取到用户openid为 {} 的图像识别缓存数据", userId);
+            List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, type);
+            if (photoDistinguishList != null && photoDistinguishList.size() > 0) {
+                logger.info("获取图像识别所有记录成功");
+                JSONArray photoDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(photoDistinguishList));
+                redisTemplate.opsForValue().set(photoDistinguishName, photoDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
+                baseMessage.setMessage("获取图像识别所有记录成功");
+                baseMessage.setData(photoDistinguishList);
+            } else {
+                logger.info("暂无图像识别的历史记录");
+                baseMessage.initStateAndMessage(1001, "暂无历史记录");
+            }
+            return baseMessage.response();
+        }
     }
 
     @LoggerManage(logDescription = "根据id删除图像识别记录")
     @ApiOperation(value = "根据id删除图像识别记录", notes = "根据id删除图像识别记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/deletePhotoDistinguishById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deletePhotoDistinguishById(
-            @ApiParam(value = "记录id", required = true) @RequestParam(value = "idList") String idList) {
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "idList") String idList,
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             photoDistinguishService.deletePhotoDistinguishById(idList);
             logger.info("成功删除id为 {} 的图像识别记录", idList);
             baseMessage.setMessage("删除成功");
+            String photoDistinguishName = "photoDistinguish?userId=" + userId;// 暂时不加type参数
+            List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, null);
+            JSONArray photoDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(photoDistinguishList));
+            redisTemplate.opsForValue().set(photoDistinguishName, photoDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
         } else {
             logger.info("idList为空", idList);
             baseMessage.initStateAndMessage(1001, "idList为空");
@@ -129,6 +162,11 @@ public class AIOperateController {
             if (textDistinguish != null) {
                 baseMessage.setData(textDistinguish);
                 baseMessage.setMessage("文字识别成功");
+                logger.info("更新用户openid为 {} 的图像识别记录缓存", userId);
+                String textDistinguishName = "textDistinguish?userId=" + userId;
+                List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId);
+                JSONArray textDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(textDistinguishList));
+                redisTemplate.opsForValue().set(textDistinguishName, textDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
             } else {
                 baseMessage.initStateAndMessage(1001, "文字识别失败");
             }
@@ -145,28 +183,46 @@ public class AIOperateController {
     public ResponseEntity<BaseMessage> getTextDistinguishList(
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
-        List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId);
-        if (textDistinguishList != null && textDistinguishList.size() > 0) {
-            logger.info("获取文字识别所有记录成功");
-            baseMessage.setMessage("获取文字识别所有记录成功");
+        String textDistinguishName = "textDistinguish?userId=" + userId;
+        String textDistinguishListValue = redisTemplate.opsForValue().get(textDistinguishName);
+        if (CommonUtil.isNotEmpty(textDistinguishListValue)) {
+            List<TextDistinguish> textDistinguishList = com.alibaba.fastjson.JSONObject.parseArray(textDistinguishListValue, TextDistinguish.class);
+            baseMessage.setMessage("读取用户openid为 + " + userId + "的文字识别记录成功");
             baseMessage.setData(textDistinguishList);
+            logger.info("读取用户openid为 {} 的文字识别记录缓存数据成功", userId);
+            return baseMessage.response();
         } else {
-            logger.info("暂无文字识别的历史记录");
-            baseMessage.initStateAndMessage(1001, "暂无历史记录");
+            logger.info("未读取到用户openid为 {} 的文字识别缓存数据", userId);
+            List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId);
+            if (textDistinguishList != null && textDistinguishList.size() > 0) {
+                logger.info("获取文字识别所有记录成功");
+                JSONArray textDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(textDistinguishList));
+                redisTemplate.opsForValue().set(textDistinguishName, textDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
+                baseMessage.setMessage("获取文字识别所有记录成功");
+                baseMessage.setData(textDistinguishList);
+            } else {
+                logger.info("暂无文字识别的历史记录");
+                baseMessage.initStateAndMessage(1001, "暂无历史记录");
+            }
+            return baseMessage.response();
         }
-        return baseMessage.response();
     }
 
     @LoggerManage(logDescription = "根据id删除文字识别记录")
     @ApiOperation(value = "根据id删除文字识别记录", notes = "根据id删除文字识别记录 ", response = BaseMessage.class)
     @RequestMapping(value = "/deleteTextDistinguishById", produces = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<BaseMessage> deleteTextDistinguishById(
-            @ApiParam(value = "记录id", required = true) @RequestParam(value = "idList") String idList) {
+            @ApiParam(value = "记录id", required = true) @RequestParam(value = "idList") String idList,
+            @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) {
         BaseMessage baseMessage = new BaseMessage();
         if (!CommonUtil.isNullOrWhiteSpace(idList)) {
             textDistinguishService.deleteTextDistinguishById(idList);
             logger.info("成功删除id为 {} 的文字识别记录", idList);
             baseMessage.setMessage("删除成功");
+            String textDistinguishName = "textDistinguish?userId=" + userId;
+            List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId);
+            JSONArray textDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(textDistinguishList));
+            redisTemplate.opsForValue().set(textDistinguishName, textDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
         } else {
             logger.info("idList为空", idList);
             baseMessage.initStateAndMessage(1001, "idList为空");
@@ -185,15 +241,31 @@ public class AIOperateController {
             @ApiParam(value = "用户选择的翻译语言", required = true, defaultValue = "zh") @RequestParam(value = "to") String to,
             @ApiParam(value = "来源文本表的类型（1.文字识别表2.图像识别表）", required = true) @RequestParam(value = "type") String type) {
         BaseMessage baseMessage = new BaseMessage();
-        JSONArray originalTextArray = JSONArray.parseArray(originalText);
-        JSONArray translatedText = translatorService.translateText(originalTextArray, userId, textId, from, to, type);
-        if (!translatedText.equals(null)) {
+        String translateTextName = "translateText?userId=" + userId + "&textId=" + textId + "&from=" + from + "&to=" + to + "&type=" + type;
+        String translateTextValue = redisTemplate.opsForValue().get(translateTextName);
+        if (CommonUtil.isNotEmpty(translateTextValue)) {
+            JSONArray translatedText = com.alibaba.fastjson.JSONObject.parseArray(translateTextValue);
+            baseMessage.setMessage("读取用户openid为 " + userId + " ，文本来源表中的id为 " + textId + " ，原文语种为 "
+                    + from + " ，用户选择的翻译语言为 " + to + " 来源文本表的类型为 " + type + " 的翻译缓存数据成功");
             baseMessage.setData(translatedText);
-            baseMessage.setMessage("翻译成功");
+            logger.info("读取用户openid为 {} ，文本来源表中的id为 {} ，原文语种为 {} ，用户选择的翻译语言为 {} ," +
+                    "来源文本表的类型为 {} 的翻译缓存数据成功", userId, textId, from, to, type);
+            return baseMessage.response();
         } else {
-            baseMessage.initStateAndMessage(1001, "翻译失败");
+            logger.info("未读取用户openid为 {} ，文本来源表中的id为 {} ，原文语种为 {} ，用户选择的翻译语言为 {} ," +
+                    "来源文本表的类型为 {} 的翻译缓存数据", userId, textId, from, to, type);
+            JSONArray originalTextArray = JSONArray.parseArray(originalText);
+            JSONArray translatedText = translatorService.translateText(originalTextArray, userId, textId, from, to, type);
+            if (!translatedText.equals(null)) {
+                baseMessage.setData(translatedText);
+                baseMessage.setMessage("翻译成功");
+                logger.info("添加翻译缓存");
+                redisTemplate.opsForValue().set(translateTextName, translatedText.toString(), 1, TimeUnit.HOURS);
+            } else {
+                baseMessage.initStateAndMessage(1001, "翻译失败");
+            }
+            return baseMessage.response();
         }
-        return baseMessage.response();
     }
 
     @LoggerManage(logDescription = "根据用户openid以及type类型获取所有翻译记录")
@@ -247,15 +319,27 @@ public class AIOperateController {
             @ApiParam(value = "文本List", required = true) @RequestParam(value = "text") String text,
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId) throws JSONException, DemoException, IOException {
         BaseMessage baseMessage = new BaseMessage();
-        if (!CommonUtil.isNullOrWhiteSpace(text)) {
-            String speechPath = speechService.speechSynthesis(text, userId);
-            if (!CommonUtil.isNullOrWhiteSpace(speechPath)) {
-                baseMessage.setData(speechPath);
-                baseMessage.setMessage("语音合成成功");
-            } else {
-                baseMessage.initStateAndMessage(1001, "语音合成失败");
+        String speechSynthesisName = "speechSynthesis?userId=" + userId + "&text=" + text;
+        String speechSynthesisValue = redisTemplate.opsForValue().get(speechSynthesisName);
+        if (CommonUtil.isNotEmpty(speechSynthesisValue)) {
+            String speechPath = speechSynthesisValue;
+            baseMessage.setMessage("读取用户openid为 + " + userId + "的语音缓存成功");
+            baseMessage.setData(speechPath);
+            logger.info("读取用户openid为 {} 的语音缓存数据成功", userId);
+            return baseMessage.response();
+        } else {
+            if (!CommonUtil.isNullOrWhiteSpace(text)) {
+                logger.info("未读取到用户openid为 {} 的语音缓存数据", userId);
+                String speechPath = speechService.speechSynthesis(text, userId);
+                if (!CommonUtil.isNullOrWhiteSpace(speechPath)) {
+                    baseMessage.setData(speechPath);
+                    baseMessage.setMessage("语音合成成功");
+                    redisTemplate.opsForValue().set(speechSynthesisName, speechPath, 1, TimeUnit.HOURS);
+                } else {
+                    baseMessage.initStateAndMessage(1001, "语音合成失败");
+                }
             }
+            return baseMessage.response();
         }
-        return baseMessage.response();
     }
 }

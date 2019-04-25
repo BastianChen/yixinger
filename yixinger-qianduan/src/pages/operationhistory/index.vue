@@ -168,7 +168,8 @@
           this.$httpWX.post({
             url: type == 1 ? apiurl.deletePhotoDistinguishById : apiurl.deleteTextDistinguishById,
             data: {
-              idList: id
+              idList: id,
+              userId: this.userInfo.openid
             },
           }).then(res => {
             this.getOperationHistoryData(type);

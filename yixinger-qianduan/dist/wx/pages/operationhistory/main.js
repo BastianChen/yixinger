@@ -261,7 +261,8 @@ if (false) {(function () {
         _this.$httpWX.post({
           url: type == 1 ? __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].deletePhotoDistinguishById : __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].deleteTextDistinguishById,
           data: {
-            idList: id
+            idList: id,
+            userId: _this.userInfo.openid
           }
         }).then(function (res) {
           _this.getOperationHistoryData(type);
