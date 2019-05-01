@@ -271,6 +271,9 @@ public class PlaceServiceImpl implements PlaceService {
         return placeList;
     }
 
+    /**
+     * 标签根据count由大到小排序
+     */
     @Override
     public String resetContent(String content) {
         JSONArray newContentArray = new JSONArray();
@@ -290,7 +293,7 @@ public class PlaceServiceImpl implements PlaceService {
             while (flag > 0) {
                 flag = 0;
                 for (int i = 1; i < len; i++) {
-                    // 比较评分，若前面小于后面则交换数据
+                    // 比较count，若前面小于后面则交换数据
                     if (((JSONObject) newContentArray.get(i - 1)).optInt("count") < ((JSONObject) newContentArray.get(i)).optInt("count")) {
                         JSONObject temp = (JSONObject) newContentArray.get(i);
                         newContentArray.set(i, (JSONObject) newContentArray.get(i - 1));

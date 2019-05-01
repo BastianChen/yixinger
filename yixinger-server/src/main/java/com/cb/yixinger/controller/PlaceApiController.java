@@ -393,7 +393,7 @@ public class PlaceApiController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = sdf.format(System.currentTimeMillis());
         placePhoto.setUploadDate(date);
-        placePhoto.setCommentType(2);
+        placePhoto.setPhotoType(2);
         placePhoto.setReadTimes(0);
         placePhoto.setImageSource("易行ER");
         if (CommonUtil.isNotEmpty(imageList)) {

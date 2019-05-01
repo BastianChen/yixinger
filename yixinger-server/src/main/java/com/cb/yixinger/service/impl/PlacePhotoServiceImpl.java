@@ -48,7 +48,7 @@ public class PlacePhotoServiceImpl implements PlacePhotoService {
                 String date = sdf.format(System.currentTimeMillis());
                 placePhoto.setUploadDate(date);
                 placePhoto.setUserName("百度地图网友");
-                placePhoto.setCommentType(1);
+                placePhoto.setPhotoType(1);
                 placePhotoMapper.insertSelective(placePhoto);
             }
         }

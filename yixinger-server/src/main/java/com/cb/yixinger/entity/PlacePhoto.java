@@ -29,6 +29,6 @@ public class PlacePhoto implements Serializable {
     private String userId;
     @ApiModelProperty(value="用户昵称")
     private String userName;
-    @ApiModelProperty(value="评论类型（1.爬虫数据2.用户评论）")
-    private Integer commentType;
+    @ApiModelProperty(value="图片类型（1.爬虫数据2.用户评论）")
+    private Integer photoType;
 }
