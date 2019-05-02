@@ -172,6 +172,12 @@
         color: #ffffff;
         width: 100px;
         border-radius: 20px;
+        .addImg{
+          width: 35rpx;height: 35rpx;margin-bottom:-10rpx
+        }
+        .addSpan{
+          margin-left: 10rpx
+        }
       }
     }
     .commentDetails{

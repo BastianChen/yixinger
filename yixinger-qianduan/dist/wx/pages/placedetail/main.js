@@ -328,6 +328,7 @@ if (false) {(function () {
 //
 //
 //
+//
 
 
 
@@ -1078,7 +1079,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "comment"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '37'
+      "mpcomid": '36'
     }
   }, [_c('div', {
     staticClass: "title"
@@ -1098,16 +1099,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.addComment()
       }
     }
-  }, [_c('van-icon', {
-    staticStyle: {
-      "padding-top": "5px"
-    },
+  }, [_c('img', {
+    staticClass: "addImg",
     attrs: {
-      "name": "edit",
-      "size": "15px",
-      "mpcomid": '23'
+      "src": "../../../static/images/edit.png"
     }
-  }), _vm._v("\n            写评论\n          ")], 1)], 1), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('span', {
+    staticClass: "addSpan"
+  }, [_vm._v("写评论")])])], 1), _vm._v(" "), _c('div', {
     staticClass: "commentDetails"
   }, _vm._l((_vm.commentListInfo), function(comment, commentListInfoIndex) {
     return (commentListInfoIndex < 3) ? _c('div', {
@@ -1115,12 +1114,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "commentDetail"
     }, [_c('van-row', {
       attrs: {
-        "mpcomid": '35-' + commentListInfoIndex
+        "mpcomid": '34-' + commentListInfoIndex
       }
     }, [_c('van-col', {
       attrs: {
         "span": "3",
-        "mpcomid": '24-' + commentListInfoIndex
+        "mpcomid": '23-' + commentListInfoIndex
       }
     }, [_c('img', {
       staticClass: "portrait",
@@ -1137,22 +1136,22 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "span": "19",
         "offset": "1",
-        "mpcomid": '34-' + commentListInfoIndex
+        "mpcomid": '33-' + commentListInfoIndex
       }
     }, [_c('van-row', {
       attrs: {
-        "mpcomid": '25-' + commentListInfoIndex
+        "mpcomid": '24-' + commentListInfoIndex
       }
     }, [_c('span', {
       staticClass: "userName"
     }, [_vm._v(_vm._s(comment.userName))])]), _vm._v(" "), _c('van-row', {
       attrs: {
-        "mpcomid": '30-' + commentListInfoIndex
+        "mpcomid": '29-' + commentListInfoIndex
       }
     }, [_c('van-col', {
       attrs: {
         "span": "8",
-        "mpcomid": '27-' + commentListInfoIndex
+        "mpcomid": '26-' + commentListInfoIndex
       }
     }, [_c('van-rate', {
       attrs: {
@@ -1161,12 +1160,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "count": "5",
         "disabled-color": "#00BFFF",
         "disabled": "",
-        "mpcomid": '26-' + commentListInfoIndex
+        "mpcomid": '25-' + commentListInfoIndex
       }
     })], 1), _vm._v(" "), _c('van-col', {
       attrs: {
         "span": "3",
-        "mpcomid": '28-' + commentListInfoIndex
+        "mpcomid": '27-' + commentListInfoIndex
       }
     }, [_c('span', {
       staticClass: "rate"
@@ -1174,19 +1173,19 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "span": "8",
         "offset": "5",
-        "mpcomid": '29-' + commentListInfoIndex
+        "mpcomid": '28-' + commentListInfoIndex
       }
     }, [_c('div', {
       staticClass: "time"
     }, [_c('span', [_vm._v(_vm._s(comment.date))])])])], 1), _vm._v(" "), _c('van-row', {
       attrs: {
-        "mpcomid": '31-' + commentListInfoIndex
+        "mpcomid": '30-' + commentListInfoIndex
       }
     }, [_c('div', {
       staticClass: "detail"
     }, [_c('span', [_vm._v("\n                    " + _vm._s(comment.newComment) + "\n                  ")])])]), _vm._v(" "), _c('van-row', {
       attrs: {
-        "mpcomid": '32-' + commentListInfoIndex
+        "mpcomid": '31-' + commentListInfoIndex
       }
     }, [_c('div', [_vm._l((comment.userImg), function(img, imgIndex) {
       return (imgIndex < 3 && img) ? _c('img', {
@@ -1218,7 +1217,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_vm._v(_vm._s(comment.imgLength) + "张")]) : _vm._e()], 2)]), _vm._v(" "), _c('van-row', {
       attrs: {
-        "mpcomid": '33-' + commentListInfoIndex
+        "mpcomid": '32-' + commentListInfoIndex
       }
     }, [_c('div', {
       staticClass: "bottom"
@@ -1251,13 +1250,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('span', [_vm._v("查看全部")]), _vm._v(" "), _c('van-icon', {
     attrs: {
       "name": "arrow",
-      "mpcomid": '36'
+      "mpcomid": '35'
     }
   })], 1) : _vm._e()])], 1)]), _vm._v(" "), _c('div', [_c('div', {
     staticClass: "photograph"
   }, [_c('van-row', {
     attrs: {
-      "mpcomid": '39'
+      "mpcomid": '38'
     }
   }, [_c('div', {
     staticClass: "title",
@@ -1276,7 +1275,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('van-icon', {
     attrs: {
       "name": "arrow",
-      "mpcomid": '38'
+      "mpcomid": '37'
     }
   })], 1)]), _vm._v(" "), (_vm.isImgListShow) ? _c('div', {
     staticClass: "photos"
@@ -1299,7 +1298,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "actions": _vm.actions,
       "cancel-text": "取消",
       "eventid": '13',
-      "mpcomid": '40'
+      "mpcomid": '39'
     },
     on: {
       "select": _vm.onSelect,
@@ -1308,7 +1307,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _vm._v(" "), _c('van-dialog', {
     attrs: {
       "id": "van-dialog",
-      "mpcomid": '41'
+      "mpcomid": '40'
     }
   })], 1)
 }

@@ -149,8 +149,9 @@
               class="addComment"
               @click="addComment()"
             >
-              <van-icon name="edit" size="15px" style="padding-top: 5px"/>
-              写评论
+              <img src="../../../static/images/edit.png" class="addImg"/>
+              <!--<van-icon name="edit" size="15px" style="padding-top: 5px"/>-->
+              <span class="addSpan">写评论</span>
             </button>
           </div>
           <div class="commentDetails">

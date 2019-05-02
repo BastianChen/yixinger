@@ -176,6 +176,14 @@
   width: 200rpx;
   border-radius: 40rpx;
 }
+.index .comment .title .addComment .addImg.data-v-8962503e {
+  width: 35rpx;
+  height: 35rpx;
+  margin-bottom: -10rpx;
+}
+.index .comment .title .addComment .addSpan.data-v-8962503e {
+  margin-left: 10rpx;
+}
 .index .comment .commentDetails.data-v-8962503e {
   border-top: 2rpx solid #E8E8E8;
   padding: 20rpx 0 0 0;

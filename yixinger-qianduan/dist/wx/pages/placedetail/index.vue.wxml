@@ -103,7 +103,7 @@
       <view class="_div data-v-8962503e comment">
         <van-row class="_van-row data-v-8962503e">
           <view class="_div data-v-8962503e title"><label class="_span data-v-8962503e">评论</label><label class="_span data-v-8962503e commentNumber">({{commentNumber}}条评论)</label> <button type="primary" size="mini" plain="false" bindtap="handleProxy" class="_button data-v-8962503e addComment" data-eventid="{{'6'}}" data-comkey="{{$k}}">
-              <van-icon name="edit" size="15px" style="padding-top: 5px" class="_van-icon data-v-8962503e"></van-icon> 写评论
+              <image src="/static/images/edit.png" class="_img data-v-8962503e addImg"></image> <label class="_span data-v-8962503e addSpan">写评论</label>
             </button></view>
           <view class="_div data-v-8962503e commentDetails">
             <view class="_div data-v-8962503e commentDetail" wx:key="commentListInfoIndex" key="{{commentListInfoIndex}}" wx:if="{{commentListInfoIndex<3}}" wx:for="{{commentListInfo}}" wx:for-index="commentListInfoIndex" wx:for-item="comment">
