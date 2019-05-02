@@ -41,7 +41,7 @@
   margin-top: -80rpx;
   margin-right: 60rpx;
   border-radius: 50%;
-  z-index: 1000;
+  z-index: 999;
   position: relative;
 }
 .index .info .distanceAndAddress.data-v-8962503e {
@@ -235,7 +235,7 @@
   font-size: 26rpx;
   color: #A7A7A7;
   float: right;
-  padding-top: 13rpx;
+  padding-top: 18rpx;
 }
 .index .comment .commentDetails .commentDetail .bottom .likeImg.data-v-8962503e {
   width: 30rpx;
@@ -279,4 +279,8 @@
   padding: 0 17rpx;
   width: 152rpx;
   height: 130rpx;
+}
+.index #van-dialog.data-v-8962503e {
+  z-index: 1000;
+  position: relative;
 }

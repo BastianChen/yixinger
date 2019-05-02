@@ -48,12 +48,12 @@
       <van-row class="_van-row data-v-8962503e">
         <view class="_div data-v-8962503e title"> 景区概况 </view>
         <view class="_div data-v-8962503e content" wx:if="{{isIntroduceShow}}">
-          <van-row class="_van-row data-v-8962503e">
+          <van-row bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_van-row data-v-8962503e">
             <van-col span="22" class="_van-col data-v-8962503e"><label class="_span data-v-8962503e">
                 {{introduce}}
               </label></van-col>
             <van-col span="2" class="_van-col data-v-8962503e">
-              <view class="_div data-v-8962503e right" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}">
+              <view class="_div data-v-8962503e right">
                 <van-icon name="arrow" class="_van-icon data-v-8962503e"></van-icon>
               </view>
             </van-col>

@@ -51,7 +51,7 @@
   font-size: 26rpx;
   color: #A7A7A7;
   float: right;
-  padding-top: 13rpx;
+  padding-top: 18rpx;
 }
 .index .firstDiv .commentDetail .bottom .likeImg.data-v-e625b5f4 {
   width: 30rpx;

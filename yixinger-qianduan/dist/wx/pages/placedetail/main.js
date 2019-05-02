@@ -948,7 +948,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "content"
   }, [_c('van-row', {
     attrs: {
+      "eventid": '2',
       "mpcomid": '16'
+    },
+    on: {
+      "click": function($event) {
+        _vm.seeIntroduce()
+      }
     }
   }, [_c('van-col', {
     attrs: {
@@ -961,15 +967,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "mpcomid": '15'
     }
   }, [_c('div', {
-    staticClass: "right",
-    attrs: {
-      "eventid": '2'
-    },
-    on: {
-      "click": function($event) {
-        _vm.seeIntroduce()
-      }
-    }
+    staticClass: "right"
   }, [_c('van-icon', {
     attrs: {
       "name": "arrow",

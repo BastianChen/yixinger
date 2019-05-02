@@ -64,14 +64,14 @@
           景区概况
         </div>
         <div class="content" v-if="isIntroduceShow">
-          <van-row>
+          <van-row @click="seeIntroduce()">
             <van-col span="22">
             <span>
             {{introduce}}
             </span>
             </van-col>
             <van-col span="2">
-              <div class="right" @click="seeIntroduce()">
+              <div class="right">
                 <van-icon name="arrow"/>
               </div>
             </van-col>
