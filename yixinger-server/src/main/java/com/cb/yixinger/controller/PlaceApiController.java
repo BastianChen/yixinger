@@ -418,43 +418,47 @@ public class PlaceApiController {
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
             @ApiParam(value = "地点uid", required = true) @RequestParam(value = "placeId") String placeId) {
         BaseMessage baseMessage = new BaseMessage();
-        UserHistory userHistory = userHistoryService.getUserHistory(userId, placeId);
-        if (userHistory != null) {
-            logger.info("存在该条浏览记录，则更新浏览时间");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date = sdf.format(System.currentTimeMillis());
-            userHistory.setReadDate(date);
-            Boolean isUpdateSuccess = userHistoryService.updateUserHistory(userHistory);
-            if (isUpdateSuccess) {
-                logger.info("更新成功");
-                baseMessage.setMessage("更新成功");
-                baseMessage.setData(userHistory);
-            } else {
-                logger.info("更新失败");
-                baseMessage.setMessage("更新失败");
-            }
+        if ("undefined".equals(userId) || "undefined".equals(placeId)) {
+            baseMessage.initStateAndMessage(1001, "userId或placeId未定义");
         } else {
-            logger.info("不存在该条浏览记录，则添加该条浏览记录");
-            userHistory = new UserHistory();
-            userHistory.setUserId(userId);
-            userHistory.setPlaceId(placeId);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date = sdf.format(System.currentTimeMillis());
-            userHistory.setReadDate(date);
-            Boolean isAddSuccess = userHistoryService.addUserHistory(userHistory);
-            if (isAddSuccess) {
-                logger.info("添加成功");
-                baseMessage.setMessage("添加成功");
+            UserHistory userHistory = userHistoryService.getUserHistory(userId, placeId);
+            if (userHistory != null) {
+                logger.info("存在该条浏览记录，则更新浏览时间");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String date = sdf.format(System.currentTimeMillis());
+                userHistory.setReadDate(date);
+                Boolean isUpdateSuccess = userHistoryService.updateUserHistory(userHistory);
+                if (isUpdateSuccess) {
+                    logger.info("更新成功");
+                    baseMessage.setMessage("更新成功");
+                    baseMessage.setData(userHistory);
+                } else {
+                    logger.info("更新失败");
+                    baseMessage.setMessage("更新失败");
+                }
             } else {
-                logger.info("添加失败");
-                baseMessage.setMessage("添加失败");
+                logger.info("不存在该条浏览记录，则添加该条浏览记录");
+                userHistory = new UserHistory();
+                userHistory.setUserId(userId);
+                userHistory.setPlaceId(placeId);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String date = sdf.format(System.currentTimeMillis());
+                userHistory.setReadDate(date);
+                Boolean isAddSuccess = userHistoryService.addUserHistory(userHistory);
+                if (isAddSuccess) {
+                    logger.info("添加成功");
+                    baseMessage.setMessage("添加成功");
+                } else {
+                    logger.info("添加失败");
+                    baseMessage.setMessage("添加失败");
+                }
             }
+            logger.info("更新用户openid为 {} 的浏览记录缓存", userId);
+            String userHistoryName = "userHistory?userId=" + userId;
+            List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
+            JSONArray userHistoryListJsonArray = JSONArray.parseArray(JSON.toJSONString(userHistoryList));
+            redisTemplate.opsForValue().set(userHistoryName, userHistoryListJsonArray.toString(), 1, TimeUnit.HOURS);
         }
-        logger.info("更新用户openid为 {} 的浏览记录缓存", userId);
-        String userHistoryName = "userHistory?userId=" + userId;
-        List<UserHistoryDTO> userHistoryList = userHistoryService.getUserHistoryListByUserId(userId);
-        JSONArray userHistoryListJsonArray = JSONArray.parseArray(JSON.toJSONString(userHistoryList));
-        redisTemplate.opsForValue().set(userHistoryName, userHistoryListJsonArray.toString(), 1, TimeUnit.HOURS);
         return baseMessage.response();
     }
 
