@@ -250,8 +250,11 @@
                   placeData[i].dateType = 4;// 时间为今天,但不是第一条
                 }
               }
-            } else if ((myDate.getFullYear() == dateArray[0]) && ((myDate.getMonth() + 1) == dateArray[1].substring(1, 2))
-              && (myDate.getDate() - 1 == dateArray[2].split(' ')[0])) {
+            } else if (((myDate.getFullYear() == dateArray[0]) && ((myDate.getMonth() + 1) == dateArray[1].substring(1, 2))
+              && (myDate.getDate() - 1 == dateArray[2].split(' ')[0]))
+              || ((myDate.getFullYear() == dateArray[0]) && ((myDate.getMonth()) == dateArray[1].substring(1, 2))
+                && (myDate.getDate() - 1 == 0) && (dateArray[2].split(' ')[0] == '31' || dateArray[2].split(' ')[0] == '30'
+                  || dateArray[2].split(' ')[0] == '29' || dateArray[2].split(' ')[0] == '28'))) {
               if (placeData[i].type == 1) {
                 if (!isYesterdayFirstOfScenery) {
                   placeData[i].dateType = 2;// 时间为昨天
@@ -272,7 +275,7 @@
               for (let j = 0; j < i; j++) {
                 if (placeData[i].year == placeData[j].year &&
                   placeData[i].month == placeData[j].month &&
-                  placeData[i].day == placeData[j].day) {
+                  placeData[i].day == placeData[j].day && placeData[i].type == placeData[j].type) {
                   placeData[i].dateType = 6;// 正常时间,但不是第一条
                   isFirst = true;
                   break;
