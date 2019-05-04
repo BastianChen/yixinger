@@ -58,28 +58,32 @@ public class AIOperateController {
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
             @ApiParam(value = "进行AI操作的地点用于操作记录展示", required = true) @RequestParam(value = "cityName") String cityName) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
-        String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/photo/";
-        String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
-        if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
-            logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
-            logger.info("----------------图像识别开始----------------");
-            PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(resourcePath + imageName + "_src.jpg", type, userId, cityName,
-                    "/images/photo/" + imageName + "_src.jpg");
-            logger.info("----------------图像识别结束----------------");
-            if (photoDistinguish != null) {
-                baseMessage.setData(photoDistinguish);
-                baseMessage.setMessage("图像识别成功");
-                logger.info("更新用户openid为 {} 的图像识别记录缓存", userId);
-                String photoDistinguishName = "photoDistinguish?userId=" + userId;// 暂时不加type参数
-                List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, null);
-                JSONArray photoDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(photoDistinguishList));
-                redisTemplate.opsForValue().set(photoDistinguishName, photoDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
-            } else {
-                baseMessage.initStateAndMessage(1001, "图像识别失败");
-            }
+        if (imageFile.getContentType().contains("image/gif")) {
+            baseMessage.initStateAndMessage(1001, "暂不支持识别动图");
         } else {
-            logger.info("返回的图片名称为Null");
-            baseMessage.initStateAndMessage(1001, "图像识别失败,返回的图片名称为Null");
+            String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/photo/";
+            String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
+            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
+                logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
+                logger.info("----------------图像识别开始----------------");
+                PhotoDistinguish photoDistinguish = photoDistinguishService.photoDistinguishBytype(resourcePath + imageName + "_src.jpg", type, userId, cityName,
+                        "/images/photo/" + imageName + "_src.jpg");
+                logger.info("----------------图像识别结束----------------");
+                if (photoDistinguish != null) {
+                    baseMessage.setData(photoDistinguish);
+                    baseMessage.setMessage("图像识别成功");
+                    logger.info("更新用户openid为 {} 的图像识别记录缓存", userId);
+                    String photoDistinguishName = "photoDistinguish?userId=" + userId;// 暂时不加type参数
+                    List<PhotoDistinguish> photoDistinguishList = photoDistinguishService.getPhotoDistinguishList(userId, null);
+                    JSONArray photoDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(photoDistinguishList));
+                    redisTemplate.opsForValue().set(photoDistinguishName, photoDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
+                } else {
+                    baseMessage.initStateAndMessage(1001, "图像识别失败");
+                }
+            } else {
+                logger.info("返回的图片名称为Null");
+                baseMessage.initStateAndMessage(1001, "图像识别失败,返回的图片名称为Null");
+            }
         }
         return baseMessage.response();
     }
@@ -151,28 +155,32 @@ public class AIOperateController {
             @ApiParam(value = "用户openid", required = true) @RequestParam(value = "userId") String userId,
             @ApiParam(value = "进行AI操作的地点用于操作记录展示", required = true) @RequestParam(value = "cityName") String cityName) throws IOException {
         BaseMessage baseMessage = new BaseMessage();
-        String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/text/";
-        String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
-        if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
-            logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
-            logger.info("----------------文字识别开始----------------");
-            TextDistinguish textDistinguish = textDistinguishService.textDistinguish(resourcePath + imageName + "_src.jpg",
-                    userId, cityName, "/images/text/" + imageName + "_src.jpg");
-            logger.info("----------------文字识别结束----------------");
-            if (textDistinguish != null) {
-                baseMessage.setData(textDistinguish);
-                baseMessage.setMessage("文字识别成功");
-                logger.info("更新用户openid为 {} 的图像识别记录缓存", userId);
-                String textDistinguishName = "textDistinguish?userId=" + userId;
-                List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId);
-                JSONArray textDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(textDistinguishList));
-                redisTemplate.opsForValue().set(textDistinguishName, textDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
-            } else {
-                baseMessage.initStateAndMessage(1001, "文字识别失败");
-            }
+        if (imageFile.getContentType().contains("image/gif")) {
+            baseMessage.initStateAndMessage(1001, "暂不支持识别动图");
         } else {
-            logger.info("返回的图片名称为Null");
-            baseMessage.initStateAndMessage(1001, "文字识别失败,返回的图片名称为Null");
+            String resourcePath = System.getProperty("user.dir") + "/src/main/resources/static/images/text/";
+            String imageName = fileUploadService.fileUpload(resourcePath, imageFile, baseMessage);
+            if (!CommonUtil.isNullOrWhiteSpace(imageName)) {
+                logger.info("返回的图片名称为 {}", imageName + "_src.jpg");
+                logger.info("----------------文字识别开始----------------");
+                TextDistinguish textDistinguish = textDistinguishService.textDistinguish(resourcePath + imageName + "_src.jpg",
+                        userId, cityName, "/images/text/" + imageName + "_src.jpg");
+                logger.info("----------------文字识别结束----------------");
+                if (textDistinguish != null) {
+                    baseMessage.setData(textDistinguish);
+                    baseMessage.setMessage("文字识别成功");
+                    logger.info("更新用户openid为 {} 的图像识别记录缓存", userId);
+                    String textDistinguishName = "textDistinguish?userId=" + userId;
+                    List<TextDistinguish> textDistinguishList = textDistinguishService.getTextDistinguishList(userId);
+                    JSONArray textDistinguishListJsonArray = JSONArray.parseArray(JSON.toJSONString(textDistinguishList));
+                    redisTemplate.opsForValue().set(textDistinguishName, textDistinguishListJsonArray.toString(), 1, TimeUnit.HOURS);
+                } else {
+                    baseMessage.initStateAndMessage(1001, "文字识别失败");
+                }
+            } else {
+                logger.info("返回的图片名称为Null");
+                baseMessage.initStateAndMessage(1001, "文字识别失败,返回的图片名称为Null");
+            }
         }
         return baseMessage.response();
     }
