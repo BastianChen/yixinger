@@ -267,16 +267,11 @@ if (false) {(function () {
       wx.getLocation({
         type: 'wgs84',
         success: function success(res) {
-          console.log(res);
           _this.latitude = res.latitude;
           _this.longitude = res.longitude;
-          var speed = res.speed;
-          var accuracy = res.accuracy;
           // ②百度地图API，将微信获得的经纬度传给百度，获得城市等信息
           wx.request({
             url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' + '&location=' + _this.latitude + ',' + _this.longitude + '&output=json&coordtype=wgs84ll',
-            // url: 'https://api.map.baidu.com/geocoder/v2/?ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y' +
-            // '&location=' + 52.17643737792969 + ',' + 10.548863410949707 + '&output=json&coordtype=wgs84ll',
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -284,8 +279,6 @@ if (false) {(function () {
             success: function success(res) {
               console.log(res.data.result);
               console.log("地点：" + res.data.result.addressComponent.city + res.data.result.addressComponent.district);
-              // _this.vuexInfo.location = res.data.result.addressComponent.country;
-              // _this.setDisc(_this.vuexInfo);
               if (res.data.result.addressComponent.district != '') {
                 _this.cityName = res.data.result.addressComponent.district;
               } else {
@@ -309,16 +302,11 @@ if (false) {(function () {
       wx.getLocation({
         type: 'wgs84',
         success: function success(res) {
-          console.log(res);
           var latitude = res.latitude;
           var longitude = res.longitude;
-          var speed = res.speed;
-          var accuracy = res.accuracy;
           // 获取天气信息
           wx.request({
             url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' + '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + longitude + '%2C' + latitude,
-            // url: 'https://api.map.baidu.com/telematics/v3/weather?coord_type=gcj02&output=json' +
-            // '&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&location=' + 10 + '%2C' + 10,
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -345,9 +333,6 @@ if (false) {(function () {
           // 获取周边景点信息
           wx.request({
             url: 'https://api.map.baidu.com/place/v2/search?query=%E6%99%AF%E7%82%B9&scope=1&filter=&coord_type=2' + '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' + '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
-            // url: 'https://api.map.baidu.com/place/v2/search?query=%E6%99%AF%E7%82%B9&scope=1&filter=&coord_type=2' +
-            // '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
-            // '&ret_coordtype=gcj02ll&location=' + 13.82031 + '%2C' + 100.66471,
             data: {},
             header: {
               'Content-Type': 'application/json'
@@ -382,9 +367,6 @@ if (false) {(function () {
                 // 获取周边餐馆信息
                 wx.request({
                   url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' + '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' + '&ret_coordtype=gcj02ll&location=' + latitude + '%2C' + longitude,
-                  // url: 'https://api.map.baidu.com/place/v2/search?query=%E7%BE%8E%E9%A3%9F&scope=1&filter=&coord_type=2' +
-                  // '&page_size=10&page_num=0&output=json&ak=FuD2k606aTeFr0dOa4bFs0PIzz8VFs9Y&sn=&timestamp=&radius=2000' +
-                  // '&ret_coordtype=gcj02ll&location=' + 10.548863410949707 + '%2C' + 52.17643737792969,
                   data: {},
                   header: {
                     'Content-Type': 'application/json'

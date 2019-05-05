@@ -1,4 +1,4 @@
-<template name="5ee601b2">
+<template name="2570a9fe">
   <view class="_div data-v-40d83a4c">
     <view class="_div data-v-40d83a4c my">
       <view class="_div data-v-40d83a4c myinfo" wx:if="{{isLogin}}">

@@ -1,4 +1,4 @@
-<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="f2ef20fe">
+<import src="/modules/mpvue-wxparse/src/wxParse.vue.wxml" /><template name="0301dfb5">
   <view class="_div data-v-1c5af7e1 index">
     <view class="_div data-v-1c5af7e1 radius"></view>
     <view class="_div data-v-1c5af7e1 firstDiv">
@@ -9,12 +9,12 @@
     <view class="_div data-v-1c5af7e1 secondDiv" style=" {{('margin-top:' + (imgHeight - 50 + 'px') + ';')}}">
       <van-row class="_van-row data-v-1c5af7e1">
         <van-col span="18" class="_van-col data-v-1c5af7e1">
-          <view class="_div data-v-1c5af7e1 firstCol"><template data="{{...$root[$kk+'0'], $root}}" is="9aa3b73e"></template></view>
+          <view class="_div data-v-1c5af7e1 firstCol"><template data="{{...$root[$kk+'0'], $root}}" is="ed185ca6"></template></view>
         </van-col>
       </van-row>
       <van-row class="_van-row data-v-1c5af7e1">
         <van-col span="18" offset="6" class="_van-col data-v-1c5af7e1">
-          <view class="_div data-v-1c5af7e1 firstCol"><template data="{{...$root[$kk+'3'], $root}}" is="9aa3b73e"></template>
+          <view class="_div data-v-1c5af7e1 firstCol"><template data="{{...$root[$kk+'3'], $root}}" is="ed185ca6"></template>
             <image src="{{broadcastImgUrl}}" bindtap="handleProxy" hidden="{{!(isTranslated)}}" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_img data-v-1c5af7e1"></image>
           </view>
         </van-col>

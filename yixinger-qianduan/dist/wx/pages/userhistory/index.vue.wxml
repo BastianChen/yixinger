@@ -1,4 +1,4 @@
-<template name="6e7749dc">
+<template name="0f460546">
   <view class="_div data-v-2ecb44f2 index">
     <van-tabs active="{{active}}" bindchange="handleProxy" sticky animated swipeable color="#00BFFF" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_van-tabs data-v-2ecb44f2">
       <van-tab title="景点" class="_van-tab data-v-2ecb44f2">

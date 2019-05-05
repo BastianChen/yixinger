@@ -1,4 +1,4 @@
-<template name="4b9a8604">
+<template name="00c02850">
   <view class="_div data-v-75831fc4 index">
     <view class="_div data-v-75831fc4 firstDiv">
       <image wx:key="imgIndex" key="{{imgIndex}}" src="{{img}}" data-src="{{img}}" bindtap="handleProxy" bindlongpress="handleProxy" data-eventid="{{'0-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{imgList}}" wx:for-index="imgIndex" wx:for-item="img" class="_img data-v-75831fc4"></image>
