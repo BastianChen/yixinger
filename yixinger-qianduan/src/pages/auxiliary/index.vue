@@ -1,26 +1,5 @@
 <template>
   <div class="index">
-    <!--<div class="auxiliary">-->
-    <!--<div class="content">-->
-    <!--<div>-->
-    <!--<div>-->
-    <!--<p>图像识别</p>-->
-    <!--</div>-->
-    <!--<img src="https://wzcb97.top/images/index/photo.jpg">-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="auxiliary">-->
-    <!--<div class="content">-->
-    <!--<div>-->
-    <!--<div>-->
-    <!--<p>文字识别</p>-->
-    <!--</div>-->
-    <!--<img-->
-    <!--src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551787214368&di=1603f11da101544e417a131ff1bb9ba5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201406%2F18%2F20140618110551_vL3iQ.jpeg">-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
     <div class="firstDiv">
       <div>
         <img src="../../../static/images/trip.png"/>
@@ -186,9 +165,6 @@
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
-            // wx.showLoading({
-            //   title: '识别中...',
-            // })
             wx.showToast({
               title: '识别中...',
               icon: 'loading'
@@ -221,8 +197,6 @@
                 }
               }
             })
-
-            // console.log(_this.type);
           }
         })
         // _this.data = JSON.parse(_this.text);
