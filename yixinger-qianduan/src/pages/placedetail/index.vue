@@ -195,7 +195,7 @@
                       <img class="userImg" v-for="(img, imgIndex) in comment.userImg " :key="imgIndex"
                            :src="img" :data-src="img" v-if="imgIndex<3&&img" @click="seePhoto(img,comment.userImg)"/>
                       <span v-if="comment.moreThanThree"
-                            style="width:30px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:65px;margin-top:52px;">{{comment.imgLength}}张</span>
+                            style="width:30px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:137rpx;margin-top:112rpx;">{{comment.imgLength}}张</span>
                     </div>
                   </van-row>
                   <van-row>
@@ -239,483 +239,486 @@
 </template>
 
 <script>
-  import {apiurl} from "@/service/api.js";
-  import {mapGetters, mapMutations} from 'vuex';
-  import Dialog from '../../../static/vant-weapp/dist/dialog/dialog.js';
+import {apiurl} from "@/service/api.js";
+import {mapGetters, mapMutations} from 'vuex';
+import Dialog from '../../../static/vant-weapp/dist/dialog/dialog.js';
 
-  export default {
-    data() {
-      return {
-        userId: '',
-        uid: '',
-        longitude: 0,
-        latitude: 0,
-        placeDetailData: {},
-        name: '',
-        overallRating: 0,
-        distance: '',
-        address: '',
-        showtag: '',
-        sugTime: '',
-        bestTime: '',
-        telephone1: '',
-        telephone2: '',
-        isOneTelephone: true,// 判断是否有两个电话
-        tags1: [],
-        tags1ShowIndex: 0,
-        tag1OfContent: [],
-        tag2OfContent: [],
-        isTagShow: true,
-        commentNumber: 0,
-        commentListInfo: [],
-        imgList: [],
-        hour: '',
-        introduce: '',
-        isIntroduceShow: false,
-        isSugTimeShow: false,
-        isBestTimeShow: false,
-        isSurveyOfScenery: false,
-        isTelephoneShow: false,
-        isTelephone1Show: false,
-        isTelephone2Show: false,
-        isHourShow: false,
-        isTag2OfContentShow: false,
-        isImgListShow: false,
-        isSeeAllShow: false,
-        banner: [],
-        userInfo: {},
-        likeImgUrl: '/static/images/like.png',
-        likedHistory: {},
-        totalPhotoNumber: 0,
-        show: false,
-        phoneNumber: '',
-        price: 0,
-        placeType: 1,
-        actions: [
-          {
-            name: '',
-            disabled: true
-          },
-          {
-            name: '呼叫'
-          }
-        ],
-        isComment: false// 用于辨别是否为添加评论操作
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'disc'
-      ])
-    },
-    created() {
+export default {
+  data() {
+    return {
+      userId: '',
+      uid: '',
+      longitude: 0,
+      latitude: 0,
+      placeDetailData: {},
+      name: '',
+      overallRating: 0,
+      distance: '',
+      address: '',
+      showtag: '',
+      sugTime: '',
+      bestTime: '',
+      telephone1: '',
+      telephone2: '',
+      isOneTelephone: true,// 判断是否有两个电话
+      tags1: [],
+      tags1ShowIndex: 0,
+      tag1OfContent: [],
+      tag2OfContent: [],
+      isTagShow: true,
+      commentNumber: 0,
+      commentListInfo: [],
+      imgList: [],
+      hour: '',
+      introduce: '',
+      isIntroduceShow: false,
+      isSugTimeShow: false,
+      isBestTimeShow: false,
+      isSurveyOfScenery: false,
+      isTelephoneShow: false,
+      isTelephone1Show: false,
+      isTelephone2Show: false,
+      isHourShow: false,
+      isTag2OfContentShow: false,
+      isImgListShow: false,
+      isSeeAllShow: false,
+      banner: [],
+      userInfo: {},
+      likeImgUrl: '/static/images/like.png',
+      likedHistory: {},
+      totalPhotoNumber: 0,
+      show: false,
+      phoneNumber: '',
+      price: 0,
+      placeType: 1,
+      actions: [
+        {
+          name: '',
+          disabled: true
+        },
+        {
+          name: '呼叫'
+        }
+      ],
+      isComment: false// 用于辨别是否为添加评论操作
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'disc'
+    ])
+  },
+  created() {
 
-    },
-    onShow() {
-      this.userInfo = this.$store.getters.disc;
-      this.isComment = this.userInfo.isComment;
-      if (this.isComment) {
-        this.getLikedCommentByPlaceIdAndUserId();
-        this.addOrUpdateUserHistory();
-      }
-    },
-    mounted() {
-      this.userInfo = this.$store.getters.disc;
-      this.isComment = this.userInfo.isComment;
-      this.uid = this.$route.query.uid;
+  },
+  onShow() {
+    this.userInfo = this.$store.getters.disc;
+    this.isComment = this.userInfo.isComment;
+    if (this.isComment) {
       this.getLikedCommentByPlaceIdAndUserId();
       this.addOrUpdateUserHistory();
+    }
+  },
+  mounted() {
+    this.userInfo = this.$store.getters.disc;
+    this.isComment = this.userInfo.isComment;
+    this.uid = this.$route.query.uid;
+    this.getLikedCommentByPlaceIdAndUserId();
+    this.addOrUpdateUserHistory();
+  },
+  onUnload() {
+    this.banner = [];
+    this.tag1OfContent = [];
+    this.tag2OfContent = [];
+    this.commentListInfo = [];
+    this.tags1 = [];
+    this.imgList = [];
+    this.name = '';
+    this.overallRating = 0;
+    this.distance = '';
+    this.address = '';
+    this.showtag = '';
+    this.sugTime = '';
+    this.bestTime = '';
+    this.telephone1 = '';
+    this.telephone2 = '';
+    this.commentNumber = 0;
+    this.totalPhotoNumber = 0;
+    this.hour = '';
+    this.introduce = '';
+    this.phoneNumber = '';
+    this.price = 0;
+    this.uid = '';
+    this.userInfo.isComment = false;
+    this.setDisc(this.userInfo);
+  },
+  methods: {
+    ...mapMutations({
+      setDisc: 'set_disc'
+    }),
+    /**
+     * 预览图片
+     */
+    seePhoto(index, imgList) {
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
+      if (imgList instanceof Array) {
+        wx.previewImage({
+          current: index, // 当前显示图片的http链接
+          urls: imgList // 需要预览的图片http链接列表
+        })
+      } else {
+        let imgArray = [];
+        imgArray.push(imgList);
+        wx.previewImage({
+          current: index, // 当前显示图片的http链接
+          urls: imgArray // 需要预览的图片http链接列表
+        })
+      }
     },
-    onUnload() {
-      this.banner = [];
+    getPlaceDetailData() {
       this.tag1OfContent = [];
       this.tag2OfContent = [];
-      this.commentListInfo = [];
-      this.tags1 = [];
       this.imgList = [];
-      this.name = '';
-      this.overallRating = 0;
-      this.distance = '';
-      this.address = '';
-      this.showtag = '';
-      this.sugTime = '';
-      this.bestTime = '';
-      this.telephone1 = '';
-      this.telephone2 = '';
-      this.commentNumber = 0;
-      this.totalPhotoNumber = 0;
-      this.hour = '';
-      this.introduce = '';
-      this.phoneNumber = '';
-      this.price = 0;
-    },
-    methods: {
-      ...mapMutations({
-        setDisc: 'set_disc'
-      }),
-      /**
-       * 预览图片
-       */
-      seePhoto(index, imgList) {
-        this.userInfo.isComment = false;
-        this.setDisc(this.userInfo);
-        if (imgList instanceof Array) {
-          wx.previewImage({
-            current: index, // 当前显示图片的http链接
-            urls: imgList // 需要预览的图片http链接列表
-          })
+      this.banner = [];
+      this.longitude = this.$route.query.longitude;
+      this.latitude = this.$route.query.latitude;
+      this.$httpWX.get({
+        url: apiurl.getPlaceByUid,
+        data: {
+          uid: this.uid,
+          longitude: this.longitude,
+          latitude: this.latitude
+        },
+      }).then(res => {
+        this.placeDetailData = res.data;
+        this.placeType = this.placeDetailData.place.type;
+        if (this.placeDetailData.placePhotoList != null && this.placeDetailData.placePhotoList.length > 0) {
+          for (let i = 0; i < this.placeDetailData.placePhotoList.length; i++) {
+            if (this.placeDetailData.placePhotoList[i].imageUrl.indexOf("/images/placephoto") != -1) {
+              this.placeDetailData.placePhotoList[i].imageUrl = 'https://wzcb97.top/' + this.placeDetailData.placePhotoList[i].imageUrl;
+            }
+            this.banner.push(this.placeDetailData.placePhotoList[i].imageUrl);
+            if (i == 4) {
+              break;
+            }
+          }
         } else {
-          let imgArray = [];
-          imgArray.push(imgList);
-          wx.previewImage({
-            current: index, // 当前显示图片的http链接
-            urls: imgArray // 需要预览的图片http链接列表
-          })
+          this.banner.push(this.placeDetailData.place.image);
         }
-      },
-      getPlaceDetailData() {
-        this.tag1OfContent = [];
-        this.tag2OfContent = [];
-        this.imgList = [];
-        this.banner = [];
-        this.longitude = this.$route.query.longitude;
-        this.latitude = this.$route.query.latitude;
-        this.$httpWX.get({
-          url: apiurl.getPlaceByUid,
-          data: {
-            uid: this.uid,
-            longitude: this.longitude,
-            latitude: this.latitude
-          },
-        }).then(res => {
-          this.placeDetailData = res.data;
-          this.placeType = this.placeDetailData.place.type;
-          if (this.placeDetailData.placePhotoList != null && this.placeDetailData.placePhotoList.length > 0) {
-            for (let i = 0; i < this.placeDetailData.placePhotoList.length; i++) {
-              if (this.placeDetailData.placePhotoList[i].imageUrl.indexOf("/images/placephoto") != -1) {
-                this.placeDetailData.placePhotoList[i].imageUrl = 'https://wzcb97.top/' + this.placeDetailData.placePhotoList[i].imageUrl;
-              }
-              this.banner.push(this.placeDetailData.placePhotoList[i].imageUrl);
-              if (i == 4) {
-                break;
-              }
-            }
+        this.name = this.placeDetailData.place.name;
+        if (this.placeDetailData.place.distance / 1000 >= 10000) {
+          this.distance = '>10000km';
+        } else {
+          this.distance = this.placeDetailData.place.distance ? this.placeDetailData.place.distance >= 1000 ?
+            (this.placeDetailData.place.distance / 1000).toFixed(1) + 'km' :
+            parseInt(this.placeDetailData.place.distance) + 'm' : 0 + 'm';
+        }
+        this.address = this.placeDetailData.place.address;
+        this.overallRating = this.placeDetailData.place.overallRating;
+        if (this.placeDetailData.place.type == 2) {
+          if (!this.placeDetailData.place.price || this.placeDetailData.place.price == '' ||
+            this.placeDetailData.place.price == '暂无' || this.placeDetailData.place.price == 'false') {
+            this.price = 0;
           } else {
-            this.banner.push(this.placeDetailData.place.image);
+            this.price = parseInt(this.placeDetailData.place.price);
           }
-          this.name = this.placeDetailData.place.name;
-          if (this.placeDetailData.place.distance / 1000 >= 10000) {
-            this.distance = '>10000km';
-          } else {
-            this.distance = this.placeDetailData.place.distance ? this.placeDetailData.place.distance >= 1000 ?
-              (this.placeDetailData.place.distance / 1000).toFixed(1) + 'km' :
-              parseInt(this.placeDetailData.place.distance) + 'm' : 0 + 'm';
-          }
-          this.address = this.placeDetailData.place.address;
-          this.overallRating = this.placeDetailData.place.overallRating;
-          if (this.placeDetailData.place.type == 2) {
-            if (!this.placeDetailData.place.price || this.placeDetailData.place.price == '' ||
-              this.placeDetailData.place.price == '暂无' || this.placeDetailData.place.price == 'false') {
-              this.price = 0;
+        }
+        this.showtag = this.placeDetailData.place.showtag;
+        if (this.placeDetailData.place.tags1) {
+          let tags1Array = this.placeDetailData.place.tags1.split(';');
+          let tags1Length = 0;
+          for (let j = 0; j < tags1Array.length; j++) {
+            tags1Length = tags1Length + tags1Array[j].length;
+            if (tags1Length <= 10) {
+              this.tags1ShowIndex = j;
             } else {
-              this.price = parseInt(this.placeDetailData.place.price);
+              break;
             }
+            this.tags1.push(tags1Array[j]);
           }
-          this.showtag = this.placeDetailData.place.showtag;
-          if (this.placeDetailData.place.tags1) {
-            let tags1Array = this.placeDetailData.place.tags1.split(';');
-            let tags1Length = 0;
-            for (let j = 0; j < tags1Array.length; j++) {
-              tags1Length = tags1Length + tags1Array[j].length;
-              if (tags1Length <= 10) {
-                this.tags1ShowIndex = j;
-              } else {
-                break;
-              }
-              this.tags1.push(tags1Array[j]);
-            }
+        } else {
+          this.tags1 = [];
+        }
+        // 判断是否显示景点简介
+        if (this.placeDetailData.place.introduce && this.placeDetailData.place.introduce != '暂无') {
+          if (this.placeDetailData.place.introduce.length > 65) {
+            this.introduce = this.placeDetailData.place.introduce.substring(0, 65) + '...';
           } else {
-            this.tags1 = [];
+            this.introduce = this.placeDetailData.place.introduce;
           }
-          // 判断是否显示景点简介
-          if (this.placeDetailData.place.introduce && this.placeDetailData.place.introduce != '暂无') {
-            if (this.placeDetailData.place.introduce.length > 65) {
-              this.introduce = this.placeDetailData.place.introduce.substring(0, 65) + '...';
-            } else {
-              this.introduce = this.placeDetailData.place.introduce;
-            }
-            this.isIntroduceShow = true;
-          } else {
-            this.isIntroduceShow = false;
-          }
-          // 判断是否显示建议游玩时间
-          if (this.placeDetailData.place.sugTime && this.placeDetailData.place.sugTime != '' && this.placeDetailData.place.sugTime != '暂无') {
-            this.sugTime = this.placeDetailData.place.sugTime;
-            this.isSugTimeShow = true;
-          } else {
-            this.isSugTimeShow = false;
-          }
-          // 判断是否显示建议游玩季节
-          if (this.placeDetailData.place.bestTime && this.placeDetailData.place.bestTime != '' && this.placeDetailData.place.bestTime != '暂无') {
-            this.bestTime = this.placeDetailData.place.bestTime;
-            this.isBestTimeShow = true;
-          } else {
-            this.isBestTimeShow = false;
-          }
-          // 判断是否显示景点概况
-          if (!this.isIntroduceShow && !this.isSugTimeShow && !this.isBestTimeShow) {
-            this.isSurveyOfScenery = false;
-          } else {
-            this.isSurveyOfScenery = true;
-          }
-          // 判断是否显示电话信息
-          if (this.placeDetailData.place.phone && this.placeDetailData.place.phone != 'null') {
-            this.isTelephoneShow = true;
-            let phoneArray = this.placeDetailData.place.phone.split(',');
-            this.telephone1 = phoneArray[0];
-            if (phoneArray.size > 1) {
-              this.isTelephone1Show = false;
-              this.isTelephone2Show = true;
-              this.telephone2 = phoneArray[1];
-            } else {
-              this.isTelephone1Show = true;
-              this.isTelephone2Show = false;
-            }
-          } else {
-            this.isTelephoneShow = false;
+          this.isIntroduceShow = true;
+        } else {
+          this.isIntroduceShow = false;
+        }
+        // 判断是否显示建议游玩时间
+        if (this.placeDetailData.place.sugTime && this.placeDetailData.place.sugTime != '' && this.placeDetailData.place.sugTime != '暂无') {
+          this.sugTime = this.placeDetailData.place.sugTime;
+          this.isSugTimeShow = true;
+        } else {
+          this.isSugTimeShow = false;
+        }
+        // 判断是否显示建议游玩季节
+        if (this.placeDetailData.place.bestTime && this.placeDetailData.place.bestTime != '' && this.placeDetailData.place.bestTime != '暂无') {
+          this.bestTime = this.placeDetailData.place.bestTime;
+          this.isBestTimeShow = true;
+        } else {
+          this.isBestTimeShow = false;
+        }
+        // 判断是否显示景点概况
+        if (!this.isIntroduceShow && !this.isSugTimeShow && !this.isBestTimeShow) {
+          this.isSurveyOfScenery = false;
+        } else {
+          this.isSurveyOfScenery = true;
+        }
+        // 判断是否显示电话信息
+        if (this.placeDetailData.place.phone && this.placeDetailData.place.phone != 'null') {
+          this.isTelephoneShow = true;
+          let phoneArray = this.placeDetailData.place.phone.split(',');
+          this.telephone1 = phoneArray[0];
+          if (phoneArray.size > 1) {
             this.isTelephone1Show = false;
+            this.isTelephone2Show = true;
+            this.telephone2 = phoneArray[1];
+          } else {
+            this.isTelephone1Show = true;
             this.isTelephone2Show = false;
           }
-          // 判断是否显示营业时间
-          if (this.placeDetailData.place.shopHours != '暂无' && this.placeDetailData.place.shopHours && this.placeDetailData.place.shopHours != '') {
-            this.hour = this.placeDetailData.place.shopHours;
-            this.isHourShow = true;
-          } else {
-            this.isHourShow = false;
-          }
-          if (this.placeDetailData.place.content != '暂无' && this.placeDetailData.place.content && this.placeDetailData.place.content != '') {
-            this.isTagShow = true;
-            let contentArray = this.placeDetailData.place.content.split(';');
-            if (contentArray.length <= 3) {
-              for (let i = 0; i < contentArray.length; i++) {
-                this.tag1OfContent.push(contentArray[i]);
-              }
-              this.isTag2OfContentShow = false;
-            } else if (contentArray.length > 3 && contentArray.length <= 6) {
-              for (let i = 0; i < contentArray.length; i++) {
-                if (i < 3) {
-                  this.tag1OfContent.push(contentArray[i]);
-                } else {
-                  this.tag2OfContent.push(contentArray[i]);
-                }
-              }
-              this.isTag2OfContentShow = true;
-            } else {
-              for (let i = 3; i < 6; i++) {
-                if (i < 3) {
-                  this.tag1OfContent.push(contentArray[i]);
-                } else {
-                  this.tag2OfContent.push(contentArray[i]);
-                }
-              }
-              this.isTag2OfContentShow = true;
-            }
-          } else {
-            this.isTagShow = false;
-          }
-          this.handleCommentList();
-          // 处理图片列表
-          if (res.data.placePhotoList.length > 0) {
-            for (let i = 0; i < res.data.placePhotoList.length; i++) {
-              this.imgList.push(res.data.placePhotoList[i].imageUrl);
-            }
-            this.totalPhotoNumber = this.imgList.length;
-            this.isImgListShow = true;
-          } else {
-            this.isImgListShow = false;
-          }
-        })
-      },
-      // 处理评论
-      handleCommentList() {
-        this.$httpWX.get({
-          url: apiurl.getPlaceCommentByUid,
-          data: {
-            uid: this.placeDetailData.place.uid,
-            pageNo: 1,
-            pageSize: 3
-          },
-        }).then(res => {
-          this.commentListInfo = res.data.items;
-          this.commentNumber = res.data.totalNum;
-          if (this.commentNumber > 0) {
-            this.isSeeAllShow = true;
-          } else {
-            this.isSeeAllShow = false;
-          }
-          let userImgArray = [];
-          let length = 0;
-          if (this.commentListInfo.length <= 3) {
-            length = this.commentListInfo.length;
-          } else {
-            length = 3;
-          }
-          for (let i = 0; i < length; i++) {
-            if (this.commentListInfo[i].comment.length > 58) {
-              this.$set(this.commentListInfo[i], 'newComment', this.commentListInfo[i].comment.substring(0, 58) + '...');
-            } else {
-              this.$set(this.commentListInfo[i], 'newComment', this.commentListInfo[i].comment);
-            }
-            if (this.commentListInfo[i].imageList) {
-              var userImg = JSON.parse(this.commentListInfo[i].imageList);
-              userImgArray = [];
-              for (let j = 0; j < userImg.length; j++) {
-                if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
-                  userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
-                } else {
-                  userImgArray.push(userImg[j].pic_url);
-                }
-              }
-              this.$set(this.commentListInfo[i], 'userImg', userImgArray);
-              if (userImgArray.length > 3) {
-                this.$set(this.commentListInfo[i], 'moreThanThree', true);
-              } else {
-                this.$set(this.commentListInfo[i], 'moreThanThree', false);
-              }
-              this.$set(this.commentListInfo[i], 'imgLength', userImgArray.length);
-            } else {
-              this.$set(this.commentListInfo[i], 'userImg', null);
-            }
-            this.$set(this.commentListInfo[i], 'date', this.commentListInfo[i].date.split(" ")[0]);
-            if (this.likedHistory) {// 有点赞记录
-              for (let m = 0; m < this.likedHistory.length; m++) {
-                if (this.commentListInfo[i].id == this.likedHistory[m].placeCommentId) {
-                  this.$set(this.commentListInfo[i], 'likeImgUrl', '/static/images/liked.png');
-                  break;
-                } else {
-                  this.$set(this.commentListInfo[i], 'likeImgUrl', '/static/images/like.png');
-                }
-              }
-            } else {// 无点赞记录
-              this.$set(this.commentListInfo[i], 'likeImgUrl', '/static/images/like.png');
-            }
-          }
-        })
-      },
-      like(commentId, likeImgUrl, index) {
-        this.$httpWX.post({
-          url: apiurl.updateLikes,
-          data: {
-            userId: this.userInfo.openid,
-            placeCommentId: commentId,
-            placeId: this.uid
-          },
-        }).then(res => {
-          if (res.state == 0) {
-            if (likeImgUrl == '/static/images/like.png') {
-              this.commentListInfo[index].likeImgUrl = '/static/images/liked.png';
-              this.commentListInfo[index].likes = res.data.likes;
-            } else {
-              this.commentListInfo[index].likeImgUrl = '/static/images/like.png';
-              this.commentListInfo[index].likes = res.data.likes;
-            }
-          } else {
-            wx.showToast({
-              title: res.message,
-              duration: 3000,
-              icon: 'none'
-            });
-          }
-        })
-      },
-      getLikedCommentByPlaceIdAndUserId() {
-        this.$httpWX.get({
-          url: apiurl.getLikedCommentByPlaceIdAndUserId,
-          data: {
-            placeId: this.uid,
-            openid: this.userInfo.openid
-          },
-        }).then(res => {
-          this.likedHistory = res.data;
-          this.getPlaceDetailData();
-        })
-      },
-      phoneCall(number) {
-        this.show = true;
-        this.actions[0].name = number;
-        this.phoneNumber = number;
-      },
-      onSelect(index) {
-        this.userInfo.isComment = false;
-        this.setDisc(this.userInfo);
-        if (index.target.name == '呼叫') {
-          wx.makePhoneCall({
-            phoneNumber: this.phoneNumber,
-          })
+        } else {
+          this.isTelephoneShow = false;
+          this.isTelephone1Show = false;
+          this.isTelephone2Show = false;
         }
-      },
-      onCancel() {
-        this.show = false;
-      },
-      addOrUpdateUserHistory() {// 添加或更新用户浏览记录
-        this.$httpWX.post({
-          url: apiurl.addOrUpdateUserHistory,
-          data: {
-            userId: this.userInfo.openid,
-            placeId: this.uid
-          },
-        }).then(res => {
+        // 判断是否显示营业时间
+        if (this.placeDetailData.place.shopHours != '暂无' && this.placeDetailData.place.shopHours && this.placeDetailData.place.shopHours != '') {
+          this.hour = this.placeDetailData.place.shopHours;
+          this.isHourShow = true;
+        } else {
+          this.isHourShow = false;
+        }
+        if (this.placeDetailData.place.content != '暂无' && this.placeDetailData.place.content && this.placeDetailData.place.content != '') {
+          this.isTagShow = true;
+          let contentArray = this.placeDetailData.place.content.split(';');
+          if (contentArray.length <= 3) {
+            for (let i = 0; i < contentArray.length; i++) {
+              this.tag1OfContent.push(contentArray[i]);
+            }
+            this.isTag2OfContentShow = false;
+          } else if (contentArray.length > 3 && contentArray.length <= 6) {
+            for (let i = 0; i < contentArray.length; i++) {
+              if (i < 3) {
+                this.tag1OfContent.push(contentArray[i]);
+              } else {
+                this.tag2OfContent.push(contentArray[i]);
+              }
+            }
+            this.isTag2OfContentShow = true;
+          } else {
+            for (let i = 3; i < 6; i++) {
+              if (i < 3) {
+                this.tag1OfContent.push(contentArray[i]);
+              } else {
+                this.tag2OfContent.push(contentArray[i]);
+              }
+            }
+            this.isTag2OfContentShow = true;
+          }
+        } else {
+          this.isTagShow = false;
+        }
+        this.handleCommentList();
+        // 处理图片列表
+        if (res.data.placePhotoList.length > 0) {
+          for (let i = 0; i < res.data.placePhotoList.length; i++) {
+            this.imgList.push(res.data.placePhotoList[i].imageUrl);
+          }
+          this.totalPhotoNumber = this.imgList.length;
+          this.isImgListShow = true;
+        } else {
+          this.isImgListShow = false;
+        }
+      })
+    },
+    // 处理评论
+    handleCommentList() {
+      this.$httpWX.get({
+        url: apiurl.getPlaceCommentByUid,
+        data: {
+          uid: this.placeDetailData.place.uid,
+          pageNo: 1,
+          pageSize: 3
+        },
+      }).then(res => {
+        this.commentListInfo = res.data.items;
+        this.commentNumber = res.data.totalNum;
+        if (this.commentNumber > 0) {
+          this.isSeeAllShow = true;
+        } else {
+          this.isSeeAllShow = false;
+        }
+        let userImgArray = [];
+        let length = 0;
+        if (this.commentListInfo.length <= 3) {
+          length = this.commentListInfo.length;
+        } else {
+          length = 3;
+        }
+        for (let i = 0; i < length; i++) {
+          if (this.commentListInfo[i].comment.length > 58) {
+            this.$set(this.commentListInfo[i], 'newComment', this.commentListInfo[i].comment.substring(0, 58) + '...');
+          } else {
+            this.$set(this.commentListInfo[i], 'newComment', this.commentListInfo[i].comment);
+          }
+          if (this.commentListInfo[i].imageList) {
+            var userImg = JSON.parse(this.commentListInfo[i].imageList);
+            userImgArray = [];
+            for (let j = 0; j < userImg.length; j++) {
+              if (userImg[j].pic_url.indexOf("/images/comment") != -1) {
+                userImgArray.push('https://wzcb97.top' + userImg[j].pic_url);
+              } else {
+                userImgArray.push(userImg[j].pic_url);
+              }
+            }
+            this.$set(this.commentListInfo[i], 'userImg', userImgArray);
+            if (userImgArray.length > 3) {
+              this.$set(this.commentListInfo[i], 'moreThanThree', true);
+            } else {
+              this.$set(this.commentListInfo[i], 'moreThanThree', false);
+            }
+            this.$set(this.commentListInfo[i], 'imgLength', userImgArray.length);
+          } else {
+            this.$set(this.commentListInfo[i], 'userImg', null);
+          }
+          this.$set(this.commentListInfo[i], 'date', this.commentListInfo[i].date.split(" ")[0]);
+          if (this.likedHistory) {// 有点赞记录
+            for (let m = 0; m < this.likedHistory.length; m++) {
+              if (this.commentListInfo[i].id == this.likedHistory[m].placeCommentId) {
+                this.$set(this.commentListInfo[i], 'likeImgUrl', '/static/images/liked.png');
+                break;
+              } else {
+                this.$set(this.commentListInfo[i], 'likeImgUrl', '/static/images/like.png');
+              }
+            }
+          } else {// 无点赞记录
+            this.$set(this.commentListInfo[i], 'likeImgUrl', '/static/images/like.png');
+          }
+        }
+      })
+    },
+    like(commentId, likeImgUrl, index) {
+      this.$httpWX.post({
+        url: apiurl.updateLikes,
+        data: {
+          userId: this.userInfo.openid,
+          placeCommentId: commentId,
+          placeId: this.uid
+        },
+      }).then(res => {
+        if (res.state == 0) {
+          if (likeImgUrl == '/static/images/like.png') {
+            this.commentListInfo[index].likeImgUrl = '/static/images/liked.png';
+            this.commentListInfo[index].likes = res.data.likes;
+          } else {
+            this.commentListInfo[index].likeImgUrl = '/static/images/like.png';
+            this.commentListInfo[index].likes = res.data.likes;
+          }
+        } else {
+          wx.showToast({
+            title: res.message,
+            duration: 3000,
+            icon: 'none'
+          });
+        }
+      })
+    },
+    getLikedCommentByPlaceIdAndUserId() {
+      this.$httpWX.get({
+        url: apiurl.getLikedCommentByPlaceIdAndUserId,
+        data: {
+          placeId: this.uid,
+          openid: this.userInfo.openid
+        },
+      }).then(res => {
+        this.likedHistory = res.data;
+        this.getPlaceDetailData();
+      })
+    },
+    phoneCall(number) {
+      this.show = true;
+      this.actions[0].name = number;
+      this.phoneNumber = number;
+    },
+    onSelect(index) {
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
+      if (index.target.name == '呼叫') {
+        wx.makePhoneCall({
+          phoneNumber: this.phoneNumber,
         })
-      },
-      seeIntroduce() {
-        Dialog.alert({
-          message: this.placeDetailData.place.introduce
-        }).then(() => {
-        });
-      },
-      navigation() {
-        wx.openLocation({
-          latitude: parseFloat(this.placeDetailData.place.latitude),
-          longitude: parseFloat(this.placeDetailData.place.longitude),
-          name: this.name,
-          address: this.address
-        });
-      },
-      addComment() {
-        this.userInfo.isComment = false;
-        this.setDisc(this.userInfo);
-        this.$router.push({
-          path: `../addcomment/main`,
-          query: {
-            title: this.name,
-            placeId: this.uid
-          }
-        });
-      },
-      seeAllComments() {
-        this.userInfo.isComment = false;
-        this.setDisc(this.userInfo);
-        this.$router.push({
-          path: `../commentlist/main`,
-          query: {
-            title: this.name,
-            placeId: this.uid
-          }
-        });
-      },
-      seePhotoList() {
-        this.userInfo.isComment = false;
-        this.setDisc(this.userInfo);
-        this.$router.push({
-          path: `../photolist/main`,
-          query: {
-            title: this.name,
-            placeId: this.uid
-          }
-        });
       }
+    },
+    onCancel() {
+      this.show = false;
+    },
+    addOrUpdateUserHistory() {// 添加或更新用户浏览记录
+      this.$httpWX.post({
+        url: apiurl.addOrUpdateUserHistory,
+        data: {
+          userId: this.userInfo.openid,
+          placeId: this.uid
+        },
+      }).then(res => {
+      })
+    },
+    seeIntroduce() {
+      Dialog.alert({
+        message: this.placeDetailData.place.introduce
+      }).then(() => {
+      });
+    },
+    navigation() {
+      wx.openLocation({
+        latitude: parseFloat(this.placeDetailData.place.latitude),
+        longitude: parseFloat(this.placeDetailData.place.longitude),
+        name: this.name,
+        address: this.address
+      });
+    },
+    addComment() {
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
+      this.$router.push({
+        path: `../addcomment/main`,
+        query: {
+          title: this.name,
+          placeId: this.uid
+        }
+      });
+    },
+    seeAllComments() {
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
+      this.$router.push({
+        path: `../commentlist/main`,
+        query: {
+          title: this.name,
+          placeId: this.uid
+        }
+      });
+    },
+    seePhotoList() {
+      this.userInfo.isComment = false;
+      this.setDisc(this.userInfo);
+      this.$router.push({
+        path: `../photolist/main`,
+        query: {
+          title: this.name,
+          placeId: this.uid
+        }
+      });
     }
   }
+}
 </script>
 
 <style lang='scss' scoped>

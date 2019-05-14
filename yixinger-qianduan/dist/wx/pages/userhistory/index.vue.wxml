@@ -6,7 +6,7 @@
           <view class="_div data-v-2ecb44f2">
             <image src="/static/images/noContent.png" class="_img data-v-2ecb44f2"></image>
           </view>
-          <view class="_div data-v-2ecb44f2 title"><label class="_span data-v-2ecb44f2"> 暂无推荐景点 </label></view>
+          <view class="_div data-v-2ecb44f2 title"><label class="_span data-v-2ecb44f2"> 暂无景点浏览记录 </label></view>
         </view>
         <view class="_div data-v-2ecb44f2 secondDiv" wx:key="key" key="{{key}}" wx:if="{{!isSceneryDataEmpty}}" wx:for="{{yearsSceneryData}}" wx:for-index="key" wx:for-item="year">
           <van-row class="_van-row data-v-2ecb44f2">
@@ -38,7 +38,7 @@
           <view class="_div data-v-2ecb44f2">
             <image src="/static/images/noContent.png" class="_img data-v-2ecb44f2"></image>
           </view>
-          <view class="_div data-v-2ecb44f2 title"><label class="_span data-v-2ecb44f2"> 暂无推荐餐馆 </label></view>
+          <view class="_div data-v-2ecb44f2 title"><label class="_span data-v-2ecb44f2"> 暂无餐馆浏览记录 </label></view>
         </view>
         <view class="_div data-v-2ecb44f2 secondDiv" wx:key="key" key="{{key}}" wx:if="{{!isRestaurantDataEmpty}}" wx:for="{{yearsRestaurantData}}" wx:for-index="key" wx:for-item="year">
           <van-row class="_van-row data-v-2ecb44f2">

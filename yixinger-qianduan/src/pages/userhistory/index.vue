@@ -8,7 +8,7 @@
           </div>
           <div class="title">
             <span>
-              暂无推荐景点
+              暂无景点浏览记录
             </span>
           </div>
         </div>
@@ -64,7 +64,7 @@
           </div>
           <div class="title">
             <span>
-              暂无推荐餐馆
+              暂无餐馆浏览记录
             </span>
           </div>
         </div>
@@ -155,7 +155,7 @@
     },
     mounted() {
       this.userInfo = this.$store.getters.disc;
-      this.getUserHistoryByUserId();
+      //this.getUserHistoryByUserId();
     },
     methods: {
       clickLong(id, type) {
@@ -319,6 +319,8 @@
               this.restaurantData.push(placeData[i]);
             }
           }
+          console.log("sss"+JSON.stringify(this.sceneryData));
+          console.log("www"+JSON.stringify(this.restaurantData));
         })
       }
     }

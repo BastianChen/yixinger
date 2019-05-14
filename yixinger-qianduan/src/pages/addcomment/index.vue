@@ -100,6 +100,7 @@
       }
     },
     mounted() {
+      this.userInfo = this.$store.getters.disc;
     },
     methods: {
       ...mapMutations({

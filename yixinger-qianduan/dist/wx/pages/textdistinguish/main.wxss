@@ -72,9 +72,9 @@
 }
 .index .secondDiv ._img.data-v-1c5af7e1 {
   position: relative;
-  height: 36rpx;
-  width: 36rpx;
-  bottom: 60rpx;
+  height: 32rpx;
+  width: 32rpx;
+  bottom: 56rpx;
   float: right;
   right: 14rpx;
 }

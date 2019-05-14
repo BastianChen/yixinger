@@ -431,6 +431,9 @@ if (false) {(function () {
     this.introduce = '';
     this.phoneNumber = '';
     this.price = 0;
+    this.uid = '';
+    this.userInfo.isComment = false;
+    this.setDisc(this.userInfo);
   },
 
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])({
@@ -1210,8 +1213,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "position": "absolute",
         "font-size": "12px",
         "text-align": "center",
-        "right": "65px",
-        "margin-top": "52px"
+        "right": "137rpx",
+        "margin-top": "112rpx"
       }
     }, [_vm._v(_vm._s(comment.imgLength) + "张")]) : _vm._e()], 2)]), _vm._v(" "), _c('van-row', {
       attrs: {

@@ -24,7 +24,7 @@
             </van-row>
             <van-row class="_van-row data-v-e625b5f4">
               <view class="_div data-v-e625b5f4">
-                <image class="_img data-v-e625b5f4 userImg" wx:key="imgIndex" key="{{imgIndex}}" src="{{img}}" data-src="{{img}}" wx:if="{{imgIndex<3&&img}}" bindtap="handleProxy" data-eventid="{{'1-'+commentListInfoIndex+'-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{comment.userImg}}" wx:for-index="imgIndex" wx:for-item="img"></image> <label wx:if="{{comment.moreThanThree}}" style="width:30px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:65px;margin-top:52px;" class="_span data-v-e625b5f4">{{comment.imgLength}}张</label>
+                <image class="_img data-v-e625b5f4 userImg" wx:key="imgIndex" key="{{imgIndex}}" src="{{img}}" data-src="{{img}}" wx:if="{{imgIndex<3&&img}}" bindtap="handleProxy" data-eventid="{{'1-'+commentListInfoIndex+'-'+imgIndex}}" data-comkey="{{$k}}" wx:for="{{comment.userImg}}" wx:for-index="imgIndex" wx:for-item="img"></image> <label wx:if="{{comment.moreThanThree}}" style="width:30px;height:15px;background:#000000;opacity:0.6;color:#ffffff;position:absolute;font-size:12px;text-align:center;right:137rpx;margin-top:112rpx;" class="_span data-v-e625b5f4">{{comment.imgLength}}张</label>
               </view>
             </van-row>
             <van-row class="_van-row data-v-e625b5f4">

@@ -105,6 +105,9 @@
   text-align: center;
   padding: 20rpx 0;
 }
+.index .telephone .one.data-v-8962503e:active {
+  background-color: #e8e8e8;
+}
 .index .telephone .two.data-v-8962503e {
   border-top: 2rpx solid #E8E8E8;
   font-size: 32rpx;

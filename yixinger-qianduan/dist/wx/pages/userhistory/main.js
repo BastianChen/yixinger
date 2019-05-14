@@ -83,8 +83,11 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_api_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__static_vant_weapp_dist_dialog_dialog_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_api_js__ = __webpack_require__(3);
+
 //
 //
 //
@@ -242,19 +245,19 @@ if (false) {(function () {
   },
   mounted: function mounted() {
     this.userInfo = this.$store.getters.disc;
-    this.getUserHistoryByUserId();
+    //this.getUserHistoryByUserId();
   },
 
   methods: {
     clickLong: function clickLong(id, type) {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0__static_vant_weapp_dist_dialog_dialog_js__["a" /* default */].confirm({
+      __WEBPACK_IMPORTED_MODULE_1__static_vant_weapp_dist_dialog_dialog_js__["a" /* default */].confirm({
         title: '温馨提示',
         message: '您确定要删除该条记录？'
       }).then(function () {
         _this.$httpWX.post({
-          url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].deleteUserHistory,
+          url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].deleteUserHistory,
           data: {
             idList: id,
             userId: _this.userInfo.openid
@@ -296,7 +299,7 @@ if (false) {(function () {
       this.yearsRestaurantData = [];
       this.yearsSceneryData = [];
       this.$httpWX.get({
-        url: __WEBPACK_IMPORTED_MODULE_1__service_api_js__["a" /* apiurl */].getUserHistoryByUserId,
+        url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].getUserHistoryByUserId,
         data: {
           longitude: this.userInfo.longitude,
           latitude: this.userInfo.latitude,
@@ -404,6 +407,8 @@ if (false) {(function () {
             _this2.restaurantData.push(placeData[i]);
           }
         }
+        console.log("sss" + __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(_this2.sceneryData));
+        console.log("www" + __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(_this2.restaurantData));
       });
     }
   }
@@ -444,7 +449,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "title"
-  }, [_c('span', [_vm._v("\n            暂无推荐景点\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.yearsSceneryData), function(year, key) {
+  }, [_c('span', [_vm._v("\n            暂无景点浏览记录\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.yearsSceneryData), function(year, key) {
     return (!_vm.isSceneryDataEmpty) ? _c('div', {
       key: key,
       staticClass: "secondDiv"
@@ -517,7 +522,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "title"
-  }, [_c('span', [_vm._v("\n            暂无推荐餐馆\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.yearsRestaurantData), function(year, key) {
+  }, [_c('span', [_vm._v("\n            暂无餐馆浏览记录\n          ")])])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.yearsRestaurantData), function(year, key) {
     return (!_vm.isRestaurantDataEmpty) ? _c('div', {
       key: key,
       staticClass: "secondDiv"

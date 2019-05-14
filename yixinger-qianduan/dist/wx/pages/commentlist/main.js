@@ -208,6 +208,16 @@ if (false) {(function () {
       this.getNewComment();
     }
   },
+  onUnload: function onUnload() {
+    this.isComment = false;
+    this.pageNo = 1;
+    this.pageSize = 10;
+    this.totalPage = 0;
+    this.commentListInfo = [];
+    this.isShowLine = false;
+    this.isCommentListEmpty = false;
+    this.totalNum = 0;
+  },
   onReachBottom: function onReachBottom() {
     if (this.pageNo + 1 <= this.totalPage) {
       this.pageNo = this.pageNo + 1;
@@ -542,8 +552,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "position": "absolute",
         "font-size": "12px",
         "text-align": "center",
-        "right": "65px",
-        "margin-top": "52px"
+        "right": "137rpx",
+        "margin-top": "112rpx"
       }
     }, [_vm._v(_vm._s(comment.imgLength) + "张")]) : _vm._e()], 2)]), _vm._v(" "), _c('van-row', {
       attrs: {

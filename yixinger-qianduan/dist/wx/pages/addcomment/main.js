@@ -332,7 +332,9 @@ if (false) {(function () {
       this.isFinished = false;
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.userInfo = this.$store.getters.disc;
+  },
 
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])({
     setDisc: 'set_disc'
