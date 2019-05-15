@@ -229,6 +229,7 @@ public class PlaceServiceImpl implements PlaceService {
     public List<Place> getPlaceList(String uidList, Double longitude, Double latitude) {
         List<String> uid = Arrays.asList(uidList.split(";"));
         List<Place> placeList = new ArrayList<>();
+        // 用于附近页面获取
         if (longitude != null && latitude != null) {
             Double distance;
             for (String id : uid) {
