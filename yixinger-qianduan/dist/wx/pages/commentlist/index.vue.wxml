@@ -1,4 +1,4 @@
-<template name="6d67e55a">
+<template name="26e63b26">
   <view class="_div data-v-e625b5f4 index">
     <view class="_div data-v-e625b5f4 firstDiv">
       <view class="_div data-v-e625b5f4 commentDetail" wx:key="commentListInfoIndex" key="{{commentListInfoIndex}}" wx:for="{{commentListInfo}}" wx:for-index="commentListInfoIndex" wx:for-item="comment">

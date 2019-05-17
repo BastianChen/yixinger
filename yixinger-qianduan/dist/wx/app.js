@@ -145,7 +145,7 @@ function request(url, method, data, header, title, isShowLoading) {
   if (header != null) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       wx.request({
-        url: host + url, // 仅为示例，并非真实的接口地址
+        url: host + url,
         method: method,
         data: data,
         header: header,

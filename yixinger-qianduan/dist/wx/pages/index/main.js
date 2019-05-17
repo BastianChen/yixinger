@@ -486,12 +486,13 @@ if (false) {(function () {
         }
       });
     },
-    clickHandle: function clickHandle(msg, ev) {
-      console.log('clickHandle:', msg, ev);
-    },
-    radioChange: function radioChange(e) {
-      console.log('radio发生change事件，携带value值为：', e.target.value);
-    },
+
+    // clickHandle(msg, ev) {
+    //   console.log('clickHandle:', msg, ev)
+    // },
+    // radioChange(e) {
+    //   console.log('radio发生change事件，携带value值为：', e.target.value)
+    // },
     swipclick: function swipclick(uid) {
       this.$router.push({
         path: '../placedetail/main',
