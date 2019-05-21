@@ -2,15 +2,6 @@
   <div class="index">
     <div class="radius"></div>
     <div class="firstDiv">
-      <!--<div class="firstRow">-->
-      <!--<van-row>-->
-      <!--<van-col span="6" offset="3">-->
-      <!--<span>-->
-      <!--识别图片：-->
-      <!--</span>-->
-      <!--</van-col>-->
-      <!--</van-row>-->
-      <!--</div>-->
       <div class="secondRow">
         <van-row>
           <img :src="imageUrl" :style="{width:imgWidth+'px',height:imgHeight+'px'}" v-show="isShow"
@@ -45,52 +36,7 @@
           </scroll-view>
         </ul>
       </div>
-      <!--<div class="thirdRow">-->
-      <!--<van-row>-->
-      <!--<van-col span="6" offset="3">-->
-      <!--<span>-->
-      <!--识别结果：-->
-      <!--</span>-->
-      <!--</van-col>-->
-      <!--</van-row>-->
-      <!--</div>-->
-      <!--<div class="forthRow">-->
-      <!--<van-row v-for="(domain, index) in results" :key="domain.key">-->
-      <!--<div style="margin-top: 20px">-->
-      <!--<div>-->
-      <!--<van-col span="6" offset="1">-->
-      <!--&lt;!&ndash;<wxParse :content="result"/>&ndash;&gt;-->
-      <!--<span v-if="type==1">{{domain.keyword}}</span>-->
-      <!--<span v-if="type!=1">{{domain.name}}</span>-->
-      <!--</van-col>-->
-      <!--</div>-->
-      <!--<div style="padding-top: 8px">-->
-      <!--<van-col span="11" offset="2">-->
-      <!--&lt;!&ndash;<wxParse :content="result"/>&ndash;&gt;-->
-      <!--&lt;!&ndash;<progress :percent="domain.score" show-info />&ndash;&gt;-->
-      <!--<van-progress v-if="type!=4" :percentage="domain.score"-->
-      <!--color="linear-gradient(to right, #87CEFF, #00BFFF)"/>-->
-      <!--<van-progress v-if="type==4" :percentage="domain.probability"-->
-      <!--color="linear-gradient(to right, #87CEFF, #00BFFF)"/>-->
-      <!--</van-col>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</van-row>-->
-      <!--</div>-->
     </div>
-    <!--<div class="secondDiv" v-show="isTranslated">-->
-    <!--<div class="firstRow">-->
-    <!--<span>-->
-    <!--&#45;&#45; 翻译结果 &#45;&#45;-->
-    <!--</span>-->
-    <!--</div>-->
-    <!--<div class="secondRow">-->
-    <!--<div>-->
-    <!--<wxParse :content="translateResult"/>-->
-    <!--<img :src="broadcastImgUrl" @click="play"/>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
   </div>
 </template>
 
@@ -182,9 +128,7 @@
       }
       this.isFirst = true;
       this.userInfo = this.$store.getters.disc;
-      //console.log("dddddd" + this.$route.query.data)
       this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
-      //console.log("ccccccc" + this.data)
       if (this.data.data.imageUrl.indexOf("https://www.wzcb97.top") == -1) {
         this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
       } else {
@@ -196,7 +140,6 @@
       wx.getImageInfo({
         src: this.imageUrl,
         success: function (res) {
-          //console.log("图片" + JSON.stringify(res))
           let winWidth = wx.getSystemInfoSync().windowWidth;
           if (res.width > winWidth) {
             _this.imgWidth = winWidth * 0.9;
@@ -207,12 +150,9 @@
             _this.imgHeight = res.height;
           }
           _this.isShow = true;
-          //console.log("屏幕宽度" + winWidth);
         }
       })
-      //console.log(JSON.parse(this.data.data.result))
       this.results = JSON.parse(this.data.data.result).result;
-      //console.log("this.results      " + JSON.stringify(this.results));
       for (let i = 0; i < this.results.length; i++) {
         if (this.type == '4') {
           this.results[i].probability = (this.results[i].probability * 100).toFixed(2)

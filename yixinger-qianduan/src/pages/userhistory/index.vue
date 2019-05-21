@@ -319,8 +319,6 @@
               this.restaurantData.push(placeData[i]);
             }
           }
-          console.log("sss"+JSON.stringify(this.sceneryData));
-          console.log("www"+JSON.stringify(this.restaurantData));
         })
       }
     }

@@ -129,7 +129,6 @@
             wx.getUserInfo({
               success: (res) => {
                 this.userInfo = res.userInfo;
-                //console.log("userInfo++++" + JSON.stringify(this.userInfo))
                 this.isLogin = true;
                 this.$httpWX.post({
                   url: apiurl.addUser + '?code=' + this.code,

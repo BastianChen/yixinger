@@ -49,31 +49,6 @@
         </van-col>
       </van-row>
     </div>
-    <!--<div>-->
-    <!--<button-->
-    <!--type="primary"-->
-    <!--size="default"-->
-    <!--plain="false"-->
-    <!--bindtap="primary"-->
-    <!--@click="photoDistinguish()"-->
-    <!--style="background-color: #1989FA;border-color: #1989FA;color: #ffffff;width: 90%;margin-top: 20px"-->
-    <!--&gt;-->
-    <!--图像识别-->
-    <!--</button>-->
-    <!--</div>-->
-    <!--<div>-->
-    <!--<button-->
-    <!--type="primary"-->
-    <!--size="default"-->
-    <!--plain="false"-->
-    <!--bindtap="primary"-->
-    <!--@click="textDistinguish()"-->
-    <!--style="width: 90%;margin-top: 20px"-->
-    <!--&gt;-->
-    <!--通用文字识别-->
-    <!--</button>-->
-    <!--</div>-->
-    <!--:title="message"-->
     <van-action-sheet
       :show="show"
       :actions="actions"
@@ -236,9 +211,6 @@
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
-            // wx.showLoading({
-            //   title: '识别中...',
-            // })
             wx.showToast({
               title: '识别中...',
               icon: 'loading'

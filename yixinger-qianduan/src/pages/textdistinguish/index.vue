@@ -7,57 +7,6 @@
         <img :src="imageUrl" :style="{width:imgWidth+'px',height:imgHeight+'px'}" v-show="isShow"
              @click="seePhoto(imageUrl)"/>
       </div>
-      <!--<div class="thirdRow">-->
-      <!--<van-row>-->
-      <!--<van-col span="6" offset="3">-->
-      <!--<span>-->
-      <!--识别结果：-->
-      <!--</span>-->
-      <!--</van-col>-->
-      <!--</van-row>-->
-      <!--</div>-->
-      <!--<div class="forthRow">-->
-      <!--<van-row>-->
-      <!--<van-col span="18" offset="3">-->
-      <!--<wxParse :content="result"/>-->
-      <!--</van-col>-->
-      <!--</van-row>-->
-      <!--</div>-->
-      <!--<div class="fifthRow">-->
-      <!--<van-row>-->
-      <!--<van-col span="10" offset="2">-->
-      <!--&lt;!&ndash;<div style="border-width: 1px;border-color: #333333;">&ndash;&gt;-->
-      <!--&lt;!&ndash;<span @click="selectLanguage">&ndash;&gt;-->
-      <!--&lt;!&ndash;{{language}}&ndash;&gt;-->
-      <!--&lt;!&ndash;</span>&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;<van-button type="default" @click="selectLanguage">{{language}}</van-button>&ndash;&gt;-->
-      <!--<button-->
-      <!--type="default"-->
-      <!--size="mini"-->
-      <!--plain="false"-->
-      <!--bindtap="primary"-->
-      <!--style="width: 180px"-->
-      <!--@click="selectLanguage"-->
-      <!--&gt;-->
-      <!--{{language}}-->
-      <!--</button>-->
-      <!--</van-col>-->
-      <!--<van-col span="4" offset="5">-->
-      <!--<button-->
-      <!--type="primary"-->
-      <!--size="mini"-->
-      <!--plain="false"-->
-      <!--bindtap="primary"-->
-      <!--style="width: 80px;border-color: #1989FA;color: #1989FA"-->
-      <!--@click="translate"-->
-      <!--&gt;-->
-      <!--翻译-->
-      <!--</button>-->
-      <!--&lt;!&ndash;<van-button plain type="primary">翻译</van-button>&ndash;&gt;-->
-      <!--</van-col>-->
-      <!--</van-row>-->
-      <!--</div>-->
     </div>
     <div class="secondDiv" :style="{'margin-top':imgHeight-50+'px'}">
       <van-row>
@@ -75,17 +24,6 @@
           </div>
         </van-col>
       </van-row>
-      <!--<div class="firstRow">-->
-      <!--<span>-->
-      <!--&#45;&#45; 翻译结果 &#45;&#45;-->
-      <!--</span>-->
-      <!--</div>-->
-      <!--<div class="secondRow">-->
-      <!--<div>-->
-      <!--<wxParse :content="translateResult"/>-->
-      <!--<img :src="broadcastImgUrl" @click="play" v-show="isTranslated"/>-->
-      <!--</div>-->
-      <!--</div>-->
     </div>
     <div class="thirdDiv">
       <div class="bottom">

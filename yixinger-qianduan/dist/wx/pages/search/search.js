@@ -38,13 +38,11 @@ Page({
       city = data.originalData.results.city
     }
     var success2 = function(data) {
-      //console.log("first" + JSON.stringify(data.wxMarkerData));
       var len = wxMarkerData.length;
       for (let i = 0; i < data.wxMarkerData.length; i++) {
         data.wxMarkerData[i].id = len + data.wxMarkerData[i].id;
         wxMarkerData.push(data.wxMarkerData[i]);
       }
-      //console.log("second" + JSON.stringify(wxMarkerData));
       city = data.originalData.results.city
       that.setData({
         showOrHidden: false,
@@ -68,7 +66,6 @@ Page({
       iconPath: '../../img/marker_checked.png',
       iconTapPath: '../../img/marker_checked.png'
     });
-
   },
   showSearchInfo: function(data, i) {
     var that = this;
@@ -101,13 +98,6 @@ Page({
     wx.navigateTo({
       url: url
     })
-    // if (e.target.dataset.latitude && e.target.dataset.longitude && e.target.dataset.city) {
-    //   var dataset = e.target.dataset;
-    //   url = url + '?lonlat=' + dataset.longitude + ',' + dataset.latitude + '&city=' + dataset.city;
-    // }
-    // wx.redirectTo({
-    //   url: url
-    // })
   },
   nav: function(data, i) {
     var that = this;

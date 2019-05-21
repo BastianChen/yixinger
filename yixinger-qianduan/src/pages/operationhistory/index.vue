@@ -182,19 +182,12 @@
             } else {
               this.active = 1;
             }
-            // setTimeout(() => {
-            //   wx.hideToast();
-            // }, 2000);
           })
         }).catch(() => {
           console.log("取消")
         });
       },
       onChange(index) {
-        // wx.showToast({
-        //   title: `切换到标签 ${index.target.title}`,
-        //   icon: 'none'
-        // });
         if (index.target.index == 0) {
           this.active = 0;
         } else if (index.target.index == 1) {

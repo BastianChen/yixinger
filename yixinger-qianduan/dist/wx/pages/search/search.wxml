@@ -1,17 +1,8 @@
 <view class="map_container">
   <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" show-location="true" markers="{{markers}}" bindmarkertap="makertap"></map>
 </view>
-<!-- <van-transition show="{{placeData.title!=null}}" name="fade-up" class="viewCenter"> -->
   <cover-view class="place_info" wx:if="{{placeData.title!=null}}">
     <cover-view class="h1">{{placeData.title}}</cover-view>
     <cover-view class="h2">{{placeData.address}}</cover-view>
     <cover-image class="img" src="https://wzcb97.top/images/index/navigation.png" bindtouchstart="navigation"/>
-    <!-- <cover-view aria-role="button" bindtouchstart="navigation">导航</cover-view> -->
-    <!-- <van-button type="primary" size="normal" round class="_van-button data-v-548e5345" bindtouchstart="navigation">导航</van-button> -->
   </cover-view>
-<!-- </van-transition> -->
-<!-- <view class="place_info">
-  <text class="h1">{{placeData.title}}</text>
-  <text>{{placeData.address}}</text>
-  <van-button type="primary" size="normal" round class="_van-button data-v-548e5345" bindtouchstart="nav">导航</van-button>
-</view> -->
