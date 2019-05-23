@@ -216,7 +216,6 @@ if (false) {(function () {
           wx.getUserInfo({
             success: function success(res) {
               _this2.userInfo = res.userInfo;
-              //console.log("userInfo++++" + JSON.stringify(this.userInfo))
               _this2.isLogin = true;
               _this2.$httpWX.post({
                 url: __WEBPACK_IMPORTED_MODULE_2__service_api_js__["a" /* apiurl */].addUser + '?code=' + _this2.code,

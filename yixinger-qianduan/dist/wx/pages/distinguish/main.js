@@ -130,60 +130,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -268,9 +214,7 @@ if (false) {(function () {
     }
     this.isFirst = true;
     this.userInfo = this.$store.getters.disc;
-    //console.log("dddddd" + this.$route.query.data)
     this.data = JSON.parse(decodeURIComponent(this.$route.query.data));
-    //console.log("ccccccc" + this.data)
     if (this.data.data.imageUrl.indexOf("https://www.wzcb97.top") == -1) {
       this.imageUrl = 'https://wzcb97.top' + this.data.data.imageUrl;
     } else {
@@ -282,7 +226,6 @@ if (false) {(function () {
     wx.getImageInfo({
       src: this.imageUrl,
       success: function success(res) {
-        //console.log("图片" + JSON.stringify(res))
         var winWidth = wx.getSystemInfoSync().windowWidth;
         if (res.width > winWidth) {
           _this.imgWidth = winWidth * 0.9;
@@ -293,12 +236,9 @@ if (false) {(function () {
           _this.imgHeight = res.height;
         }
         _this.isShow = true;
-        //console.log("屏幕宽度" + winWidth);
       }
     });
-    //console.log(JSON.parse(this.data.data.result))
     this.results = JSON.parse(this.data.data.result).result;
-    //console.log("this.results      " + JSON.stringify(this.results));
     for (var i = 0; i < this.results.length; i++) {
       if (this.type == '4') {
         this.results[i].probability = (this.results[i].probability * 100).toFixed(2);
