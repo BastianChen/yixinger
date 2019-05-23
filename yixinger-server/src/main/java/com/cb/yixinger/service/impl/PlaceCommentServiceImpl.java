@@ -42,7 +42,7 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
 
     @Override
     public PageBean<PlaceComment> getPlaceCommentByUid(String uid, Integer pageNo, Integer pageSize) {
-        PageHelper.startPage(1, 100000);
+        PageHelper.startPage(pageNo, pageSize);
         List<PlaceComment> placeCommentList = placeCommentDao.getPlaceCommentByUid(uid);
         // 根据评论评分进行排序（答辩时提的要求）
         int len = placeCommentList.size();
