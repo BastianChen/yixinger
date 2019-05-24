@@ -203,7 +203,7 @@ public class PlaceApiController {
             @ApiParam(value = "页数", required = true, defaultValue = "1") @RequestParam(value = "pageNo") Integer pageNo,
             @ApiParam(value = "列数", required = true, defaultValue = "10") @RequestParam(value = "pageSize") Integer pageSize) {
         BaseMessage baseMessage = new BaseMessage();
-        PageBean<PlaceComment> placeCommentPageBean = placeCommentService.getPlaceCommentByUid(uid, 1, 100000);
+        PageBean<PlaceComment> placeCommentPageBean = placeCommentService.getPlaceCommentByUid(uid, pageNo, pageSize);
         if (placeCommentPageBean.getItems() != null && placeCommentPageBean.getItems().size() > 0) {
             logger.info("获取uid为 {} 的游玩地点的第 {} 页的评论成功", uid, pageNo);
             baseMessage.setMessage("获取uid为 " + uid + " 的游玩地点的评论成功");

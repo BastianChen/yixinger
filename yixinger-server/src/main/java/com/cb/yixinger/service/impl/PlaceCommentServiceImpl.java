@@ -45,24 +45,24 @@ public class PlaceCommentServiceImpl implements PlaceCommentService {
         PageHelper.startPage(pageNo, pageSize);
         List<PlaceComment> placeCommentList = placeCommentDao.getPlaceCommentByUid(uid);
         // 根据评论评分进行排序（答辩时提的要求）
-        int len = placeCommentList.size();
-        int flag = len;
-        // 如果flag>0则排序结束
-        while (flag > 0) {
-            flag = 0;
-            for (int i = 1; i < len; i++) {
-                // 比较评分，若前面小于后面则交换数据
-                if (placeCommentList.get(i - 1).getOverallRating() < placeCommentList.get(i).getOverallRating()) {
-                    PlaceComment temp = placeCommentList.get(i);
-                    placeCommentList.set(i, placeCommentList.get(i - 1));
-                    placeCommentList.set(i - 1, temp);
-                    // 设置最新边界
-                    flag = i;
-                }
-            }
-            // 记录遍历的边界
-            len = flag;
-        }
+//        int len = placeCommentList.size();
+//        int flag = len;
+//        // 如果flag>0则排序结束
+//        while (flag > 0) {
+//            flag = 0;
+//            for (int i = 1; i < len; i++) {
+//                // 比较评分，若前面小于后面则交换数据
+//                if (placeCommentList.get(i - 1).getOverallRating() < placeCommentList.get(i).getOverallRating()) {
+//                    PlaceComment temp = placeCommentList.get(i);
+//                    placeCommentList.set(i, placeCommentList.get(i - 1));
+//                    placeCommentList.set(i - 1, temp);
+//                    // 设置最新边界
+//                    flag = i;
+//                }
+//            }
+//            // 记录遍历的边界
+//            len = flag;
+//        }
         int totalCount = placeCommentDao.getCountByUid(uid);
         PageBean<PlaceComment> pageData = new PageBean<>(pageNo, pageSize, totalCount);
         pageData.setItems(placeCommentList);

@@ -205,7 +205,9 @@ if (false) {(function () {
     this.userInfo = this.$store.getters.disc;
     this.isComment = this.userInfo.isComment;
     if (this.isComment) {
-      this.getNewComment();
+      this.isShowLine = false;
+      this.commentListInfo = [];
+      this.getCommentList();
     }
   },
   onUnload: function onUnload() {
@@ -219,13 +221,13 @@ if (false) {(function () {
     this.totalNum = 0;
   },
   onReachBottom: function onReachBottom() {
-    if (this.pageNo + 1 <= this.totalPage) {
-      this.pageNo = this.pageNo + 1;
-      this.isShowLine = false;
-      this.getCommentList();
-    } else {
-      this.isShowLine = true;
-    }
+    // if (this.pageNo + 1 <= this.totalPage) {
+    //   this.pageNo = this.pageNo + 1;
+    //   this.isShowLine = false;
+    //   this.getCommentList();
+    // } else {
+    //   this.isShowLine = true;
+    // }
   },
   mounted: function mounted() {
     this.userInfo = this.$store.getters.disc;
